@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/widgets/social_login_buttons.dart';
 import '../../../../core/resuebale_componants/headlineText.dart';
-import '../../../../core/resuebale_componants/titleMediumText.dart';
+import '../../../../core/resuebale_componants/title_medium_text.dart';
 import 'forgot_password_text.dart';
 import 'logIn_button.dart';
 import 'login_text_fields.dart';
