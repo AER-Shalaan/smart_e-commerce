@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
@@ -29,18 +28,15 @@ class LogInButton extends StatelessWidget {
           onPressed: () {
             if (!isFormValid) return;
             if (formKey.currentState == null ||
-                !formKey.currentState!.validate())
+                !formKey.currentState!.validate()) {
               return;
+            }
 
             final loginCubit = context.read<LoginChecksCubit>();
             final loginViewModel = LoginViewModel.get(context);
 
             String email = loginCubit.emailController.text;
             String password = loginCubit.passController.text;
-
-            log(email);
-            log(password);
-
             loginViewModel.login(email, password, context);
           },
         );

@@ -11,8 +11,8 @@ class SignUpChecksState extends Equatable {
   final bool isWrongEmail;
   final bool isWrongPass;
   final bool isWrongConfirmPass;
-  final bool isPasswordObscure;
   final bool isConfirmPasswordObscure;
+  final bool isPasswordObscure;
 
   const SignUpChecksState({
     required this.isFNCheck,
@@ -25,10 +25,9 @@ class SignUpChecksState extends Equatable {
     required this.isWrongEmail,
     required this.isWrongPass,
     required this.isWrongConfirmPass,
-    required this.isPasswordObscure,
     required this.isConfirmPasswordObscure,
+    required this.isPasswordObscure,
   });
-
   SignUpChecksState copyWith({
     bool? isFNCheck,
     bool? isLNCheck,
@@ -72,19 +71,19 @@ class SignUpChecksState extends Equatable {
     isWrongEmail,
     isWrongPass,
     isWrongConfirmPass,
-    isPasswordObscure,
     isConfirmPasswordObscure,
+    isPasswordObscure,
   ];
 }
 
-final class InitialSignUpChecksState extends SignUpChecksState {
+class InitialSignUpChecksState extends SignUpChecksState {
   const InitialSignUpChecksState()
     : super(
         isFNCheck: false,
         isLNCheck: false,
-        isConfirmPassCheck: false,
         isEmailCheck: false,
         isPassCheck: false,
+        isConfirmPassCheck: false,
         isWrongFirstName: false,
         isWrongLastName: false,
         isWrongEmail: false,

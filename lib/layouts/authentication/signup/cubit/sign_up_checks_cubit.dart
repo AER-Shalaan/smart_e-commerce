@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_checks_states.dart';
+import 'sign_up_checks_states.dart';
 import '../../../../core/constants.dart';
+import 'package:flutter/material.dart';
 
 class SignUpChecksCubit extends Cubit<SignUpChecksState> {
-  SignUpChecksCubit() : super(InitialSignUpChecksState()) {
-    initListeners();
-  }
+  SignUpChecksCubit() : super(const InitialSignUpChecksState());
+
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -18,87 +17,55 @@ class SignUpChecksCubit extends Cubit<SignUpChecksState> {
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode passFocusNode = FocusNode();
   final FocusNode confirmPassFocusNode = FocusNode();
-  void initListeners() {
-    firstNameFocusNode.addListener(() {
-      if (!firstNameFocusNode.hasFocus) {
-        validateFirstName(firstNameController.text);
-      }
-    });
-    lastNameFocusNode.addListener(() {
-      if (!lastNameFocusNode.hasFocus) {
-        validateLastName(lastNameController.text);
-      }
-    });
-    emailFocusNode.addListener(() {
-      if (!emailFocusNode.hasFocus) {
-        validateEmail(emailController.text);
-      }
-    });
-    passFocusNode.addListener(() {
-      if (!passFocusNode.hasFocus) {
-        validatePassword(passController.text);
-      }
-    });
-    confirmPassFocusNode.addListener(() {
-      if (!confirmPassFocusNode.hasFocus) {
-        validateConfirmPassword(
-          confirmPassController.text,
-          passController.text,
-        );
-      }
-    });
-  }
-
   void validateFirstName(String value) {
-    bool isValid =
-        value.isNotEmpty && RegExp(Constants.nameRegExp).hasMatch(value);
     emit(
       state.copyWith(
-        isFNCheck: isValid,
-        isWrongFirstName: value.isNotEmpty && !isValid,
+        isFNCheck:
+            value.isNotEmpty && RegExp(Constants.nameRegExp).hasMatch(value),
+        isWrongFirstName:
+            value.isEmpty || !RegExp(Constants.nameRegExp).hasMatch(value),
       ),
     );
   }
 
   void validateLastName(String value) {
-    bool isValid =
-        value.isNotEmpty && RegExp(Constants.nameRegExp).hasMatch(value);
     emit(
       state.copyWith(
-        isLNCheck: isValid,
-        isWrongLastName: value.isNotEmpty && !isValid,
+        isLNCheck:
+            value.isNotEmpty && RegExp(Constants.nameRegExp).hasMatch(value),
+        isWrongLastName:
+            value.isEmpty || !RegExp(Constants.nameRegExp).hasMatch(value),
       ),
     );
   }
 
   void validateEmail(String value) {
-    bool isValid =
-        value.isNotEmpty && RegExp(Constants.emailRegExp).hasMatch(value);
     emit(
       state.copyWith(
-        isEmailCheck: isValid,
-        isWrongEmail: value.isNotEmpty && !isValid,
+        isEmailCheck:
+            value.isNotEmpty && RegExp(Constants.emailRegExp).hasMatch(value),
+        isWrongEmail:
+            value.isEmpty || !RegExp(Constants.emailRegExp).hasMatch(value),
       ),
     );
   }
 
   void validatePassword(String value) {
-    bool isValid =
-        value.isNotEmpty && RegExp(Constants.passRegExp).hasMatch(value);
     emit(
       state.copyWith(
-        isPassCheck: isValid,
-        isWrongPass: value.isNotEmpty && !isValid,
+        isPassCheck:
+            value.isNotEmpty && RegExp(Constants.passRegExp).hasMatch(value),
+        isWrongPass:
+            value.isEmpty || !RegExp(Constants.passRegExp).hasMatch(value),
       ),
     );
   }
 
   void validateConfirmPassword(String value, String password) {
-    bool isValid = value.isNotEmpty && value == password;
     emit(
       state.copyWith(
-        isConfirmPassCheck: isValid,
-        isWrongConfirmPass: value.isNotEmpty && !isValid,
+        isConfirmPassCheck: value == password && value.isNotEmpty,
+        isWrongConfirmPass: value != password || value.isEmpty,
       ),
     );
   }
@@ -111,18 +78,5 @@ class SignUpChecksCubit extends Cubit<SignUpChecksState> {
     emit(
       state.copyWith(isConfirmPasswordObscure: !state.isConfirmPasswordObscure),
     );
-  }
-
-  void dispose() {
-    firstNameController.dispose();
-    lastNameController.dispose();
-    emailController.dispose();
-    passController.dispose();
-    confirmPassController.dispose();
-    firstNameFocusNode.dispose();
-    lastNameFocusNode.dispose();
-    emailFocusNode.dispose();
-    passFocusNode.dispose();
-    confirmPassFocusNode.dispose();
   }
 }
