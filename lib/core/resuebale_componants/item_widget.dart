@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../utils/assets.dart';
-import '../utils/routes.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
 
 class ItemWidget extends StatelessWidget {
   const ItemWidget(
@@ -11,14 +10,17 @@ class ItemWidget extends StatelessWidget {
       required this.title,
       required this.price,
       required this.descount,
-      required this.review,
-      required this.reviewersCount});
-
+      required this.rate,
+      required this.reviewersCount,
+      required this.productId,
+      required this.token});
+  final String productId;
+  final String token;
   final String imagePath;
   final String title;
   final String price;
   final String descount;
-  final String review;
+  final String rate;
   final String reviewersCount;
 
   @override
@@ -26,7 +28,10 @@ class ItemWidget extends StatelessWidget {
     var width = MediaQuery.sizeOf(context).width;
     return InkWell(
       enableFeedback: false,
-      onTap: () => Navigator.pushNamed(context, Routes.productDetailsView),
+      onTap: () {
+        Navigator.pushNamed(context, Routes.productDetailsView,
+            arguments: [productId, token]);
+      },
       child: Container(
         width: width >= 600 ? 280 : 240,
         clipBehavior: Clip.antiAlias,
@@ -101,7 +106,7 @@ class ItemWidget extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 6),
-                      if (descount.isNotEmpty)
+                      if (descount != "0.0")
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 6, vertical: 2),
@@ -130,7 +135,7 @@ class ItemWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        "$review ",
+                        "$rate ",
                         style: TextStyle(
                           color: Colors.grey[700],
                           fontSize: 14,

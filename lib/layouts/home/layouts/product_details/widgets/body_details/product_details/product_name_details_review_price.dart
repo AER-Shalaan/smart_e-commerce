@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../../../../../../core/utils/app_colors.dart';
-import '../../../../../../../core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/app_colors.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/Data.dart';
 
 class ProductNameDetailsReviewPrice extends StatelessWidget {
-  const ProductNameDetailsReviewPrice({super.key});
-
+  const ProductNameDetailsReviewPrice({super.key, required this.productData});
+  final ProductData productData;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -19,23 +19,23 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
               height: 20,
             ),
             Text(
-              "Apple Watch Pro",
+              productData.itemName ?? "",
               style: Theme.of(context)
                   .textTheme
                   .headlineLarge
                   ?.copyWith(fontSize: 26),
             ),
-            const Row(
+            Row(
               children: [
                 Text(
-                  "\$ 1100",
+                  "\$ ${productData.priceOut}",
                   style: TextStyle(color: Color(0xff808080), fontSize: 16),
                 ),
                 SizedBox(
                   width: 4,
                 ),
                 Text(
-                  "-10%",
+                  "-${productData.discount}",
                   style: TextStyle(color: Color(0xffED1010), fontSize: 16),
                 ),
               ],
@@ -44,7 +44,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
               children: [
                 SvgPicture.asset(Assets.assetsIconsStarIcon),
                 Text(
-                  "4.9  86 Reviews",
+                  "${productData.rate}  ${productData.viewCount} Reviews",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.secondary,
                     fontSize: 14,
@@ -55,7 +55,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                   padding: const EdgeInsets.all(8),
                   child: Text(
-                    "Stock: 50",
+                    "Stock: ${productData.quantity}",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontSize: 14,
@@ -81,11 +81,11 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                         const AssetImage(Assets.assetsImagesSallerImage),
                     backgroundColor: Colors.grey[300],
                   ),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Shop Larson Electronic",
+                        "${productData.sellerName}",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w800,
@@ -118,18 +118,18 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Text('''
-The speaker unit contains a diaphragm that is precision-grown from NAC Audio bio-cellulose, making it stiffer, lighter and stronger than regular PET speaker units, and allowing the sound-producing diaphragm to vibrate without the levels of distortion found in other speakers. 
-
-The speaker unit contains a diaphragm that is precision-grown from NAC Audio bio-cellulose, making it stiffer, lighter and stronger than regular PET speaker units, and allowing the sound-producing diaphragm to vibrate without the levels of distortion found in other speakers. 
-''', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16)),
+            Text(productData.description ?? "",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontSize: 16)),
             Divider(
               color: Colors.grey[300],
             ),
             Row(
               children: [
                 Text(
-                  "Review (86)",
+                  "Review (${productData.viewCount})",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const Spacer(),
@@ -138,7 +138,7 @@ The speaker unit contains a diaphragm that is precision-grown from NAC Audio bio
                     width: 20,
                     child: SvgPicture.asset(Assets.assetsIconsStarIcon)),
                 Text(
-                  "4.9",
+                  "${productData.rate}",
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.secondary,
                       fontSize: 18,

@@ -1,5 +1,4 @@
-
-import '../../../../../../../core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
 
 class Brand {
   final int id;
@@ -16,54 +15,64 @@ class Brand {
 
   static List<Brand> dummyBrands = [
     Brand(
-        id: 1,
-        name: 'Samsung',
-        subcategoryId: 1,
-        iconPath: Assets.assetsIconsSamsungIcon),
+      id: 1,
+      name: 'Samsung',
+      subcategoryId: 1,
+      iconPath: Assets.assetsIconsSamsungIcon,
+    ),
     Brand(
-        id: 2,
-        name: 'Apple',
-        subcategoryId: 1,
-        iconPath: Assets.assetsIconsAppleIcon),
+      id: 2,
+      name: 'Apple',
+      subcategoryId: 1,
+      iconPath: Assets.assetsIconsAppleIcon,
+    ),
     Brand(
-        id: 3,
-        name: 'Dell',
-        subcategoryId: 2,
-        iconPath: Assets.assetsIconsDellIcon),
+      id: 3,
+      name: 'Dell',
+      subcategoryId: 2,
+      iconPath: Assets.assetsIconsDellIcon,
+    ),
     Brand(
-        id: 4,
-        name: 'HP',
-        subcategoryId: 2,
-        iconPath: Assets.assetsIconsHpIcon),
+      id: 4,
+      name: 'HP',
+      subcategoryId: 2,
+      iconPath: Assets.assetsIconsHpIcon,
+    ),
     Brand(
-        id: 5,
-        name: 'Nike',
-        subcategoryId: 3,
-        iconPath: Assets.assetsIconsNikeIcon),
+      id: 5,
+      name: 'Nike',
+      subcategoryId: 3,
+      iconPath: Assets.assetsIconsNikeIcon,
+    ),
     Brand(
-        id: 6,
-        name: 'Adidas',
-        subcategoryId: 5,
-        iconPath: Assets.assetsIconsAdidasIcon),
+      id: 6,
+      name: 'Adidas',
+      subcategoryId: 5,
+      iconPath: Assets.assetsIconsAdidasIcon,
+    ),
     Brand(
-        id: 8,
-        name: 'Bose',
-        subcategoryId: 4,
-        iconPath: Assets.assetsIconsSamsungIcon),
+      id: 8,
+      name: 'Bose',
+      subcategoryId: 4,
+      iconPath: Assets.assetsIconsSamsungIcon,
+    ),
     Brand(
-        id: 7,
-        name: 'Sony',
-        subcategoryId: 4,
-        iconPath: Assets.assetsIconsSonyLogoIcon),
+      id: 7,
+      name: 'Sony',
+      subcategoryId: 4,
+      iconPath: Assets.assetsIconsSonyLogoIcon,
+    ),
     Brand(
-        id: 9,
-        name: 'IKEA',
-        subcategoryId: 6,
-        iconPath: Assets.assetsIconsIkea),
+      id: 9,
+      name: 'IKEA',
+      subcategoryId: 6,
+      iconPath: Assets.assetsIconsIkea,
+    ),
     Brand(
-        id: 10,
-        name: 'Lenovo',
-        subcategoryId: 8,
-        iconPath: Assets.assetsIconsLenovoLogoIcon),
+      id: 10,
+      name: 'Lenovo',
+      subcategoryId: 8,
+      iconPath: Assets.assetsIconsLenovoLogoIcon,
+    ),
   ];
 }

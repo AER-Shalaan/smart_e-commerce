@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../../../../../../core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
 
 class CommentsWidget extends StatelessWidget {
   const CommentsWidget({super.key});

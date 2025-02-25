@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-
-import '../../core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
 
 class Categorys {
   final String image;
   final Color categoryColor;
   final String label;
   final int index;
-  const Categorys(
-      {required this.index,
-      required this.label,
-      required this.image,
-      required this.categoryColor});
+  const Categorys({
+    required this.index,
+    required this.label,
+    required this.image,
+    required this.categoryColor,
+  });
   static const List<Categorys> categoryList = [
     Categorys(
       image: Assets.assetsIconsFoodCategory,
@@ -42,6 +42,6 @@ class Categorys {
       image: Assets.assetsIconsComputeCategory,
       categoryColor: Color(0xff3A9B7A),
       index: 5,
-    )
+    ),
   ];
 }

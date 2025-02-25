@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../../../../../core/utils/app_colors.dart';
-import '../../../../../../../core/utils/text_styles.dart';
-import '../filter_cubit/filter_cubit.dart';
-import '../filter_cubit/filter_state.dart';
-import '../models/brands.dart';
+import 'package:smart_ecommerce/core/utils/app_colors.dart';
+import 'package:smart_ecommerce/core/utils/text_styles.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_cubit.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_state.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/brands.dart';
 
 class FilterBottomSheet extends StatelessWidget {
   const FilterBottomSheet({super.key});
@@ -33,8 +32,10 @@ class FilterBottomSheet extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text("Filters",
-                          style: TextStyles.filterBottomSheetTitles),
+                      Text(
+                        "Filters",
+                        style: TextStyles.filterBottomSheetTitles,
+                      ),
                       const Spacer(),
                       IconButton(
                         onPressed: () {
@@ -42,7 +43,7 @@ class FilterBottomSheet extends StatelessWidget {
                           context.read<FilterCubit>().clearFilters();
                         },
                         icon: const Icon(Icons.close),
-                      )
+                      ),
                     ],
                   ),
                   const Divider(),
@@ -76,13 +77,18 @@ class FilterBottomSheet extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text("Price",
-                style:
-                    TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18)),
+            Text(
+              "Price",
+              style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+            ),
             const Spacer(),
-            Text("\$ ",
-                style: TextStyles.filterBottomSheetTitles
-                    .copyWith(fontSize: 16, fontWeight: FontWeight.w500)),
+            Text(
+              "\$ ",
+              style: TextStyles.filterBottomSheetTitles.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             _buildPriceInput(context, "Min", state.start, (value) {
               context.read<FilterCubit>().updateRange(value, state.end);
             }),
@@ -107,62 +113,86 @@ class FilterBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceInput(BuildContext context, String label, double value,
-      Function(double) onValueChanged) {
+  Widget _buildPriceInput(
+    BuildContext context,
+    String label,
+    double value,
+    Function(double) onValueChanged,
+  ) {
     return GestureDetector(
       onTap: () => _showPriceInputDialog(context, label, value, onValueChanged),
-      child: Text("${value.round()}",
-          style: TextStyles.filterBottomSheetTitles
-              .copyWith(fontSize: 14, fontWeight: FontWeight.w500)),
+      child: Text(
+        "${value.round()}",
+        style: TextStyles.filterBottomSheetTitles.copyWith(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     );
   }
 
-  void _showPriceInputDialog(BuildContext context, String label,
-      double currentValue, Function(double) onValueChanged) {
-    TextEditingController controller =
-        TextEditingController(text: currentValue.round().toString());
+  void _showPriceInputDialog(
+    BuildContext context,
+    String label,
+    double currentValue,
+    Function(double) onValueChanged,
+  ) {
+    TextEditingController controller = TextEditingController(
+      text: currentValue.round().toString(),
+    );
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          "Enter $label Price",
-          textAlign: TextAlign.center,
-        ),
-        titleTextStyle: TextStyles.filterBottomSheetTitles,
-        content: TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          decoration: const InputDecoration(hintText: "Enter value"),
-          style: TextStyles.filterBottomSheetTitles
-              .copyWith(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
-        actionsAlignment: MainAxisAlignment.spaceBetween,
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text("Cancel",
-                  style: TextStyles.filterBottomSheetTitles
-                      .copyWith(fontSize: 18, fontWeight: FontWeight.w500))),
-          TextButton(
-            onPressed: () {
-              double? value = double.tryParse(controller.text);
-              if (value != null && value >= 0) {
-                onValueChanged(value);
-                Navigator.pop(context);
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Please enter a valid number.")));
-              }
-            },
-            child: Text("Confirm",
-                style: TextStyles.filterBottomSheetTitles.copyWith(
+      builder:
+          (context) => AlertDialog(
+            title: Text("Enter $label Price", textAlign: TextAlign.center),
+            titleTextStyle: TextStyles.filterBottomSheetTitles,
+            content: TextField(
+              controller: controller,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: const InputDecoration(hintText: "Enter value"),
+              style: TextStyles.filterBottomSheetTitles.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  "Cancel",
+                  style: TextStyles.filterBottomSheetTitles.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.primary)),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  double? value = double.tryParse(controller.text);
+                  if (value != null && value >= 0) {
+                    onValueChanged(value);
+                    Navigator.pop(context);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Please enter a valid number."),
+                      ),
+                    );
+                  }
+                },
+                child: Text(
+                  "Confirm",
+                  style: TextStyles.filterBottomSheetTitles.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -171,12 +201,15 @@ class FilterBottomSheet extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Rating",
-            style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18)),
+        Text(
+          "Rating",
+          style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+        ),
         Expanded(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.sizeOf(context).width * 0.04),
+              horizontal: MediaQuery.sizeOf(context).width * 0.04,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(5, (index) {
@@ -208,7 +241,7 @@ class FilterBottomSheet extends StatelessWidget {
       "Top Rated",
       "Price: Low to High",
       "Price: High to Low",
-      "Top Viewed"
+      "Top Viewed",
     ];
 
     void scrollLeft() {
@@ -230,8 +263,10 @@ class FilterBottomSheet extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Sort by",
-            style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18)),
+        Text(
+          "Sort by",
+          style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+        ),
         const SizedBox(height: 10),
         Row(
           children: [
@@ -244,22 +279,32 @@ class FilterBottomSheet extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 controller: scrollController,
                 child: Row(
-                  children: options
-                      .map((option) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: ChoiceChip(
-                              label: Text(option),
-                              labelStyle: TextStyles.filterBottomSheetTitles
-                                  .copyWith(
+                  children:
+                      options
+                          .map(
+                            (option) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5,
+                              ),
+                              child: ChoiceChip(
+                                label: Text(option),
+                                labelStyle: TextStyles.filterBottomSheetTitles
+                                    .copyWith(
                                       fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                              side: const BorderSide(color: Colors.transparent),
-                              selected: state.sortBy == option,
-                              onSelected: (_) =>
-                                  context.read<FilterCubit>().setSortBy(option),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                side: const BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                                selected: state.sortBy == option,
+                                onSelected:
+                                    (_) => context
+                                        .read<FilterCubit>()
+                                        .setSortBy(option),
+                              ),
                             ),
-                          ))
-                      .toList(),
+                          )
+                          .toList(),
                 ),
               ),
             ),
@@ -274,35 +319,48 @@ class FilterBottomSheet extends StatelessWidget {
   }
 
   Widget _buildBrandFilter(BuildContext context, FilterState state) {
-    final filteredBrands = Brand.dummyBrands
-        .where((brand) => brand.subcategoryId == state.selectedSubcategory?.id)
-        .toList();
+    final filteredBrands =
+        Brand.dummyBrands
+            .where(
+              (brand) => brand.subcategoryId == state.selectedSubcategory?.id,
+            )
+            .toList();
 
     if (filteredBrands.length <= 2) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Brand",
-              style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18)),
+          Text(
+            "Brand",
+            style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+          ),
           const SizedBox(height: 5),
           Row(
-            children: filteredBrands
-                .map((brand) => Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: ChoiceChip(
-                        padding: const EdgeInsets.all(8),
-                        label: Text(brand.name),
-                        labelStyle: TextStyles.filterBottomSheetTitles.copyWith(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                        side: const BorderSide(color: Colors.transparent),
-                        avatar: SvgPicture.asset(brand.iconPath),
-                        showCheckmark: false,
-                        selected: state.selectedBrands.contains(brand.id),
-                        onSelected: (_) =>
-                            context.read<FilterCubit>().toggleBrand(brand.id),
+            children:
+                filteredBrands
+                    .map(
+                      (brand) => Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: ChoiceChip(
+                          padding: const EdgeInsets.all(8),
+                          label: Text(brand.name),
+                          labelStyle: TextStyles.filterBottomSheetTitles
+                              .copyWith(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                          side: const BorderSide(color: Colors.transparent),
+                          avatar: SvgPicture.asset(brand.iconPath),
+                          showCheckmark: false,
+                          selected: state.selectedBrands.contains(brand.id),
+                          onSelected:
+                              (_) => context.read<FilterCubit>().toggleBrand(
+                                brand.id,
+                              ),
+                        ),
                       ),
-                    ))
-                .toList(),
+                    )
+                    .toList(),
           ),
         ],
       );
@@ -329,8 +387,10 @@ class FilterBottomSheet extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Brand",
-            style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18)),
+        Text(
+          "Brand",
+          style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+        ),
         const SizedBox(height: 10),
         Row(
           children: [
@@ -343,21 +403,29 @@ class FilterBottomSheet extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 controller: scrollController,
                 child: Row(
-                  children: filteredBrands
-                      .map((brand) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: ChoiceChip(
-                              padding: const EdgeInsets.all(8),
-                              label: Text(brand.name),
-                              avatar: SvgPicture.asset(brand.iconPath),
-                              showCheckmark: false,
-                              selected: state.selectedBrands.contains(brand.id),
-                              onSelected: (_) => context
-                                  .read<FilterCubit>()
-                                  .toggleBrand(brand.id),
+                  children:
+                      filteredBrands
+                          .map(
+                            (brand) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5,
+                              ),
+                              child: ChoiceChip(
+                                padding: const EdgeInsets.all(8),
+                                label: Text(brand.name),
+                                avatar: SvgPicture.asset(brand.iconPath),
+                                showCheckmark: false,
+                                selected: state.selectedBrands.contains(
+                                  brand.id,
+                                ),
+                                onSelected:
+                                    (_) => context
+                                        .read<FilterCubit>()
+                                        .toggleBrand(brand.id),
+                              ),
                             ),
-                          ))
-                      .toList(),
+                          )
+                          .toList(),
                 ),
               ),
             ),
@@ -388,7 +456,8 @@ class FilterBottomSheet extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => Navigator.pop(context),
             style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.primary),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
             child: const Text("Apply", style: TextStyle(color: Colors.white)),
           ),
         ),

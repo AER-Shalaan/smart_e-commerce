@@ -2,9 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisements/adv_widget.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisements/provider/adv_provider.dart';
-import '../../../../../../core/utils/assets.dart';
-import 'adv_widget.dart';
 
 class AdvWidgetBuilder extends StatelessWidget {
   const AdvWidgetBuilder({super.key});
@@ -37,13 +37,13 @@ class AdvWidgetBuilder extends StatelessWidget {
                 viewportFraction: 1,
                 autoPlayInterval: const Duration(seconds: 3),
                 onPageChanged: (index, reason) {
-                  advProvider.changeAdvCurrentIndex(index.toDouble());
+                  advProvider.changeAdvCurrentIndex(index);
                 },
               )),
         ),
         DotsIndicator(
           dotsCount: advImagePath.length,
-          position: advProvider.currentIndex,
+          position: advProvider.currentIndex.toDouble(),
           decorator: DotsDecorator(
             activeColor: Theme.of(context).colorScheme.primary,
             activeShape: const CircleBorder(),

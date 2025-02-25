@@ -15,19 +15,24 @@ class ApiManger {
     );
   }
 
-  Future<Response> getRequest(
-      {required String endPoints,
-      Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getRequest({
+    required String endPoints,
+    Map<String, dynamic>? queryParameters,
+    required String token,
+  }) async {
     var response = await dio.get(
       endPoints,
       queryParameters: queryParameters,
+      options: Options(headers: {'Authorization': "Bearer $token"}),
     );
 
     return response;
   }
 
-  Future<Response> postRequest(
-      {required String endPoints, Map<String, dynamic>? body}) async {
+  Future<Response> postRequest({
+    required String endPoints,
+    Map<String, dynamic>? body,
+  }) async {
     var response = await dio.post(endPoints, data: body);
     return response;
   }

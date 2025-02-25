@@ -36,6 +36,7 @@ class LoginView extends StatelessWidget {
               context,
               Routes.homeView,
               (route) => false,
+              arguments: loginModel.token,
             ),
           );
         } else if (state is LoginErrorState) {

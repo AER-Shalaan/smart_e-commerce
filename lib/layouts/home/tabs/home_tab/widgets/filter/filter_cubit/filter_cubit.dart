@@ -1,14 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../models/category_model.dart';
-import '../models/subcategory_model.dart';
-import 'filter_state.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_state.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/category_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/subcategory_model.dart';
 
 class FilterCubit extends Cubit<FilterState> {
   FilterCubit() : super(const FilterInitial());
 
   void initializeFilters() {
-    emit(const FilterSuccess(
+    emit(
+      const FilterSuccess(
         selectedCategory: null,
         selectedSubcategory: null,
         selectedItemForBorder: null,
@@ -17,7 +17,9 @@ class FilterCubit extends Cubit<FilterState> {
         end: 100000.0,
         sortBy: "Newest",
         selectedRating: 1,
-        selectedBrands: []));
+        selectedBrands: [],
+      ),
+    );
   }
 
   void setCategory(Category category) {
@@ -59,7 +61,8 @@ class FilterCubit extends Cubit<FilterState> {
   }
 
   void clearFilters() {
-    emit(const FilterInitial(
+    emit(
+      const FilterInitial(
         selectedCategory: null,
         selectedSubcategory: null,
         selectedItemForBorder: null,
@@ -68,15 +71,20 @@ class FilterCubit extends Cubit<FilterState> {
         end: 100000.0,
         sortBy: "Newest",
         selectedRating: 1,
-        selectedBrands: []));
+        selectedBrands: [],
+      ),
+    );
   }
 
   void clearSubFilters() {
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         start: 0.0,
         end: 100000.0,
         sortBy: "Newest",
         selectedRating: 1,
-        selectedBrands: []));
+        selectedBrands: [],
+      ),
+    );
   }
 }
