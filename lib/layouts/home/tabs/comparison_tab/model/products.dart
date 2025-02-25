@@ -1,0 +1,72 @@
+final List<Map<String, dynamic>> allProducts = [
+  {
+    'name': 'Dell XPS 13',
+    'price': '\$999',
+    'imageUrls': [
+      'https://5.imimg.com/data5/EQ/SC/GQ/GLADMIN-31073588/laptop-xps-13-pdp-mod5-500x500-500x500.jpg',
+      'https://www.laptopsdirect.co.uk/Images/8JX91_9_supersize.jpg?v=1'
+    ],
+    'Processor': 'Intel i7',
+    'RAM': '16GB',
+    'Storage': '512GB SSD',
+    'Graphics': 'Intel Iris Xe',
+    'Display': '13.4" FHD+',
+    'Battery': '10 hours',
+  },
+  {
+    'name': 'HP Spectre x360',
+    'price': '\$1199',
+    'imageUrls': [
+      'https://images-cdn.ubuy.com.sa/6411efab2f64ae6095644c03-hp-spectre-x360-16-3k-ips-3072-x.jpg',
+      'https://media.s-bol.com/OkV5K8NDljMr/B5p0XW/550x359.jpg'
+    ],
+    'Processor': 'Intel i7',
+    'RAM': '16GB',
+    'Storage': '1TB SSD',
+    'Graphics': 'Intel Iris Xe',
+    'Display': '14" OLED Touchscreen',
+    'Battery': '12 hours'
+  },
+  {
+    'name': 'Lenovo Legion 5',
+    'price': '\$1299',
+    'imageUrls': [
+      'https://www.abcshop-eg.com/web/image/21166-ba00c292/Lenovo-Legion-5-Pro-16ACH6H-Ryzen-7-5800H-16GB-1TB-RTX-3070-Win11-2.png?access_token=a5416877-9ea0-4a74-93b1-3b29a0522fba',
+      'https://5.imimg.com/data5/SELLER/Default/2025/1/478739717/RM/IY/QI/42601293/lenovo-legion-5-pro-82wm00fein-500x500.jpg'
+    ],
+    'Processor': 'AMD Ryzen 7 6800H',
+    'RAM': '32GB',
+    'Storage': '1TB SSD',
+    'Graphics': 'NVIDIA RTX 3060',
+    'Display': '15.6" FHD 165Hz',
+    'Battery': '8 hours'
+  },
+  {
+    'name': 'Apple MacBook Air M2',
+    'price': '\$1099',
+    'imageUrls': [
+      'https://egyptlaptop.com/images/Apple%20MacBook%20Air%20M2/xApple,P20MacBook,P20Air,P20M2,P20Egyptlaptop.webp,q1704023605772.pagespeed.ic.KxHT2hwxlY.webp',
+      'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/refurb-macbook-air-m2-silver-202208?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1659114467665'
+    ],
+    'Processor': 'Apple M2',
+    'RAM': '8GB',
+    'Storage': '512GB SSD',
+    'Graphics': 'Apple M2 GPU',
+    'Display': '13.6" Liquid Retina',
+    'Battery': '18 hours'
+  },
+  {
+    'name': 'ASUS ROG Zephyrus G14',
+    'price': '\$1499',
+    'imageUrls': [
+      'https://i5.walmartimages.com/seo/Asus-ROG-Zephyrus-G14-14-Gaming-Laptop-AMD-Ryzen-9-5900HS-NVIDIA-GeForce-RTX-3060-6-GB-1TB-SSD-Windows-10-Pro-GA401QM-XS98Q-WH_a73a68d0-3e85-4a29-8391-ea0ba3cafab0.e7e8d9dfdfd3140a1d25bdfde7001b49.jpeg',
+      'https://multimedia.bbycastatic.ca/multimedia/products/500x500/166/16690/16690991.jpg'
+    ],
+    'Processor': 'AMD Ryzen 9 6900HS',
+    'RAM': '32GB',
+    'Storage': '1TB SSD',
+    'Graphics': 'AMD Radeon RX 6800S',
+    'Display': '14" QHD 120Hz',
+    'Battery': '9 hours'
+  }
+];
