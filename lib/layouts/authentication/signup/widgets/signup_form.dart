@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/headlineText.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/title_medium_text.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_checks_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/sign_up_button.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/signup_text_fields.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/social_signup_buttons.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/terms_and_policies_and_cookies_text.dart';
-import '../../../../core/resuebale_componants/headlineText.dart';
-import '../../../../core/resuebale_componants/titleMediumText.dart';
 
 class SignUpForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -27,7 +27,7 @@ class SignUpForm extends StatelessWidget {
             opacity: 0.6,
           ),
           const SizedBox(height: 24),
-          SignUpTextFields(),
+          const SignUpTextFields(),
           const SizedBox(height: 10),
           const TermsAndPoliciesAndCookiesText(),
           const SizedBox(height: 24),
@@ -40,7 +40,7 @@ class SignUpForm extends StatelessWidget {
             email: signUpChecksCubit.emailController.text,
             password: signUpChecksCubit.passController.text,
             phone: "01559296111",
-            location: "maddi",
+            location: "Maddi",
           ),
           const SizedBox(height: 24),
           const SocialSignUpButtons(),

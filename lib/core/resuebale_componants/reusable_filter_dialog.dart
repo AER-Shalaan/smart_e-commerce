@@ -38,9 +38,10 @@ class ReusableFilterDialog<T> extends StatelessWidget {
           TextField(
             decoration: const InputDecoration(hintText: 'Search...'),
             style: TextStyles.filterBottomSheetTitles.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: AppColors.secondary),
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: AppColors.secondary,
+            ),
             onChanged: (value) {
               context.read<FilterCubit>().updateSearchQuery(value);
             },
@@ -53,11 +54,14 @@ class ReusableFilterDialog<T> extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          List<T> filteredItems = items
-              .where((item) => itemLabel(item)
-                  .toLowerCase()
-                  .contains(state.searchQuery.toLowerCase()))
-              .toList();
+          List<T> filteredItems =
+              items
+                  .where(
+                    (item) => itemLabel(
+                      item,
+                    ).toLowerCase().contains(state.searchQuery.toLowerCase()),
+                  )
+                  .toList();
 
           return SizedBox(
             width: double.maxFinite,
@@ -79,9 +83,10 @@ class ReusableFilterDialog<T> extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: isSelected
-                            ? AppColors.primary
-                            : AppColors.secondary.withOpacity(0.4),
+                        color:
+                            isSelected
+                                ? AppColors.primary
+                                : AppColors.secondary.withOpacity(0.4),
                         width: 1,
                       ),
                     ),
@@ -94,14 +99,17 @@ class ReusableFilterDialog<T> extends StatelessWidget {
                               Icon(
                                 itemIcon!(item),
                                 size: MediaQuery.sizeOf(context).width * 0.06,
-                                color: isSelected
-                                    ? AppColors.primary
-                                    : AppColors.secondary,
+                                color:
+                                    isSelected
+                                        ? AppColors.primary
+                                        : AppColors.secondary,
                               ),
                             const SizedBox(width: 15),
-                            Text(itemLabel(item),
-                                style: TextStyles.filterBottomSheetTitles
-                                    .copyWith(fontSize: 16)),
+                            Text(
+                              itemLabel(item),
+                              style: TextStyles.filterBottomSheetTitles
+                                  .copyWith(fontSize: 16),
+                            ),
                           ],
                         ),
                         isSelected
@@ -119,19 +127,30 @@ class ReusableFilterDialog<T> extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: onCancelPressed,
-          child: Text('Cancel',
-              style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 14)),
+          child: Text(
+            'Cancel',
+            style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 14),
+          ),
         ),
         TextButton(
-            onPressed: onConfirmPressed,
-            child: Text('Done',
-                style: TextStyles.filterBottomSheetTitles
-                    .copyWith(fontSize: 14, color: Colors.cyan[800]))),
+          onPressed: onConfirmPressed,
+          child: Text(
+            'Done',
+            style: TextStyles.filterBottomSheetTitles.copyWith(
+              fontSize: 14,
+              color: Colors.cyan[800],
+            ),
+          ),
+        ),
         TextButton(
           onPressed: onNextPressed,
-          child: Text('Next',
-              style: TextStyles.filterBottomSheetTitles
-                  .copyWith(fontSize: 14, color: AppColors.primary)),
+          child: Text(
+            'Next',
+            style: TextStyles.filterBottomSheetTitles.copyWith(
+              fontSize: 14,
+              color: AppColors.primary,
+            ),
+          ),
         ),
       ],
     );

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/config/shared_preferences.dart';
@@ -29,7 +28,6 @@ class LoginView extends StatelessWidget {
         CustomDialogs.closeDialogs(context);
         if (state is LoginSuccessState) {
           LoginModel loginModel = state.loginModel;
-          log(loginModel.token.toString());
           SharedPreferencesFunctions.saveToken(loginModel.token.toString());
 
           Future.delayed(
