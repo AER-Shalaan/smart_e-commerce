@@ -38,7 +38,11 @@ class ForgotPassword extends StatelessWidget {
                   children: [
                     const Headlinetext(text: "Forgot password"),
                     const SizedBox(height: 8),
-                    const TitleMediumtext(text: "Enter your email for the verification process. We will send a 6-digit code to your email.", opacity: 0.6),
+                    const TitleMediumtext(
+                      text:
+                          "Enter your email for the verification process. We will send a 6-digit code to your email.",
+                      opacity: 0.6,
+                    ),
                     const SizedBox(height: 24),
                     const TitleMediumtext(text: "Email", opacity: 1),
                     const SizedBox(height: 4),
@@ -46,23 +50,32 @@ class ForgotPassword extends StatelessWidget {
                       hint: "email@example.com",
                       controller: emailController,
                       keyboard: TextInputType.emailAddress,
-                      suffixIconConstraints: BoxConstraints.tight(const Size(50, 30)),
+                      suffixIconConstraints: BoxConstraints.tight(
+                        const Size(50, 30),
+                      ),
                       prefixIcon: const Icon(Icons.email_outlined),
                       suffixIcon: Row(
                         children: [
                           if (provider.isEmailValid)
-                            SvgPicture.asset(Assets.assetsIconsCheck, height: 30),
-                          if (!provider.isEmailValid && provider.emailErrorMessage.isNotEmpty)
-                            SvgPicture.asset(Assets.assetsIconsWarningCircle, height: 30)
+                            SvgPicture.asset(
+                              Assets.assetsIconsCheck,
+                              height: 30,
+                            ),
+                          if (!provider.isEmailValid &&
+                              provider.emailErrorMessage.isNotEmpty)
+                            SvgPicture.asset(
+                              Assets.assetsIconsWarningCircle,
+                              height: 30,
+                            ),
                         ],
                       ),
-                      borderColor: provider.isEmailValid
-                          ? Colors.green
-                          : provider.emailErrorMessage.isNotEmpty
-                          ? Colors.red
-                          : AppColors.primary.withOpacity(0.4),
-                      onChanged: (value) {
-                      },
+                      borderColor:
+                          provider.isEmailValid
+                              ? Colors.green
+                              : provider.emailErrorMessage.isNotEmpty
+                              ? Colors.red
+                              : AppColors.primary.withOpacity(0.4),
+                      onChanged: (value) {},
                       focusNode: emailFocusNode,
                       validator: (value) {
                         if (!provider.isEmailValid) {
@@ -80,7 +93,10 @@ class ForgotPassword extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: SendCodeButton(formKey: formKey, emailController: emailController),
+                child: SendCodeButton(
+                  formKey: formKey,
+                  emailController: emailController,
+                ),
               ),
             ],
           ),
