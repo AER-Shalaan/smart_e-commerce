@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import '../../models/signup_model/sign_up_model.dart';
+import 'package:smart_ecommerce/data/models/signup_model/sign_up_model.dart';
 
 abstract class SignUpDataSource {
   Future<Either<String, SignUpModel>> signUp({

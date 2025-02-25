@@ -1,25 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../../../../../../core/utils/app_colors.dart';
-import '../../../../../../../../core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/app_colors.dart';
 
 class ProductPhotosMobile extends StatefulWidget {
-  const ProductPhotosMobile({super.key});
-
+  const ProductPhotosMobile({super.key, required this.productImages});
+  final List<String> productImages;
   @override
   State<ProductPhotosMobile> createState() => _ProductPhotosMobileState();
 }
 
 class _ProductPhotosMobileState extends State<ProductPhotosMobile> {
-  final List<String> productImages = const [
-    Assets.assetsImagesWatch,
-    Assets.assetsImagesWatch2,
-    Assets.assetsImagesWatch3,
-    Assets.assetsImagesWatch4,
-  ];
-
   late int imageIndex;
   @override
   void initState() {
@@ -31,29 +22,52 @@ class _ProductPhotosMobileState extends State<ProductPhotosMobile> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CarouselSlider.builder(
-            itemCount: productImages.length,
-            itemBuilder: (context, index, realIndex) {
-              return Image.asset(
-                productImages[index],
-                fit: BoxFit.cover,
-              );
-            },
-            options: CarouselOptions(
-              height: MediaQuery.sizeOf(context).height * 0.38,
-              autoPlay: false,
-              enlargeCenterPage: false,
-              viewportFraction: 1,
-              onPageChanged: (index, reason) {
-                imageIndex = index;
-                setState(() {});
+        Visibility(
+          visible: widget.productImages.isNotEmpty,
+          child: CarouselSlider.builder(
+              itemCount: widget.productImages.length,
+              itemBuilder: (context, index, realIndex) {
+                return Image.network(
+                  widget.productImages[index],
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(
+                        Icons.broken_image,
+                        size: 50,
+                        color: Colors.grey,
+                      ),
+                    );
+                  },
+                );
               },
-            )),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Text(
-            "${imageIndex + 1}/${productImages.length} Photo",
-            style: GoogleFonts.gupter(color: AppColors.secondary, fontSize: 20),
+              options: CarouselOptions(
+                height: MediaQuery.sizeOf(context).height * 0.38,
+                autoPlay: false,
+                enlargeCenterPage: false,
+                viewportFraction: 1,
+                onPageChanged: (index, reason) {
+                  imageIndex = index;
+                  setState(() {});
+                },
+              )),
+        ),
+        Visibility(
+          visible: widget.productImages.isNotEmpty,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              "${imageIndex + 1}/${widget.productImages.length} Photo",
+              style:
+                  GoogleFonts.gupter(color: AppColors.secondary, fontSize: 20),
+            ),
           ),
         )
       ],

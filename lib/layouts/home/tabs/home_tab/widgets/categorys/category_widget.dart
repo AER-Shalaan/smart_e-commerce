@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../../../../../data/models/category.dart';
+import 'package:smart_ecommerce/data/models/category.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({super.key, required this.categorys});
@@ -20,16 +19,19 @@ class CategoryWidget extends StatelessWidget {
           ),
           child: SvgPicture.asset(
             categorys.image,
-            colorFilter:
-                ColorFilter.mode(categorys.categoryColor, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+              categorys.categoryColor,
+              BlendMode.srcIn,
+            ),
           ),
         ),
         Text(
           categorys.label,
           style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
-              fontSize: 12,
-              fontWeight: FontWeight.w400),
+            color: Theme.of(context).colorScheme.secondary,
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ],
     );

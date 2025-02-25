@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import '../models/category_model.dart';
-import '../models/subcategory_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/category_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/subcategory_model.dart';
 
 class FilterState extends Equatable {
   final Category? selectedCategory;
@@ -52,16 +52,16 @@ class FilterState extends Equatable {
 
   @override
   List<Object?> get props => [
-        selectedCategory,
-        selectedSubcategory,
-        selectedItemForBorder,
-        searchQuery,
-        start,
-        end,
-        sortBy,
-        selectedRating,
-        selectedBrands,
-      ];
+    selectedCategory,
+    selectedSubcategory,
+    selectedItemForBorder,
+    searchQuery,
+    start,
+    end,
+    sortBy,
+    selectedRating,
+    selectedBrands,
+  ];
 }
 
 class FilterInitial extends FilterState {

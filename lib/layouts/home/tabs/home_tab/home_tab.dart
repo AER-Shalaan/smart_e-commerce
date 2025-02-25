@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/widgets/hom_tab_body.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/widgets/home_tab_app_bar.dart';
 
-class HomeTab extends StatelessWidget {
-  const HomeTab({super.key});
 
+class HomeTab extends StatelessWidget {
+  const HomeTab({super.key, required this.token});
+  final String token ;
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
@@ -13,6 +14,6 @@ class HomeTab extends StatelessWidget {
             const HomeTabAppBar(),
           ];
         },
-        body: const HomeTabBody());
+        body:  HomeTabBody(token: token,));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'comments_widget.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/body_details/review_comments/comments_widget.dart';
 
 class CommentsWidgetBuilder extends StatelessWidget {
   const CommentsWidgetBuilder({super.key});

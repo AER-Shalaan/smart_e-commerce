@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import '../../../core/api/api_manger.dart';
-import '../../../core/api/end_points.dart';
-import '../../data_source/signup/signup_data_source.dart';
-import '../../models/signup_model/sign_up_model.dart';
+import 'package:smart_ecommerce/core/api/api_manger.dart';
+import 'package:smart_ecommerce/core/api/end_points.dart';
+import 'package:smart_ecommerce/data/data_source/signup/signup_data_source.dart';
+import 'package:smart_ecommerce/data/models/signup_model/sign_up_model.dart';
 
 @Injectable(as: SignUpDataSource)
 class SignUpDataSourceImpl extends SignUpDataSource {

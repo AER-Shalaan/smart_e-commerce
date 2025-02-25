@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/body_titles.dart';
+import 'package:smart_ecommerce/data/models/category.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/category_widget.dart';
 
-import '../../../../../../core/resuebale_componants/body_titles.dart';
-import '../../../../../../data/models/category.dart';
-import 'category_widget.dart';
 class CategoryWidgetBuilder extends StatelessWidget {
   const CategoryWidgetBuilder({super.key});
 

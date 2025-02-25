@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:smart_ecommerce/layouts/home/views/home_view_mobile_layout.dart';
 import 'package:smart_ecommerce/layouts/home/widgets/tablet_drawer.dart';
-
-import '../views/home_view_mobile_layout.dart';
 
 class UiLayoutBuilder extends StatelessWidget {
   const UiLayoutBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final String? token = ModalRoute.of(context)!.settings.arguments as String?;
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.minWidth > 600) {
-          return const Row(
+          return Row(
             children: [
-              Expanded(child: TabletDrawer()),
-              Expanded(flex: 3, child: HomeViewMobileLayout()),
+              const Expanded(child: TabletDrawer()),
+              Expanded(
+                flex: 3,
+                child: HomeViewMobileLayout(token: token ?? ''),
+              ),
             ],
           );
         } else {
-          return const HomeViewMobileLayout();
+          return HomeViewMobileLayout(token: token ?? "");
         }
       },
     );

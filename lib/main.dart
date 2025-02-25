@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'core/api/api_manger.dart';
 import 'di/di.dart';
 import 'layouts/cubit/bloc_observer.dart';

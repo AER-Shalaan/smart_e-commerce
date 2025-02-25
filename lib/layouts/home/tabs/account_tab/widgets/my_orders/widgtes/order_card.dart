@@ -7,7 +7,6 @@ import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/cubits/my_orders_cubit/orders_cubit.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/cubits/my_orders_cubit/orders_state.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/my_orders/widgtes/order_timeline.dart';
-import 'package:timelines_plus/timelines_plus.dart';
 import '../models/order.dart';
 import '../../../../../../../core/utils/assets.dart';
 
