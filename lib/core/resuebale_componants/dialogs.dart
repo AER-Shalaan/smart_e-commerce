@@ -44,6 +44,7 @@ class CustomDialogs {
     required IconData icon,
     required Color iconColor,
     required String cancelLabel,
+    Widget? customContent,
     required String confirmationLabel,
     required Color confirmationColor,
   }) {
@@ -52,6 +53,7 @@ class CustomDialogs {
       icon: icon,
       iconColor: iconColor,
       title: title,
+      customContent: customContent,
       content: content,
       actions: [
         _buildDialogButton(

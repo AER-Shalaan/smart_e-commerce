@@ -13,12 +13,16 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../core/api/api_manger.dart' as _i993;
+import '../data/data_source/home/cart_tap_data_source/add_to_cart_data_source.dart'
+    as _i928;
 import '../data/data_source/home/home_tap_data_source/top_rated_data_source.dart'
     as _i359;
 import '../data/data_source/home/product_details_data_source/product_details_data.dart'
     as _i688;
 import '../data/data_source/login/login_data_source.dart' as _i153;
 import '../data/data_source/signup/signup_data_source.dart' as _i125;
+import '../data/data_source_impl/home/cart_tap_data_source_impl/add_tap_data_source_impl.dart'
+    as _i530;
 import '../data/data_source_impl/home/home_tap_data_source_impl/top_rated_data_source_impl.dart'
     as _i22;
 import '../data/data_source_impl/home/product_details_data_source_impl/product_details_data_source.dart'
@@ -29,6 +33,8 @@ import '../layouts/authentication/login/view_model/login_view_model.dart'
     as _i857;
 import '../layouts/authentication/signup/view_model/sign_up_view_model.dart'
     as _i55;
+import '../layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model.dart'
+    as _i242;
 import '../layouts/home/layouts/product_details/veiw_model/product_details_view_model.dart'
     as _i869;
 import '../layouts/home/tabs/home_tab/widgets/top_rated_product/view_model/top_rated_view_model.dart'
@@ -51,11 +57,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i359.TopRatedDataSource>(
       () => _i22.TopRatedDataSourceImpl(gh<_i993.ApiManger>()),
     );
+    gh.factory<_i928.AddToCartDataSource>(
+      () => _i530.AddTapDataSourceImpl(gh<_i993.ApiManger>()),
+    );
     gh.factory<_i688.ProductDetailsDataSource>(
       () => _i489.ProductDetailsDataSourceImpl(gh<_i993.ApiManger>()),
     );
     gh.factory<_i409.TopRatedViewModel>(
       () => _i409.TopRatedViewModel(gh<_i359.TopRatedDataSource>()),
+    );
+    gh.factory<_i242.AddToCartViewModel>(
+      () => _i242.AddToCartViewModel(gh<_i928.AddToCartDataSource>()),
     );
     gh.factory<_i857.LoginViewModel>(
       () => _i857.LoginViewModel(gh<_i153.LoginDataSource>()),

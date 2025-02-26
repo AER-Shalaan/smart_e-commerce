@@ -8,7 +8,7 @@ class CartProvider extends ChangeNotifier {
   List<Map<String, dynamic>> get cartItems => _cartItems;
 
   bool get isCartEmpty => _cartItems.isEmpty;
-
+ 
   void addItem(Map<String, dynamic> item) {
     _cartItems.add(item);
     notifyListeners();
@@ -25,6 +25,7 @@ class CartProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   void clearCart() {
     _cartItems.clear();

@@ -33,7 +33,17 @@ class ApiManger {
     required String endPoints,
     Map<String, dynamic>? body,
   }) async {
-    var response = await dio.post(endPoints, data: body);
+    var response = await dio.post(endPoints, data: body,);
+    return response;
+  }
+
+  Future<Response> postRequestForHme({
+    required String endPoints,
+    Map<String, dynamic>? body,
+    required String token,
+     Map<String, dynamic>? queryParameters
+  }) async {
+    var response = await dio.post(endPoints, data: body,options: Options(headers: {'Authorization': "Bearer $token"}),queryParameters: queryParameters);
     return response;
   }
 }
