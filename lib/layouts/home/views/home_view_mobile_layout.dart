@@ -14,18 +14,19 @@ import 'package:smart_ecommerce/layouts/home/tabs/home_tab/home_tab.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/saved_tab.dart';
 
 class HomeViewMobileLayout extends StatelessWidget {
-  const HomeViewMobileLayout({super.key, required this.token});
+  const HomeViewMobileLayout({super.key, required this.token, required this.userId});
   final String token;
+  final String userId;
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = Provider.of<HomeProvider>(context);
     log(provider.homeTapIndex.toString());
     final List<Widget> navWidget = [
-       HomeTab(token: token,),
+       HomeTab(token: token, userId: userId,),
       const ComparisonTab(),
       const SavedTab(),
       ChangeNotifierProvider(
-          create: (_) => CartProvider(), child: const CartTab()),
+          create: (_) => CartProvider(), child:  CartTab(token: token,userId: userId,)),
       const AccountTabView()
     ];
     return Scaffold(

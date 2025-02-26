@@ -12,12 +12,13 @@ class AddToCartViewModel extends Cubit<AddToCartViewModelStates> {
     required String productId,
     required String token,
     required int quantity,
+    required String userId
   }) async {
     emit(AddToCartLoadingState());
     final result = await addToCartDataSource.addToCart(
       productId: productId,
       token: token,
-      quantity: quantity,
+      quantity: quantity, userId: userId,
     );
     result.fold(
       (l) => emit(AddToCartSuccessState(l)),

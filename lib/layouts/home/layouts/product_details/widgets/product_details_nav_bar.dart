@@ -12,10 +12,11 @@ class ProductDetailsNavBar extends StatelessWidget {
   const ProductDetailsNavBar({
     super.key,
     required this.productId,
-    required this.token,
+    required this.token, required this.userId,
   });
   final String productId;
   final String token;
+  final String userId;
   @override
   Widget build(BuildContext context) {
     AddCartProvider addCartProvider = Provider.of<AddCartProvider>(context);
@@ -74,7 +75,7 @@ class ProductDetailsNavBar extends StatelessWidget {
                       AddToCartViewModel.get(context).addToCart(
                         productId: productId,
                         token: token,
-                        quantity: addCartProvider.quantity,
+                        quantity: addCartProvider.quantity, userId:userId ,
                       );
                     },
                     icon: Icons.add_circle_outline,

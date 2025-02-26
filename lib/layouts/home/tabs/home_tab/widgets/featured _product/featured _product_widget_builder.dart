@@ -12,7 +12,7 @@ class FeaturedProductWidgetBuilder extends StatelessWidget {
       label: "Featured Product",
       index: 0,
       token: "",
-      products: topRatedModel,
+      products: topRatedModel, userId: '',
     );
   }
 }

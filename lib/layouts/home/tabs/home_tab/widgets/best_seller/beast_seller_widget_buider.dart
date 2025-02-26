@@ -12,7 +12,7 @@ class BeastSellerWidgetBuider extends StatelessWidget {
       label: "Beast Seller",
       index: 0,
       products: topRatedModel,
-      token: "",
+      token: "", userId: '',
     );
   }
 }

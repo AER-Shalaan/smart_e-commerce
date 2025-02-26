@@ -11,7 +11,7 @@ class RecommendedWidgetBuilder extends StatelessWidget {
       label: "Recommended for you",
       index: 0,
       products: topRatedModel,
-      token: "",
+      token: "", userId: '',
     );
   }
 }

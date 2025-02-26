@@ -12,9 +12,9 @@ import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/recommended/r
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/top_rated_product/top_rated_product_widget_builder.dart';
 
 class HomeTabBody extends StatefulWidget {
-  const HomeTabBody({super.key, required this.token});
+  const HomeTabBody({super.key, required this.token, required this.userId});
   final String token;
-
+  final String userId;
   @override
   State<HomeTabBody> createState() => _HomeTabBodyState();
 }
@@ -48,7 +48,7 @@ class _HomeTabBodyState extends State<HomeTabBody> {
         SliverToBoxAdapter(child: NewArrivalsWidgetBuilder()),
         const SliverSizedBoxSpace(height: 30),
         SliverToBoxAdapter(
-          child: TopRatedProductWidgetBuilder(token: widget.token),
+          child: TopRatedProductWidgetBuilder(token: widget.token, userId: widget.userId,),
         ),
         const SliverSizedBoxSpace(height: 30),
         const AdvWidgetBuilder2(),

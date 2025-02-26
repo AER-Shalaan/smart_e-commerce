@@ -31,7 +31,7 @@ class ProductsDetailsView extends StatelessWidget {
           body: const ProductDetailsViewBody(),
           bottomNavigationBar: ProductDetailsNavBar(
             token: data?[1] ?? "",
-            productId: data?[0] ?? "",
+            productId: data?[0] ?? "", userId: data?[2] ?? "",
           ),
         ),
       ),

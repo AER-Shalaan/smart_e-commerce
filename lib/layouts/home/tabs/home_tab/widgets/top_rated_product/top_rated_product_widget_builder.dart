@@ -7,8 +7,9 @@ import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/top_rated_pro
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/top_rated_product/view_model/top_rated_view_model_states.dart';
 
 class TopRatedProductWidgetBuilder extends StatelessWidget {
-  const TopRatedProductWidgetBuilder({super.key, required this.token});
+  const TopRatedProductWidgetBuilder({super.key, required this.token, required this.userId});
   final String token;
+  final String userId;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -22,7 +23,7 @@ class TopRatedProductWidgetBuilder extends StatelessWidget {
               label: "Top Rated Product",
               index: topRatedModel.length,
               products: topRatedModel,
-              token: token,
+              token: token, userId: userId,
             );
           }
           if (state is TopRatedErrorState) {

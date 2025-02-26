@@ -12,7 +12,7 @@ class NewArrivalsWidgetBuilder extends StatelessWidget {
       label: "New Arrivals",
       index: 0,
       products: topRatedModel,
-      token: "",
+      token: "", userId: '',
     );
   }
 }

@@ -4,18 +4,20 @@ import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 
 class ItemWidget extends StatelessWidget {
-  const ItemWidget(
-      {super.key,
-      required this.imagePath,
-      required this.title,
-      required this.price,
-      required this.descount,
-      required this.rate,
-      required this.reviewersCount,
-      required this.productId,
-      required this.token});
+  const ItemWidget({
+    super.key,
+    required this.imagePath,
+    required this.title,
+    required this.price,
+    required this.descount,
+    required this.rate,
+    required this.reviewersCount,
+    required this.productId,
+    required this.token, required this.userId,
+  });
   final String productId;
   final String token;
+  final String userId;
   final String imagePath;
   final String title;
   final String price;
@@ -29,8 +31,11 @@ class ItemWidget extends StatelessWidget {
     return InkWell(
       enableFeedback: false,
       onTap: () {
-        Navigator.pushNamed(context, Routes.productDetailsView,
-            arguments: [productId, token]);
+        Navigator.pushNamed(
+          context,
+          Routes.productDetailsView,
+          arguments: [productId, token,userId],
+        );
       },
       child: Container(
         width: width >= 600 ? 280 : 240,
@@ -63,9 +68,7 @@ class ItemWidget extends StatelessWidget {
                   width: double.infinity,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return const Center(child: CircularProgressIndicator());
                   },
                   errorBuilder: (context, error, stackTrace) {
                     return const Center(
@@ -109,7 +112,9 @@ class ItemWidget extends StatelessWidget {
                       if (descount != "0.0")
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.redAccent,
                             borderRadius: BorderRadius.circular(6),
@@ -136,18 +141,12 @@ class ItemWidget extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         "$rate ",
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(color: Colors.grey[700], fontSize: 14),
                       ),
                       const Spacer(),
                       Text(
                         "($reviewersCount Reviews)",
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(color: Colors.grey[700], fontSize: 14),
                       ),
                     ],
                   ),

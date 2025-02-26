@@ -15,6 +15,8 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../core/api/api_manger.dart' as _i993;
 import '../data/data_source/home/cart_tap_data_source/add_to_cart_data_source.dart'
     as _i928;
+import '../data/data_source/home/cart_tap_data_source/get_cart_data_source.dart'
+    as _i262;
 import '../data/data_source/home/home_tap_data_source/top_rated_data_source.dart'
     as _i359;
 import '../data/data_source/home/product_details_data_source/product_details_data.dart'
@@ -23,6 +25,8 @@ import '../data/data_source/login/login_data_source.dart' as _i153;
 import '../data/data_source/signup/signup_data_source.dart' as _i125;
 import '../data/data_source_impl/home/cart_tap_data_source_impl/add_tap_data_source_impl.dart'
     as _i530;
+import '../data/data_source_impl/home/cart_tap_data_source_impl/get_cart_data_source_impl.dart'
+    as _i114;
 import '../data/data_source_impl/home/home_tap_data_source_impl/top_rated_data_source_impl.dart'
     as _i22;
 import '../data/data_source_impl/home/product_details_data_source_impl/product_details_data_source.dart'
@@ -37,6 +41,8 @@ import '../layouts/home/layouts/product_details/veiw_model/add_to_cart_view_mode
     as _i242;
 import '../layouts/home/layouts/product_details/veiw_model/product_details_view_model.dart'
     as _i869;
+import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart'
+    as _i153;
 import '../layouts/home/tabs/home_tab/widgets/top_rated_product/view_model/top_rated_view_model.dart'
     as _i409;
 
@@ -56,6 +62,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i359.TopRatedDataSource>(
       () => _i22.TopRatedDataSourceImpl(gh<_i993.ApiManger>()),
+    );
+    gh.factory<_i262.GetCartDataSource>(
+      () => _i114.GetCartDataSourceImpl(gh<_i993.ApiManger>()),
     );
     gh.factory<_i928.AddToCartDataSource>(
       () => _i530.AddTapDataSourceImpl(gh<_i993.ApiManger>()),
@@ -77,6 +86,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i869.ProductDetailsViewModel>(
       () => _i869.ProductDetailsViewModel(gh<_i688.ProductDetailsDataSource>()),
+    );
+    gh.factory<_i153.GetCartViewModel>(
+      () => _i153.GetCartViewModel(gh<_i262.GetCartDataSource>()),
     );
     return this;
   }
