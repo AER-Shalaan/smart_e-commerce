@@ -9,13 +9,14 @@ class ProductListBuilder extends StatelessWidget {
     required this.label,
     required this.products,
     required this.index,
-    required this.token,
+    required this.token, required this.userId,
   });
 
   final String label;
   final List<TopRatedModel> products;
   final int index;
   final String token;
+  final String userId;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,7 +41,7 @@ class ProductListBuilder extends StatelessWidget {
                 rate: product.rate.toString() ?? "",
                 reviewersCount: product.quantity.toString() ?? "",
                 token: token,
-                productId: product.itemID ?? "",
+                productId: product.itemID ?? "", userId:userId ,
               );
             },
             separatorBuilder: (context, index) => const SizedBox(width: 20),

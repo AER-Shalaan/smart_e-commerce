@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';
 import '../../di/di.dart';
 import '../../layouts/authentication/logIn/login_view.dart';
 import '../../layouts/authentication/login/view_model/login_view_model.dart';
@@ -73,7 +74,9 @@ class Routes {
             create: (_) => getIt<SignUpViewModel>(),
             child: const SignUpView(),
           ),
-      productDetailsView: (_) => const ProductsDetailsView(),
+      productDetailsView: (_) => ChangeNotifierProvider(
+        create: (_)=>AddCartProvider(),
+        child: const ProductsDetailsView()),
       addressBookViewRouteName: (_) => const AddressBookView(),
       fAQsViewRouteName:
           (_) => ChangeNotifierProvider(

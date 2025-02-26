@@ -1,162 +1,195 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
+import 'package:smart_ecommerce/data/models/cart_model/CartModel.dart';
 
 class ShoppingCartItem extends StatelessWidget {
-  final String image;
-  final String name;
-  final double discountedPrice;
-  final int price;
-  final int quantity;
-  final double rating;
-  final String category;
-  final bool isAvailable;
-  final ValueChanged<int> onQuantityChanged;
-  final VoidCallback onDelete;
-
+  // final ValueChanged<int> onQuantityChanged;
+  // final VoidCallback onDelete;
+  final CartModel cartModel;
+  final String token, userId;
   const ShoppingCartItem({
     super.key,
-    required this.image,
-    required this.name,
-    required this.price,
-    required this.discountedPrice,
-    required this.quantity,
-    required this.rating,
-    required this.category,
-    required this.isAvailable,
-    required this.onQuantityChanged,
-    required this.onDelete,
+
+    // required this.onQuantityChanged,
+    // required this.onDelete,
+    required this.cartModel,
+    required this.token,
+    required this.userId,
   });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
-    return Card(
-      color: Colors.white,
-      elevation: 5,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Image Section
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    image,
+  List<String>? data=[cartModel.itemID!, token, userId];
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          Routes.productDetailsView,
+          arguments: data,
+        );
+      },
+      child: Card(
+        color: Colors.white,
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Image Section
+                  SizedBox(
                     width: screenWidth * 0.2, // Responsive width
-                    height: screenWidth * 0.15, // Responsive height
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                // Details Section
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: GoogleFonts.dmSans(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                    height: screenWidth * 0.15,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
                       ),
-                      Text(
-                        category,
-                        style: GoogleFonts.dmSans(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Text(
-                        '⭐ ${rating.toStringAsFixed(1)}',
-                        style: GoogleFonts.dmSans(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        isAvailable ? 'Available' : 'Out of Stock',
-                        style: GoogleFonts.dmSans(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: isAvailable ? Colors.green : Colors.red,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        children: [
-                          Text(
-                            '\$ $price',
-                            style: GoogleFonts.dmSans(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
+                      child: Image.network(
+                        cartModel.imageCover ?? "",
+                        fit: BoxFit.contain,
+                        width: double.infinity,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Center(
+                            child: Icon(
+                              Icons.broken_image,
+                              size: 50,
                               color: Colors.grey,
-                              decoration: TextDecoration.lineThrough,
-                              decorationColor: Colors.grey,
                             ),
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            '\$ $discountedPrice',
-                            style: GoogleFonts.dmSans(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    ],
-                  ),
-                ),
-                // Actions Section
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.remove_shopping_cart_outlined,
-                        color: Colors.red,
-                      ),
-                      onPressed: onDelete,
                     ),
-                    Row(
+                  ),
+                  const SizedBox(width: 10),
+                  // Details Section
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.remove_circle_outline),
-                          onPressed: () {
-                            if (quantity > 1) {
-                              onQuantityChanged(quantity - 1);
-                            }
-                          },
+                        Text(
+                          cartModel.itemName ?? "",
+                          style: GoogleFonts.dmSans(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          '$quantity',
-                          style: const TextStyle(fontSize: 16),
+                          cartModel.categoryName ?? "",
+                          style: GoogleFonts.dmSans(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.add_circle_outline),
-                          onPressed: () {
-                            onQuantityChanged(quantity + 1);
-                          },
+                        // Text(
+                        //   '⭐ ${cartModel.rate.toStringAsFixed(1)}',
+                        //   style: GoogleFonts.dmSans(
+                        //     fontWeight: FontWeight.w400,
+                        //     fontSize: 14,
+                        //   ),
+                        // ),
+                        Text(
+                          '${cartModel.subCategoryName}',
+                          style: GoogleFonts.dmSans(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                        ),
+                        // Text(
+                        //   isAvailable ? 'Available' : 'Out of Stock',
+                        //   style: GoogleFonts.dmSans(
+                        //     fontWeight: FontWeight.w400,
+                        //     fontSize: 14,
+                        //     color: isAvailable ? Colors.green : Colors.red,
+                        //   ),
+                        // ),
+                        Text(
+                          'Available',
+                          style: GoogleFonts.dmSans(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: Colors.green,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Text(
+                              '\$ ${cartModel.priceOut}',
+                              style: GoogleFonts.dmSans(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough,
+                                decorationColor: Colors.grey,
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            // Text(
+                            //   '\$ ${cartModel}',
+                            //   style: GoogleFonts.dmSans(
+                            //     fontWeight: FontWeight.w600,
+                            //     fontSize: 14,
+                            //     color: Colors.black,
+                            //   ),
+                            // ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ],
-            );
-          },
+                  ),
+                  // Actions Section
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   crossAxisAlignment: CrossAxisAlignment.end,
+                  //   children: [
+                  //     IconButton(
+                  //       icon: const Icon(
+                  //         Icons.remove_shopping_cart_outlined,
+                  //         color: Colors.red,
+                  //       ),
+                  //       onPressed: onDelete,
+                  //     ),
+                  //     Row(
+                  //       children: [
+                  //         IconButton(
+                  //           icon: const Icon(Icons.remove_circle_outline),
+                  //           onPressed: () {
+                  //             if (quantity > 1) {
+                  //               onQuantityChanged(quantity - 1);
+                  //             }
+                  //           },
+                  //         ),
+                  //         Text('$quantity', style: const TextStyle(fontSize: 16)),
+                  //         IconButton(
+                  //           icon: const Icon(Icons.add_circle_outline),
+                  //           onPressed: () {
+                  //             onQuantityChanged(quantity + 1);
+                  //           },
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

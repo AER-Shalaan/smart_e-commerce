@@ -57,6 +57,7 @@ dependencies:
   widget_and_text_animator: ^1.1.5
   flutter_launcher_icons: ^0.14.3
   timelines_plus: ^1.0.6
+  jwt_decoder: ^2.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

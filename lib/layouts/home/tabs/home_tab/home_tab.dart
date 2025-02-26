@@ -4,8 +4,9 @@ import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/widgets/home_
 
 
 class HomeTab extends StatelessWidget {
-  const HomeTab({super.key, required this.token});
+  const HomeTab({super.key, required this.token, required this.userId});
   final String token ;
+  final String userId ;
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
@@ -14,6 +15,6 @@ class HomeTab extends StatelessWidget {
             const HomeTabAppBar(),
           ];
         },
-        body:  HomeTabBody(token: token,));
+        body:  HomeTabBody(token: token, userId: userId,));
   }
 }
