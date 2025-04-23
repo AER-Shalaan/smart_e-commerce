@@ -74,9 +74,11 @@ class Routes {
             create: (_) => getIt<SignUpViewModel>(),
             child: const SignUpView(),
           ),
-      productDetailsView: (_) => ChangeNotifierProvider(
-        create: (_)=>AddCartProvider(),
-        child: const ProductsDetailsView()),
+      productDetailsView:
+          (_) => ChangeNotifierProvider(
+            create: (_) => AddCartProvider(),
+            child: const ProductsDetailsView(),
+          ),
       addressBookViewRouteName: (_) => const AddressBookView(),
       fAQsViewRouteName:
           (_) => ChangeNotifierProvider(

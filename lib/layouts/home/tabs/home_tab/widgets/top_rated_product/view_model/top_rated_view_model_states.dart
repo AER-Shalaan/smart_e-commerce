@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:smart_ecommerce/data/models/top_rated_products_model/TopRatedModel.dart';
+import 'package:smart_ecommerce/data/models/home_models/produdts_model/Products.dart';
 
 abstract class TopRatedViewModelStates extends Equatable {
   const TopRatedViewModelStates();
@@ -21,7 +21,7 @@ class TopRatedErrorState extends TopRatedViewModelStates {
 }
 
 class TopRatedSuccessState extends TopRatedViewModelStates {
-  final List<TopRatedModel> topRatedModel;
+  final List<Products> topRatedModel;
   const TopRatedSuccessState(this.topRatedModel);
 
   @override

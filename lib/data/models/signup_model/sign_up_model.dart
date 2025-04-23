@@ -1,8 +1,5 @@
 class SignUpModel {
-  SignUpModel({
-    this.message,
-    this.token,
-  });
+  SignUpModel({this.message, this.token});
 
   SignUpModel.fromJson(dynamic json) {
     message = json['message'];

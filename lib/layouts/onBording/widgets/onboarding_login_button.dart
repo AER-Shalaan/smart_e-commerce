@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingLoginButton extends StatelessWidget {
-  const OnboardingLoginButton(
-      {super.key, required this.onTap, required this.isLogin});
+  const OnboardingLoginButton({
+    super.key,
+    required this.onTap,
+    required this.isLogin,
+  });
   final Function() onTap;
   final bool isLogin;
   @override
@@ -13,17 +16,23 @@ class OnboardingLoginButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-            enableFeedback: false,
-            overlayColor: Colors.white.withOpacity(0.3),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            backgroundColor: isLogin
-                ? const Color(0xff292C32)
-                : Theme.of(context).colorScheme.primary),
+          enableFeedback: false,
+          overlayColor: Colors.white.withOpacity(0.3),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          backgroundColor:
+              isLogin
+                  ? const Color(0xff292C32)
+                  : Theme.of(context).colorScheme.primary,
+        ),
         child: Text(
           isLogin ? "Login" : "Sign Up",
           style: GoogleFonts.arima(
-              fontSize: 16, fontWeight: FontWeight.w800, color: Colors.white),
+            fontSize: 16,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+          ),
         ),
       ),
     );

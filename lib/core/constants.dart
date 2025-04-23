@@ -5,5 +5,5 @@ class Constants {
   static String nameRegExp = r"^[A-Z][a-zA-Z'-]+([ ][A-Z][a-zA-Z'-]+)*$";
   static const String passRegExp =
       r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$";
-  static const String baseUrl = "http://sm-ecommerce.runasp.net/";
+  static const String baseUrl = "https://sm-ecommerce.runasp.net/";
 }

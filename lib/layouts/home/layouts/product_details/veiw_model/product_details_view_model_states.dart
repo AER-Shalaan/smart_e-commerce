@@ -1,4 +1,3 @@
-
 import 'package:smart_ecommerce/data/models/product_details_model/ProductDetailsModel.dart';
 
 abstract class ProductDetailsViewModelStates {}

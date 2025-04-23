@@ -16,8 +16,10 @@ class FAQsView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(size: 33),
         centerTitle: true,
-        title: Text("FAQs",
-            style: TextStyles.headlineStyle.copyWith(fontSize: 24)),
+        title: Text(
+          "FAQs",
+          style: TextStyles.headlineStyle.copyWith(fontSize: 24),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

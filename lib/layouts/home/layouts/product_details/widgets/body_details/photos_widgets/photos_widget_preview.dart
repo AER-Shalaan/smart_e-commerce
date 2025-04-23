@@ -11,13 +11,9 @@ class PhotosWidgetPreview extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.minWidth > 600) {
-            return ProductPhotosTablet(
-              productImages: productImages,
-            );
+            return ProductPhotosTablet(productImages: productImages);
           } else {
-            return ProductPhotosMobile(
-              productImages: productImages,
-            );
+            return ProductPhotosMobile(productImages: productImages);
           }
         },
       ),

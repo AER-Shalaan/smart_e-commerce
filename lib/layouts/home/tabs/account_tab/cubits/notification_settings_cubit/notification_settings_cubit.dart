@@ -4,7 +4,8 @@ import 'notification_settings_state.dart';
 
 class NotificationSettingsCubit extends Cubit<NotificationSettingsState> {
   NotificationSettingsCubit()
-      : super(const NotificationSettingsLoaded({
+    : super(
+        const NotificationSettingsLoaded({
           'General Notifications': true,
           'Sound': true,
           'Vibrate': false,
@@ -15,7 +16,8 @@ class NotificationSettingsCubit extends Cubit<NotificationSettingsState> {
           'App Updates': false,
           'New Service Available': false,
           'New Tips Available': false,
-        }));
+        }),
+      );
 
   void toggleSetting(String key) {
     if (state is NotificationSettingsLoaded) {

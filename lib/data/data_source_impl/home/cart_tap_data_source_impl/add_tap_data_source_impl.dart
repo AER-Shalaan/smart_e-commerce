@@ -15,13 +15,21 @@ class AddTapDataSourceImpl extends AddToCartDataSource {
     required String productId,
     required String token,
     required int quantity,
-    required String userId
-  }) async{
-   try {
-   var response=  await apiManger.postRequestForHme(endPoints: EndPoints.addToCartEndPoint, queryParameters: {"ItemId":productId,"Quantity":quantity,"BuyerId":userId},token: token);
-   return left(response.data.toString());
-   } catch (e) {
-     return right(e.toString());
-   }
+    required String userId,
+  }) async {
+    try {
+      var response = await apiManger.postRequestForHme(
+        endPoints: EndPoints.addToCartEndPoint,
+        queryParameters: {
+          "ItemId": productId,
+          "Quantity": quantity,
+          "BuyerId": userId,
+        },
+        token: token,
+      );
+      return left(response.data.toString());
+    } catch (e) {
+      return right(e.toString());
+    }
   }
 }

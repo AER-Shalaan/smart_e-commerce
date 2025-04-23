@@ -13,16 +13,15 @@ class AppTheme {
     ),
     textTheme: TextTheme(
       headlineLarge: TextStyles.headlineStyle,
-      titleMedium:TextStyles.titleMediumStyle,
+      titleMedium: TextStyles.titleMediumStyle,
       bodyMedium: TextStyles.listsTitle,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      selectedLabelStyle: const TextStyle(
-        color: AppColors.secondary,
-      ),
+      selectedLabelStyle: const TextStyle(color: AppColors.secondary),
       selectedItemColor: AppColors.secondary,
-      unselectedLabelStyle:
-          TextStyle(color: AppColors.secondary.withOpacity(0.3)),
+      unselectedLabelStyle: TextStyle(
+        color: AppColors.secondary.withOpacity(0.3),
+      ),
       enableFeedback: false,
       type: BottomNavigationBarType.fixed,
       showSelectedLabels: true,

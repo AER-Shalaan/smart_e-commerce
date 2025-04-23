@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/utils/assets.dart';
 import '../../../../../core/utils/routes.dart';
+
 class SavedItemCard extends StatelessWidget {
   const SavedItemCard({
     super.key,
@@ -58,9 +59,7 @@ class SavedItemCard extends StatelessWidget {
                       width: double.infinity,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        return const Center(child: CircularProgressIndicator());
                       },
                       errorBuilder: (context, error, stackTrace) {
                         return const Center(
@@ -104,7 +103,9 @@ class SavedItemCard extends StatelessWidget {
                           if (descount.isNotEmpty)
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 2),
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.redAccent,
                                 borderRadius: BorderRadius.circular(6),
@@ -137,12 +138,11 @@ class SavedItemCard extends StatelessWidget {
               width: 30,
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.transparent),
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8)),
-              child: SvgPicture.asset(
-                Assets.assetsIconsHeartFilled,
+                border: Border.all(color: Colors.transparent),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
               ),
+              child: SvgPicture.asset(Assets.assetsIconsHeartFilled),
             ),
           ),
         ),

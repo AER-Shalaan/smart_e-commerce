@@ -22,16 +22,21 @@ class SummaryRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: GoogleFonts.dmSans(
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-                fontSize: 16,
-                color: isBlack ? Colors.black : Colors.grey,
-              )),
-          Text('\$ $value',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
+          Text(
+            label,
+            style: GoogleFonts.dmSans(
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              fontSize: 16,
+              color: isBlack ? Colors.black : Colors.grey,
+            ),
+          ),
+          Text(
+            '\$ $value',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
         ],
       ),
     );

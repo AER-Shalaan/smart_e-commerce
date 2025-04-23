@@ -35,8 +35,9 @@ class _CarouselImageState extends State<CarouselImage> {
                     enableInfiniteScroll: true,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 800),
+                    autoPlayAnimationDuration: const Duration(
+                      milliseconds: 800,
+                    ),
                     enlargeCenterPage: true,
                     viewportFraction: 1.0,
                     onPageChanged: (index, reason) {
@@ -45,10 +46,16 @@ class _CarouselImageState extends State<CarouselImage> {
                       });
                     },
                   ),
-                  items: widget.imageUrls
-                      .map((url) =>
-                          _buildImageWithLoader(url, imageHeight, screenWidth))
-                      .toList(),
+                  items:
+                      widget.imageUrls
+                          .map(
+                            (url) => _buildImageWithLoader(
+                              url,
+                              imageHeight,
+                              screenWidth,
+                            ),
+                          )
+                          .toList(),
                 ),
                 const SizedBox(height: 5),
                 _buildCarouselIndicator(indicatorSize),

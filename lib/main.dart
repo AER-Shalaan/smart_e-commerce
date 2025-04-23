@@ -11,4 +11,5 @@ void main() {
   configureDependencies();
   return runApp(const MyApp());
 }
-//DevicePreview(enabled: true, builder: (context) => 
+
+//DevicePreview(enabled: true, builder: (context) =>

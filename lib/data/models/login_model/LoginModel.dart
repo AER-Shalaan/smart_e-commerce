@@ -1,8 +1,5 @@
 class LoginModel {
-  LoginModel({
-    this.message,
-    this.token,
-  });
+  LoginModel({this.message, this.token});
 
   LoginModel.fromJson(dynamic json) {
     message = json['message'];

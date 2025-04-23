@@ -1,5 +1,5 @@
-class ProductData {
-  ProductData({
+class ProductsData {
+  ProductsData({
     this.itemID,
     this.imageCover,
     this.itemName,
@@ -18,7 +18,7 @@ class ProductData {
     this.brandID,
   });
 
-  ProductData.fromJson(dynamic json) {
+  ProductsData.fromJson(dynamic json) {
     itemID = json['Item_ID'];
     imageCover = json['Image_Cover'];
     itemName = json['Item_Name'];
@@ -51,7 +51,7 @@ class ProductData {
   num? viewCount;
   num? soldCount;
   String? crateDate;
-  num? brandID;
+  dynamic brandID;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

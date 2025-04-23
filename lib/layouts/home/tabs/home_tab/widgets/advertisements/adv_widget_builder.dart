@@ -16,30 +16,33 @@ class AdvWidgetBuilder extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: MediaQuery.sizeOf(context).width >= 600
-              ? MediaQuery.sizeOf(context).width * 1.2
-              : MediaQuery.sizeOf(context).width * 0.8,
+          width:
+              MediaQuery.sizeOf(context).width >= 600
+                  ? MediaQuery.sizeOf(context).width * 1.2
+                  : MediaQuery.sizeOf(context).width * 0.8,
           child: CarouselSlider.builder(
-              carouselController: CarouselSliderController(),
-              itemBuilder: (context, index, index2) {
-                return AdvWidget(imagePath: advImagePath[index]);
+            carouselController: CarouselSliderController(),
+            itemBuilder: (context, index, index2) {
+              return AdvWidget(imagePath: advImagePath[index]);
+            },
+            itemCount: advImagePath.length,
+            options: CarouselOptions(
+              autoPlayCurve: Curves.fastOutSlowIn,
+              height:
+                  MediaQuery.sizeOf(context).width >= 600
+                      ? height * 0.28
+                      : MediaQuery.sizeOf(context).width >= 450
+                      ? height * 0.2
+                      : height * 0.17,
+              autoPlay: true,
+              enlargeCenterPage: true,
+              viewportFraction: 1,
+              autoPlayInterval: const Duration(seconds: 3),
+              onPageChanged: (index, reason) {
+                advProvider.changeAdvCurrentIndex(index);
               },
-              itemCount: advImagePath.length,
-              options: CarouselOptions(
-                autoPlayCurve: Curves.fastOutSlowIn,
-                height: MediaQuery.sizeOf(context).width >= 600
-                    ? height * 0.28
-                    : MediaQuery.sizeOf(context).width >= 450
-                        ? height * 0.2
-                        : height * 0.17,
-                autoPlay: true,
-                enlargeCenterPage: true,
-                viewportFraction: 1,
-                autoPlayInterval: const Duration(seconds: 3),
-                onPageChanged: (index, reason) {
-                  advProvider.changeAdvCurrentIndex(index);
-                },
-              )),
+            ),
+          ),
         ),
         DotsIndicator(
           dotsCount: advImagePath.length,
@@ -52,7 +55,7 @@ class AdvWidgetBuilder extends StatelessWidget {
             shape: const CircleBorder(),
             size: const Size(10.0, 10),
           ),
-        )
+        ),
       ],
     );
   }

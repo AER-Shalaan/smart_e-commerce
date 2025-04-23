@@ -14,9 +14,10 @@ class SavedItemWidgetBuilder extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: MediaQuery.sizeOf(context).width >= 900
-                ? 4
-                : MediaQuery.sizeOf(context).width >= 500
+            crossAxisCount:
+                MediaQuery.sizeOf(context).width >= 900
+                    ? 4
+                    : MediaQuery.sizeOf(context).width >= 500
                     ? 3
                     : 2,
             crossAxisSpacing: 16,

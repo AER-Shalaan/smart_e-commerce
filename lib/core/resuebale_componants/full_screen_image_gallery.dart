@@ -18,9 +18,7 @@ class FullScreenImageGallery extends StatelessWidget {
                 panEnabled: true,
                 minScale: 1.0,
                 maxScale: 4.0,
-                child: Center(
-                  child: _buildImageWithLoader(imageUrls[index]),
-                ),
+                child: Center(child: _buildImageWithLoader(imageUrls[index])),
               );
             },
           ),

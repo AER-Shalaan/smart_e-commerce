@@ -26,9 +26,14 @@ class LoginPrompt extends StatelessWidget {
               fontSize: 16,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-              Navigator.pushReplacementNamed(context, Routes.loginViewRouteName);
-            },
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      Routes.loginViewRouteName,
+                    );
+                  },
           ),
         ],
       ),

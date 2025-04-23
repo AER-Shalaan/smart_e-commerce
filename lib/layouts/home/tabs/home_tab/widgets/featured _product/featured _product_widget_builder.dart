@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/product_list_builder.dart';
-import 'package:smart_ecommerce/data/models/top_rated_products_model/TopRatedModel.dart';
+import 'package:smart_ecommerce/data/models/home_models/produdts_model/Products.dart';
 
 class FeaturedProductWidgetBuilder extends StatelessWidget {
   FeaturedProductWidgetBuilder({super.key});
-  final List<TopRatedModel> topRatedModel = [];
+  final List<Products> topRatedModel = [];
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +12,12 @@ class FeaturedProductWidgetBuilder extends StatelessWidget {
       label: "Featured Product",
       index: 0,
       token: "",
-      products: topRatedModel, userId: '',
+      products: topRatedModel,
+      userId: '',
     );
   }
 }
+
 //  [
 //         {
 //           "imagePath": "https://m.media-amazon.com/images/I/61tOjWVRaKL.jpg",

@@ -1,24 +1,19 @@
+import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
 import 'Brand.dart';
-import 'Data.dart';
 import 'Detilas.dart';
 import 'Images.dart';
 
 class ProductDetailsModel {
-  ProductDetailsModel({
-    this.data,
-    this.images,
-    this.brand,
-    this.detilas,
-  });
+  ProductDetailsModel({this.data, this.images, this.brand, this.detilas});
 
   ProductDetailsModel.fromJson(dynamic json) {
-    data = json['Data'] != null ? ProductData.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? ProductsData.fromJson(json['Data']) : null;
     images = json['images'] != null ? Images.fromJson(json['images']) : null;
     brand = json['Brand'] != null ? Brand.fromJson(json['Brand']) : null;
     detilas =
         json['Detilas'] != null ? Detilas.fromJson(json['Detilas']) : null;
   }
-  ProductData? data;
+  ProductsData? data;
   Images? images;
   Brand? brand;
   Detilas? detilas;

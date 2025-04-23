@@ -9,8 +9,9 @@ AppBar productDetailsViewAppBar(BuildContext context) {
     ),
     backgroundColor: AppColors.backGroundColor,
     leading: IconButton(
-        onPressed: () => Navigator.pop(context),
-        icon: const Icon(Icons.arrow_back_ios)),
+      onPressed: () => Navigator.pop(context),
+      icon: const Icon(Icons.arrow_back_ios),
+    ),
     centerTitle: true,
     surfaceTintColor: Colors.transparent,
   );

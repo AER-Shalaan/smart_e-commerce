@@ -11,7 +11,8 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> with SingleTickerProviderStateMixin {
+class _SplashViewState extends State<SplashView>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _opacityAnimation;
@@ -28,44 +29,29 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
       begin: const Offset(0, 0.4),
       end: Offset.zero,
     ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
-    _opacityAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
+    _opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
-    _progressAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeIn,
-      ),
+    _progressAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
 
     _animationController.forward();
 
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-       Navigator.pushReplacementNamed(context, Routes.onBoardingRouteName);
+        Navigator.pushReplacementNamed(context, Routes.onBoardingRouteName);
       }
     });
   }
 
   @override
   void dispose() {
-   _animationController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -98,11 +84,11 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
                 Text(
                   "Inspire Shopping",
                   style: GoogleFonts.moonDance(
-                      fontSize: 28, fontWeight: FontWeight.w600),
+                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 SizedBox(
                   height: 15,
                   child: Padding(
@@ -133,4 +119,3 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
     );
   }
 }
-

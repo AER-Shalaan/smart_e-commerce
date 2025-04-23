@@ -14,20 +14,28 @@ class LoginViewModel extends Cubit<LoginState> {
   static LoginViewModel get(BuildContext context) => BlocProvider.of(context);
 
   Future<void> login(
-      String email, String password, BuildContext context) async {
+    String email,
+    String password,
+    BuildContext context,
+  ) async {
     emit(LoginLoadingState());
 
-    final response =
-        await loginDataSource.login(email: email, password: password);
+    final response = await loginDataSource.login(
+      email: email,
+      password: password,
+    );
 
-    response.fold((error) {
-      emit(LoginErrorState(error));
-    }, (login) {
-      if (login.message == "success") {
-        emit(LoginSuccessState(login));
-      } else {
-        emit(LoginErrorState(login.message ?? "Unknown error occurred"));
-      }
-    });
+    response.fold(
+      (error) {
+        emit(LoginErrorState(error));
+      },
+      (login) {
+        if (login.message == "success") {
+          emit(LoginSuccessState(login));
+        } else {
+          emit(LoginErrorState(login.message ?? "Unknown error occurred"));
+        }
+      },
+    );
   }
 }

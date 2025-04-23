@@ -8,10 +8,11 @@ class OrdersState extends Equatable {
 
   final List<OrderModel> orders;
 
-  const OrdersState(
-      {this.selectedIndex = 0,
-      this.orders = const [],
-      this.selectedRating = 0});
+  const OrdersState({
+    this.selectedIndex = 0,
+    this.orders = const [],
+    this.selectedRating = 0,
+  });
 
   OrdersState copyWith({
     int? selectedIndex,

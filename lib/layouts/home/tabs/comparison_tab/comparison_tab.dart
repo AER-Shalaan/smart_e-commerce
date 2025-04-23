@@ -17,8 +17,9 @@ class ComparisonTab extends StatelessWidget {
             if (state is ComparisonFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content:
-                      Text("Failed to load comparison data. Please try again."),
+                  content: Text(
+                    "Failed to load comparison data. Please try again.",
+                  ),
                   backgroundColor: Colors.red,
                 ),
               );

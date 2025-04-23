@@ -69,40 +69,44 @@ class _OtpState extends State<Otp> {
                 label: "Continue",
                 labelColor: Colors.white,
                 buttonColor: AppColors.secondary,
-                borderSide:
-                    const BorderSide(color: Colors.transparent, width: 1),
+                borderSide: const BorderSide(
+                  color: Colors.transparent,
+                  width: 1,
+                ),
                 isDisabled: false,
                 onPressed: () {
                   if (pinController.text == validPin) {
                     Navigator.pushNamed(context, Routes.resetPasswordRouteName);
                     //TODO: respond from Farag
                   } else if (pinController.text == "") {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: const Row(
-                        children: [
-                          Icon(Icons.error_outline, color: Colors.white),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              "OTP Can't be empty!",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Row(
+                          children: [
+                            Icon(Icons.error_outline, color: Colors.white),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                "OTP Can't be empty!",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                        backgroundColor: Colors.redAccent,
+                        behavior: SnackBarBehavior.floating,
+                        duration: const Duration(seconds: 2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        margin: const EdgeInsets.all(20),
                       ),
-                      backgroundColor: Colors.redAccent,
-                      behavior: SnackBarBehavior.floating,
-                      duration: const Duration(seconds: 2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      margin: const EdgeInsets.all(20),
-                    ));
+                    );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -130,13 +134,15 @@ class _OtpState extends State<Otp> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         margin: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 10),
+                          vertical: 20,
+                          horizontal: 10,
+                        ),
                       ),
                     );
                   }
                 },
               ),
-            )
+            ),
           ],
         ),
       ),

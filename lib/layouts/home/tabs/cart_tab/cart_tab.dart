@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/di/di.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/provider/cart_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model_states.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/widgets/shopping_cart_item.dart';
@@ -30,11 +29,10 @@ class CartTab extends StatelessWidget {
   }
 
   final String token;
-final String userId;
+  final String userId;
   @override
   Widget build(BuildContext context) {
-    CartProvider provider = Provider.of<CartProvider>(context);
-    double subTotal = calculateSubTotal(provider.cartItems);
+    double subTotal = 222;
     double vat = 15;
     double shippingFee = calculateShippingFee(subTotal);
     double total = subTotal + vat + shippingFee;
@@ -46,7 +44,7 @@ final String userId;
       child: BlocBuilder<GetCartViewModel, GetCartViewModelStates>(
         builder: (context, state) {
           if (state is GetCartViewModelSuccess) {
-            if (state.cartModel.isEmpty || state.cartModel == null) {
+            if (state.cartModel.isEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +77,6 @@ final String userId;
                     child: ListView.builder(
                       itemCount: state.cartModel.length,
                       itemBuilder: (context, index) {
-
                         var item = state.cartModel[index];
 
                         // double discountedPrice =
@@ -87,7 +84,8 @@ final String userId;
                         //     (item['price'] * item['discountPercentage'] / 100);
                         return ShoppingCartItem(
                           cartModel: item,
-                          token: token,userId: userId,
+                          token: token,
+                          userId: userId,
                         );
                       },
                     ),
