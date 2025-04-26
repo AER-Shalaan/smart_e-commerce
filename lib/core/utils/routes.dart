@@ -21,7 +21,6 @@ import '../../layouts/home/tabs/account_tab/widgets/help_center/help_center_view
 import '../../layouts/home/tabs/account_tab/widgets/my_details/my_details_view.dart';
 import '../../layouts/home/tabs/account_tab/widgets/my_orders/my_orders_view.dart';
 import '../../layouts/home/tabs/account_tab/widgets/notifications/notifications_view.dart';
-import '../../layouts/home/tabs/account_tab/widgets/payment_methods/paymentMethodsView.dart';
 import '../../layouts/home/widgets/ui_layout_builder.dart';
 import '../../layouts/onBording/onBording_view.dart';
 import '../../layouts/splash/splash_view.dart';
@@ -89,7 +88,6 @@ class Routes {
       myDetailsViewRouteName: (_) => const MyDetailsView(),
       myOrdersViewRouteName: (_) => const MyOrdersView(),
       notificationsViewRouteName: (_) => const NotificationsView(),
-      paymentMethodsViewRouteName: (_) => const PaymentMethodsView(),
     };
   }
 }

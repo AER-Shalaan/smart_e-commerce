@@ -57,9 +57,26 @@ class SignUpTextFields extends StatelessWidget {
               prefixIcon: const Icon(Icons.email_outlined),
               isValid: state.isEmailCheck,
               isWrong: state.isWrongEmail,
+
+              /////////Change to Phone logic////////
               validator: (value) => _validateEmail(value),
               onChanged: cubit.validateEmail,
             ),
+            const SizedBox(height: 16),
+            buildTextField(
+              context: context,
+              title: "Phone",
+              hint: "0123456789",
+              controller: cubit.phoneController,
+              focusNode: cubit.phoneFoucsNode,
+              keyboardType: TextInputType.phone,
+              prefixIcon: const Icon(Icons.call_outlined),
+              isValid: state.isPhoneCheck,
+              isWrong: state.isWrongPhone,
+              validator: (value) => _validatePhone(value),
+              onChanged: cubit.validatePhone,
+            ),
+
             const SizedBox(height: 16),
             buildPasswordTextField(
               context: context,
@@ -202,6 +219,12 @@ class SignUpTextFields extends StatelessWidget {
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) return "Email can't be empty";
     if (!RegExp(Constants.emailRegExp).hasMatch(value)) return "Invalid email";
+    return null;
+  }
+
+  String? _validatePhone(String? value) {
+    if (value == null || value.isEmpty) return "Phone can't be empty";
+    if (!RegExp(Constants.phoneRegExp).hasMatch(value)) return "Invalid phone";
     return null;
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model_states.dart';

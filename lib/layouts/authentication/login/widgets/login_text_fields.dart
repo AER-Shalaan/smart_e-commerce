@@ -42,6 +42,7 @@ class LoginTextFields extends StatelessWidget {
                       : AppColors.primary.withOpacity(0.4),
             ),
             const SizedBox(height: 16),
+
             const TitleMediumtext(text: "Password", opacity: 1),
             const SizedBox(height: 4),
             CustomAuthTextField(

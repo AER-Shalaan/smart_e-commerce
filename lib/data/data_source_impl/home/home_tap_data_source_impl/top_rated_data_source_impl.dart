@@ -19,7 +19,7 @@ class TopRatedDataSourceImpl extends TopRatedDataSource {
       var response = await apiManger.getRequest(
         endPoints: EndPoints.getFilteredProducts,
         token: token,
-        queryParameters: {"pageNumber": 1, "pageSize": 25, "minRate": 1},
+        queryParameters: {"pageNumber": 1, "pageSize": 25, "maxRating": 5},
       );
       List<Products> topRatedModel =
           ProductsModel.fromJson(response.data).products ?? [];
