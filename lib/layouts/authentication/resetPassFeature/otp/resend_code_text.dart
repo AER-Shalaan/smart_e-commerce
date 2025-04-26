@@ -25,9 +25,11 @@ class ResendCodeText extends StatelessWidget {
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-              //TODO
-            },
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    //TODO
+                  },
           ),
         ],
       ),

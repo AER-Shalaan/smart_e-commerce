@@ -1,11 +1,12 @@
 class Detilas {
   Detilas({
-      this.itemID, 
-      this.ram, 
-      this.memory, 
-      this.cpu, 
-      this.color, 
-      this.screenSize,});
+    this.itemID,
+    this.ram,
+    this.memory,
+    this.cpu,
+    this.color,
+    this.screenSize,
+  });
 
   Detilas.fromJson(dynamic json) {
     itemID = json['Item_ID'];
@@ -32,5 +33,4 @@ class Detilas {
     map['Screen_Size'] = screenSize;
     return map;
   }
-
 }

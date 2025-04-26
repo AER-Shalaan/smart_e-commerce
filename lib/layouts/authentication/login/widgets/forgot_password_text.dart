@@ -26,10 +26,14 @@ class ForgotPasswordText extends StatelessWidget {
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-              Navigator.pushNamed(context, Routes.forgotPasswordRouteName);
-
-            },
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.forgotPasswordRouteName,
+                    );
+                  },
           ),
         ],
       ),

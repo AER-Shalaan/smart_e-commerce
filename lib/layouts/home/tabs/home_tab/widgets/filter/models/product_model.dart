@@ -73,7 +73,7 @@ class Product {
       features: {
         'Type': 'Over-ear',
         'Color': 'Black',
-        'Noise Cancellation': 'Yes'
+        'Noise Cancellation': 'Yes',
       },
     ),
     Product(

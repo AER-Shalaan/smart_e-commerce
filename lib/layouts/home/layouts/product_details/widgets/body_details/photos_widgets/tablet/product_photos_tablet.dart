@@ -31,24 +31,16 @@ class _ProductPhotosTabletState extends State<ProductPhotosTablet> {
               width: double.infinity,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Center(child: CircularProgressIndicator());
               },
               errorBuilder: (context, error, stackTrace) {
                 return const Center(
-                  child: Icon(
-                    Icons.broken_image,
-                    size: 50,
-                    color: Colors.grey,
-                  ),
+                  child: Icon(Icons.broken_image, size: 50, color: Colors.grey),
                 );
               },
             ),
           ),
-          const SizedBox(
-            width: 20,
-          ),
+          const SizedBox(width: 20),
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, index) {
@@ -86,7 +78,7 @@ class _ProductPhotosTabletState extends State<ProductPhotosTablet> {
               },
               itemCount: widget.productImages.length,
             ),
-          )
+          ),
         ],
       ),
     );

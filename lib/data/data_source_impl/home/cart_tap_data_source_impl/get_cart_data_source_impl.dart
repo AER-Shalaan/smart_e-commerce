@@ -23,9 +23,10 @@ class GetCartDataSourceImpl extends GetCartDataSource {
         queryParameters: {"UserId": userId},
       );
 
-      List<CartModel> cartModel =  (response.data as List)
-          .map((json) => CartModel.fromJson(json))
-          .toList();
+      List<CartModel> cartModel =
+          (response.data as List)
+              .map((json) => CartModel.fromJson(json))
+              .toList();
       return Left(cartModel);
     } catch (e) {
       return Right(e.toString());

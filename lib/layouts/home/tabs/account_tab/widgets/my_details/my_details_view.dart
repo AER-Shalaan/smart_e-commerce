@@ -13,8 +13,10 @@ class MyDetailsView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(size: 33),
         centerTitle: true,
-        title: Text("MyDetails",
-            style: TextStyles.headlineStyle.copyWith(fontSize: 24)),
+        title: Text(
+          "MyDetails",
+          style: TextStyles.headlineStyle.copyWith(fontSize: 24),
+        ),
       ),
       body: const MyDetailsBody(),
     );

@@ -20,9 +20,7 @@ class PageViewItem extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 40,
-        ),
+        const SizedBox(height: 40),
         Expanded(
           flex: 10,
           child: AspectRatio(
@@ -31,32 +29,26 @@ class PageViewItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: mainAxisAlignment,
                 mainAxisSize: MainAxisSize.max,
-                children: [
-                  SvgPicture.asset(
-                    imagePath,
-                    fit: BoxFit.fill,
-                  )
-                ],
+                children: [SvgPicture.asset(imagePath, fit: BoxFit.fill)],
               ),
             ),
           ),
         ),
-        const SizedBox(
-          height: 40,
-        ),
+        const SizedBox(height: 40),
         Expanded(
           child: TextAnimator(
             title,
-            style:
-                GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w700),
+            style: GoogleFonts.poppins(
+              fontSize: 25,
+              fontWeight: FontWeight.w700,
+            ),
             incomingEffect: WidgetTransitionEffects.incomingScaleUp(
-                curve: Curves.bounceIn,
-                duration: const Duration(milliseconds: 100)),
+              curve: Curves.bounceIn,
+              duration: const Duration(milliseconds: 100),
+            ),
           ),
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         Expanded(
           flex: 3,
           child: Padding(
@@ -64,11 +56,14 @@ class PageViewItem extends StatelessWidget {
             child: TextAnimator(
               description,
               style: GoogleFonts.openSans(
-                  fontSize: 14, fontWeight: FontWeight.w400),
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
               textAlign: TextAlign.center,
               incomingEffect: WidgetTransitionEffects.incomingScaleUp(
-                  curve: Curves.bounceIn,
-                  duration: const Duration(milliseconds: 10)),
+                curve: Curves.bounceIn,
+                duration: const Duration(milliseconds: 10),
+              ),
             ),
           ),
         ),

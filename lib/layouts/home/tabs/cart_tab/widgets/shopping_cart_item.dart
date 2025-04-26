@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/data/models/cart_model/CartModel.dart';
 
@@ -21,7 +22,7 @@ class ShoppingCartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-  List<String>? data=[cartModel.itemID!, token, userId];
+    List<String>? data = [cartModel.itemID!, token, userId];
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -44,7 +45,7 @@ class ShoppingCartItem extends StatelessWidget {
                 children: [
                   // Image Section
                   SizedBox(
-                    width: screenWidth * 0.2, // Responsive width
+                    width: screenWidth * 0.2,
                     height: screenWidth * 0.15,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
@@ -134,9 +135,7 @@ class ShoppingCartItem extends StatelessWidget {
                               style: GoogleFonts.dmSans(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough,
-                                decorationColor: Colors.grey,
+                                color: AppColors.secondary,
                               ),
                             ),
                             const SizedBox(width: 5),

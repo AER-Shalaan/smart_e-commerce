@@ -12,50 +12,56 @@ class NotificationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          iconTheme: const IconThemeData(size: 33),
-          centerTitle: true,
-          title: Text("Notifications",
-              style: TextStyles.headlineStyle.copyWith(fontSize: 24)),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(size: 33),
+        centerTitle: true,
+        title: Text(
+          "Notifications",
+          style: TextStyles.headlineStyle.copyWith(fontSize: 24),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child:
-              BlocBuilder<NotificationSettingsCubit, NotificationSettingsState>(
-            builder: (context, state) {
-              if (state is NotificationSettingsLoaded) {
-                return ListView(
-                  children: state.settings.entries.map((entry) {
-                    return Column(
-                      children: [
-                        SwitchListTile(
-                          title: Text(
-                            entry.key,
-                            style: TextStyles.accountLabels
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          value: entry.value,
-                          activeColor: AppColors.primary,
-                          thumbColor:
-                              const WidgetStatePropertyAll(Colors.white),
-                          activeTrackColor: AppColors.primary,
-                          dense: true,
-                          onChanged: (value) {
-                            context
-                                .read<NotificationSettingsCubit>()
-                                .toggleSetting(entry.key);
-                          },
-                        ),
-                        const Divider()
-                      ],
-                    );
-                  }).toList(),
-                );
-              }
-              return const Center(child: CircularProgressIndicator());
-            },
-          ),
-        ));
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child:
+            BlocBuilder<NotificationSettingsCubit, NotificationSettingsState>(
+              builder: (context, state) {
+                if (state is NotificationSettingsLoaded) {
+                  return ListView(
+                    children:
+                        state.settings.entries.map((entry) {
+                          return Column(
+                            children: [
+                              SwitchListTile(
+                                title: Text(
+                                  entry.key,
+                                  style: TextStyles.accountLabels.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                value: entry.value,
+                                activeColor: AppColors.primary,
+                                thumbColor: const WidgetStatePropertyAll(
+                                  Colors.white,
+                                ),
+                                activeTrackColor: AppColors.primary,
+                                dense: true,
+                                onChanged: (value) {
+                                  context
+                                      .read<NotificationSettingsCubit>()
+                                      .toggleSetting(entry.key);
+                                },
+                              ),
+                              const Divider(),
+                            ],
+                          );
+                        }).toList(),
+                  );
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+      ),
+    );
   }
 }

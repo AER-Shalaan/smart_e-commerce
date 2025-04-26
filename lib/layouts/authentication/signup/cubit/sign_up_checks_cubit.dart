@@ -9,12 +9,15 @@ class SignUpChecksCubit extends Cubit<SignUpChecksState> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
 
   final FocusNode firstNameFocusNode = FocusNode();
   final FocusNode lastNameFocusNode = FocusNode();
   final FocusNode emailFocusNode = FocusNode();
+  final FocusNode phoneFoucsNode = FocusNode();
+
   final FocusNode passFocusNode = FocusNode();
   final FocusNode confirmPassFocusNode = FocusNode();
   void validateFirstName(String value) {
@@ -50,6 +53,17 @@ class SignUpChecksCubit extends Cubit<SignUpChecksState> {
     );
   }
 
+  void validatePhone(String value) {
+    emit(
+      state.copyWith(
+        isPhoneCheck:
+            value.isNotEmpty && RegExp(Constants.phoneRegExp).hasMatch(value),
+        isWrongPhone:
+            value.isEmpty || !RegExp(Constants.phoneRegExp).hasMatch(value),
+      ),
+    );
+  }
+
   void validatePassword(String value) {
     emit(
       state.copyWith(
@@ -77,6 +91,19 @@ class SignUpChecksCubit extends Cubit<SignUpChecksState> {
   void toggleConfirmPasswordVisibility() {
     emit(
       state.copyWith(isConfirmPasswordObscure: !state.isConfirmPasswordObscure),
+    );
+  }
+
+  void resetPassData() {
+    passController.clear();
+    confirmPassController.clear();
+    emit(
+      state.copyWith(
+        isConfirmPassCheck: false,
+        isPassCheck: false,
+        isWrongPass: false,
+        isWrongConfirmPass: false,
+      ),
     );
   }
 }

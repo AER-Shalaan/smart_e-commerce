@@ -39,7 +39,8 @@ class SignUpForm extends StatelessWidget {
             ].where((text) => text.isNotEmpty).join(' '),
             email: signUpChecksCubit.emailController.text,
             password: signUpChecksCubit.passController.text,
-            phone: "01559296111",
+            phone: signUpChecksCubit.phoneController.text,
+            ///// Farag 'll delete this later ///////
             location: "Maddi",
           ),
           const SizedBox(height: 24),

@@ -7,10 +7,7 @@ class BodyTitles extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
+      child: Text(title, style: Theme.of(context).textTheme.bodyMedium),
     );
   }
 }

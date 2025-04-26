@@ -36,11 +36,7 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-          child: OnBoardingPageView(
-            pageController: pageController,
-          ),
-        ),
+        Expanded(child: OnBoardingPageView(pageController: pageController)),
         const SizedBox(height: 30),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +44,9 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
             OnboardingLoginButton(
               onTap: () {
                 Navigator.pushReplacementNamed(
-                    context, Routes.loginViewRouteName);
+                  context,
+                  Routes.loginViewRouteName,
+                );
               },
               isLogin: true,
             ),
@@ -56,7 +54,9 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
             OnboardingLoginButton(
               onTap: () {
                 Navigator.pushReplacementNamed(
-                    context, Routes.signUpViewRouteName);
+                  context,
+                  Routes.signUpViewRouteName,
+                );
               },
               isLogin: false,
             ),
@@ -69,20 +69,22 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
             Visibility(
               visible: currentPage != 0,
               child: ElevatedButton(
-                onPressed: currentPage == 0
-                    ? null
-                    : () {
-                        pageController.animateToPage(
-                          currentPage - 1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeOut,
-                        );
-                      },
+                onPressed:
+                    currentPage == 0
+                        ? null
+                        : () {
+                          pageController.animateToPage(
+                            currentPage - 1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
+                        },
                 style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    padding: const EdgeInsets.all(16),
-                    overlayColor: Colors.white.withOpacity(0.3)),
+                  shape: const CircleBorder(),
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  padding: const EdgeInsets.all(16),
+                  overlayColor: Colors.white.withOpacity(0.3),
+                ),
                 child: Icon(
                   Icons.arrow_back_ios_rounded,
                   size: MediaQuery.sizeOf(context).width * 0.05,
@@ -116,10 +118,11 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    padding: const EdgeInsets.all(16),
-                    overlayColor: Colors.white.withOpacity(0.3)),
+                  shape: const CircleBorder(),
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  padding: const EdgeInsets.all(16),
+                  overlayColor: Colors.white.withOpacity(0.3),
+                ),
                 child: Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: MediaQuery.sizeOf(context).width * 0.05,

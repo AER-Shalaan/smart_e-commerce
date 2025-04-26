@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisements/adv_widget_builder.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisements/provider/adv_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisments2/adv_widget_builder2.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/best_seller/beast_seller_widget_buider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/best_seller/best_seller_widget_buider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/category_widget_builder.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/featured%20_product/featured%20_product_widget_builder.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/new_arrivals/new_arrivals_widget_builder.dart';
@@ -43,12 +43,23 @@ class _HomeTabBodyState extends State<HomeTabBody> {
         const SliverSizedBoxSpace(height: 30),
         SliverToBoxAdapter(child: RecommendedWidgetBuilder()),
         const SliverSizedBoxSpace(height: 30),
-        SliverToBoxAdapter(child: BeastSellerWidgetBuider()),
+        SliverToBoxAdapter(
+          child: BestSellerWidgetBuider(
+            token: widget.token,
+            userId: widget.userId,
+          ),
+        ),
         const SliverSizedBoxSpace(height: 30),
-        SliverToBoxAdapter(child: NewArrivalsWidgetBuilder()),
+        SliverToBoxAdapter(child: NewArrivalsWidgetBuilder(
+          token: widget.token,
+          userId: widget.userId,
+        )),
         const SliverSizedBoxSpace(height: 30),
         SliverToBoxAdapter(
-          child: TopRatedProductWidgetBuilder(token: widget.token, userId: widget.userId,),
+          child: TopRatedProductWidgetBuilder(
+            token: widget.token,
+            userId: widget.userId,
+          ),
         ),
         const SliverSizedBoxSpace(height: 30),
         const AdvWidgetBuilder2(),

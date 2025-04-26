@@ -19,7 +19,7 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
     super.didChangeDependencies();
     _extractUserId();
   }
-  
+
   void _extractUserId() {
     final String? receivedToken =
         ModalRoute.of(context)!.settings.arguments as String?;
@@ -51,10 +51,7 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
             ],
           );
         } else {
-          return HomeViewMobileLayout(
-            token: token ?? "",
-            userId: userId ?? '',
-          );
+          return HomeViewMobileLayout(token: token ?? "", userId: userId ?? '');
         }
       },
     );

@@ -1,159 +1,198 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
+import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
 
-class ItemWidget extends StatelessWidget {
+class ItemWidget extends StatefulWidget {
   const ItemWidget({
     super.key,
-    required this.imagePath,
-    required this.title,
-    required this.price,
-    required this.descount,
-    required this.rate,
-    required this.reviewersCount,
-    required this.productId,
-    required this.token, required this.userId,
+    required this.productData,
+    required this.token,
+    required this.userId,
   });
-  final String productId;
+
+  final ProductsData productData;
   final String token;
   final String userId;
-  final String imagePath;
-  final String title;
-  final String price;
-  final String descount;
-  final String rate;
-  final String reviewersCount;
+
+  @override
+  State<ItemWidget> createState() => _ItemWidgetState();
+}
+
+class _ItemWidgetState extends State<ItemWidget> {
+  double _scale = 1.0;
+  double _elevation = 2;
+
+  void _onTapDown(_) {
+    setState(() {
+      _scale = 0.97;
+      _elevation = 8;
+    });
+    HapticFeedback.lightImpact();
+  }
+
+  void _onTapUp(_) {
+    setState(() {
+      _scale = 1.0;
+      _elevation = 2;
+    });
+  }
+
+  void _onTapCancel() {
+    setState(() {
+      _scale = 1.0;
+      _elevation = 2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
-    return InkWell(
-      enableFeedback: false,
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          Routes.productDetailsView,
-          arguments: [productId, token,userId],
-        );
-      },
-      child: Container(
-        width: width >= 600 ? 280 : 240,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: Colors.white,
+    return AnimatedScale(
+      scale: _scale,
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeOut,
+      child: Material(
+        elevation: _elevation,
+        borderRadius: BorderRadius.circular(15),
+        shadowColor: Colors.black.withAlpha(25),
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.productDetailsView,
+              arguments: [
+                widget.productData.itemID,
+                widget.token,
+                widget.userId,
+              ],
+            );
+          },
+          onTapDown: _onTapDown,
+          onTapUp: _onTapUp,
+          onTapCancel: _onTapCancel,
+          splashColor: Colors.grey.withAlpha(50),
+          highlightColor: Colors.transparent,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.grey[300]!),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              spreadRadius: 2,
-              offset: const Offset(0, 5),
+          child: Container(
+            width: width >= 600 ? 280 : 240,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: Colors.grey[300]!),
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                ),
-                child: Image.network(
-                  imagePath,
-                  fit: BoxFit.contain,
-                  width: double.infinity,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Center(
-                      child: Icon(
-                        Icons.broken_image,
-                        size: 50,
-                        color: Colors.grey,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.secondary,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    child: Image.network(
+                      widget.productData.imageCover ?? "",
+                      fit: BoxFit.contain,
+                      width: double.infinity,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Center(
+                          child: Icon(
+                            Icons.broken_image,
+                            size: 50,
+                            color: Colors.grey,
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                  const SizedBox(height: 4),
-                  Row(
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "\$ $price",
-                        style: const TextStyle(
-                          color: Colors.black87,
+                        widget.productData.itemName ?? "",
+                        style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(width: 6),
-                      if (descount != "0.0")
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 6,
-                            vertical: 2,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.redAccent,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text(
-                            "-$descount%",
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Text(
+                            "\$ ${widget.productData.priceOut}",
                             style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ),
+                          const SizedBox(width: 6),
+                          if (widget.productData.discount != 0)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                "-${widget.productData.discount}%",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            Assets.assetsIconsStarIcon,
+                            width: 18,
+                            height: 18,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            "${widget.productData.rate}",
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14,
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            "(${widget.productData.viewCount} Reviews)",
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        Assets.assetsIconsStarIcon,
-                        width: 18,
-                        height: 18,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        "$rate ",
-                        style: TextStyle(color: Colors.grey[700], fontSize: 14),
-                      ),
-                      const Spacer(),
-                      Text(
-                        "($reviewersCount Reviews)",
-                        style: TextStyle(color: Colors.grey[700], fontSize: 14),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

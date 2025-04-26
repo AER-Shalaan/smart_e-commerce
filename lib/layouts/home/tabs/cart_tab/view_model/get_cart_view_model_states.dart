@@ -1,8 +1,6 @@
 import 'package:smart_ecommerce/data/models/cart_model/CartModel.dart';
 
-abstract class GetCartViewModelStates {
-  
-}
+abstract class GetCartViewModelStates {}
 
 class GetCartViewModelInitial extends GetCartViewModelStates {}
 

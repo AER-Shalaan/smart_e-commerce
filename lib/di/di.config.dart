@@ -17,6 +17,10 @@ import '../data/data_source/home/cart_tap_data_source/add_to_cart_data_source.da
     as _i928;
 import '../data/data_source/home/cart_tap_data_source/get_cart_data_source.dart'
     as _i262;
+import '../data/data_source/home/home_tap_data_source/best_seller_data_source.dart'
+    as _i141;
+import '../data/data_source/home/home_tap_data_source/new_arrivals_data_source.dart'
+    as _i354;
 import '../data/data_source/home/home_tap_data_source/top_rated_data_source.dart'
     as _i359;
 import '../data/data_source/home/product_details_data_source/product_details_data.dart'
@@ -27,6 +31,10 @@ import '../data/data_source_impl/home/cart_tap_data_source_impl/add_tap_data_sou
     as _i530;
 import '../data/data_source_impl/home/cart_tap_data_source_impl/get_cart_data_source_impl.dart'
     as _i114;
+import '../data/data_source_impl/home/home_tap_data_source_impl/most_selling_data_source_impl.dart'
+    as _i543;
+import '../data/data_source_impl/home/home_tap_data_source_impl/new_arrivals_data_source_impl.dart'
+    as _i765;
 import '../data/data_source_impl/home/home_tap_data_source_impl/top_rated_data_source_impl.dart'
     as _i22;
 import '../data/data_source_impl/home/product_details_data_source_impl/product_details_data_source.dart'
@@ -43,6 +51,10 @@ import '../layouts/home/layouts/product_details/veiw_model/product_details_view_
     as _i869;
 import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart'
     as _i153;
+import '../layouts/home/tabs/home_tab/widgets/best_seller/view_model/best_seller_view_model.dart'
+    as _i860;
+import '../layouts/home/tabs/home_tab/widgets/new_arrivals/view_model/new_arrivals_view_model.dart'
+    as _i322;
 import '../layouts/home/tabs/home_tab/widgets/top_rated_product/view_model/top_rated_view_model.dart'
     as _i409;
 
@@ -56,6 +68,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i993.ApiManger>(() => _i993.ApiManger());
     gh.factory<_i125.SignUpDataSource>(
       () => _i764.SignUpDataSourceImpl(gh<_i993.ApiManger>()),
+    );
+    gh.factory<_i354.NewArrivalsDataSource>(
+      () => _i765.NewArrivalsDataSourceImpl(gh<_i993.ApiManger>()),
     );
     gh.factory<_i153.LoginDataSource>(
       () => _i335.LoginDataSourceImpl(gh<_i993.ApiManger>()),
@@ -71,6 +86,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i688.ProductDetailsDataSource>(
       () => _i489.ProductDetailsDataSourceImpl(gh<_i993.ApiManger>()),
+    );
+    gh.factory<_i141.BestSellerDataSource>(
+      () => _i543.MostSellingDataSourceImpl(gh<_i993.ApiManger>()),
     );
     gh.factory<_i409.TopRatedViewModel>(
       () => _i409.TopRatedViewModel(gh<_i359.TopRatedDataSource>()),
@@ -89,6 +107,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i153.GetCartViewModel>(
       () => _i153.GetCartViewModel(gh<_i262.GetCartDataSource>()),
+    );
+    gh.factory<_i860.BestSellerViewModel>(
+      () => _i860.BestSellerViewModel(gh<_i141.BestSellerDataSource>()),
+    );
+    gh.factory<_i322.NewArrivalsViewModel>(
+      () => _i322.NewArrivalsViewModel(gh<_i354.NewArrivalsDataSource>()),
     );
     return this;
   }

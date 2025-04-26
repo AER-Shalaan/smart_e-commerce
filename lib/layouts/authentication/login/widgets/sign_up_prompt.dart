@@ -27,11 +27,14 @@ class SignUpPrompt extends StatelessWidget {
               fontSize: 16,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                Navigator.pushReplacementNamed(
-                    context, Routes.signUpViewRouteName);
-              },
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      Routes.signUpViewRouteName,
+                    );
+                  },
           ),
         ],
       ),

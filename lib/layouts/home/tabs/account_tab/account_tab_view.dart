@@ -35,12 +35,6 @@ class AccountTabView extends StatelessWidget {
         ),
         const Divider(indent: 25, endIndent: 25, color: Colors.black26),
         const WideArrowButton(
-          label: 'Payment Methods',
-          imagePath: Assets.assetsIconsCard,
-          routeName: Routes.paymentMethodsViewRouteName,
-        ),
-        const Divider(indent: 25, endIndent: 25, color: Colors.black26),
-        const WideArrowButton(
           label: 'Notifications',
           imagePath: Assets.assetsIconsBell,
           routeName: Routes.notificationsViewRouteName,

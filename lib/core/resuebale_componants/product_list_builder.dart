@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/body_titles.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/item_widget.dart';
-import 'package:smart_ecommerce/data/models/top_rated_products_model/TopRatedModel.dart';
+import 'package:smart_ecommerce/data/models/home_models/produdts_model/Products.dart';
 
 class ProductListBuilder extends StatelessWidget {
   const ProductListBuilder({
@@ -9,11 +9,12 @@ class ProductListBuilder extends StatelessWidget {
     required this.label,
     required this.products,
     required this.index,
-    required this.token, required this.userId,
+    required this.token,
+    required this.userId,
   });
 
   final String label;
-  final List<TopRatedModel> products;
+  final List<Products> products;
   final int index;
   final String token;
   final String userId;
@@ -32,16 +33,11 @@ class ProductListBuilder extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             itemCount: index,
             itemBuilder: (context, index) {
-              final product = products[index];
+              final product = products[index].data;
               return ItemWidget(
-                imagePath: product.imageCover ?? "",
-                title: product.itemName ?? "",
-                price: product.priceOut.toString() ?? "",
-                descount: product.discount.toString() ?? "",
-                rate: product.rate.toString() ?? "",
-                reviewersCount: product.quantity.toString() ?? "",
+                productData: product!,
                 token: token,
-                productId: product.itemID ?? "", userId:userId ,
+                userId: userId,
               );
             },
             separatorBuilder: (context, index) => const SizedBox(width: 20),

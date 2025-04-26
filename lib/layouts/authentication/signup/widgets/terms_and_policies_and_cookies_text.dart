@@ -25,9 +25,7 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-
-            },
+            recognizer: TapGestureRecognizer()..onTap = () {},
           ),
           TextSpan(
             text: ', ',
@@ -42,9 +40,7 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-
-            },
+            recognizer: TapGestureRecognizer()..onTap = () {},
           ),
           TextSpan(
             text: ', and ',
@@ -62,9 +58,11 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-              // Reset password functionality
-            },
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    // Reset password functionality
+                  },
           ),
         ],
       ),

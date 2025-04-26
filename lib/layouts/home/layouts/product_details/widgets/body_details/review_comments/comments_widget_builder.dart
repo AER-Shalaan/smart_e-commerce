@@ -7,10 +7,9 @@ class CommentsWidgetBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList.separated(
-        itemBuilder: (context, index) => const CommentsWidget(),
-        separatorBuilder: (context, index) => const SizedBox(
-              height: 16,
-            ),
-        itemCount: 5);
+      itemBuilder: (context, index) => const CommentsWidget(),
+      separatorBuilder: (context, index) => const SizedBox(height: 16),
+      itemCount: 5,
+    );
   }
 }

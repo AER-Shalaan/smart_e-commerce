@@ -17,9 +17,9 @@ class MyOrdersView extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final isSmallScreen = screenWidth < 400;
 
-    context
-        .read<OrdersCubit>()
-        .changeStatus(context.read<OrdersCubit>().selectedIndex);
+    context.read<OrdersCubit>().changeStatus(
+      context.read<OrdersCubit>().selectedIndex,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -46,8 +46,9 @@ class MyOrdersView extends StatelessWidget {
                 selector: (state) => state.selectedIndex,
                 builder: (context, selectedIndex) {
                   return ToggleButtons(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(screenWidth * 0.03)),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(screenWidth * 0.03),
+                    ),
                     selectedBorderColor: Colors.transparent,
                     borderColor: Colors.transparent,
                     fillColor: Colors.white,
@@ -63,10 +64,14 @@ class MyOrdersView extends StatelessWidget {
                       context.read<OrdersCubit>().changeStatus(index);
                     },
                     children: [
-                      Text("Ongoing",
-                          style: TextStyle(fontSize: isSmallScreen ? 12 : 14)),
-                      Text("Completed",
-                          style: TextStyle(fontSize: isSmallScreen ? 12 : 14)),
+                      Text(
+                        "Ongoing",
+                        style: TextStyle(fontSize: isSmallScreen ? 12 : 14),
+                      ),
+                      Text(
+                        "Completed",
+                        style: TextStyle(fontSize: isSmallScreen ? 12 : 14),
+                      ),
                     ],
                   );
                 },
@@ -85,26 +90,25 @@ class MyOrdersView extends StatelessWidget {
                         Assets.assetsIconsBox,
                         height: screenHeight * 0.1,
                         colorFilter: const ColorFilter.mode(
-                            Colors.grey, BlendMode.srcIn),
+                          Colors.grey,
+                          BlendMode.srcIn,
+                        ),
                       ),
-                      SizedBox(
-                        height: screenHeight * 0.02,
-                      ),
+                      SizedBox(height: screenHeight * 0.02),
                       Text(
                         "No Ongoing Orders!",
-                        style: TextStyles.headlineStyle
-                            .copyWith(fontSize: isSmallScreen ? 18 : 20),
+                        style: TextStyles.headlineStyle.copyWith(
+                          fontSize: isSmallScreen ? 18 : 20,
+                        ),
                       ),
-                      SizedBox(
-                        height: screenHeight * 0.01,
-                      ),
+                      SizedBox(height: screenHeight * 0.01),
                       Text(
                         "You don’t have any ongoing orders\nat this time.",
                         textAlign: TextAlign.center,
                         style: TextStyles.accountLabels.copyWith(
                           color: Colors.grey,
                         ),
-                      )
+                      ),
                     ],
                   );
                 } else if (state.selectedIndex == 1 && state.orders.isEmpty) {
@@ -116,26 +120,25 @@ class MyOrdersView extends StatelessWidget {
                         Assets.assetsIconsBox,
                         height: screenHeight * 0.1,
                         colorFilter: const ColorFilter.mode(
-                            Colors.grey, BlendMode.srcIn),
+                          Colors.grey,
+                          BlendMode.srcIn,
+                        ),
                       ),
-                      SizedBox(
-                        height: screenHeight * 0.02,
-                      ),
+                      SizedBox(height: screenHeight * 0.02),
                       Text(
                         "No Completed Orders!",
-                        style: TextStyles.headlineStyle
-                            .copyWith(fontSize: isSmallScreen ? 18 : 20),
+                        style: TextStyles.headlineStyle.copyWith(
+                          fontSize: isSmallScreen ? 18 : 20,
+                        ),
                       ),
-                      SizedBox(
-                        height: screenHeight * 0.01,
-                      ),
+                      SizedBox(height: screenHeight * 0.01),
                       Text(
                         "You don’t have any Completed orders\nfor now.",
                         textAlign: TextAlign.center,
                         style: TextStyles.accountLabels.copyWith(
                           color: Colors.grey,
                         ),
-                      )
+                      ),
                     ],
                   );
                 }

@@ -13,15 +13,15 @@ class ProductsDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String>? data =
-        ModalRoute.of(context)!.settings.arguments as List<String>?;
+    final List<String?> data =
+        ModalRoute.of(context)!.settings.arguments as List<String?>;
 
     return BlocProvider(
       create:
           (context) =>
               getIt<ProductDetailsViewModel>()..getProductDetails(
-                productId: data?[0] ?? "",
-                token: data?[1] ?? "",
+                productId: data[0] ?? "",
+                token: data[1] ?? "",
               ),
       child: BlocProvider(
         create: (context) => getIt<AddToCartViewModel>(),
@@ -30,8 +30,9 @@ class ProductsDetailsView extends StatelessWidget {
           appBar: productDetailsViewAppBar(context),
           body: const ProductDetailsViewBody(),
           bottomNavigationBar: ProductDetailsNavBar(
-            token: data?[1] ?? "",
-            productId: data?[0] ?? "", userId: data?[2] ?? "",
+            token: data[1] ?? "",
+            productId: data[0] ?? "",
+            userId: data[2] ?? "",
           ),
         ),
       ),

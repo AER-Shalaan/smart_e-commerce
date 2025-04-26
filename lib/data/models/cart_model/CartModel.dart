@@ -1,12 +1,13 @@
 class CartModel {
   CartModel({
-      this.itemID, 
-      this.itemName, 
-      this.imageCover, 
-      this.priceOut, 
-      this.quantity, 
-      this.categoryName, 
-      this.subCategoryName,});
+    this.itemID,
+    this.itemName,
+    this.imageCover,
+    this.priceOut,
+    this.quantity,
+    this.categoryName,
+    this.subCategoryName,
+  });
 
   CartModel.fromJson(dynamic json) {
     itemID = json['Item_ID'];
@@ -36,5 +37,4 @@ class CartModel {
     map['Sub_Category_Name'] = subCategoryName;
     return map;
   }
-
 }

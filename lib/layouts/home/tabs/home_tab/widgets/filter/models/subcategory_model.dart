@@ -16,16 +16,36 @@ class Subcategory {
 
   static List<Subcategory> dummySubcategories = [
     Subcategory(
-        id: 1, name: 'Smart Phones', categoryId: 1, icon: Icons.phone_android),
+      id: 1,
+      name: 'Smart Phones',
+      categoryId: 1,
+      icon: Icons.phone_android,
+    ),
     Subcategory(id: 2, name: 'Laptops', categoryId: 1, icon: Icons.laptop),
     Subcategory(
-        id: 3, name: 'Shirts', categoryId: 2, icon: FontAwesomeIcons.shirt),
+      id: 3,
+      name: 'Shirts',
+      categoryId: 2,
+      icon: FontAwesomeIcons.shirt,
+    ),
     Subcategory(
-        id: 4, name: 'Headphones', categoryId: 1, icon: Icons.headphones),
+      id: 4,
+      name: 'Headphones',
+      categoryId: 1,
+      icon: Icons.headphones,
+    ),
     Subcategory(
-        id: 5, name: 'Socks', categoryId: 2, icon: FontAwesomeIcons.socks),
+      id: 5,
+      name: 'Socks',
+      categoryId: 2,
+      icon: FontAwesomeIcons.socks,
+    ),
     Subcategory(
-        id: 6, name: 'Couches', categoryId: 3, icon: FontAwesomeIcons.couch),
+      id: 6,
+      name: 'Couches',
+      categoryId: 3,
+      icon: FontAwesomeIcons.couch,
+    ),
     Subcategory(id: 7, name: 'Beds', categoryId: 3, icon: FontAwesomeIcons.bed),
     Subcategory(id: 8, name: 'Tablets', categoryId: 1, icon: Icons.tablet),
   ];

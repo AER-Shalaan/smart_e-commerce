@@ -8,7 +8,8 @@ class WideArrowButton extends StatelessWidget {
   final String label;
   final String routeName;
 
-  const WideArrowButton({super.key,
+  const WideArrowButton({
+    super.key,
     required this.imagePath,
     required this.label,
     required this.routeName,
@@ -24,23 +25,24 @@ class WideArrowButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(25),
         child: Row(
-         children: [
-           SvgPicture.asset(
-             imagePath,
+          children: [
+            SvgPicture.asset(
+              imagePath,
               height: 24,
-             colorFilter: const ColorFilter.mode(AppColors.primary, BlendMode.srcIn),
-           ),
-           const SizedBox(
-             width: 16,
-           ),
-           Text(label, style:TextStyles.accountLabels),
-           const Spacer(),
+              colorFilter: const ColorFilter.mode(
+                AppColors.primary,
+                BlendMode.srcIn,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Text(label, style: TextStyles.accountLabels),
+            const Spacer(),
             const Icon(
-             color: AppColors.primary,
-             Icons.arrow_forward_ios_sharp,
-             size: 24,
-           )
-         ],
+              color: AppColors.primary,
+              Icons.arrow_forward_ios_sharp,
+              size: 24,
+            ),
+          ],
         ),
       ),
     );
