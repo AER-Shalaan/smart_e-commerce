@@ -19,7 +19,6 @@ class SignUpViewModel extends Cubit<SignUpState> {
     String email,
     String phone,
     String password,
-    String location,
     BuildContext context,
   ) async {
     emit(SignUpLoadingState());
@@ -29,7 +28,6 @@ class SignUpViewModel extends Cubit<SignUpState> {
       email: email,
       phone: phone,
       password: password,
-      location: location,
     );
 
     response.fold(

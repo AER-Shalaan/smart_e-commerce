@@ -40,8 +40,6 @@ class SignUpForm extends StatelessWidget {
             email: signUpChecksCubit.emailController.text,
             password: signUpChecksCubit.passController.text,
             phone: signUpChecksCubit.phoneController.text,
-            ///// Farag 'll delete this later ///////
-            location: "Maddi",
           ),
           const SizedBox(height: 24),
           const SocialSignUpButtons(),

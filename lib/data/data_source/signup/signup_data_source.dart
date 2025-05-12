@@ -7,6 +7,5 @@ abstract class SignUpDataSource {
     required String email,
     required String phone,
     required String password,
-    required String location,
   });
 }

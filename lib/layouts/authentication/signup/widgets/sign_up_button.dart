@@ -12,14 +12,12 @@ class SignUpButton extends StatelessWidget {
   final String email;
   final String password;
   final String phone;
-  final String location;
   const SignUpButton({
     super.key,
     required this.formKey,
     required this.buyerName,
     required this.email,
     required this.password,
-    required this.location,
     required this.phone,
   });
 
@@ -62,7 +60,6 @@ class SignUpButton extends StatelessWidget {
                 email,
                 phone,
                 password,
-                location,
                 context,
               );
             }

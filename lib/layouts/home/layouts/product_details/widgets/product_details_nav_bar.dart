@@ -105,6 +105,7 @@ class ProductDetailsNavBar extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                //TODO : Add to compare
                 // onAddToCompare(product);
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   SnackBar(content: Text("${product['name']} added to comparison")),
