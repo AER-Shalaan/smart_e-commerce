@@ -29,7 +29,7 @@ class LoginView extends StatelessWidget {
         if (state is LoginSuccessState) {
           LoginModel loginModel = state.loginModel;
           SharedPreferencesFunctions.saveToken(loginModel.token.toString());
-
+          context.read<LoginChecksCubit>().resetLoginData();
           Future.delayed(
             const Duration(seconds: 1),
             () => Navigator.pushNamedAndRemoveUntil(

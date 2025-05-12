@@ -66,8 +66,6 @@ class AccountTabView extends StatelessWidget {
                 cancelLabel: 'No, Cancel',
                 confirmationColor: Colors.red,
                 onConfirm: () {
-                  //TODo make reset sign in data
-                  context.read<LoginChecksCubit>().resetLoginData();
                   SharedPreferencesFunctions.clearToken();
                   Navigator.pushNamedAndRemoveUntil(
                     context,

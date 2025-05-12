@@ -31,6 +31,7 @@ class SignUpView extends StatelessWidget {
         if (state is SignUpSuccessState) {
           SignUpModel signUpModel = state.signUpModel;
           SharedPreferencesFunctions.saveToken(signUpModel.token.toString());
+          context.read<SignUpChecksCubit>().resetSignUpData();
           Future.delayed(
             const Duration(seconds: 1),
             () => Navigator.pushNamedAndRemoveUntil(

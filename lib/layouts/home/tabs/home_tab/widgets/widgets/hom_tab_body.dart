@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisements/adv_widget_builder.dart';
@@ -23,7 +22,6 @@ class _HomeTabBodyState extends State<HomeTabBody> {
   @override
   void initState() {
     super.initState();
-    log(widget.token);
   }
 
   @override

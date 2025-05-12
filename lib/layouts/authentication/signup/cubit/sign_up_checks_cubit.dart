@@ -106,4 +106,24 @@ class SignUpChecksCubit extends Cubit<SignUpChecksState> {
       ),
     );
   }
+
+  void resetSignUpData() {
+    firstNameController.clear();
+    lastNameController.clear();
+    emailController.clear();
+    phoneController.clear();
+    resetPassData();
+    emit(
+      state.copyWith(
+        isFNCheck: false,
+        isLNCheck: false,
+        isEmailCheck: false,
+        isPhoneCheck: false,
+        isWrongFirstName: false,
+        isWrongLastName: false,
+        isWrongEmail: false,
+        isWrongPhone: false,
+      ),
+    );
+  }
 }
