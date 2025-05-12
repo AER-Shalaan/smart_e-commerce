@@ -23,8 +23,8 @@ class AddToCartViewModel extends Cubit<AddToCartViewModelStates> {
       userId: userId,
     );
     result.fold(
-      (l) => emit(AddToCartSuccessState(l)),
-      (r) => emit(AddToCartErrorState(r.toString())),
+      (failure) => emit(AddToCartErrorState(failure.message)),
+      (successMessage) => emit(AddToCartSuccessState(successMessage)),
     );
   }
 }

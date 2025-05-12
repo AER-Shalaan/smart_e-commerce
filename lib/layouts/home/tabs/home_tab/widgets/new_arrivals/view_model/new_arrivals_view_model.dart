@@ -18,8 +18,9 @@ class NewArrivalsViewModel extends Cubit<NewArrivalsViewModelStates> {
         .getNewArrivals(token: token)
         .then(
           (value) => value.fold(
-            (l) => emit(NewArrivalsSuccessState(l)),
-            (r) => emit(NewArrivalsErrorState(r)),
+            (failure) => emit(NewArrivalsErrorState(failure.message)),
+            (productList) => emit(NewArrivalsSuccessState(productList)),
+            
           ),
         );
   }

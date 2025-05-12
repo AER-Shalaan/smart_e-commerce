@@ -15,16 +15,18 @@ class ProductDetailsViewModel extends Cubit<ProductDetailsViewModelStates> {
     required String token,
   }) async {
     emit(ProductDetailsLoadingState());
+
     var response = await productDetailsDataSource.getProductDetails(
       productId: productId,
       token: token,
     );
+
     response.fold(
+      (failure) {
+        emit(ProductDetailsErrorState(failure.message));
+      },
       (productDetails) {
         emit(ProductDetailsSuccessState(productDetails));
-      },
-      (error) {
-        emit(ProductDetailsErrorState(error));
       },
     );
   }

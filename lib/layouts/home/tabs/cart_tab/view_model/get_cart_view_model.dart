@@ -16,8 +16,8 @@ class GetCartViewModel extends Cubit<GetCartViewModelStates> {
       userId: userId,
     );
     result.fold(
-      (l) => emit(GetCartViewModelSuccess(l)),
-      (r) => emit(GetCartViewModelError(r)),
+      (failure) => emit(GetCartViewModelError(failure.message)),
+      (cartList) => emit(GetCartViewModelSuccess(cartList)),
     );
   }
 }

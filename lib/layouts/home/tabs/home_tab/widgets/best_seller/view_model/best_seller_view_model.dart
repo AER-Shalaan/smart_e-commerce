@@ -18,8 +18,8 @@ class BestSellerViewModel extends Cubit<BestSellerViewModelStates> {
         .getMostSelling(token: token)
         .then(
           (value) => value.fold(
-            (l) => emit(BestSellerSuccessState(l)),
-            (r) => emit(BestSellerErrorState(r)),
+            (failure) => emit(BestSellerErrorState(failure.message)),
+            (productList) => emit(BestSellerSuccessState(productList)),
           ),
         );
   }

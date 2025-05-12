@@ -1,8 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import '../../core/utils/assets.dart';
 import '../../core/utils/routes.dart';
+import '../../config/shared_preferences.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -42,9 +45,20 @@ class _SplashViewState extends State<SplashView>
 
     _animationController.forward();
 
-    _animationController.addStatusListener((status) {
+    _animationController.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
-        Navigator.pushReplacementNamed(context, Routes.onBoardingRouteName);
+        final token = await SharedPreferencesFunctions.getToken();
+        final hasSeenOnboarding = await SharedPreferencesFunctions.hasSeenOnBoarding();
+
+        if (!hasSeenOnboarding) {
+          await SharedPreferencesFunctions.setOnBoardingSeen();
+          Navigator.pushReplacementNamed(context, Routes.onBoardingRouteName);
+        } else if (token != null && token.isNotEmpty && !JwtDecoder.isExpired(token)) {
+          Navigator.pushReplacementNamed(context, Routes.homeView);
+        } else {
+          await SharedPreferencesFunctions.clearToken();
+          Navigator.pushReplacementNamed(context, Routes.loginViewRouteName);
+        }
       }
     });
   }

@@ -39,19 +39,28 @@ class ServerFailure extends Failure {
       return ServerFailure('Unexpected error, please try again.');
     }
 
+    dynamic data = response.data;
+
+    String? message;
+
+    if (data is Map<String, dynamic>) {
+      message = data['error']?['message'] ??
+                data['message'] ??
+                data['error_description'] ??
+                data['detail'];
+    }
+
     switch (response.statusCode) {
       case 400:
       case 401:
       case 403:
-        return ServerFailure(
-          response.data?['error']['message'] ?? 'Authentication error.',
-        );
+        return ServerFailure(message ?? 'Authentication error.');
       case 404:
         return ServerFailure('Request not found, please try again later.');
       case 500:
         return ServerFailure('Internal server error, please try again later.');
       default:
-        return ServerFailure('Oops! An error occurred, please try again.');
+        return ServerFailure(message ?? 'Oops! An error occurred, please try again.');
     }
   }
 }

@@ -54,7 +54,7 @@ import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart'
 import '../layouts/home/tabs/home_tab/widgets/best_seller/view_model/best_seller_view_model.dart'
     as _i860;
 import '../layouts/home/tabs/home_tab/widgets/new_arrivals/view_model/new_arrivals_view_model.dart'
-    as _i322;
+    as _i585;
 import '../layouts/home/tabs/home_tab/widgets/top_rated_product/view_model/top_rated_view_model.dart'
     as _i409;
 
@@ -102,6 +102,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i55.SignUpViewModel>(
       () => _i55.SignUpViewModel(gh<_i125.SignUpDataSource>()),
     );
+    gh.factory<_i585.NewArrivalsViewModel>(
+      () => _i585.NewArrivalsViewModel(gh<_i354.NewArrivalsDataSource>()),
+    );
     gh.factory<_i869.ProductDetailsViewModel>(
       () => _i869.ProductDetailsViewModel(gh<_i688.ProductDetailsDataSource>()),
     );
@@ -110,9 +113,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i860.BestSellerViewModel>(
       () => _i860.BestSellerViewModel(gh<_i141.BestSellerDataSource>()),
-    );
-    gh.factory<_i322.NewArrivalsViewModel>(
-      () => _i322.NewArrivalsViewModel(gh<_i354.NewArrivalsDataSource>()),
     );
     return this;
   }

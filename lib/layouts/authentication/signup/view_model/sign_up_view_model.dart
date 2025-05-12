@@ -32,7 +32,7 @@ class SignUpViewModel extends Cubit<SignUpState> {
 
     response.fold(
       (error) {
-        emit(SignUpErrorState(error));
+        emit(SignUpErrorState(error.message));
       },
       (signUp) {
         if (signUp.message == "success") {
