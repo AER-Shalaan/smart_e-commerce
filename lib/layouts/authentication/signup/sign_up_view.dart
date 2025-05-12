@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/config/shared_preferences.dart';
@@ -29,7 +31,6 @@ class SignUpView extends StatelessWidget {
         if (state is SignUpSuccessState) {
           SignUpModel signUpModel = state.signUpModel;
           SharedPreferencesFunctions.saveToken(signUpModel.token.toString());
-
           Future.delayed(
             const Duration(seconds: 1),
             () => Navigator.pushNamedAndRemoveUntil(

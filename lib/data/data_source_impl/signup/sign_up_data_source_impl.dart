@@ -16,7 +16,6 @@ class SignUpDataSourceImpl extends SignUpDataSource {
     required String email,
     required String phone,
     required String password,
-    required String location,
   }) async {
     try {
       var response = await apiManger.postRequest(
@@ -26,7 +25,6 @@ class SignUpDataSourceImpl extends SignUpDataSource {
           "email": email,
           "phone": phone,
           "password": password,
-          "location": location,
         },
       );
       SignUpModel signUpModel = SignUpModel.fromJson(response.data);
