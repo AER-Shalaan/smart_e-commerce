@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:smart_ecommerce/config/shared_preferences.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import '../../../../core/resuebale_componants/dialogs.dart';
 import '../../../../core/resuebale_componants/wide_arrow_button.dart';
@@ -65,7 +66,9 @@ class AccountTabView extends StatelessWidget {
                 cancelLabel: 'No, Cancel',
                 confirmationColor: Colors.red,
                 onConfirm: () {
+                  //TODo make reset sign in data
                   context.read<LoginChecksCubit>().resetLoginData();
+                  SharedPreferencesFunctions.clearToken();
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     Routes.loginViewRouteName,

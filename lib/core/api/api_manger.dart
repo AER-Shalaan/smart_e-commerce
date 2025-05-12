@@ -1,54 +1,58 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-
+import 'api_helper.dart';
+import 'failure.dart';
 import '../constants.dart';
 
 @singleton
 class ApiManger {
   static late Dio dio;
+
   static init() {
     dio = Dio(
       BaseOptions(
         baseUrl: Constants.baseUrl,
-        // headers: {"Authorization": ""},
       ),
     );
   }
 
-  Future<Response> getRequest({
+  Future<Either<Failure, Response>> getRequest({
     required String endPoints,
     Map<String, dynamic>? queryParameters,
     required String token,
   }) async {
-    var response = await dio.get(
+    return await ApiHelper.safeGet(
+      dio,
       endPoints,
-      queryParameters: queryParameters,
-      options: Options(headers: {'Authorization': "Bearer $token"}),
+      queryParams: queryParameters,
+      headers: {'Authorization': "Bearer $token"},
     );
-
-    return response;
   }
 
-  Future<Response> postRequest({
+  Future<Either<Failure, Response>> postRequest({
     required String endPoints,
     Map<String, dynamic>? body,
   }) async {
-    var response = await dio.post(endPoints, data: body);
-    return response;
+    return await ApiHelper.safePost(
+      dio,
+      endPoints,
+      body: body,
+    );
   }
 
-  Future<Response> postRequestForHme({
+  Future<Either<Failure, Response>> postRequestForHme({
     required String endPoints,
     Map<String, dynamic>? body,
     required String token,
     Map<String, dynamic>? queryParameters,
   }) async {
-    var response = await dio.post(
+    return await ApiHelper.safePost(
+      dio,
       endPoints,
-      data: body,
-      options: Options(headers: {'Authorization': "Bearer $token"}),
-      queryParameters: queryParameters,
+      body: body,
+      headers: {'Authorization': "Bearer $token"},
+      queryParams: queryParameters,
     );
-    return response;
   }
 }

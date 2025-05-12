@@ -18,8 +18,8 @@ class TopRatedViewModel extends Cubit<TopRatedViewModelStates> {
         .getTopRated(token: token)
         .then(
           (value) => value.fold(
-            (l) => emit(TopRatedSuccessState(l)),
-            (r) => emit(TopRatedErrorState(r)),
+            (failure) => emit(TopRatedErrorState(failure.message)),
+            (productList) => emit(TopRatedSuccessState(productList)),
           ),
         );
   }
