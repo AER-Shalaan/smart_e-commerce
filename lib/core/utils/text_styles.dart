@@ -15,6 +15,13 @@ class TextStyles {
     color: AppColors.secondary,
     fontSize: 16,
   );
+
+  static TextStyle style14Simebold = GoogleFonts.dmSans(
+    fontWeight: FontWeight.w600,
+    color: AppColors.secondary,
+    fontSize: 14,
+  );
+
   static TextStyle filterBottomSheetTitles = GoogleFonts.dmSans(
     fontWeight: FontWeight.w600,
     color: AppColors.secondary,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_ecommerce/config/shared_preferences.dart';
+import 'package:smart_ecommerce/config/auth_session.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_states.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/view_model/login_view_model.dart';
@@ -26,10 +26,14 @@ class LoginView extends StatelessWidget {
               current is LoginLoadingState,
       listener: (context, state) async {
         CustomDialogs.closeDialogs(context);
+
         if (state is LoginSuccessState) {
-          LoginModel loginModel = state.loginModel;
-          SharedPreferencesFunctions.saveToken(loginModel.token.toString());
+          final LoginModel loginModel = state.loginModel;
+
+          await AuthSession.saveSession(loginModel.token.toString());
+
           context.read<LoginChecksCubit>().resetLoginData();
+
           Future.delayed(
             const Duration(seconds: 1),
             () => Navigator.pushNamedAndRemoveUntil(

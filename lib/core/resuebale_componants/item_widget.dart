@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
+import 'package:animate_do/animate_do.dart';
 
 class ItemWidget extends StatefulWidget {
   const ItemWidget({
@@ -74,7 +75,7 @@ class _ItemWidgetState extends State<ItemWidget> {
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,
           onTapCancel: _onTapCancel,
-          splashColor: Colors.grey.withAlpha(50),
+          splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
           highlightColor: Colors.transparent,
           borderRadius: BorderRadius.circular(15),
           child: Container(
@@ -98,7 +99,9 @@ class _ItemWidgetState extends State<ItemWidget> {
                       fit: BoxFit.contain,
                       width: double.infinity,
                       loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
+                        if (loadingProgress == null) {
+                          return FadeIn(child: child);
+                        }
                         return const Center(child: CircularProgressIndicator());
                       },
                       errorBuilder: (context, error, stackTrace) {
@@ -113,6 +116,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                     ),
                   ),
                 ),
+                //TODO: cheak price form farg 
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Column(
@@ -131,8 +135,18 @@ class _ItemWidgetState extends State<ItemWidget> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
+                          if (widget.productData.discount != 0)
+                            Text(
+                              "\$${widget.productData.priceOut}",
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                          const SizedBox(width: 6),
                           Text(
-                            "\$ ${widget.productData.priceOut}",
+                            "\$${widget.productData.priceIn}",
                             style: const TextStyle(
                               color: Colors.black87,
                               fontSize: 16,
@@ -168,6 +182,10 @@ class _ItemWidgetState extends State<ItemWidget> {
                             Assets.assetsIconsStarIcon,
                             width: 18,
                             height: 18,
+                            colorFilter: const ColorFilter.mode(
+                              Color(0xFFFFC107),
+                              BlendMode.srcIn,
+                            ),
                           ),
                           const SizedBox(width: 4),
                           Text(

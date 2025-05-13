@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/AppSnackBar.dart';
 import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/otp/pin_input_form.dart';
 import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/otp/resend_code_text.dart';
 import '../../../../core/resuebale_componants/custom_main_button.dart';
@@ -79,65 +80,20 @@ class _OtpState extends State<Otp> {
                     Navigator.pushNamed(context, Routes.resetPasswordRouteName);
                     //TODO: respond from Farag
                   } else if (pinController.text == "") {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Row(
-                          children: [
-                            Icon(Icons.error_outline, color: Colors.white),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                "OTP Can't be empty!",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                        backgroundColor: Colors.redAccent,
-                        behavior: SnackBarBehavior.floating,
-                        duration: const Duration(seconds: 2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        margin: const EdgeInsets.all(20),
-                      ),
+                    return AppSnackBar.show(
+                      context: context,
+                      message: "OTP Can't be empty!",
+                      icon: Icons.error_outline,
+                      backgroundColor: Colors.redAccent,
+                      fromTop: false,
                     );
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Row(
-                          children: [
-                            Icon(Icons.error_outline, color: Colors.white),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                "Invalid OTP! Please check the code and try again.",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                        backgroundColor: Colors.redAccent,
-                        behavior: SnackBarBehavior.floating,
-                        duration: const Duration(seconds: 2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 10,
-                        ),
-                      ),
+                    return AppSnackBar.show(
+                      context: context,
+                      message: "Wrong OTP!",
+                      icon: Icons.error_outline,
+                      backgroundColor: Colors.redAccent,
+                      fromTop: false,
                     );
                   }
                 },

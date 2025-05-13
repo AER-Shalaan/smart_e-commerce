@@ -34,7 +34,7 @@ class _CarouselImageState extends State<CarouselImage> {
                     height: imageHeight,
                     enableInfiniteScroll: true,
                     autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayInterval: const Duration(seconds: 2),
                     autoPlayAnimationDuration: const Duration(
                       milliseconds: 800,
                     ),
