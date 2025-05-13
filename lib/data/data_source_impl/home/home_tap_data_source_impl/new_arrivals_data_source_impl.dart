@@ -17,15 +17,12 @@ class NewArrivalsDataSourceImpl extends NewArrivalsDataSource {
   @override
   Future<Either<Failure, List<Products>>> getNewArrivals({
     required String token,
+    required int page,
   }) async {
     final result = await apiManger.getRequest(
       endPoints: EndPoints.getFilteredProducts,
       token: token,
-      queryParameters: {
-        "pageNumber": 1,
-        "pageSize": 25,
-        "newwest": true,
-      },
+      queryParameters: {"pageNumber": page, "pageSize": 10, "newwest": true},
     );
 
     return result.map((response) {

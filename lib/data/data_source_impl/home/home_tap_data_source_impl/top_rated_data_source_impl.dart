@@ -17,11 +17,12 @@ class TopRatedDataSourceImpl extends TopRatedDataSource {
   @override
   Future<Either<Failure, List<Products>>> getTopRated({
     required String token,
+    required int page,
   }) async {
     final result = await apiManger.getRequest(
       endPoints: EndPoints.getFilteredProducts,
       token: token,
-      queryParameters: {"pageNumber": 1, "pageSize": 25, "maxRate": 5},
+      queryParameters: {"pageNumber": page, "pageSize": 10, "maxRate": 5},
     );
 
     return result.map((response) {

@@ -17,15 +17,12 @@ class MostSellingDataSourceImpl extends BestSellerDataSource {
   @override
   Future<Either<Failure, List<Products>>> getMostSelling({
     required String token,
+    required int page,
   }) async {
     final result = await apiManger.getRequest(
       endPoints: EndPoints.getFilteredProducts,
       token: token,
-      queryParameters: {
-        "pageNumber": 1,
-        "pageSize": 25,
-        "mostSold": true,
-      },
+      queryParameters: {"pageNumber": page, "pageSize": 10, "mostSold": true},
     );
 
     return result.map((response) {
