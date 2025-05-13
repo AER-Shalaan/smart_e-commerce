@@ -5,7 +5,7 @@ import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisement
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisments2/adv_widget_builder2.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/best_seller/best_seller_widget_buider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/category_widget_builder.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/featured%20_product/featured%20_product_widget_builder.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/featured_product/featured_product_widget_builder.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/new_arrivals/new_arrivals_widget_builder.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/recommended/recommended_widget_builder.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/top_rated_product/top_rated_product_widget_builder.dart';
@@ -48,10 +48,12 @@ class _HomeTabBodyState extends State<HomeTabBody> {
           ),
         ),
         const SliverSizedBoxSpace(height: 30),
-        SliverToBoxAdapter(child: NewArrivalsWidgetBuilder(
-          token: widget.token,
-          userId: widget.userId,
-        )),
+        SliverToBoxAdapter(
+          child: NewArrivalsWidgetBuilder(
+            token: widget.token,
+            userId: widget.userId,
+          ),
+        ),
         const SliverSizedBoxSpace(height: 30),
         SliverToBoxAdapter(
           child: TopRatedProductWidgetBuilder(
@@ -62,7 +64,12 @@ class _HomeTabBodyState extends State<HomeTabBody> {
         const SliverSizedBoxSpace(height: 30),
         const AdvWidgetBuilder2(),
         const SliverSizedBoxSpace(height: 30),
-        SliverToBoxAdapter(child: FeaturedProductWidgetBuilder()),
+        SliverToBoxAdapter(
+          child: FeaturedProductWidgetBuilder(
+            token: widget.token,
+            userId: widget.userId,
+          ),
+        ),
         const SliverSizedBoxSpace(height: 10),
       ],
     );

@@ -19,6 +19,8 @@ import '../data/data_source/home/cart_tap_data_source/get_cart_data_source.dart'
     as _i262;
 import '../data/data_source/home/home_tap_data_source/best_seller_data_source.dart'
     as _i141;
+import '../data/data_source/home/home_tap_data_source/featured_product_data_source.dart'
+    as _i27;
 import '../data/data_source/home/home_tap_data_source/new_arrivals_data_source.dart'
     as _i354;
 import '../data/data_source/home/home_tap_data_source/top_rated_data_source.dart'
@@ -31,6 +33,8 @@ import '../data/data_source_impl/home/cart_tap_data_source_impl/add_tap_data_sou
     as _i530;
 import '../data/data_source_impl/home/cart_tap_data_source_impl/get_cart_data_source_impl.dart'
     as _i114;
+import '../data/data_source_impl/home/home_tap_data_source_impl/featured_product_data_source_impl.dart'
+    as _i52;
 import '../data/data_source_impl/home/home_tap_data_source_impl/most_selling_data_source_impl.dart'
     as _i543;
 import '../data/data_source_impl/home/home_tap_data_source_impl/new_arrivals_data_source_impl.dart'
@@ -53,6 +57,8 @@ import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart'
     as _i153;
 import '../layouts/home/tabs/home_tab/widgets/best_seller/view_model/best_seller_view_model.dart'
     as _i860;
+import '../layouts/home/tabs/home_tab/widgets/featured_product/view_model/featured_product_view_model.dart'
+    as _i998;
 import '../layouts/home/tabs/home_tab/widgets/new_arrivals/view_model/new_arrivals_view_model.dart'
     as _i585;
 import '../layouts/home/tabs/home_tab/widgets/top_rated_product/view_model/top_rated_view_model.dart'
@@ -84,6 +90,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i928.AddToCartDataSource>(
       () => _i530.AddTapDataSourceImpl(gh<_i993.ApiManger>()),
     );
+    gh.factory<_i27.FeaturedProductDataSource>(
+      () => _i52.FeaturedProductDataSourceImpl(gh<_i993.ApiManger>()),
+    );
     gh.factory<_i688.ProductDetailsDataSource>(
       () => _i489.ProductDetailsDataSourceImpl(gh<_i993.ApiManger>()),
     );
@@ -110,6 +119,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i153.GetCartViewModel>(
       () => _i153.GetCartViewModel(gh<_i262.GetCartDataSource>()),
+    );
+    gh.factory<_i998.FeaturedProductViewModel>(
+      () =>
+          _i998.FeaturedProductViewModel(gh<_i27.FeaturedProductDataSource>()),
     );
     gh.factory<_i860.BestSellerViewModel>(
       () => _i860.BestSellerViewModel(gh<_i141.BestSellerDataSource>()),
