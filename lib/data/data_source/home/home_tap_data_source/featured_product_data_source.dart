@@ -5,5 +5,6 @@ import 'package:smart_ecommerce/data/models/home_models/produdts_model/Products.
 abstract class FeaturedProductDataSource {
   Future<Either<Failure, List<Products>>> getFeaturedProducts({
     required String token,
+    required int page,
   });
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_ecommerce/config/shared_preferences.dart';
-import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import '../../../../core/resuebale_componants/dialogs.dart';
 import '../../../../core/resuebale_componants/wide_arrow_button.dart';
 import '../../../../core/utils/assets.dart';
