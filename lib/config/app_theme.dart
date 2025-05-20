@@ -20,7 +20,7 @@ class AppTheme {
       selectedLabelStyle: const TextStyle(color: AppColors.secondary),
       selectedItemColor: AppColors.secondary,
       unselectedLabelStyle: TextStyle(
-        color: AppColors.secondary.withOpacity(0.3),
+        color: AppColors.secondary.withAlpha(77),
       ),
       enableFeedback: false,
       type: BottomNavigationBarType.fixed,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/AppSnackBar.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/widgets/category_widget.dart';
 import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/model_view/categories_states.dart';

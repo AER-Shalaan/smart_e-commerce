@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:smart_ecommerce/config/auth_session.dart';
 import '../../core/utils/assets.dart';
 import '../../core/utils/routes.dart';
@@ -42,10 +41,11 @@ class _SplashViewState extends State<SplashView>
     _progressAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
-
+    
     _animationController.forward();
 
     _animationController.addStatusListener((status) async {
+      SharedPreferencesFunctions.clearonboarding;
       if (status == AnimationStatus.completed) {
         final hasSeenOnboarding =
             await SharedPreferencesFunctions.hasSeenOnBoarding();
@@ -57,7 +57,7 @@ class _SplashViewState extends State<SplashView>
         } else if (session != null) {
           Navigator.pushReplacementNamed(context, Routes.homeView);
         } else {
-          await SharedPreferencesFunctions.clearToken();
+          await AuthSession.clear();
           Navigator.pushReplacementNamed(context, Routes.loginViewRouteName);
         }
       }

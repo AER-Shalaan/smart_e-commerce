@@ -26,8 +26,9 @@ class AuthSession {
 
   static Future<({String token, String userId})?> getSession() async {
     final token = await getToken();
-    if (token == null || token.isEmpty || JwtDecoder.isExpired(token))
+    if (token == null || token.isEmpty || JwtDecoder.isExpired(token)) {
       return null;
+    }
     final decoded = JwtDecoder.decode(token);
     final userId = decoded['nameid']?.toString();
     if (userId == null) return null;

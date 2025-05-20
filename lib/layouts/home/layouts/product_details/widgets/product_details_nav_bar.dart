@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/AppSnackBar.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/dialogs.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';

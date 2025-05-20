@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/AppSnackBar.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
 import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/otp/pin_input_form.dart';
 import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/otp/resend_code_text.dart';
 import '../../../../core/resuebale_componants/custom_main_button.dart';

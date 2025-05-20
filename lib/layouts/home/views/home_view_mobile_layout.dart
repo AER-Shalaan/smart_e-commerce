@@ -58,6 +58,14 @@ class HomeViewMobileLayout extends StatelessWidget {
           ),
         ],
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     debugPrint('Chat button pressed');
+      //   },
+      //   backgroundColor: Colors.blue,
+      //   child: const Icon(Icons.chat),
+      //   tooltip: 'افتح الشات',
+      // ),
       bottomNavigationBar:
           MediaQuery.of(context).size.width <= 600
               ? BottomNavigationBar(
