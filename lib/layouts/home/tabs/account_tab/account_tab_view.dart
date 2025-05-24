@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smart_ecommerce/config/shared_preferences.dart';
+import 'package:smart_ecommerce/config/auth_session.dart';
 import '../../../../core/resuebale_componants/dialogs.dart';
 import '../../../../core/resuebale_componants/wide_arrow_button.dart';
 import '../../../../core/utils/assets.dart';
@@ -64,7 +64,7 @@ class AccountTabView extends StatelessWidget {
                 cancelLabel: 'No, Cancel',
                 confirmationColor: Colors.red,
                 onConfirm: () {
-                  SharedPreferencesFunctions.clearToken();
+                  AuthSession.clear();
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     Routes.loginViewRouteName,

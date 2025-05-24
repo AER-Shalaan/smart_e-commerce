@@ -7,7 +7,6 @@ import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/best_seller/b
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/category_widget_builder.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/featured_product/featured_product_widget_builder.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/new_arrivals/new_arrivals_widget_builder.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/recommended/recommended_widget_builder.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/top_rated_product/top_rated_product_widget_builder.dart';
 
 class HomeTabBody extends StatefulWidget {
@@ -37,9 +36,9 @@ class _HomeTabBodyState extends State<HomeTabBody> {
           ),
         ),
         const SliverSizedBoxSpace(height: 30),
-        const CategoryWidgetBuilder(),
-        const SliverSizedBoxSpace(height: 30),
-        SliverToBoxAdapter(child: RecommendedWidgetBuilder()),
+        SliverToBoxAdapter(child: CategoryWidgetBuilder(token: widget.token)),
+        // const SliverSizedBoxSpace(height: 30),
+        // SliverToBoxAdapter(child: RecommendedWidgetBuilder()),
         const SliverSizedBoxSpace(height: 30),
         SliverToBoxAdapter(
           child: BestSellerWidgetBuider(

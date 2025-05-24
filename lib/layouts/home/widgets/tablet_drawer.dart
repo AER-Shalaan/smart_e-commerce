@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../../core/resuebale_componants/headlineText.dart';
 import '../../../core/utils/assets.dart';
-import '../../../data/models/category.dart';
 import '../provider/home_provider.dart';
 
 class TabletDrawer extends StatelessWidget {
@@ -76,18 +75,18 @@ class TabletDrawer extends StatelessWidget {
                     title: "All",
                     index: 0,
                   ),
-                  const SizedBox(height: 8),
-                  ...Categorys.categoryList.map(
-                    (e) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: selectedOption(
-                        imagePath: e.image,
-                        context: context,
-                        title: e.label,
-                        index: e.index,
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(height: 8),
+                  // ...Categorys.categoryList.map(
+                  //   (e) => Padding(
+                  //     padding: const EdgeInsets.only(bottom: 8),
+                  //     child: selectedOption(
+                  //       imagePath: e.image,
+                  //       context: context,
+                  //       title: e.label,
+                  //       index: e.index,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

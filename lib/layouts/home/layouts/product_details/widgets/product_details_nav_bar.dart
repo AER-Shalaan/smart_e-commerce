@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/dialogs.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';
@@ -24,32 +25,13 @@ class ProductDetailsNavBar extends StatelessWidget {
     return BlocListener<AddToCartViewModel, AddToCartViewModelStates>(
       listener: (context, state) {
         if (state is AddToCartSuccessState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              behavior: SnackBarBehavior.floating,
-              backgroundColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              content: Row(
-                children: [
-                  Icon(Icons.check_circle, color: Colors.white),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      "Product added to cart",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              duration: Duration(seconds: 3),
-            ),
+          AppSnackBar.show(
+            context: context,
+            message: "added to cart successfully",
+            backgroundColor: AppColors.primary,
+            icon: Icons.done,
+            duration: const Duration(seconds: 2),
+            fromTop: false,
           );
         }
         if (state is AddToCartErrorState) {

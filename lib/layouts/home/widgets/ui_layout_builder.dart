@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smart_ecommerce/config/shared_preferences.dart';
+import 'package:smart_ecommerce/config/auth_session.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/layouts/home/views/home_view_mobile_layout.dart';
 import 'package:smart_ecommerce/layouts/home/widgets/tablet_drawer.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'dart:async';
 
 class UiLayoutBuilder extends StatefulWidget {
@@ -21,7 +20,7 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
   @override
   void initState() {
     super.initState();
-    _extractUserId();
+    _loadSession();
     _startTokenMonitor();
   }
 
@@ -31,46 +30,44 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
     super.dispose();
   }
 
-  void _extractUserId() async {
-    final String? receivedToken = await SharedPreferencesFunctions.getToken();
-    if (receivedToken != null && receivedToken.isNotEmpty) {
-      Map<String, dynamic> decodedToken = JwtDecoder.decode(receivedToken);
+  Future<void> _loadSession() async {
+    final session = await AuthSession.getSession();
+    if (session != null) {
       setState(() {
-        token = receivedToken;
-        userId = decodedToken['nameid'];
+        token = session.token;
+        userId = session.userId;
       });
     }
   }
 
   void _startTokenMonitor() {
-    _tokenCheckTimer = Timer.periodic(Duration(minutes: 1), (timer) async {
-      final currentToken = await SharedPreferencesFunctions.getToken();
-      if (currentToken == null || JwtDecoder.isExpired(currentToken)) {
+    _tokenCheckTimer = Timer.periodic(const Duration(minutes: 1), (timer) async {
+      final session = await AuthSession.getSession();
+      if (session == null) {
         _tokenCheckTimer?.cancel();
         if (mounted) {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder:
-                (_) => AlertDialog(
-                  title: const Text("Session Expired"),
-                  content: const Text(
-                    "Your session has expired. Please log in again.",
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        SharedPreferencesFunctions.clearToken();
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          Routes.loginViewRouteName,
-                          (route) => false,
-                        );
-                      },
-                      child: const Text("Login"),
-                    ),
-                  ],
+            builder: (_) => AlertDialog(
+              title: const Text("Session Expired"),
+              content: const Text("Your session has expired. Please log in again."),
+              actions: [
+                TextButton(
+                  onPressed: () async {
+                    await AuthSession.clear();
+                    if (mounted) {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Routes.loginViewRouteName,
+                        (route) => false,
+                      );
+                    }
+                  },
+                  child: const Text("Login"),
                 ),
+              ],
+            ),
           );
         }
       }

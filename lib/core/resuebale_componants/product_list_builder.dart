@@ -3,10 +3,10 @@ import 'package:smart_ecommerce/core/resuebale_componants/item_widget.dart';
 import 'package:smart_ecommerce/core/api/failure.dart';
 import 'package:smart_ecommerce/data/models/home_models/produdts_model/Products.dart';
 import 'package:dartz/dartz.dart' hide State;
-import 'package:animate_do/animate_do.dart';
 import 'package:shimmer/shimmer.dart';
 
-typedef ProductFetcher = Future<Either<Failure, List<Products>>> Function(int page);
+typedef ProductFetcher =
+    Future<Either<Failure, List<Products>>> Function(int page);
 
 class ProductListBuilder extends StatefulWidget {
   const ProductListBuilder({
@@ -101,6 +101,19 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
     );
   }
 
+  Widget _buildProductItem(BuildContext context, int index) {
+    final product = _products[index].data!;
+    return AnimatedProductItem(
+      index: index,
+      child: ItemWidget(
+        key: ValueKey(product.itemID),
+        productData: product,
+        token: widget.token,
+        userId: widget.userId,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width >= 600;
@@ -114,9 +127,9 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
             children: [
               Text(
                 widget.label,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               const Spacer(),
               const Icon(
@@ -130,49 +143,58 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
         const SizedBox(height: 6),
         SizedBox(
           height: isTablet ? 330 : 290,
-          child: _error != null
-              ? Center(child: Text(_error!))
-              : _products.isEmpty && !_firstLoadDone
-                  ? ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (_, __) => buildShimmerItem(),
-                      separatorBuilder: (_, __) => const SizedBox(width: 16),
-                      itemCount: 5,
-                    )
-                  : ListView.separated(
-                      controller: _scrollController,
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: _products.length + (_hasMore ? 1 : 0),
-                      itemBuilder: (context, index) {
-                        if (index < _products.length) {
-                          final product = _products[index].data;
-                          return FadeInUp(
-                            from: 30,
-                            delay: _firstLoadDone
-                                ? Duration.zero
-                                : Duration(milliseconds: index * 100),
-                            duration: const Duration(milliseconds: 500),
-                            child: ItemWidget(
-                              key: ValueKey(product!.itemID),
-                              productData: product,
-                              token: widget.token,
-                              userId: widget.userId,
-                            ),
-                          );
-                        } else {
-                          return const Center(
-                            child: SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: CircularProgressIndicator(strokeWidth: 2.5),
-                            ),
-                          );
-                        }
-                      },
-                      separatorBuilder: (_, __) => const SizedBox(width: 16),
+          child:
+              _error != null
+                  ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.warning_amber_rounded,
+                          size: 48,
+                          color: Colors.red,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          _error!,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                        const SizedBox(height: 12),
+                        ElevatedButton(
+                          onPressed: _fetchInitialProducts,
+                          child: const Text("Try Again"),
+                        ),
+                      ],
                     ),
+                  )
+                  : _products.isEmpty && !_firstLoadDone
+                  ? ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, __) => buildShimmerItem(),
+                    separatorBuilder: (_, __) => const SizedBox(width: 16),
+                    itemCount: 5,
+                  )
+                  : ListView.separated(
+                    controller: _scrollController,
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: _products.length + (_hasMore ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      if (index < _products.length) {
+                        return _buildProductItem(context, index);
+                      } else {
+                        return const Center(
+                          child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: CircularProgressIndicator(strokeWidth: 2.5),
+                          ),
+                        );
+                      }
+                    },
+                    separatorBuilder: (_, __) => const SizedBox(width: 16),
+                  ),
         ),
       ],
     );
@@ -182,5 +204,58 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+}
+
+class AnimatedProductItem extends StatefulWidget {
+  const AnimatedProductItem({
+    super.key,
+    required this.child,
+    required this.index,
+  });
+
+  final Widget child;
+  final int index;
+
+  @override
+  State<AnimatedProductItem> createState() => _AnimatedProductItemState();
+}
+
+class _AnimatedProductItemState extends State<AnimatedProductItem>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacityAnim;
+  late Animation<Offset> _offsetAnim;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _opacityAnim = Tween<double>(begin: 0, end: 1).animate(_controller);
+    _offsetAnim = Tween<Offset>(
+      begin: const Offset(0, 0.05),
+      end: Offset.zero,
+    ).animate(_controller);
+
+    Future.delayed(Duration(milliseconds: widget.index * 30), () {
+      if (mounted) _controller.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideTransition(
+      position: _offsetAnim,
+      child: FadeTransition(opacity: _opacityAnim, child: widget.child),
+    );
   }
 }
