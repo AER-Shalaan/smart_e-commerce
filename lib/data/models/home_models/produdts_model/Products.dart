@@ -1,5 +1,5 @@
 import 'products_data.dart';
-import 'Detilas.dart';
+import 'detilas.dart';
 
 class Products {
   Products({

@@ -75,7 +75,7 @@ class _ItemWidgetState extends State<ItemWidget> {
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,
           onTapCancel: _onTapCancel,
-          splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+          splashColor: Theme.of(context).colorScheme.primary.withAlpha(25),
           highlightColor: Colors.transparent,
           borderRadius: BorderRadius.circular(15),
           child: Container(

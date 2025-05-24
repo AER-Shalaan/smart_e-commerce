@@ -59,7 +59,7 @@ class HelpCenterView extends StatelessWidget {
       onTap: () {},
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withOpacity(0.3)),
+          border: Border.all(color: Colors.grey.withAlpha(102)),
           borderRadius: BorderRadius.circular(10),
         ),
         padding: EdgeInsets.all(screenWidth * 0.04),

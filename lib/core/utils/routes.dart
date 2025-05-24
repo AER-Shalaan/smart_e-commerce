@@ -22,7 +22,7 @@ import '../../layouts/home/tabs/account_tab/widgets/my_details/my_details_view.d
 import '../../layouts/home/tabs/account_tab/widgets/my_orders/my_orders_view.dart';
 import '../../layouts/home/tabs/account_tab/widgets/notifications/notifications_view.dart';
 import '../../layouts/home/widgets/ui_layout_builder.dart';
-import '../../layouts/onBording/onBording_view.dart';
+import '../../layouts/onBording/on_bording_view.dart';
 import '../../layouts/splash/splash_view.dart';
 
 class Routes {

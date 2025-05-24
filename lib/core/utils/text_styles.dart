@@ -46,7 +46,7 @@ class TextStyles {
     fontWeight: FontWeight.w500,
   );
   static TextStyle myDetailsTexts = GoogleFonts.dmSans(
-    color: AppColors.secondary.withOpacity(0.5),
+    color: AppColors.secondary.withAlpha(128),
     fontSize: 16,
     fontWeight: FontWeight.w400,
   );
@@ -57,7 +57,7 @@ class TextStyles {
     fontWeight: FontWeight.w500,
   );
   static TextStyle fAQsTexts = GoogleFonts.dmSans(
-    color: AppColors.secondary.withOpacity(0.5),
+    color: AppColors.secondary.withAlpha(128),
     fontSize: 14,
     fontWeight: FontWeight.w400,
   );
@@ -69,7 +69,7 @@ class TextStyles {
   );
   static TextStyle dialogMessageStyle = GoogleFonts.dmSans(
     fontWeight: FontWeight.w400,
-    color: AppColors.secondary.withOpacity(0.4),
+    color: AppColors.secondary.withAlpha(102),
     fontSize: 16,
   );
   static TextStyle dialogLabelButtonStyle = GoogleFonts.dmSans(

@@ -170,8 +170,8 @@ class OrderStatusTages extends StatelessWidget {
       decoration: BoxDecoration(
         color:
             order.currentStatus.status != 'Delivered'
-                ? Colors.orange.withOpacity(0.3)
-                : Colors.green.withOpacity(0.3),
+                ? Colors.orange.withAlpha(102)
+                : Colors.green.withAlpha(102),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(

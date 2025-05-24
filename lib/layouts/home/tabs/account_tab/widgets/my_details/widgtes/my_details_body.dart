@@ -92,13 +92,13 @@ class MyDetailsBody extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: AppColors.secondary.withOpacity(0.5),
+                    color: AppColors.secondary.withAlpha(128),
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
-                    Icon(icon, color: AppColors.secondary.withOpacity(0.5)),
+                    Icon(icon, color: AppColors.secondary.withAlpha(128)),
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(value, style: TextStyles.myDetailsTexts),
@@ -111,7 +111,7 @@ class MyDetailsBody extends StatelessWidget {
                 onPressed: onEdit,
                 icon: Icon(
                   Icons.edit_square,
-                  color: AppColors.secondary.withOpacity(0.7),
+                  color: AppColors.secondary.withAlpha(180),
                 ),
               ),
             ],

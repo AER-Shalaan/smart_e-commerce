@@ -37,7 +37,7 @@ class SavedItemCard extends StatelessWidget {
               border: Border.all(color: Colors.grey[300]!),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withAlpha(13),
                   blurRadius: 10,
                   spreadRadius: 2,
                   offset: const Offset(0, 5),
@@ -131,7 +131,7 @@ class SavedItemCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(10),
           child: InkWell(
-            overlayColor: WidgetStatePropertyAll(Colors.black.withOpacity(0.3)),
+            overlayColor: WidgetStatePropertyAll(Colors.black.withAlpha(102)),
             onTap: () {},
             child: Container(
               height: 30,

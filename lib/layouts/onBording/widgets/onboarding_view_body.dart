@@ -83,7 +83,7 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
                   shape: const CircleBorder(),
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   padding: const EdgeInsets.all(16),
-                  overlayColor: Colors.white.withOpacity(0.3),
+                  overlayColor: Colors.white.withAlpha(102),
                 ),
                 child: Icon(
                   Icons.arrow_back_ios_rounded,
@@ -100,7 +100,7 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
                 decorator: DotsDecorator(
                   activeColor: Theme.of(context).colorScheme.primary,
                   activeShape: const CircleBorder(),
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.primary.withAlpha(102),
                   shape: const CircleBorder(),
                   activeSize: const Size(9, 9),
                   size: const Size(9, 9),
@@ -121,7 +121,7 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
                   shape: const CircleBorder(),
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   padding: const EdgeInsets.all(16),
-                  overlayColor: Colors.white.withOpacity(0.3),
+                  overlayColor: Colors.white.withAlpha(102),
                 ),
                 child: Icon(
                   Icons.arrow_forward_ios_rounded,

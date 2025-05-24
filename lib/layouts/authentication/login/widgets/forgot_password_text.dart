@@ -14,7 +14,7 @@ class ForgotPasswordText extends StatelessWidget {
         text: 'Forgot your password? ',
         style: GoogleFonts.dmSans(
           fontWeight: FontWeight.w400,
-          color: AppColors.primary.withOpacity(0.6),
+          color: AppColors.primary.withAlpha(153),
           fontSize: 14,
         ),
         children: <TextSpan>[

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
-import 'package:smart_ecommerce/data/models/cart_model/CartModel.dart';
+import 'package:smart_ecommerce/data/models/cart_model/cart_model.dart';
 
 class ShoppingCartItem extends StatelessWidget {
   // final ValueChanged<int> onQuantityChanged;

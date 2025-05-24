@@ -1,4 +1,4 @@
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/Products.dart';
+import 'package:smart_ecommerce/data/models/home_models/produdts_model/products.dart';
 
 class ProductsModel {
   ProductsModel({

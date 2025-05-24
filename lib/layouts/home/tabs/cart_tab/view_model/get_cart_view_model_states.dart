@@ -1,4 +1,4 @@
-import 'package:smart_ecommerce/data/models/cart_model/CartModel.dart';
+import 'package:smart_ecommerce/data/models/cart_model/cart_model.dart';
 
 abstract class GetCartViewModelStates {}
 

@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/headlineText.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/layouts/home/provider/home_provider.dart';
@@ -84,7 +84,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -100,7 +100,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -115,7 +115,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -130,7 +130,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -145,7 +145,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),

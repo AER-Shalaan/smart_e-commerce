@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/resuebale_componants/headlineText.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
 import '../../../../core/resuebale_componants/title_medium_text.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets.dart';
@@ -96,7 +96,7 @@ class ResetPassword extends StatelessWidget {
                             ? Colors.green
                             : resetPasswordProvider.isWrongPassword
                             ? Colors.red
-                            : AppColors.primary.withOpacity(0.4),
+                            : AppColors.primary.withAlpha(102),
                   ),
                   if (resetPasswordProvider.isWrongPassword) ...[
                     const SizedBox(height: 8),
@@ -145,7 +145,7 @@ class ResetPassword extends StatelessWidget {
                             ? Colors.green
                             : resetPasswordProvider.isWrongConfirmPass
                             ? Colors.red
-                            : AppColors.primary.withOpacity(0.4),
+                            : AppColors.primary.withAlpha(102),
                   ),
                   // عرض رسالة الخطأ
                   if (resetPasswordProvider.isWrongConfirmPass) ...[
@@ -166,7 +166,7 @@ class ResetPassword extends StatelessWidget {
                 buttonColor:
                     resetPasswordProvider.isFormValid
                         ? AppColors.secondary
-                        : AppColors.secondary.withOpacity(0.7),
+                        : AppColors.secondary.withAlpha(180),
                 borderSide: const BorderSide(
                   color: Colors.transparent,
                   width: 1,

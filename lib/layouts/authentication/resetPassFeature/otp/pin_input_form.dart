@@ -24,10 +24,10 @@ class PinInputForm extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(color: AppColors.primary),
             borderRadius: BorderRadius.circular(15),
-            color: Colors.white.withOpacity(0.4),
+            color: Colors.white.withAlpha(102),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withAlpha(25),
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),
@@ -48,7 +48,7 @@ class PinInputForm extends StatelessWidget {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.15),
+                color: Colors.black26,
                 blurRadius: 12,
                 offset: const Offset(0, 5),
               ),
@@ -61,12 +61,12 @@ class PinInputForm extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.red),
             borderRadius: BorderRadius.circular(15),
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withAlpha(102),
           ),
         ),
         onCompleted: (pin) {
           // TODO: Custom action when PIN is completed
-          print("Pin entered: $pin");
+          debugPrint("Pin entered: $pin");
         },
       ),
     );

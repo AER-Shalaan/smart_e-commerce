@@ -70,7 +70,7 @@ class ComparisonTable extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                     border: TableBorder.all(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withAlpha(128),
                       width: 1,
                       borderRadius: BorderRadius.circular(12),
                     ),

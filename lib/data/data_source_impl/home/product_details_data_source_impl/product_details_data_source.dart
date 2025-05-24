@@ -4,7 +4,7 @@ import 'package:smart_ecommerce/core/api/api_manger.dart';
 import 'package:smart_ecommerce/core/api/end_points.dart';
 import 'package:smart_ecommerce/core/api/failure.dart';
 import 'package:smart_ecommerce/data/data_source/home/product_details_data_source/product_details_data.dart';
-import 'package:smart_ecommerce/data/models/product_details_model/ProductDetailsModel.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 @Injectable(as: ProductDetailsDataSource)
 class ProductDetailsDataSourceImpl extends ProductDetailsDataSource {

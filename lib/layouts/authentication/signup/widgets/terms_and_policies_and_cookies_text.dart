@@ -13,7 +13,7 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
         text: 'By signing up you agree to our ',
         style: GoogleFonts.dmSans(
           fontWeight: FontWeight.w400,
-          color: AppColors.primary.withOpacity(0.6),
+          color: AppColors.primary.withAlpha(153),
           fontSize: 14,
         ),
         children: <TextSpan>[
@@ -29,7 +29,7 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
           ),
           TextSpan(
             text: ', ',
-            style: TextStyle(color: AppColors.primary.withOpacity(0.6)),
+            style: TextStyle(color: AppColors.primary.withAlpha(153)),
           ),
 
           TextSpan(
@@ -46,7 +46,7 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
             text: ', and ',
             style: GoogleFonts.dmSans(
               fontWeight: FontWeight.w400,
-              color: AppColors.primary.withOpacity(0.6),
+              color: AppColors.primary.withAlpha(153),
               fontSize: 14,
             ),
           ),

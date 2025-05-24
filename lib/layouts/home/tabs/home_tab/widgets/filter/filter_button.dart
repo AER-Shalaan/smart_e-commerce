@@ -16,7 +16,7 @@ class FilterButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        overlayColor: Colors.white.withOpacity(0.3),
+        overlayColor: Colors.white.withAlpha(102),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.all(10),
         minimumSize: const Size(50, 50),

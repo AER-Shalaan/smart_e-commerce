@@ -39,7 +39,7 @@ class LoginTextFields extends StatelessWidget {
                       ? Colors.green
                       : state.isWrongEmail
                       ? Colors.red
-                      : AppColors.primary.withOpacity(0.4),
+                      : AppColors.primary.withAlpha(102),
             ),
             const SizedBox(height: 16),
 
@@ -78,7 +78,7 @@ class LoginTextFields extends StatelessWidget {
                       ? Colors.green
                       : state.isWrongPassword
                       ? Colors.red
-                      : AppColors.primary.withOpacity(0.4),
+                      : AppColors.primary.withAlpha(102),
             ),
           ],
         );

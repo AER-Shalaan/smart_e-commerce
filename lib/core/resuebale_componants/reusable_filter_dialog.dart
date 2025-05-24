@@ -86,7 +86,7 @@ class ReusableFilterDialog<T> extends StatelessWidget {
                         color:
                             isSelected
                                 ? AppColors.primary
-                                : AppColors.secondary.withOpacity(0.4),
+                                : AppColors.secondary.withAlpha(102),
                         width: 1,
                       ),
                     ),

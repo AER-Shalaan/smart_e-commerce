@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/headlineText.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/title_medium_text.dart';
-import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_checks_cubit.dart';
+import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/sign_up_button.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/signup_text_fields.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/social_signup_buttons.dart';
@@ -15,7 +15,7 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var signUpChecksCubit = context.watch<SignUpChecksCubit>();
+    var signUpChecksCubit = context.watch<SignUpCheckCubit>();
     return Form(
       key: formKey,
       child: Column(

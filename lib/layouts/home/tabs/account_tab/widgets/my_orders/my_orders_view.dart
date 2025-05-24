@@ -39,7 +39,7 @@ class MyOrdersView extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(screenWidth * 0.02),
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.35),
+                color: Colors.grey.withAlpha(90),
                 borderRadius: BorderRadius.circular(screenWidth * 0.04),
               ),
               child: BlocSelector<OrdersCubit, OrdersState, int>(

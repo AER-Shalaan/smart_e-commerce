@@ -17,7 +17,7 @@ class OnboardingLoginButton extends StatelessWidget {
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           enableFeedback: false,
-          overlayColor: Colors.white.withOpacity(0.3),
+          overlayColor: Colors.white.withAlpha(102),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),

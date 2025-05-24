@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/config/auth_session.dart';
+import 'package:smart_ecommerce/data/models/login_model/login_model.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_states.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/view_model/login_view_model.dart';
@@ -9,7 +10,6 @@ import 'package:smart_ecommerce/layouts/authentication/login/widgets/login_form.
 import 'package:smart_ecommerce/layouts/authentication/login/widgets/sign_up_prompt.dart';
 import '../../../core/resuebale_componants/dialogs.dart';
 import '../../../core/utils/routes.dart';
-import '../../../data/models/login_model/LoginModel.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -29,15 +29,15 @@ class LoginView extends StatelessWidget {
 
         if (state is LoginSuccessState) {
           final LoginModel loginModel = state.loginModel;
-
+          final loginChecksCubit = context.read<LoginChecksCubit>();
+          final navigator = Navigator.of(context);
           await AuthSession.saveSession(loginModel.token.toString());
 
-          context.read<LoginChecksCubit>().resetLoginData();
+          loginChecksCubit.resetLoginData();
 
           Future.delayed(
             const Duration(seconds: 1),
-            () => Navigator.pushNamedAndRemoveUntil(
-              context,
+            () => navigator.pushNamedAndRemoveUntil(
               Routes.homeView,
               (route) => false,
             ),

@@ -1,5 +1,7 @@
-class Detilas {
-  Detilas({
+//TODo: failure in detilas
+
+class DetilasTwo {
+  DetilasTwo({
     this.itemID,
     this.ram,
     this.memory,
@@ -8,7 +10,7 @@ class Detilas {
     this.screenSize,
   });
 
-  Detilas.fromJson(dynamic json) {
+  DetilasTwo.fromJson(dynamic json) {
     itemID = json['Item_ID'];
     ram = json['RAM'];
     memory = json['Memory'];
