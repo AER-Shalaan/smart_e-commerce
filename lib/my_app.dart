@@ -1,8 +1,10 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
+import 'package:smart_ecommerce/layouts/home/provider/chat_bot_provider.dart';
 import 'config/app_theme.dart';
 import 'core/utils/routes.dart';
 import 'layouts/home/tabs/account_tab/cubits/my_orders_cubit/orders_cubit.dart';
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
         BlocProvider(create: (context) => OrdersCubit()),
         BlocProvider(create: (context) => NotificationSettingsCubit()),
@@ -23,6 +25,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ComparisonCubit()),
         BlocProvider(create: (context) => LoginChecksCubit()),
         BlocProvider(create: (context) => SignUpCheckCubit()),
+
+        ChangeNotifierProvider(create: (context) => ChatBotProvider()),
       ],
       child: MaterialApp(
         locale: DevicePreview.locale(context),
