@@ -21,9 +21,7 @@ class ProductDetailsViewBody extends StatelessWidget {
           return CustomScrollView(
             slivers: [
               PhotosWidgetPreview(productImages: images),
-              ProductNameDetailsReviewPrice(
-                productData: data,
-              ),
+              ProductNameDetailsReviewPrice(productData: data),
               // CommentsWidgetBuilder(),
             ],
           );

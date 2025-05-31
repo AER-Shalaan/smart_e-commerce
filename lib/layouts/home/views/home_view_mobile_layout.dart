@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
-import 'package:smart_ecommerce/layouts/home/provider/chat_bot_provider.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/layouts/home/provider/home_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/account_tab_view.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/cart_tab.dart';
@@ -24,7 +24,6 @@ class HomeViewMobileLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = Provider.of<HomeProvider>(context);
-    ChatBotProvider chatBotProvider = Provider.of<ChatBotProvider>(context);
 
     log(provider.homeTapIndex.toString());
     final List<Widget> navWidget = [
@@ -65,9 +64,10 @@ class HomeViewMobileLayout extends StatelessWidget {
           provider.homeTapIndex == 0 || provider.homeTapIndex == 4
               ? FloatingActionButton(
                 onPressed: () {
-                  chatBotProvider.changeChatbotVisibility(
-                    newValue: !chatBotProvider.isChatbotVisible,
-                    context: context,
+                  Navigator.pushNamed(
+                    context,
+                    Routes.chatBotViewRouteName,
+                    arguments: {'token': token, 'userId': userId},
                   );
                 },
                 shape: const CircleBorder(),

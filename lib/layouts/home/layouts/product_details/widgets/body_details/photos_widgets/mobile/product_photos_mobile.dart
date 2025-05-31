@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smart_ecommerce/core/constants.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 
 class ProductPhotosMobile extends StatefulWidget {
@@ -28,7 +29,7 @@ class _ProductPhotosMobileState extends State<ProductPhotosMobile> {
             itemCount: widget.productImages.length,
             itemBuilder: (context, index, realIndex) {
               return Image.network(
-                widget.productImages[index],
+                "${Constants.baseUrl}${widget.productImages[index]}",
                 fit: BoxFit.contain,
                 width: double.infinity,
                 loadingBuilder: (context, child, loadingProgress) {
