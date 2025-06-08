@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'sign_up_checks_states.dart';
+import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_states.dart';
 import '../../../../core/constants.dart';
 import 'package:flutter/material.dart';
 
-class SignUpChecksCubit extends Cubit<SignUpChecksState> {
-  SignUpChecksCubit() : super(const InitialSignUpChecksState());
+class SignUpCheckCubit extends Cubit<SignUpCheckState> {
+  SignUpCheckCubit() : super(const InitialSignUpCheckState());
 
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();

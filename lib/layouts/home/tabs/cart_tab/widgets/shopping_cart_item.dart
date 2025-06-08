@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smart_ecommerce/core/constants.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
-import 'package:smart_ecommerce/data/models/cart_model/CartModel.dart';
+import 'package:smart_ecommerce/data/models/cart_model/cart_model.dart';
 
 class ShoppingCartItem extends StatelessWidget {
   // final ValueChanged<int> onQuantityChanged;
@@ -53,7 +54,7 @@ class ShoppingCartItem extends StatelessWidget {
                         topRight: Radius.circular(15),
                       ),
                       child: Image.network(
-                        cartModel.imageCover ?? "",
+                        "${Constants.baseUrl}${cartModel.imageCover}",
                         fit: BoxFit.contain,
                         width: double.infinity,
                         loadingBuilder: (context, child, loadingProgress) {

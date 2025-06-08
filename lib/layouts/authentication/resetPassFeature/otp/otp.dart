@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
 import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/otp/pin_input_form.dart';
 import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/otp/resend_code_text.dart';
 import '../../../../core/resuebale_componants/custom_main_button.dart';
-import '../../../../core/resuebale_componants/headlineText.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/routes.dart';
 

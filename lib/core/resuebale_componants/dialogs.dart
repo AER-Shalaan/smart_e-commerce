@@ -29,7 +29,7 @@ class CustomDialogs {
       iconColor: Colors.amber[700]!,
       title: 'Loading...',
       customContent: LoadingAnimationWidget.fourRotatingDots(
-        color: AppColors.primary.withOpacity(0.6),
+        color: AppColors.primary.withAlpha(153),
         size: MediaQuery.of(context).size.width * 0.13,
       ),
       barrierDismissible: true,

@@ -16,7 +16,7 @@ class TitleMediumtext extends StatelessWidget {
     return Text(
       text,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        color: Theme.of(context).colorScheme.primary.withOpacity(opacity),
+        color: Theme.of(context).colorScheme.primary.withAlpha((opacity * 255).toInt()),
         fontSize: fontSize,
       ),
     );

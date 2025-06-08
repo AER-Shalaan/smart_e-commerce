@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/layouts/chat_bot/chat_bot_view.dart';
+import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';
 import '../../di/di.dart';
 import '../../layouts/authentication/logIn/login_view.dart';
@@ -22,7 +24,7 @@ import '../../layouts/home/tabs/account_tab/widgets/my_details/my_details_view.d
 import '../../layouts/home/tabs/account_tab/widgets/my_orders/my_orders_view.dart';
 import '../../layouts/home/tabs/account_tab/widgets/notifications/notifications_view.dart';
 import '../../layouts/home/widgets/ui_layout_builder.dart';
-import '../../layouts/onBording/onBording_view.dart';
+import '../../layouts/onBording/on_bording_view.dart';
 import '../../layouts/splash/splash_view.dart';
 
 class Routes {
@@ -42,6 +44,7 @@ class Routes {
   static const String myOrdersViewRouteName = "myOrdersView";
   static const String notificationsViewRouteName = "NotificationsView";
   static const String paymentMethodsViewRouteName = "PaymentMethodsView";
+  static const String chatBotViewRouteName = "ChatBotView";
 
   static Map<String, Widget Function(BuildContext)> getRoutes() {
     return {
@@ -63,6 +66,7 @@ class Routes {
             create: (_) => HomeProvider(),
             child: const UiLayoutBuilder(),
           ),
+      
       loginViewRouteName:
           (_) => BlocProvider(
             create: (_) => getIt<LoginViewModel>(),
@@ -72,6 +76,11 @@ class Routes {
           (_) => BlocProvider(
             create: (_) => getIt<SignUpViewModel>(),
             child: const SignUpView(),
+          ),
+
+      chatBotViewRouteName: (_) => BlocProvider(
+            create: (_) => getIt<ChatBotViewModel>(),
+            child: const ChatBotView(),
           ),
       productDetailsView:
           (_) => ChangeNotifierProvider(

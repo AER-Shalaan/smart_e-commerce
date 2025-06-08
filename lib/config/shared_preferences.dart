@@ -11,9 +11,5 @@ class SharedPreferencesFunctions {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('has_seen_onboarding') ?? false;
   }
-   static Future<void> clearonboarding() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('has_seen_onboarding');
-  }
 
 }

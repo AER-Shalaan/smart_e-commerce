@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/custom_auth_textfield.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/title_medium_text.dart';
-import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_checks_cubit.dart';
-import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_checks_states.dart';
+import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
+import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_states.dart';
 import '../../../../core/constants.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets.dart';
@@ -14,9 +14,9 @@ class SignUpTextFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpChecksCubit, SignUpChecksState>(
+    return BlocBuilder<SignUpCheckCubit, SignUpCheckState>(
       builder: (context, state) {
-        var cubit = context.read<SignUpChecksCubit>();
+        var cubit = context.read<SignUpCheckCubit>();
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +155,7 @@ class SignUpTextFields extends StatelessWidget {
                   ? Colors.green
                   : isWrong
                   ? Colors.red
-                  : AppColors.primary.withOpacity(0.4),
+                  : AppColors.primary.withAlpha(102),
           validator: validator,
           onChanged: onChanged,
         ),
@@ -198,7 +198,7 @@ class SignUpTextFields extends StatelessWidget {
                   ? Colors.green
                   : isWrong
                   ? Colors.red
-                  : AppColors.primary.withOpacity(0.4),
+                  : AppColors.primary.withAlpha(102),
           validator: validator,
           onChanged: onChanged,
         ),

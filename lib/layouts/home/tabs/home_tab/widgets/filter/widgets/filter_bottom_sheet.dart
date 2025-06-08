@@ -104,7 +104,7 @@ class FilterBottomSheet extends StatelessWidget {
           max: 100000,
           divisions: 1000,
           activeColor: Theme.of(context).colorScheme.primary,
-          inactiveColor: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+          inactiveColor: Theme.of(context).colorScheme.primary.withAlpha(102),
           onChanged: (RangeValues values) {
             context.read<FilterCubit>().updateRange(values.start, values.end);
           },

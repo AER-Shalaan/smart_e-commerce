@@ -4,8 +4,8 @@ import 'package:smart_ecommerce/config/auth_session.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/dialogs.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/data/models/signup_model/sign_up_model.dart';
-import 'package:smart_ecommerce/layouts/authentication/signup/Cubit/sign_up_checks_cubit.dart';
-import 'package:smart_ecommerce/layouts/authentication/signup/Cubit/sign_up_checks_states.dart';
+import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
+import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_states.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/view_model/sign_up_view_model.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/view_model/sign_up_view_model_state.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/login_prompt.dart';
@@ -29,16 +29,15 @@ class SignUpView extends StatelessWidget {
 
         if (state is SignUpSuccessState) {
           final SignUpModel signUpModel = state.signUpModel;
-
-          // ✅ حفظ الجلسة (token + userId من التوكن)
+          final signUpChecksCubit = context.read<SignUpCheckCubit>();
+          final navigator = Navigator.of(context);
           await AuthSession.saveSession(signUpModel.token.toString());
 
-          context.read<SignUpChecksCubit>().resetSignUpData();
+          signUpChecksCubit.resetSignUpData();
 
           Future.delayed(
             const Duration(seconds: 1),
-            () => Navigator.pushNamedAndRemoveUntil(
-              context,
+            () => navigator.pushNamedAndRemoveUntil(
               Routes.homeView,
               (route) => false,
             ),
@@ -49,7 +48,7 @@ class SignUpView extends StatelessWidget {
           CustomDialogs.showLoadingDialog(context);
         }
       },
-      child: BlocBuilder<SignUpChecksCubit, SignUpChecksState>(
+      child: BlocBuilder<SignUpCheckCubit, SignUpCheckState>(
         builder: (context, state) {
           return Scaffold(
             resizeToAvoidBottomInset: true,

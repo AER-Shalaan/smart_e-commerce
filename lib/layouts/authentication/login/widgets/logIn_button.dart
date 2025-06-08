@@ -6,10 +6,10 @@ import '../../../../core/resuebale_componants/custom_main_button.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../view_model/login_view_model.dart';
 
-class LogInButton extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
-  const LogInButton({super.key, required this.formKey});
+  const LoginButton({super.key, required this.formKey});
 
   @override
   Widget build(BuildContext context) {

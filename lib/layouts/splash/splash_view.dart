@@ -41,24 +41,23 @@ class _SplashViewState extends State<SplashView>
     _progressAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
-    
+
     _animationController.forward();
 
     _animationController.addStatusListener((status) async {
-      SharedPreferencesFunctions.clearonboarding;
       if (status == AnimationStatus.completed) {
+        final navigator = Navigator.of(context);
         final hasSeenOnboarding =
             await SharedPreferencesFunctions.hasSeenOnBoarding();
         final session = await AuthSession.getSession();
-
         if (!hasSeenOnboarding) {
           await SharedPreferencesFunctions.setOnBoardingSeen();
-          Navigator.pushReplacementNamed(context, Routes.onBoardingRouteName);
+          navigator.pushReplacementNamed(Routes.onBoardingRouteName);
         } else if (session != null) {
-          Navigator.pushReplacementNamed(context, Routes.homeView);
+          navigator.pushReplacementNamed(Routes.homeView);
         } else {
           await AuthSession.clear();
-          Navigator.pushReplacementNamed(context, Routes.loginViewRouteName);
+          navigator.pushReplacementNamed(Routes.loginViewRouteName);
         }
       }
     });

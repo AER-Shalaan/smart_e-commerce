@@ -71,7 +71,7 @@ class AppSnackBar {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: backgroundColor.withOpacity(0.4),
+                      color: backgroundColor.withAlpha(102),
                       blurRadius: 12,
                       offset: const Offset(0, 4),
                     ),

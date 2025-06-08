@@ -51,7 +51,7 @@ class AdvWidgetBuilder extends StatelessWidget {
             activeColor: Theme.of(context).colorScheme.primary,
             activeShape: const CircleBorder(),
             activeSize: const Size(10.0, 10.0),
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.primary.withAlpha(102),
             shape: const CircleBorder(),
             size: const Size(10.0, 10),
           ),

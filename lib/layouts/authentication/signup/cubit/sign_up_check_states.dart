@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class SignUpChecksState extends Equatable {
+class SignUpCheckState extends Equatable {
   final bool isFNCheck;
   final bool isLNCheck;
   final bool isEmailCheck;
@@ -16,7 +16,7 @@ class SignUpChecksState extends Equatable {
   final bool isConfirmPasswordObscure;
   final bool isPasswordObscure;
 
-  const SignUpChecksState({
+  const SignUpCheckState({
     required this.isFNCheck,
     required this.isLNCheck,
     required this.isEmailCheck,
@@ -32,7 +32,7 @@ class SignUpChecksState extends Equatable {
     required this.isConfirmPasswordObscure,
     required this.isPasswordObscure,
   });
-  SignUpChecksState copyWith({
+  SignUpCheckState copyWith({
     bool? isFNCheck,
     bool? isLNCheck,
     bool? isEmailCheck,
@@ -48,7 +48,7 @@ class SignUpChecksState extends Equatable {
     bool? isPasswordObscure,
     bool? isConfirmPasswordObscure,
   }) {
-    return SignUpChecksState(
+    return SignUpCheckState(
       isFNCheck: isFNCheck ?? this.isFNCheck,
       isLNCheck: isLNCheck ?? this.isLNCheck,
       isEmailCheck: isEmailCheck ?? this.isEmailCheck,
@@ -86,8 +86,8 @@ class SignUpChecksState extends Equatable {
   ];
 }
 
-class InitialSignUpChecksState extends SignUpChecksState {
-  const InitialSignUpChecksState()
+class InitialSignUpCheckState extends SignUpCheckState {
+  const InitialSignUpCheckState()
     : super(
         isFNCheck: false,
         isLNCheck: false,

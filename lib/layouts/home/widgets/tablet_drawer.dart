@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-
-import '../../../core/resuebale_componants/headlineText.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
 import '../../../core/utils/assets.dart';
 import '../provider/home_provider.dart';
 

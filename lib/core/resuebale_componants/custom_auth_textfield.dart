@@ -56,7 +56,7 @@ class CustomAuthTextField extends StatelessWidget {
             hintText: hint,
             hintStyle: GoogleFonts.dmSans(
               fontWeight: FontWeight.w400,
-              color: AppColors.primary.withOpacity(0.4),
+              color: AppColors.primary.withAlpha(102),
               fontSize: 16,
             ),
             suffixIcon: suffixIcon,
@@ -64,7 +64,7 @@ class CustomAuthTextField extends StatelessWidget {
             prefixIcon: prefixIcon,
             border: OutlineInputBorder(
               borderSide: BorderSide(
-                color: AppColors.primary.withOpacity(0.4),
+                color: AppColors.primary.withAlpha(102),
                 width: 1,
               ),
               borderRadius: const BorderRadius.all(Radius.circular(10)),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
-import 'package:smart_ecommerce/data/models/product_details_model/ProductDetailsModel.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/product_details_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/product_details_view_model_states.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/body_details/photos_widgets/photos_widget_preview.dart';
@@ -21,9 +21,7 @@ class ProductDetailsViewBody extends StatelessWidget {
           return CustomScrollView(
             slivers: [
               PhotosWidgetPreview(productImages: images),
-              ProductNameDetailsReviewPrice(
-                productData: data,
-              ),
+              ProductNameDetailsReviewPrice(productData: data),
               // CommentsWidgetBuilder(),
             ],
           );

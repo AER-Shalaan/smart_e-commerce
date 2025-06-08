@@ -47,7 +47,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                 ),
                 const Spacer(),
                 Container(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.primary.withAlpha(102),
                   padding: const EdgeInsets.all(8),
                   child: Text(
                     "Stock: ${productData.quantity}",
