@@ -7,4 +7,5 @@ class EndPoints {
   static const String getCartEndPoint = "Cart/GetUserCart";
   static const String getAllCategoryEndPoint = "Category/GetAllCategory";
   static const String getSubCategoryfromCategoryEndPoint = "Category/GetSubCategoryByCategory";
+  static const String sendChatMessageEndPoint = "https://saleschatbot.up.railway.app/chat";
 }

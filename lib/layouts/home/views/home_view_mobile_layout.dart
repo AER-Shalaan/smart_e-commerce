@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/layouts/home/provider/home_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/account_tab_view.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/cart_tab.dart';
@@ -23,6 +24,7 @@ class HomeViewMobileLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = Provider.of<HomeProvider>(context);
+
     log(provider.homeTapIndex.toString());
     final List<Widget> navWidget = [
       HomeTab(token: token, userId: userId),
@@ -58,14 +60,33 @@ class HomeViewMobileLayout extends StatelessWidget {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     debugPrint('Chat button pressed');
-      //   },
-      //   backgroundColor: Colors.blue,
-      //   child: const Icon(Icons.chat),
-      //   tooltip: 'افتح الشات',
-      // ),
+      floatingActionButton:
+          provider.homeTapIndex == 0 || provider.homeTapIndex == 4
+              ? FloatingActionButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.chatBotViewRouteName,
+                    arguments: {'token': token, 'userId': userId},
+                  );
+                },
+                shape: const CircleBorder(),
+                backgroundColor: AppColors.primary,
+                child: const Icon(Icons.chat, color: AppColors.backGroundColor),
+              )
+              : provider.homeTapIndex == 1
+              ? FloatingActionButton(
+                onPressed: () {
+                  debugPrint('table button pressed');
+                },
+                backgroundColor: AppColors.primary,
+                shape: const CircleBorder(),
+                child: const Icon(
+                  Icons.backup_table_rounded,
+                  color: AppColors.backGroundColor,
+                ),
+              )
+              : null,
       bottomNavigationBar:
           MediaQuery.of(context).size.width <= 600
               ? BottomNavigationBar(

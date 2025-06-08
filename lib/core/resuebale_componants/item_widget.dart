@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smart_ecommerce/core/constants.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
@@ -95,7 +96,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                       topRight: Radius.circular(15),
                     ),
                     child: Image.network(
-                      widget.productData.imageCover ?? "",
+                      "${Constants.baseUrl}${widget.productData.imageCover}",
                       fit: BoxFit.contain,
                       width: double.infinity,
                       loadingBuilder: (context, child, loadingProgress) {
@@ -116,7 +117,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                     ),
                   ),
                 ),
-                //TODO: cheak price form farg 
+                //TODO: cheak price form farg
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Column(
@@ -135,26 +136,31 @@ class _ItemWidgetState extends State<ItemWidget> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          if (widget.productData.discount != 0)
-                            Text(
-                              "\$${widget.productData.priceOut}",
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if ((widget.productData.discount ?? 0) != 0)
+                                Text(
+                                  "\$${(widget.productData.priceOut ?? 0).toStringAsFixed(2)}",
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
+                                ),
+                              const SizedBox(height: 4),
+                              Text(
+                                "\$${((widget.productData.priceOut ?? 0) - (widget.productData.discount ?? 0)).toStringAsFixed(2)}",
+                                style: const TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                          const SizedBox(width: 6),
-                          Text(
-                            "\$${widget.productData.priceIn}",
-                            style: const TextStyle(
-                              color: Colors.black87,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            ],
                           ),
-                          const SizedBox(width: 6),
-                          if (widget.productData.discount != 0)
+                          const Spacer(),
+                          if ((widget.productData.discount ?? 0) != 0)
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 6,
@@ -165,7 +171,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
-                                "-${widget.productData.discount}%",
+                                "-\$${(widget.productData.discount ?? 0).toStringAsFixed(2)}",
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,

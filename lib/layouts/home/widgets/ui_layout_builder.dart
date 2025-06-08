@@ -16,6 +16,7 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
   String? token;
   String? userId;
   Timer? _tokenCheckTimer;
+  bool _dialogShown = false;
 
   @override
   void initState() {
@@ -27,6 +28,7 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
   @override
   void dispose() {
     _tokenCheckTimer?.cancel();
+    _dialogShown = false;
     super.dispose();
   }
 
@@ -41,35 +43,42 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
   }
 
   void _startTokenMonitor() {
-    _tokenCheckTimer = Timer.periodic(const Duration(minutes: 1), (timer) async {
+    _tokenCheckTimer = Timer.periodic(const Duration(minutes: 1), (
+      timer,
+    ) async {
       final session = await AuthSession.getSession();
-      if (session == null) {
+      if (session == null && !_dialogShown && mounted) {
+        _dialogShown = true;
         _tokenCheckTimer?.cancel();
-        if (mounted) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (_) => AlertDialog(
-              title: const Text("Session Expired"),
-              content: const Text("Your session has expired. Please log in again."),
-              actions: [
-                TextButton(
-                  onPressed: () async {
-                    await AuthSession.clear();
-                    if (mounted) {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        Routes.loginViewRouteName,
-                        (route) => false,
-                      );
-                    }
-                  },
-                  child: const Text("Login"),
+
+        if (!context.mounted) return;
+
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder:
+              (_) => AlertDialog(
+                title: const Text("Session Expired"),
+                content: const Text(
+                  "Your session has expired. Please log in again.",
                 ),
-              ],
-            ),
-          );
-        }
+                actions: [
+                  TextButton(
+                    onPressed: () async {
+                      await AuthSession.clear();
+                      if (mounted) {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          Routes.loginViewRouteName,
+                          (route) => false,
+                        );
+                      }
+                    },
+                    child: const Text("Login"),
+                  ),
+                ],
+              ),
+        );
       }
     });
   }

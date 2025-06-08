@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:smart_ecommerce/core/api/end_points.dart';
 import 'api_helper.dart';
 import 'failure.dart';
 import '../constants.dart';
@@ -53,6 +54,15 @@ class ApiManger {
       body: body,
       headers: {'Authorization': "Bearer $token"},
       queryParams: queryParameters,
+    );
+  }
+  Future<Either<Failure, Response>> sendChatMessage(String message) async {
+    return await ApiHelper.safePost(
+      dio,
+      EndPoints.sendChatMessageEndPoint,
+      body: {
+        "message": message,
+      },
     );
   }
 }
