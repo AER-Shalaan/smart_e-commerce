@@ -27,6 +27,8 @@ import '../data/data_source/home/home_tap_data_source/featured_product_data_sour
     as _i27;
 import '../data/data_source/home/home_tap_data_source/new_arrivals_data_source.dart'
     as _i354;
+import '../data/data_source/home/home_tap_data_source/recommended_list_data_souce.dart'
+    as _i220;
 import '../data/data_source/home/home_tap_data_source/top_rated_data_source.dart'
     as _i359;
 import '../data/data_source/home/product_details_data_source/product_details_data.dart'
@@ -47,6 +49,8 @@ import '../data/data_source_impl/home/home_tap_data_source_impl/most_selling_dat
     as _i543;
 import '../data/data_source_impl/home/home_tap_data_source_impl/new_arrivals_data_source_impl.dart'
     as _i765;
+import '../data/data_source_impl/home/home_tap_data_source_impl/recommended_list_data_source_impl.dart'
+    as _i396;
 import '../data/data_source_impl/home/home_tap_data_source_impl/top_rated_data_source_impl.dart'
     as _i22;
 import '../data/data_source_impl/home/product_details_data_source_impl/product_details_data_source.dart'
@@ -66,6 +70,8 @@ import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart'
     as _i153;
 import '../layouts/home/tabs/home_tab/widgets/categorys/model_view/categories_view_model.dart'
     as _i579;
+import '../layouts/home/tabs/home_tab/widgets/recommended/view_model/recommended_cubit.dart'
+    as _i124;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -93,6 +99,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i125.SignUpDataSource>(
       () => _i764.SignUpDataSourceImpl(gh<_i108.ApiManger>()),
     );
+    gh.factory<_i220.RecommendedListDataSource>(
+      () => _i396.RecommendedListDataSourceImpl(gh<_i108.ApiManger>()),
+    );
     gh.factory<_i354.NewArrivalsDataSource>(
       () => _i765.NewArrivalsDataSourceImpl(gh<_i108.ApiManger>()),
     );
@@ -116,6 +125,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i242.AddToCartViewModel>(
       () => _i242.AddToCartViewModel(gh<_i928.AddToCartDataSource>()),
+    );
+    gh.factory<_i124.RecommendedProductsCubit>(
+      () =>
+          _i124.RecommendedProductsCubit(gh<_i220.RecommendedListDataSource>()),
     );
     gh.factory<_i857.LoginViewModel>(
       () => _i857.LoginViewModel(gh<_i153.LoginDataSource>()),

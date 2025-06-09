@@ -9,13 +9,11 @@ import '../constants.dart';
 @singleton
 class ApiManger {
   static late Dio dio;
-
+  static late Dio dio2;
   static init() {
-    dio = Dio(
-      BaseOptions(
-        baseUrl: Constants.baseUrl,
-      ),
-    );
+    dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
+
+    dio2 = Dio(BaseOptions(baseUrl: Constants.baseUrl2));
   }
 
   Future<Either<Failure, Response>> getRequest({
@@ -35,11 +33,7 @@ class ApiManger {
     required String endPoints,
     Map<String, dynamic>? body,
   }) async {
-    return await ApiHelper.safePost(
-      dio,
-      endPoints,
-      body: body,
-    );
+    return await ApiHelper.safePost(dio, endPoints, body: body);
   }
 
   Future<Either<Failure, Response>> postRequestForHme({
@@ -56,13 +50,22 @@ class ApiManger {
       queryParams: queryParameters,
     );
   }
+
   Future<Either<Failure, Response>> sendChatMessage(String message) async {
     return await ApiHelper.safePost(
       dio,
       EndPoints.sendChatMessageEndPoint,
-      body: {
-        "message": message,
-      },
+      body: {"message": message},
+    );
+  }
+
+  Future<Either<Failure, Response>> getRecommendedListRequest({
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return await ApiHelper.safeGet(
+      dio2,
+      EndPoints.getRecommendedList,
+      queryParams: queryParameters,
     );
   }
 }

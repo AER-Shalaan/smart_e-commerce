@@ -6,4 +6,5 @@ class Constants {
   static const String passRegExp =
       r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$";
   static const String baseUrl = "https://sm-ecommerce.runasp.net/";
+  static const String baseUrl2 = "https://recommendedlist.up.railway.app/";
 }

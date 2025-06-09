@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../model/products.dart';
+import '../model/allProducts.dart';
 import 'comparison_states.dart';
 
 class ComparisonCubit extends Cubit<ComparisonStates> {
