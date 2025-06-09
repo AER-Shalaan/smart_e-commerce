@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/category_model.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/subcategory_model.dart';
+import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
+import 'package:smart_ecommerce/data/models/home_models/categories_model/sub_category.dart';
 
 class FilterState extends Equatable {
   final Category? selectedCategory;
-  final Subcategory? selectedSubcategory;
+  final SubCategory? selectedSubcategory;
   final dynamic selectedItemForBorder;
   final String searchQuery;
   final double start;
@@ -27,7 +27,7 @@ class FilterState extends Equatable {
 
   FilterState copyWith({
     Category? selectedCategory,
-    Subcategory? selectedSubcategory,
+    SubCategory? selectedSubcategory,
     dynamic selectedItemForBorder,
     String? searchQuery,
     double? start,

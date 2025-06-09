@@ -11,10 +11,10 @@ class SubCategory {
     subCategoryImage = json['Sub_Category_Image'];
     categoryID = json['Category_ID'];
   }
-  num? subCategoryID;
+  int? subCategoryID;
   String? subCategoryName;
   String? subCategoryImage;
-  num? categoryID;
+  int? categoryID;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

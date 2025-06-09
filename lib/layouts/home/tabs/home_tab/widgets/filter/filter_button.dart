@@ -3,13 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/reusable_filter_dialog.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
+import 'package:smart_ecommerce/data/models/home_models/categories_model/sub_category.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_cubit.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/category_model.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/subcategory_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_states.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/subcategories_from_category_view_model/subcategories_from_category_states.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/subcategories_from_category_view_model/subcategories_from_category_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/widgets/filter_bottom_sheet.dart';
 
 class FilterButton extends StatelessWidget {
-  const FilterButton({super.key});
+  final String token;
+  final String userId;
+  const FilterButton({super.key, required this.token, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,8 @@ class FilterButton extends StatelessWidget {
         minimumSize: const Size(50, 50),
       ),
       onPressed: () {
-        BlocProvider.of<FilterCubit>(context).clearFilters();
+        context.read<FilterCubit>().clearFilters();
+        context.read<CategoriesViewModel>().getCategories(token);
         _showCategoryDialog(context);
       },
       child: SvgPicture.asset(Assets.assetsIconsFilterIcon),
@@ -30,81 +37,125 @@ class FilterButton extends StatelessWidget {
   }
 
   void _showCategoryDialog(BuildContext context) {
-    final categories = Category.dummyCategories;
     showDialog(
       context: context,
-      builder:
-          (context) => ReusableFilterDialog<Category>(
-            title: 'Select Category',
-            items: categories,
-            itemLabel: (category) => category.name,
-            itemIcon: (category) => category.icon,
-            onItemSelected: (category) {
-              context.read<FilterCubit>().setCategory(category);
-            },
-            onNextPressed: () {
-              final selectedCategory =
-                  context.read<FilterCubit>().state.selectedCategory;
-              if (selectedCategory == null) {
-                _showSnackbar(context, 'Please select a category first.');
-              } else {
-                Navigator.pop(context);
-                _showSubcategoryDialog(context, selectedCategory.id);
-              }
-            },
-            onConfirmPressed: () {
-              Navigator.pop(context);
-              // تنفيذ API لاسترجاع المنتجات الخاصة بهذه الفئة
-            },
-            onCancelPressed: () {
-              context.read<FilterCubit>().clearFilters();
-              Navigator.pop(context);
-            },
-          ),
+      builder: (context) {
+        return BlocBuilder<CategoriesViewModel, CategoriesState>(
+          builder: (context, state) {
+            if (state is CategoriesLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is CategoriesSuccessState) {
+              final categories = state.categories;
+
+              return ReusableFilterDialog<Category>(
+                title: 'Select Category',
+                items: categories,
+                itemLabel: (category) => category.categoryName ?? '',
+                itemImage: (category) => category.categoryImage ?? '',
+                onItemSelected: (category) {
+                  context.read<FilterCubit>().setCategory(category);
+                },
+                onNextPressed: () {
+                  final selectedCategory =
+                      context.read<FilterCubit>().state.selectedCategory;
+                  if (selectedCategory == null) {
+                    _showSnackbar(context, 'Please select a category first.');
+                  } else {
+                    Navigator.pop(context);
+                    context
+                        .read<SubcategoriesFromCategoryViewModel>()
+                        .getCategories(token, selectedCategory.categoryID!);
+                    _showSubcategoryDialog(context);
+                  }
+                },
+                onConfirmPressed: () {
+                  Navigator.pop(context);
+                  debugPrint('Confirm Pressed');
+                  // ممكن هنا تستدعي API لجلب المنتجات حسب التصنيف المختار
+                },
+                onCancelPressed: () {
+                  context.read<FilterCubit>().clearFilters();
+                  Navigator.pop(context);
+                },
+              );
+            } else if (state is CategoriesErrorState) {
+              return AlertDialog(
+                title: const Text("خطأ"),
+                content: Text(state.message),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("إغلاق"),
+                  ),
+                ],
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        );
+      },
     );
   }
 
-  void _showSubcategoryDialog(BuildContext context, int categoryId) {
-    final subcategories =
-        Subcategory.dummySubcategories
-            .where((sub) => sub.categoryId == categoryId)
-            .toList();
-
+  void _showSubcategoryDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder:
-          (context) => ReusableFilterDialog<Subcategory>(
-            title:
-                context.read<FilterCubit>().state.selectedCategory?.name ??
-                'Select Subcategory',
-            items: subcategories,
-            itemLabel: (subcategory) => subcategory.name,
-            itemIcon: (subcategory) => subcategory.icon,
-            onItemSelected: (subcategory) {
-              context.read<FilterCubit>().setSubcategory(subcategory);
-            },
-            onNextPressed: () {
-              final selectedSubCategory =
-                  context.read<FilterCubit>().state.selectedSubcategory;
-              if (selectedSubCategory == null) {
-                _showSnackbar(context, 'Please select a subcategory first.');
-              } else {
-                Navigator.pop(context);
-                showModalBottomSheet(
-                  context: context,
-                  enableDrag: false,
-                  builder: (context) => const FilterBottomSheet(),
-                );
-              }
-            },
-            onConfirmPressed: () {
-              Navigator.pop(context);
-            },
-            onCancelPressed: () {
-              context.read<FilterCubit>().clearFilters();
-              Navigator.pop(context);
-            },
-          ),
+      builder: (context) {
+        return BlocBuilder<SubcategoriesFromCategoryViewModel, SubcategoriesFromCategoryStates>(
+          builder: (context, state) {
+            if (state is SubcategoriesFromCategoryLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is SubcategoriesFromCategorySuccessState) {
+              final subcategories = state.subCategories;
+
+              return ReusableFilterDialog<SubCategory>(
+                title: context.read<FilterCubit>().state.selectedCategory?.categoryName ?? 'Select Subcategory',
+                items: subcategories,
+                itemLabel: (subcategory) => subcategory.subCategoryName ?? '',
+                itemImage: (subcategory) => subcategory.subCategoryImage ?? '',
+                onItemSelected: (subcategory) {
+                  context.read<FilterCubit>().setSubcategory(subcategory);
+                },
+                onNextPressed: () {
+                  final selectedSubCategory =
+                      context.read<FilterCubit>().state.selectedSubcategory;
+                  if (selectedSubCategory == null) {
+                    _showSnackbar(context, 'Please select a subcategory first.');
+                  } else {
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      context: context,
+                      enableDrag: false,
+                      builder: (context) => const FilterBottomSheet(),
+                    );
+                  }
+                },
+                onConfirmPressed: () {
+                  Navigator.pop(context);
+                },
+                onCancelPressed: () {
+                  context.read<FilterCubit>().clearFilters();
+                  Navigator.pop(context);
+                },
+              );
+            } else if (state is SubcategoriesFromCategoryErrorState) {
+              return AlertDialog(
+                title: const Text("خطأ"),
+                content: Text(state.message),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("إغلاق"),
+                  ),
+                ],
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        );
+      },
     );
   }
 

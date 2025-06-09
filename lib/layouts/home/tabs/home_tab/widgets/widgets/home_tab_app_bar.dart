@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_button.dart';
 
 class HomeTabAppBar extends StatelessWidget {
-  const HomeTabAppBar({super.key});
+  final String token;
+  final String userId;
+  const HomeTabAppBar({super.key, required this.token, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,10 @@ class HomeTabAppBar extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 15),
-              const Expanded(flex: 2, child: FilterButton()),
+              Expanded(
+                flex: 2,
+                child: FilterButton(token: token, userId: userId),
+              ),
             ],
           ),
         ),

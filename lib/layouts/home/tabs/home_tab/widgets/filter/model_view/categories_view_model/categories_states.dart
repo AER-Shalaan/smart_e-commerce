@@ -1,11 +1,11 @@
-import 'package:smart_ecommerce/data/models/home_models/categories_model/Categories.dart';
+import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
 
 abstract class CategoriesState {}
 
 class CategoriesLoadingState extends CategoriesState {}
 
 class CategoriesSuccessState extends CategoriesState {
-  final List<Categories> categories;
+  final List<Category> categories;
   CategoriesSuccessState(this.categories);
 }
 

@@ -10,7 +10,7 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) {
-        return [const HomeTabAppBar()];
+        return [ HomeTabAppBar( token: token, userId: userId)];
       },
       body: HomeTabBody(token: token, userId: userId),
     );
