@@ -72,6 +72,8 @@ import '../layouts/home/layouts/product_details/veiw_model/product_details_view_
     as _i869;
 import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart'
     as _i153;
+import '../layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_view_model.dart'
+    as _i573;
 import '../layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_view_model.dart'
     as _i172;
 import '../layouts/home/tabs/home_tab/widgets/filter/model_view/subcategories_from_category_view_model/subcategories_from_category_view_model.dart'
@@ -132,6 +134,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i172.CategoriesViewModel>(
       () => _i172.CategoriesViewModel(gh<_i1050.CategoriesDataSource>()),
+    );
+    gh.factory<_i573.HomeCategoriesViewModel>(
+      () => _i573.HomeCategoriesViewModel(gh<_i1050.CategoriesDataSource>()),
     );
     gh.factory<_i242.AddToCartViewModel>(
       () => _i242.AddToCartViewModel(gh<_i928.AddToCartDataSource>()),

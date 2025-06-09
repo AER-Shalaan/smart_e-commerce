@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/core/utils/text_styles.dart';
-import 'package:smart_ecommerce/data/models/home_models/categories_model/Categories.dart';
+import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({
     super.key,
-    required this.categories,
+    required this.category,
     required this.color,
   });
 
-  final Categories categories;
+  final Category category;
   final Color color;
 
   @override
@@ -32,14 +32,14 @@ class CategoryWidget extends StatelessWidget {
               height: isTablet ? 80 : 60,
               color: Colors.white,
               child:
-                  (categories.categoryImage == null ||
-                          categories.categoryImage!.isEmpty)
+                  (category.categoryImage == null ||
+                          category.categoryImage!.isEmpty)
                       ? const Icon(
                         Icons.image_not_supported,
                         color: Colors.grey,
                       )
                       : Image.network(
-                        categories.categoryImage!,
+                        category.categoryImage!,
                         fit: BoxFit.cover,
                         errorBuilder:
                             (_, __, ___) => const Icon(
@@ -51,7 +51,7 @@ class CategoryWidget extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            categories.categoryName ?? "No name",
+            category.categoryName ?? "No name",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyles.style14Simebold,
