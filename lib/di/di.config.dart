@@ -35,6 +35,8 @@ import '../data/data_source/home/home_tap_data_source/top_rated_data_source.dart
     as _i359;
 import '../data/data_source/home/product_details_data_source/product_details_data.dart'
     as _i688;
+import '../data/data_source/home/save_tab_data_source/add_and_del_itme_from_wishlsit_data_source.dart'
+    as _i641;
 import '../data/data_source/login/login_data_source.dart' as _i153;
 import '../data/data_source/signup/signup_data_source.dart' as _i125;
 import '../data/data_source_impl/home/cart_tap_data_source_impl/add_tap_data_source_impl.dart'
@@ -59,6 +61,8 @@ import '../data/data_source_impl/home/home_tap_data_source_impl/top_rated_data_s
     as _i22;
 import '../data/data_source_impl/home/product_details_data_source_impl/product_details_data_source.dart'
     as _i489;
+import '../data/data_source_impl/home/save_tab_data_source_impl/add_product_to_wishlist_data_source_impl.dart'
+    as _i474;
 import '../data/data_source_impl/login/login_data_source_impl.dart' as _i335;
 import '../data/data_source_impl/signup/sign_up_data_source_impl.dart' as _i764;
 import '../layouts/authentication/login/view_model/login_view_model.dart'
@@ -68,6 +72,8 @@ import '../layouts/authentication/signup/view_model/sign_up_view_model.dart'
 import '../layouts/chat_bot/view_model/chat_bot_view_model.dart' as _i200;
 import '../layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model.dart'
     as _i242;
+import '../layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model.dart'
+    as _i676;
 import '../layouts/home/layouts/product_details/veiw_model/product_details_view_model.dart'
     as _i869;
 import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart'
@@ -123,11 +129,19 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i879.SubcategoriesFromCategoryDataSourceImpl(gh<_i108.ApiManger>()),
     );
+    gh.factory<_i641.AddAndDelItmeFromWishlistDataSource>(
+      () => _i474.AddProductToWishlistDataSourceImpl(gh<_i108.ApiManger>()),
+    );
     gh.factory<_i262.GetCartDataSource>(
       () => _i114.GetCartDataSourceImpl(gh<_i108.ApiManger>()),
     );
     gh.factory<_i928.AddToCartDataSource>(
       () => _i530.AddTapDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i676.AddToWishlistViewModel>(
+      () => _i676.AddToWishlistViewModel(
+        gh<_i641.AddAndDelItmeFromWishlistDataSource>(),
+      ),
     );
     gh.factory<_i200.ChatBotViewModel>(
       () => _i200.ChatBotViewModel(gh<_i508.ChatBotDataSource>()),

@@ -9,4 +9,8 @@ class EndPoints {
   static const String getSubCategoryfromCategoryEndPoint = "Category/GetSubCategoryByCategory";
   static const String sendChatMessageEndPoint = "https://saleschatbot.up.railway.app/chat";
   static const String getRecommendedList = "recommend_list";
+  // whislist endpoints
+  static const String addToWhislistEndPoint = "Wishlist/AddProduct";
+  static const String removeFromWhislistEndPoint = "Wishlist/RemoveProduct";
+  static const String getWhislistEndPoint = "Wishlist/GetUserProducts";
 }

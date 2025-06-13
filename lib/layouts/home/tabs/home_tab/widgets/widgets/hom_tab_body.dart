@@ -25,7 +25,7 @@ class _HomeTabBodyState extends State<HomeTabBody> {
 
   @override
   Widget build(BuildContext context) {
-   // final userId = int.parse(widget.userId);
+    // final userId = int.parse(widget.userId);
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
@@ -38,7 +38,7 @@ class _HomeTabBodyState extends State<HomeTabBody> {
         ),
         const SliverSizedBoxSpace(height: 30),
         SliverToBoxAdapter(child: CategoryWidgetBuilder(token: widget.token)),
-        const SliverSizedBoxSpace(height: 30),
+        const SliverSizedBoxSpace(height: 20),
         // SliverToBoxAdapter(
         //   child: BlocProvider(
         //     create:
@@ -51,21 +51,20 @@ class _HomeTabBodyState extends State<HomeTabBody> {
         //     ),
         //   ),
         // ),
-        const SliverSizedBoxSpace(height: 30),
         SliverToBoxAdapter(
           child: BestSellerWidgetBuider(
             token: widget.token,
             userId: widget.userId,
           ),
         ),
-        const SliverSizedBoxSpace(height: 30),
+        const SliverSizedBoxSpace(height: 20),
         SliverToBoxAdapter(
           child: NewArrivalsWidgetBuilder(
             token: widget.token,
             userId: widget.userId,
           ),
         ),
-        const SliverSizedBoxSpace(height: 30),
+        const SliverSizedBoxSpace(height: 20),
         SliverToBoxAdapter(
           child: TopRatedProductWidgetBuilder(
             token: widget.token,

@@ -8,6 +8,8 @@ import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model_states.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model_states.dart';
 
 class ProductDetailsNavBar extends StatelessWidget {
   const ProductDetailsNavBar({
@@ -16,28 +18,58 @@ class ProductDetailsNavBar extends StatelessWidget {
     required this.token,
     required this.userId,
   });
+
   final String productId;
   final String token;
   final String userId;
+
   @override
   Widget build(BuildContext context) {
     AddCartProvider addCartProvider = Provider.of<AddCartProvider>(context);
-    return BlocListener<AddToCartViewModel, AddToCartViewModelStates>(
-      listener: (context, state) {
-        if (state is AddToCartSuccessState) {
-          AppSnackBar.show(
-            context: context,
-            message: "added to cart successfully",
-            backgroundColor: AppColors.primary,
-            icon: Icons.done,
-            duration: const Duration(seconds: 2),
-            fromTop: false,
-          );
-        }
-        if (state is AddToCartErrorState) {
-          log(state.errorMessage);
-        }
-      },
+
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AddToCartViewModel, AddToCartViewModelStates>(
+          listener: (context, state) {
+            if (state is AddToCartSuccessState) {
+              AppSnackBar.show(
+                context: context,
+                message: "Added to cart successfully",
+                backgroundColor: AppColors.primary,
+                icon: Icons.done,
+                duration: const Duration(seconds: 2),
+                fromTop: false,
+              );
+            }
+            if (state is AddToCartErrorState) {
+              log(state.errorMessage);
+            }
+          },
+        ),
+        BlocListener<AddToWishlistViewModel, AddToWishlistViewModelStates>(
+          listener: (context, state) {
+            if (state is AddToWishlistSuccess) {
+              AppSnackBar.show(
+                context: context,
+                message: state.response.messageToUser,
+                backgroundColor: Colors.pink,
+                icon: Icons.favorite,
+                duration: const Duration(seconds: 2),
+                fromTop: false,
+              );
+            } else if (state is AddToWishlistFailure) {
+              AppSnackBar.show(
+                context: context,
+                message: state.error.message,
+                backgroundColor: Colors.red,
+                icon: Icons.error,
+                duration: const Duration(seconds: 2),
+                fromTop: false,
+              );
+            }
+          },
+        ),
+      ],
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -51,7 +83,7 @@ class ProductDetailsNavBar extends StatelessWidget {
                     content: "How many do you want to add to cart",
                     customContent: ChangeNotifierProvider(
                       create: (context) => AddCartProvider(),
-                      child: ConfirmAddToCart(),
+                      child: const ConfirmAddToCart(),
                     ),
                     onConfirm: () {
                       log(addCartProvider.quantity.toString());
@@ -81,17 +113,20 @@ class ProductDetailsNavBar extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                print(productId);
+                context.read<AddToWishlistViewModel>().addToWishlist(
+                  token: token,
+                  userId: int.parse(userId),
+                  itemId: int.parse(productId),
+                );
+              },
               style: ElevatedButton.styleFrom(shape: const CircleBorder()),
               child: const Icon(Icons.favorite_border),
             ),
             ElevatedButton(
               onPressed: () {
-                //TODO : Add to compare
-                // onAddToCompare(product);
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(content: Text("${product['name']} added to comparison")),
-                // );
+                // TODO : Add to compare logic
               },
               style: ElevatedButton.styleFrom(shape: const CircleBorder()),
               child: const Icon(Icons.compare_arrows_outlined),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_ecommerce/core/constants.dart';
 import 'package:smart_ecommerce/core/utils/text_styles.dart';
 import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
 
@@ -39,7 +40,7 @@ class CategoryWidget extends StatelessWidget {
                         color: Colors.grey,
                       )
                       : Image.network(
-                        category.categoryImage!,
+                        Constants.baseUrl + category.categoryImage!,
                         fit: BoxFit.cover,
                         errorBuilder:
                             (_, __, ___) => const Icon(
