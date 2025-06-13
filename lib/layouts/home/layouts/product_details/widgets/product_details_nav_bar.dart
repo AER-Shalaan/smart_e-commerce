@@ -114,11 +114,10 @@ class ProductDetailsNavBar extends StatelessWidget {
             const SizedBox(width: 8),
             ElevatedButton(
               onPressed: () {
-                print(productId);
                 context.read<AddToWishlistViewModel>().addToWishlist(
                   token: token,
-                  userId: int.parse(userId),
-                  itemId: int.parse(productId),
+                  userId: userId,
+                  itemId: productId,
                 );
               },
               style: ElevatedButton.styleFrom(shape: const CircleBorder()),

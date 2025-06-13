@@ -5,7 +5,7 @@ import 'package:smart_ecommerce/data/models/wishlist_models/add_and_del_response
 abstract class AddAndDelItmeFromWishlistDataSource {
   Future<Either<Failure, AddAndDelResponseForWishlist>> addAndDelProduct({
     required String token,
-    required int userId,
-    required int itemId,
+    required String userId,
+    required String itemId,
   });
 }

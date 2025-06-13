@@ -17,13 +17,13 @@ class AddProductToWishlistDataSourceImpl
   @override
   Future<Either<Failure, AddAndDelResponseForWishlist>> addAndDelProduct({
     required String token,
-    required int userId,
-    required int itemId,
+    required String userId,
+    required String itemId,
   }) async {
     final result = await apiManger.postRequestForHme(
       endPoints: EndPoints.addToWhislistEndPoint,
       token: token,
-      queryParameters: {"UserId": userId, "ItemId": itemId},
+      queryParameters: {"BuyerId": userId, "ItemId": itemId},
     );
 
     return result.fold(

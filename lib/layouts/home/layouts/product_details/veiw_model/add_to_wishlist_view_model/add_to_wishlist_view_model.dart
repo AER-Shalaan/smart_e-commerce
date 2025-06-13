@@ -10,8 +10,8 @@ class AddToWishlistViewModel extends Cubit<AddToWishlistViewModelStates> {
 
   Future<void> addToWishlist({
     required String token,
-    required int userId,
-    required int itemId,
+    required String userId,
+    required String itemId,
   }) async {
     emit(AddToWishlistLoading());
     final response = await addToWishlistDataSource.addAndDelProduct(
