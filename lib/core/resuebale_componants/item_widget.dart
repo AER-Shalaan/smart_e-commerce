@@ -117,7 +117,6 @@ class _ItemWidgetState extends State<ItemWidget> {
                     ),
                   ),
                 ),
-                //TODO: cheak price form farg
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Column(

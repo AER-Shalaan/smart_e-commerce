@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:smart_ecommerce/data/models/wishlist_models/wishlist_item_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/widgets/saved_item_card.dart';
 
 class SavedItemWidgetBuilder extends StatelessWidget {
-  const SavedItemWidgetBuilder({super.key, required this.products});
-  final List<Map<String, dynamic>> products;
+  const SavedItemWidgetBuilder({
+    super.key,
+    required this.token,
+    required this.userId,
+    required this.productsList,
+  });
+  final String token;
+  final String userId;
+  final List<WishlistItemModel> productsList;
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
+    return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
@@ -24,14 +32,13 @@ class SavedItemWidgetBuilder extends StatelessWidget {
             mainAxisSpacing: 16,
             mainAxisExtent: MediaQuery.sizeOf(context).width >= 600 ? 320 : 280,
           ),
-          itemCount: products.length,
+          itemCount: productsList.length,
           itemBuilder: (context, index) {
-            final product = products[index];
+            final product = productsList[index];
             return SavedItemCard(
-              imagePath: product['imagePath'],
-              title: product['title'],
-              price: product['price'],
-              descount: product['discount'],
+              token: token,
+              userId: userId,
+              wishlistItemModel: product,
             );
           },
         ),

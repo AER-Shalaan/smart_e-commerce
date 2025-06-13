@@ -11,6 +11,7 @@ import 'package:smart_ecommerce/layouts/home/tabs/account_tab/account_tab_view.d
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/cart_tab.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/comparison_tab/comparison_tab.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/home_tab.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/provider/wishlist_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/saved_tab.dart';
 
 class HomeViewMobileLayout extends StatelessWidget {
@@ -29,7 +30,9 @@ class HomeViewMobileLayout extends StatelessWidget {
     final List<Widget> navWidget = [
       HomeTab(token: token, userId: userId),
       const ComparisonTab(),
-      const SavedTab(),
+      ChangeNotifierProvider(
+        create: (context) => WishlistProvider(),
+        child: SavedTab(token: token, userId: userId)),
       CartTab(token: token, userId: userId),
       const AccountTabView(),
     ];

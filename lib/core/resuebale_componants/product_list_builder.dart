@@ -5,8 +5,7 @@ import 'package:smart_ecommerce/data/models/home_models/produdts_model/products.
 import 'package:dartz/dartz.dart' hide State;
 import 'package:shimmer/shimmer.dart';
 
-typedef ProductFetcher =
-    Future<Either<Failure, List<Products>>> Function(int page);
+typedef ProductFetcher = Future<Either<Failure, List<Products>>> Function(int page);
 
 class ProductListBuilder extends StatefulWidget {
   const ProductListBuilder({
@@ -54,17 +53,24 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
   Future<void> _fetchInitialProducts() async {
     setState(() => _isLoading = true);
     final result = await widget.fetchFunction(_currentPage);
+    if (!mounted) return;
     result.fold(
-      (failure) => setState(() {
-        _error = failure.message;
-        _isLoading = false;
-      }),
-      (fetchedProducts) => setState(() {
-        _products = fetchedProducts;
-        _hasMore = fetchedProducts.length >= 10;
-        _isLoading = false;
-        _firstLoadDone = true;
-      }),
+      (failure) {
+        if (!mounted) return;
+        setState(() {
+          _error = failure.message;
+          _isLoading = false;
+        });
+      },
+      (fetchedProducts) {
+        if (!mounted) return;
+        setState(() {
+          _products = fetchedProducts;
+          _hasMore = fetchedProducts.length >= 10;
+          _isLoading = false;
+          _firstLoadDone = true;
+        });
+      },
     );
   }
 
@@ -72,17 +78,24 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
     setState(() => _isLoading = true);
     final nextPage = _currentPage + 1;
     final result = await widget.fetchFunction(nextPage);
+    if (!mounted) return;
     result.fold(
-      (failure) => setState(() {
-        _error = failure.message;
-        _isLoading = false;
-      }),
-      (fetchedProducts) => setState(() {
-        _currentPage = nextPage;
-        _products.addAll(fetchedProducts);
-        _hasMore = fetchedProducts.length >= 10;
-        _isLoading = false;
-      }),
+      (failure) {
+        if (!mounted) return;
+        setState(() {
+          _error = failure.message;
+          _isLoading = false;
+        });
+      },
+      (fetchedProducts) {
+        if (!mounted) return;
+        setState(() {
+          _currentPage = nextPage;
+          _products.addAll(fetchedProducts);
+          _hasMore = fetchedProducts.length >= 10;
+          _isLoading = false;
+        });
+      },
     );
   }
 
@@ -127,9 +140,10 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
             children: [
               Text(
                 widget.label,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.bold),
               ),
               const Spacer(),
               const Icon(
@@ -143,58 +157,57 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
         const SizedBox(height: 6),
         SizedBox(
           height: isTablet ? 330 : 290,
-          child:
-              _error != null
-                  ? Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.warning_amber_rounded,
-                          size: 48,
-                          color: Colors.red,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          _error!,
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                        const SizedBox(height: 12),
-                        ElevatedButton(
-                          onPressed: _fetchInitialProducts,
-                          child: const Text("Try Again"),
-                        ),
-                      ],
-                    ),
-                  )
-                  : _products.isEmpty && !_firstLoadDone
-                  ? ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (_, __) => buildShimmerItem(),
-                    separatorBuilder: (_, __) => const SizedBox(width: 16),
-                    itemCount: 5,
-                  )
-                  : ListView.separated(
-                    controller: _scrollController,
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: _products.length + (_hasMore ? 1 : 0),
-                    itemBuilder: (context, index) {
-                      if (index < _products.length) {
-                        return _buildProductItem(context, index);
-                      } else {
-                        return const Center(
-                          child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: CircularProgressIndicator(strokeWidth: 2.5),
-                          ),
-                        );
-                      }
-                    },
-                    separatorBuilder: (_, __) => const SizedBox(width: 16),
+          child: _error != null
+              ? Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.warning_amber_rounded,
+                        size: 48,
+                        color: Colors.red,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        _error!,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton(
+                        onPressed: _fetchInitialProducts,
+                        child: const Text("Try Again"),
+                      ),
+                    ],
                   ),
+                )
+              : _products.isEmpty && !_firstLoadDone
+                  ? ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (_, __) => buildShimmerItem(),
+                      separatorBuilder: (_, __) => const SizedBox(width: 16),
+                      itemCount: 5,
+                    )
+                  : ListView.separated(
+                      controller: _scrollController,
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: _products.length + (_hasMore ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (index < _products.length) {
+                          return _buildProductItem(context, index);
+                        } else {
+                          return const Center(
+                            child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: CircularProgressIndicator(strokeWidth: 2.5),
+                            ),
+                          );
+                        }
+                      },
+                      separatorBuilder: (_, __) => const SizedBox(width: 16),
+                    ),
         ),
       ],
     );
