@@ -39,14 +39,12 @@ class CustomMainButton extends StatelessWidget {
           onPressed: isDisabled ? null : onPressed,
           style: ButtonStyle(
             alignment: Alignment.center,
-            backgroundColor: WidgetStateProperty.resolveWith<Color>(
-              (states) {
-                if (isDisabled) {
-                  return Colors.grey;
-                }
-                return buttonColor!;
-              },
-            ),
+            backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+              if (isDisabled) {
+                return Colors.grey;
+              }
+              return buttonColor!;
+            }),
             shape: WidgetStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -64,10 +62,7 @@ class CustomMainButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (icon != null) ...[
-                icon!,
-                const SizedBox(width: 10),
-              ],
+              if (icon != null) ...[icon!, const SizedBox(width: 10)],
               Text(
                 label,
                 style: GoogleFonts.dmSans(

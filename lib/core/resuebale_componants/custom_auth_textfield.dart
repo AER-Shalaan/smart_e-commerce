@@ -55,31 +55,42 @@ class CustomAuthTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: GoogleFonts.dmSans(
-                fontWeight: FontWeight.w400,
-                color: AppColors.primary.withOpacity(0.4),
-                fontSize: 16),
+              fontWeight: FontWeight.w400,
+              color: AppColors.primary.withAlpha(102),
+              fontSize: 16,
+            ),
             suffixIcon: suffixIcon,
             suffixIconConstraints: suffixIconConstraints,
             prefixIcon: prefixIcon,
             border: OutlineInputBorder(
-                borderSide:
-                BorderSide(color: AppColors.primary.withOpacity(0.4), width: 1),
-                borderRadius: const BorderRadius.all(Radius.circular(10))),
+              borderSide: BorderSide(
+                color: AppColors.primary.withAlpha(102),
+                width: 1,
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: borderColor, width: 2),
-                borderRadius: const BorderRadius.all(Radius.circular(10))),
+              borderSide: BorderSide(color: borderColor, width: 2),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
             focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide(color: borderColor, width: 2)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(color: borderColor, width: 2),
+            ),
             disabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.primary, width: 1),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+              borderSide: BorderSide(color: AppColors.primary, width: 1),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
             errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red, width: 2),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+              borderSide: BorderSide(color: Colors.red, width: 2),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
           ),
           style: GoogleFonts.dmSans(
-              fontWeight: FontWeight.w400, color: AppColors.primary, fontSize: 16),
+            fontWeight: FontWeight.w400,
+            color: AppColors.primary,
+            fontSize: 16,
+          ),
         ),
         // Display error message if any
         if (errorMessage != null && errorMessage!.isNotEmpty)

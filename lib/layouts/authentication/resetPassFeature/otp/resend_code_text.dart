@@ -13,7 +13,7 @@ class ResendCodeText extends StatelessWidget {
         text: 'Email not received? ',
         style: GoogleFonts.dmSans(
           fontWeight: FontWeight.w400,
-          color: AppColors.primary.withOpacity(0.6),
+          color: AppColors.primary.withAlpha(153),
           fontSize: 14,
         ),
         children: <TextSpan>[
@@ -25,9 +25,11 @@ class ResendCodeText extends StatelessWidget {
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-              //TODO
-            },
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    //TODO
+                  },
           ),
         ],
       ),

@@ -1,0 +1,168 @@
+import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/dialogs.dart';
+import 'package:smart_ecommerce/core/utils/app_colors.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model_states.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model_states.dart';
+
+class ProductDetailsNavBar extends StatelessWidget {
+  const ProductDetailsNavBar({
+    super.key,
+    required this.productId,
+    required this.token,
+    required this.userId,
+  });
+
+  final String productId;
+  final String token;
+  final String userId;
+
+  @override
+  Widget build(BuildContext context) {
+    AddCartProvider addCartProvider = Provider.of<AddCartProvider>(context);
+
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AddToCartViewModel, AddToCartViewModelStates>(
+          listener: (context, state) {
+            if (state is AddToCartSuccessState) {
+              AppSnackBar.show(
+                context: context,
+                message: "Added to cart successfully",
+                backgroundColor: AppColors.primary,
+                icon: Icons.done,
+                duration: const Duration(seconds: 2),
+                fromTop: false,
+              );
+            }
+            if (state is AddToCartErrorState) {
+              log(state.errorMessage);
+            }
+          },
+        ),
+        BlocListener<AddToWishlistViewModel, AddToWishlistViewModelStates>(
+          listener: (context, state) {
+            if (state is AddToWishlistSuccess) {
+              AppSnackBar.show(
+                context: context,
+                message: state.response.messageToUser,
+                backgroundColor: Colors.pink,
+                icon: Icons.favorite,
+                duration: const Duration(seconds: 2),
+                fromTop: false,
+              );
+            } else if (state is AddToWishlistFailure) {
+              AppSnackBar.show(
+                context: context,
+                message: state.error.message,
+                backgroundColor: Colors.red,
+                icon: Icons.error,
+                duration: const Duration(seconds: 2),
+                fromTop: false,
+              );
+            }
+          },
+        ),
+      ],
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  CustomDialogs.showConfirmationDialog(
+                    context,
+                    title: "Quantify",
+                    content: "How many do you want to add to cart",
+                    customContent: ChangeNotifierProvider(
+                      create: (context) => AddCartProvider(),
+                      child: const ConfirmAddToCart(),
+                    ),
+                    onConfirm: () {
+                      log(addCartProvider.quantity.toString());
+                      AddToCartViewModel.get(context).addToCart(
+                        productId: productId,
+                        token: token,
+                        quantity: addCartProvider.quantity,
+                        userId: userId,
+                      );
+                    },
+                    icon: Icons.add_circle_outline,
+                    iconColor: AppColors.primary,
+                    cancelLabel: "Cancel",
+                    confirmationLabel: "Add, Now",
+                    confirmationColor: AppColors.primary,
+                  );
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Add To Cart"),
+                    SizedBox(width: 8),
+                    Icon(Icons.shopping_cart_outlined),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            ElevatedButton(
+              onPressed: () {
+                context.read<AddToWishlistViewModel>().addToWishlist(
+                  token: token,
+                  userId: userId,
+                  itemId: productId,
+                );
+              },
+              style: ElevatedButton.styleFrom(shape: const CircleBorder()),
+              child: const Icon(Icons.favorite_border),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // TODO : Add to compare logic
+              },
+              style: ElevatedButton.styleFrom(shape: const CircleBorder()),
+              child: const Icon(Icons.compare_arrows_outlined),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ConfirmAddToCart extends StatelessWidget {
+  const ConfirmAddToCart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    AddCartProvider addCartProvider = Provider.of<AddCartProvider>(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.remove_circle_outline),
+          onPressed: () {
+            addCartProvider.decrement();
+          },
+        ),
+        Text(
+          '${addCartProvider.quantity}',
+          style: const TextStyle(fontSize: 16),
+        ),
+        IconButton(
+          icon: const Icon(Icons.add_circle_outline),
+          onPressed: () {
+            addCartProvider.increment();
+          },
+        ),
+      ],
+    );
+  }
+}

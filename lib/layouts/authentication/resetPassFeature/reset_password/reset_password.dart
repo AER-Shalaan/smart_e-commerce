@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/resuebale_componants/headlineText.dart';
-import '../../../../core/resuebale_componants/titleMediumText.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
+import '../../../../core/resuebale_componants/title_medium_text.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets.dart';
 import '../../../../core/utils/text_styles.dart';
@@ -56,9 +56,10 @@ class ResetPassword extends StatelessWidget {
                   const Headlinetext(text: "Reset Password"),
                   const SizedBox(height: 8),
                   const TitleMediumtext(
-                      text:
-                          "Set the new password for your account so you can login and access all the features.",
-                      opacity: 1),
+                    text:
+                        "Set the new password for your account so you can login and access all the features.",
+                    opacity: 1,
+                  ),
                   const SizedBox(height: 24),
                   Text("New Password", style: TextStyles.titleMediumStyle),
                   const SizedBox(height: 4),
@@ -75,8 +76,10 @@ class ResetPassword extends StatelessWidget {
                         if (resetPasswordProvider.isPassCheck)
                           SvgPicture.asset(Assets.assetsIconsCheck, height: 30),
                         if (resetPasswordProvider.isWrongPassword)
-                          SvgPicture.asset(Assets.assetsIconsWarningCircle,
-                              height: 30),
+                          SvgPicture.asset(
+                            Assets.assetsIconsWarningCircle,
+                            height: 30,
+                          ),
                         IconButton(
                           onPressed:
                               resetPasswordProvider.togglePasswordVisibility,
@@ -88,11 +91,12 @@ class ResetPassword extends StatelessWidget {
                         ),
                       ],
                     ),
-                    borderColor: resetPasswordProvider.isPassCheck
-                        ? Colors.green
-                        : resetPasswordProvider.isWrongPassword
+                    borderColor:
+                        resetPasswordProvider.isPassCheck
+                            ? Colors.green
+                            : resetPasswordProvider.isWrongPassword
                             ? Colors.red
-                            : AppColors.primary.withOpacity(0.4),
+                            : AppColors.primary.withAlpha(102),
                   ),
                   if (resetPasswordProvider.isWrongPassword) ...[
                     const SizedBox(height: 8),
@@ -102,8 +106,10 @@ class ResetPassword extends StatelessWidget {
                     ),
                   ],
                   const SizedBox(height: 16),
-                  Text("Confirm New Password",
-                      style: TextStyles.titleMediumStyle),
+                  Text(
+                    "Confirm New Password",
+                    style: TextStyles.titleMediumStyle,
+                  ),
                   const SizedBox(height: 4),
                   CustomAuthTextField(
                     hint: "Re-enter your password",
@@ -118,11 +124,14 @@ class ResetPassword extends StatelessWidget {
                         if (resetPasswordProvider.isConfirmPassCheck)
                           SvgPicture.asset(Assets.assetsIconsCheck, height: 30),
                         if (resetPasswordProvider.isWrongConfirmPass)
-                          SvgPicture.asset(Assets.assetsIconsWarningCircle,
-                              height: 30),
+                          SvgPicture.asset(
+                            Assets.assetsIconsWarningCircle,
+                            height: 30,
+                          ),
                         IconButton(
-                          onPressed: resetPasswordProvider
-                              .toggleConfirmPasswordVisibility,
+                          onPressed:
+                              resetPasswordProvider
+                                  .toggleConfirmPasswordVisibility,
                           icon: SvgPicture.asset(
                             resetPasswordProvider.isConfirmPasswordObscure
                                 ? Assets.assetsIconsEyeOff
@@ -131,11 +140,12 @@ class ResetPassword extends StatelessWidget {
                         ),
                       ],
                     ),
-                    borderColor: resetPasswordProvider.isConfirmPassCheck
-                        ? Colors.green
-                        : resetPasswordProvider.isWrongConfirmPass
+                    borderColor:
+                        resetPasswordProvider.isConfirmPassCheck
+                            ? Colors.green
+                            : resetPasswordProvider.isWrongConfirmPass
                             ? Colors.red
-                            : AppColors.primary.withOpacity(0.4),
+                            : AppColors.primary.withAlpha(102),
                   ),
                   // عرض رسالة الخطأ
                   if (resetPasswordProvider.isWrongConfirmPass) ...[
@@ -153,16 +163,20 @@ class ResetPassword extends StatelessWidget {
               child: CustomMainButton(
                 label: "Continue",
                 labelColor: Colors.white,
-                buttonColor: resetPasswordProvider.isFormValid
-                    ? AppColors.secondary
-                    : AppColors.secondary.withOpacity(0.7),
-                borderSide:
-                    const BorderSide(color: Colors.transparent, width: 1),
-                onPressed: resetPasswordProvider.isFormValid
-                    ? () {
-                        // TODO Handle submission logic
-                      }
-                    : null,
+                buttonColor:
+                    resetPasswordProvider.isFormValid
+                        ? AppColors.secondary
+                        : AppColors.secondary.withAlpha(180),
+                borderSide: const BorderSide(
+                  color: Colors.transparent,
+                  width: 1,
+                ),
+                onPressed:
+                    resetPasswordProvider.isFormValid
+                        ? () {
+                          // TODO Handle submission logic
+                        }
+                        : null,
               ),
             ),
           ],

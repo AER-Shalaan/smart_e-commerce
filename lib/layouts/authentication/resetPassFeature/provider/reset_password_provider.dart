@@ -24,7 +24,8 @@ class ResetPasswordProvider with ChangeNotifier {
       passwordErrorMessage = "Password must be at least 8 characters long";
     } else if (!RegExp(Constants.passRegExp).hasMatch(value)) {
       isWrongPassword = true;
-      passwordErrorMessage = "Password must contain an uppercase letter, a number, and a special character (e.g., !@#\$%^&*)";
+      passwordErrorMessage =
+          "Password must contain an uppercase letter, a number, and a special character (e.g., !@#\$%^&*)";
     } else {
       isWrongPassword = false;
     }

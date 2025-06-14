@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_ecommerce/config/shared_preferences.dart';
-import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_checks_cubit.dart';
-import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_checks_states.dart';
+import 'package:smart_ecommerce/config/auth_session.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/dialogs.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
+import 'package:smart_ecommerce/data/models/signup_model/sign_up_model.dart';
+import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
+import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_states.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/view_model/sign_up_view_model.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/view_model/sign_up_view_model_state.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/login_prompt.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/signup_form.dart';
-import '../../../core/resuebale_componants/dialogs.dart';
-import '../../../core/utils/routes.dart';
-import '../../../data/models/signup_model/sign_up_model.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
+    GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return BlocListener<SignUpViewModel, SignUpState>(
       listenWhen:
@@ -26,14 +26,18 @@ class SignUpView extends StatelessWidget {
               current is SignUpLoadingState,
       listener: (context, state) async {
         CustomDialogs.closeDialogs(context);
+
         if (state is SignUpSuccessState) {
-          SignUpModel signUpModel = state.signUpModel;
-          SharedPreferencesFunctions.saveToken(signUpModel.token.toString());
+          final SignUpModel signUpModel = state.signUpModel;
+          final signUpChecksCubit = context.read<SignUpCheckCubit>();
+          final navigator = Navigator.of(context);
+          await AuthSession.saveSession(signUpModel.token.toString());
+
+          signUpChecksCubit.resetSignUpData();
 
           Future.delayed(
             const Duration(seconds: 1),
-            () => Navigator.pushNamedAndRemoveUntil(
-              context,
+            () => navigator.pushNamedAndRemoveUntil(
               Routes.homeView,
               (route) => false,
             ),
@@ -44,7 +48,7 @@ class SignUpView extends StatelessWidget {
           CustomDialogs.showLoadingDialog(context);
         }
       },
-      child: BlocBuilder<SignUpChecksCubit, SignUpChecksState>(
+      child: BlocBuilder<SignUpCheckCubit, SignUpCheckState>(
         builder: (context, state) {
           return Scaffold(
             resizeToAvoidBottomInset: true,

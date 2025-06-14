@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../../../../../../core/utils/app_colors.dart';
-import '../../../../../../../core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/app_colors.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
 
 class ProductNameDetailsReviewPrice extends StatelessWidget {
-  const ProductNameDetailsReviewPrice({super.key});
-
+  const ProductNameDetailsReviewPrice({super.key, required this.productData});
+  final ProductsData productData;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -15,27 +15,22 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Text(
-              "Apple Watch Pro",
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineLarge
-                  ?.copyWith(fontSize: 26),
+              productData.itemName ?? "",
+              style: Theme.of(
+                context,
+              ).textTheme.headlineLarge?.copyWith(fontSize: 26),
             ),
-            const Row(
+            Row(
               children: [
                 Text(
-                  "\$ 1100",
+                  "\$ ${productData.priceOut}",
                   style: TextStyle(color: Color(0xff808080), fontSize: 16),
                 ),
-                SizedBox(
-                  width: 4,
-                ),
+                SizedBox(width: 4),
                 Text(
-                  "-10%",
+                  "-${productData.discount}",
                   style: TextStyle(color: Color(0xffED1010), fontSize: 16),
                 ),
               ],
@@ -44,7 +39,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
               children: [
                 SvgPicture.asset(Assets.assetsIconsStarIcon),
                 Text(
-                  "4.9  86 Reviews",
+                  "${productData.rate}  ${productData.viewCount} Reviews",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.secondary,
                     fontSize: 14,
@@ -52,97 +47,93 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                 ),
                 const Spacer(),
                 Container(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.primary.withAlpha(102),
                   padding: const EdgeInsets.all(8),
                   child: Text(
-                    "Stock: 50",
+                    "Stock: ${productData.quantity}",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                )
+                ),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Divider(
-              color: Colors.grey[300],
-            ),
+            const SizedBox(height: 20),
+            Divider(color: Colors.grey[300]),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CircleAvatar(
-                    backgroundImage:
-                        const AssetImage(Assets.assetsImagesSallerImage),
+                    backgroundImage: const AssetImage(
+                      Assets.assetsImagesSallerImage,
+                    ),
                     backgroundColor: Colors.grey[300],
                   ),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Shop Larson Electronic",
+                        "${productData.sellerName}",
                         style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.secondary),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.secondary,
+                        ),
                       ),
-                      Text("Official Store",
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.secondary)),
+                      Text(
+                        "Official Store",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.secondary,
+                        ),
+                      ),
                     ],
                   ),
-                  const Icon(Icons.arrow_forward_ios)
+                  const Icon(Icons.arrow_forward_ios),
                 ],
               ),
             ),
-            Divider(
-              color: Colors.grey[300],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            Divider(color: Colors.grey[300]),
+            const SizedBox(height: 20),
             Text(
               "Product Description",
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineLarge
-                  ?.copyWith(fontSize: 22, fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            const SizedBox(
-              height: 10,
+            const SizedBox(height: 10),
+            Text(
+              productData.description ?? "",
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontSize: 16),
             ),
-            Text('''
-The speaker unit contains a diaphragm that is precision-grown from NAC Audio bio-cellulose, making it stiffer, lighter and stronger than regular PET speaker units, and allowing the sound-producing diaphragm to vibrate without the levels of distortion found in other speakers. 
-
-The speaker unit contains a diaphragm that is precision-grown from NAC Audio bio-cellulose, making it stiffer, lighter and stronger than regular PET speaker units, and allowing the sound-producing diaphragm to vibrate without the levels of distortion found in other speakers. 
-''', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16)),
-            Divider(
-              color: Colors.grey[300],
-            ),
+            Divider(color: Colors.grey[300]),
             Row(
               children: [
                 Text(
-                  "Review (86)",
+                  "Review (${productData.viewCount})",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const Spacer(),
                 SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: SvgPicture.asset(Assets.assetsIconsStarIcon)),
+                  height: 20,
+                  width: 20,
+                  child: SvgPicture.asset(Assets.assetsIconsStarIcon),
+                ),
                 Text(
-                  "4.9",
+                  "${productData.rate}",
                   style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800),
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ],
             ),

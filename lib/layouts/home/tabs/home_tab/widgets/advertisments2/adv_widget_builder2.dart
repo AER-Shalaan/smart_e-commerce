@@ -1,8 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../../core/utils/assets.dart';
-import 'adv_widget2.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisments2/adv_widget2.dart';
 
 class AdvWidgetBuilder2 extends StatelessWidget {
   const AdvWidgetBuilder2({super.key});
@@ -14,13 +13,15 @@ class AdvWidgetBuilder2 extends StatelessWidget {
       child: Column(
         children: [
           CarouselSlider.builder(
-            itemBuilder: (context, index, index2) =>
-                AdvWidget2(imagePath: advImagePath[index]),
+            itemBuilder:
+                (context, index, index2) =>
+                    AdvWidget2(imagePath: advImagePath[index]),
             itemCount: advImagePath.length,
             options: CarouselOptions(
-              height: MediaQuery.sizeOf(context).width >= 600
-                  ? height * 0.28
-                  : MediaQuery.sizeOf(context).width >= 450
+              height:
+                  MediaQuery.sizeOf(context).width >= 600
+                      ? height * 0.28
+                      : MediaQuery.sizeOf(context).width >= 450
                       ? height * 0.2
                       : height * 0.18,
               autoPlay: true,

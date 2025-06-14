@@ -1,32 +1,39 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-
-import '../../../core/resuebale_componants/headlineText.dart';
-import '../../../core/utils/app_colors.dart';
-import '../../../core/utils/assets.dart';
-import '../provider/home_provider.dart';
-import '../tabs/account_tab/account_tab_view.dart';
-import '../tabs/cart_tab/cart_tab.dart';
-import '../tabs/cart_tab/provider/cart_provider.dart';
-import '../tabs/comparison_tab/comparison_tab.dart';
-import '../tabs/home_tab/home_tab.dart';
-import '../tabs/saved_tab/saved_tab.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
+import 'package:smart_ecommerce/core/utils/app_colors.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
+import 'package:smart_ecommerce/layouts/home/provider/home_provider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/account_tab/account_tab_view.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/cart_tab.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/comparison_tab/comparison_tab.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/home_tab.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/provider/wishlist_provider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/saved_tab.dart';
 
 class HomeViewMobileLayout extends StatelessWidget {
-  const HomeViewMobileLayout({super.key});
-
+  const HomeViewMobileLayout({
+    super.key,
+    required this.token,
+    required this.userId,
+  });
+  final String token;
+  final String userId;
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = Provider.of<HomeProvider>(context);
+
+    log(provider.homeTapIndex.toString());
     final List<Widget> navWidget = [
-      const HomeTab(),
+      HomeTab(token: token, userId: userId),
       const ComparisonTab(),
-      const SavedTab(),
       ChangeNotifierProvider(
-        create: (_) => CartProvider(),
-        child: const CartTab(),
-      ),
+        create: (context) => WishlistProvider(),
+        child: SavedTab(token: token, userId: userId)),
+      CartTab(token: token, userId: userId),
       const AccountTabView(),
     ];
     return Scaffold(
@@ -56,6 +63,33 @@ class HomeViewMobileLayout extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton:
+          provider.homeTapIndex == 0 || provider.homeTapIndex == 4
+              ? FloatingActionButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.chatBotViewRouteName,
+                    arguments: {'token': token, 'userId': userId},
+                  );
+                },
+                shape: const CircleBorder(),
+                backgroundColor: AppColors.primary,
+                child: const Icon(Icons.chat, color: AppColors.backGroundColor),
+              )
+              : provider.homeTapIndex == 1
+              ? FloatingActionButton(
+                onPressed: () {
+                  debugPrint('table button pressed');
+                },
+                backgroundColor: AppColors.primary,
+                shape: const CircleBorder(),
+                child: const Icon(
+                  Icons.backup_table_rounded,
+                  color: AppColors.backGroundColor,
+                ),
+              )
+              : null,
       bottomNavigationBar:
           MediaQuery.of(context).size.width <= 600
               ? BottomNavigationBar(
@@ -74,7 +108,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -90,7 +124,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -105,7 +139,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -120,7 +154,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -135,7 +169,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(
                               context,
-                            ).colorScheme.secondary.withOpacity(0.3),
+                            ).colorScheme.secondary.withAlpha(77),
                         BlendMode.srcIn,
                       ),
                     ),

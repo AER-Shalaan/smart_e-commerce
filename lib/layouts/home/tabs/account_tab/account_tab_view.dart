@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
+import 'package:smart_ecommerce/config/auth_session.dart';
 import '../../../../core/resuebale_componants/dialogs.dart';
-import '../../../../core/resuebale_componants/wideArrowButton.dart';
+import '../../../../core/resuebale_componants/wide_arrow_button.dart';
 import '../../../../core/utils/assets.dart';
 import '../../../../core/utils/routes.dart';
 
@@ -32,12 +31,6 @@ class AccountTabView extends StatelessWidget {
           label: 'Address Book',
           imagePath: Assets.assetsIconsAddress,
           routeName: Routes.addressBookViewRouteName,
-        ),
-        const Divider(indent: 25, endIndent: 25, color: Colors.black26),
-        const WideArrowButton(
-          label: 'Payment Methods',
-          imagePath: Assets.assetsIconsCard,
-          routeName: Routes.paymentMethodsViewRouteName,
         ),
         const Divider(indent: 25, endIndent: 25, color: Colors.black26),
         const WideArrowButton(
@@ -71,7 +64,7 @@ class AccountTabView extends StatelessWidget {
                 cancelLabel: 'No, Cancel',
                 confirmationColor: Colors.red,
                 onConfirm: () {
-                  context.read<LoginChecksCubit>().resetLoginData();
+                  AuthSession.clear();
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     Routes.loginViewRouteName,

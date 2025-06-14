@@ -29,7 +29,7 @@ class CustomDialogs {
       iconColor: Colors.amber[700]!,
       title: 'Loading...',
       customContent: LoadingAnimationWidget.fourRotatingDots(
-        color: AppColors.primary.withOpacity(0.6),
+        color: AppColors.primary.withAlpha(153),
         size: MediaQuery.of(context).size.width * 0.13,
       ),
       barrierDismissible: true,
@@ -44,6 +44,7 @@ class CustomDialogs {
     required IconData icon,
     required Color iconColor,
     required String cancelLabel,
+    Widget? customContent,
     required String confirmationLabel,
     required Color confirmationColor,
   }) {
@@ -52,6 +53,7 @@ class CustomDialogs {
       icon: icon,
       iconColor: iconColor,
       title: title,
+      customContent: customContent,
       content: content,
       actions: [
         _buildDialogButton(
@@ -97,32 +99,45 @@ class CustomDialogs {
         final screenHeight = MediaQuery.of(context).size.height;
 
         return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Container(
             width: screenWidth * 0.8,
             padding: EdgeInsets.all(screenWidth * 0.05),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(icon, color: iconColor, size: screenWidth * 0.12),
                 SizedBox(height: screenHeight * 0.02),
-                Text(title,
-                    style: TextStyles.dialogTitleStyle
-                        .copyWith(fontSize: screenWidth * 0.05)),
+                Text(
+                  title,
+                  style: TextStyles.dialogTitleStyle.copyWith(
+                    fontSize: screenWidth * 0.05,
+                  ),
+                ),
                 if (content != null) ...[
                   SizedBox(height: screenHeight * 0.01),
-                  Text(content,
-                      textAlign: TextAlign.center,
-                      style: TextStyles.dialogMessageStyle
-                          .copyWith(fontSize: screenWidth * 0.035)),
+                  Text(
+                    content,
+                    textAlign: TextAlign.center,
+                    style: TextStyles.dialogMessageStyle.copyWith(
+                      fontSize: screenWidth * 0.035,
+                    ),
+                  ),
                 ],
-                if (customContent != null) ...[
-                  customContent,
-                ],
+                if (customContent != null) ...[customContent],
                 if (actions != null) ...[
                   SizedBox(height: screenHeight * 0.03),
-                  Row(mainAxisSize: MainAxisSize.min, children: actions),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: actions,
+                  ),
                 ],
               ],
             ),
@@ -140,27 +155,33 @@ class CustomDialogs {
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: isOutlined
-          ? OutlinedButton(
-              onPressed: onPressed,
-              style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                side: BorderSide(color: color),
+      child:
+          isOutlined
+              ? OutlinedButton(
+                onPressed: onPressed,
+                style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  side: BorderSide(color: color),
+                ),
+                child: Text(
+                  label,
+                  style: TextStyles.dialogLabelButtonStyle.copyWith(
+                    color: color,
+                  ),
+                ),
+              )
+              : ElevatedButton(
+                onPressed: onPressed,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: color,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(label, style: TextStyles.dialogLabelButtonStyle),
               ),
-              child: Text(label,
-                  style:
-                      TextStyles.dialogLabelButtonStyle.copyWith(color: color)),
-            )
-          : ElevatedButton(
-              onPressed: onPressed,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: color,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              child: Text(label, style: TextStyles.dialogLabelButtonStyle),
-            ),
     );
   }
 }

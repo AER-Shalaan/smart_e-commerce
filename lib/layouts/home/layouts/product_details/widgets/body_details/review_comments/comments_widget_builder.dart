@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'comments_widget.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/body_details/review_comments/comments_widget.dart';
 
 class CommentsWidgetBuilder extends StatelessWidget {
   const CommentsWidgetBuilder({super.key});
@@ -8,10 +7,9 @@ class CommentsWidgetBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList.separated(
-        itemBuilder: (context, index) => const CommentsWidget(),
-        separatorBuilder: (context, index) => const SizedBox(
-              height: 16,
-            ),
-        itemCount: 5);
+      itemBuilder: (context, index) => const CommentsWidget(),
+      separatorBuilder: (context, index) => const SizedBox(height: 16),
+      itemCount: 5,
+    );
   }
 }

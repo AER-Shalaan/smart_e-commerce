@@ -2,9 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisements/adv_widget.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/advertisements/provider/adv_provider.dart';
-import '../../../../../../core/utils/assets.dart';
-import 'adv_widget.dart';
 
 class AdvWidgetBuilder extends StatelessWidget {
   const AdvWidgetBuilder({super.key});
@@ -16,43 +16,46 @@ class AdvWidgetBuilder extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: MediaQuery.sizeOf(context).width >= 600
-              ? MediaQuery.sizeOf(context).width * 1.2
-              : MediaQuery.sizeOf(context).width * 0.8,
+          width:
+              MediaQuery.sizeOf(context).width >= 600
+                  ? MediaQuery.sizeOf(context).width * 1.2
+                  : MediaQuery.sizeOf(context).width * 0.8,
           child: CarouselSlider.builder(
-              carouselController: CarouselSliderController(),
-              itemBuilder: (context, index, index2) {
-                return AdvWidget(imagePath: advImagePath[index]);
+            carouselController: CarouselSliderController(),
+            itemBuilder: (context, index, index2) {
+              return AdvWidget(imagePath: advImagePath[index]);
+            },
+            itemCount: advImagePath.length,
+            options: CarouselOptions(
+              autoPlayCurve: Curves.fastOutSlowIn,
+              height:
+                  MediaQuery.sizeOf(context).width >= 600
+                      ? height * 0.28
+                      : MediaQuery.sizeOf(context).width >= 450
+                      ? height * 0.2
+                      : height * 0.17,
+              autoPlay: true,
+              enlargeCenterPage: true,
+              viewportFraction: 1,
+              autoPlayInterval: const Duration(seconds: 3),
+              onPageChanged: (index, reason) {
+                advProvider.changeAdvCurrentIndex(index);
               },
-              itemCount: advImagePath.length,
-              options: CarouselOptions(
-                autoPlayCurve: Curves.fastOutSlowIn,
-                height: MediaQuery.sizeOf(context).width >= 600
-                    ? height * 0.28
-                    : MediaQuery.sizeOf(context).width >= 450
-                        ? height * 0.2
-                        : height * 0.17,
-                autoPlay: true,
-                enlargeCenterPage: true,
-                viewportFraction: 1,
-                autoPlayInterval: const Duration(seconds: 3),
-                onPageChanged: (index, reason) {
-                  advProvider.changeAdvCurrentIndex(index.toDouble());
-                },
-              )),
+            ),
+          ),
         ),
         DotsIndicator(
           dotsCount: advImagePath.length,
-          position: advProvider.currentIndex,
+          position: advProvider.currentIndex.toDouble(),
           decorator: DotsDecorator(
             activeColor: Theme.of(context).colorScheme.primary,
             activeShape: const CircleBorder(),
             activeSize: const Size(10.0, 10.0),
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.primary.withAlpha(102),
             shape: const CircleBorder(),
             size: const Size(10.0, 10),
           ),
-        )
+        ),
       ],
     );
   }

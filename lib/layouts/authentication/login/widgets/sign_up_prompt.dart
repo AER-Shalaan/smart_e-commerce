@@ -15,7 +15,7 @@ class SignUpPrompt extends StatelessWidget {
         text: 'Don’t have an account? ',
         style: GoogleFonts.dmSans(
           fontWeight: FontWeight.w400,
-          color: AppColors.primary.withOpacity(0.6),
+          color: AppColors.primary.withAlpha(153),
           fontSize: 16,
         ),
         children: <TextSpan>[
@@ -27,11 +27,14 @@ class SignUpPrompt extends StatelessWidget {
               fontSize: 16,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                Navigator.pushReplacementNamed(
-                    context, Routes.signUpViewRouteName);
-              },
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      Routes.signUpViewRouteName,
+                    );
+                  },
           ),
         ],
       ),

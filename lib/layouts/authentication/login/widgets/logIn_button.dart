@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
@@ -7,10 +6,10 @@ import '../../../../core/resuebale_componants/custom_main_button.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../view_model/login_view_model.dart';
 
-class LogInButton extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
-  const LogInButton({super.key, required this.formKey});
+  const LoginButton({super.key, required this.formKey});
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +28,15 @@ class LogInButton extends StatelessWidget {
           onPressed: () {
             if (!isFormValid) return;
             if (formKey.currentState == null ||
-                !formKey.currentState!.validate())
+                !formKey.currentState!.validate()) {
               return;
+            }
 
             final loginCubit = context.read<LoginChecksCubit>();
             final loginViewModel = LoginViewModel.get(context);
 
             String email = loginCubit.emailController.text;
             String password = loginCubit.passController.text;
-
-            log(email);
-            log(password);
-
             loginViewModel.login(email, password, context);
           },
         );

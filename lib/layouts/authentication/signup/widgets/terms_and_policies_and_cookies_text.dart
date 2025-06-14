@@ -13,7 +13,7 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
         text: 'By signing up you agree to our ',
         style: GoogleFonts.dmSans(
           fontWeight: FontWeight.w400,
-          color: AppColors.primary.withOpacity(0.6),
+          color: AppColors.primary.withAlpha(153),
           fontSize: 14,
         ),
         children: <TextSpan>[
@@ -25,13 +25,11 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-
-            },
+            recognizer: TapGestureRecognizer()..onTap = () {},
           ),
           TextSpan(
             text: ', ',
-            style: TextStyle(color: AppColors.primary.withOpacity(0.6)),
+            style: TextStyle(color: AppColors.primary.withAlpha(153)),
           ),
 
           TextSpan(
@@ -42,15 +40,13 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-
-            },
+            recognizer: TapGestureRecognizer()..onTap = () {},
           ),
           TextSpan(
             text: ', and ',
             style: GoogleFonts.dmSans(
               fontWeight: FontWeight.w400,
-              color: AppColors.primary.withOpacity(0.6),
+              color: AppColors.primary.withAlpha(153),
               fontSize: 14,
             ),
           ),
@@ -62,9 +58,11 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {
-              // Reset password functionality
-            },
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    // Reset password functionality
+                  },
           ),
         ],
       ),

@@ -1,7 +1,10 @@
 import 'package:dartz/dartz.dart';
-import '../../models/login_model/LoginModel.dart';
+import 'package:smart_ecommerce/core/api/failure.dart';
+import 'package:smart_ecommerce/data/models/login_model/login_model.dart';
 
 abstract class LoginDataSource {
-  Future<Either<String, LoginModel>> login(
-      {required String email, required String password});
+  Future<Either<Failure, LoginModel>> login({
+    required String email,
+    required String password,
+  });
 }

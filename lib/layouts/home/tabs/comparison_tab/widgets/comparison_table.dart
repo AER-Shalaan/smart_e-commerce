@@ -34,15 +34,13 @@ class ComparisonTable extends StatelessWidget {
             centerTitle: true,
             actions: [
               IconButton(
-                  onPressed: () {
-                    {
-                      cubit.clearComparison();
-                    }
-                  },
-                  icon: const Icon(
-                    Icons.clear_all,
-                    color: Colors.red,
-                  ))
+                onPressed: () {
+                  {
+                    cubit.clearComparison();
+                  }
+                },
+                icon: const Icon(Icons.clear_all, color: Colors.red),
+              ),
             ],
           ),
           body: Padding(
@@ -58,8 +56,9 @@ class ComparisonTable extends StatelessWidget {
                     dataRowMinHeight: 60,
                     dataRowMaxHeight: 100,
                     clipBehavior: Clip.antiAlias,
-                    headingRowColor:
-                        const WidgetStatePropertyAll(Color(0xff0E947A)),
+                    headingRowColor: const WidgetStatePropertyAll(
+                      Color(0xff0E947A),
+                    ),
                     headingTextStyle: GoogleFonts.dmSans(
                       color: Colors.white,
                       fontSize: 16,
@@ -71,7 +70,7 @@ class ComparisonTable extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                     border: TableBorder.all(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withAlpha(128),
                       width: 1,
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -83,7 +82,9 @@ class ComparisonTable extends StatelessWidget {
                             child: Text(
                               'Feature',
                               style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -131,8 +132,11 @@ class ComparisonTable extends StatelessWidget {
                         ),
                       ),
                     ],
-                    rows:
-                        _buildComparisonRows(context, allFeatures, columnWidth),
+                    rows: _buildComparisonRows(
+                      context,
+                      allFeatures,
+                      columnWidth,
+                    ),
                   ),
                 ),
               ),
@@ -144,7 +148,10 @@ class ComparisonTable extends StatelessWidget {
   }
 
   List<DataRow> _buildComparisonRows(
-      BuildContext context, Set<String> allFeatures, double columnWidth) {
+    BuildContext context,
+    Set<String> allFeatures,
+    double columnWidth,
+  ) {
     List<DataRow> rows = [];
 
     rows.add(
@@ -163,9 +170,7 @@ class ComparisonTable extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: 120,
-                    child: CarouselImage(
-                      imageUrls: product['imageUrls'] ?? [],
-                    ),
+                    child: CarouselImage(imageUrls: product['imageUrls'] ?? []),
                   ),
                 ),
               ),
@@ -186,7 +191,9 @@ class ComparisonTable extends StatelessWidget {
                   Text(
                     feature,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 14),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -203,27 +210,32 @@ class ComparisonTable extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: (product[feature] is List)
-                          ? (product[feature] as List<dynamic>)
-                              .map((item) => Center(
-                                    child: Text(
-                                      '-$item',
-                                      style: const TextStyle(
-                                          fontSize: 12, color: Colors.black87),
+                      children:
+                          (product[feature] is List)
+                              ? (product[feature] as List<dynamic>)
+                                  .map(
+                                    (item) => Center(
+                                      child: Text(
+                                        '-$item',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
                                     ),
-                                  ))
-                              .toList()
-                          : [
-                              Center(
-                                child: Text(
-                                  product[feature]?.toString() ?? 'NA',
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black87,
+                                  )
+                                  .toList()
+                              : [
+                                Center(
+                                  child: Text(
+                                    product[feature]?.toString() ?? 'NA',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black87,
+                                    ),
                                   ),
                                 ),
-                              )
-                            ],
+                              ],
                     ),
                   ),
                 ),

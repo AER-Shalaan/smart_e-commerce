@@ -17,7 +17,7 @@ class SocialLoginButtons extends StatelessWidget {
           children: [
             Expanded(
               child: Divider(
-                color: AppColors.secondary.withOpacity(0.4),
+                color: AppColors.secondary.withAlpha(102),
                 endIndent: 10,
               ),
             ),
@@ -26,12 +26,12 @@ class SocialLoginButtons extends StatelessWidget {
               style: GoogleFonts.dmSans(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: AppColors.secondary.withOpacity(0.65),
+                color: AppColors.secondary.withAlpha(165),
               ),
             ),
             Expanded(
               child: Divider(
-                color: AppColors.secondary.withOpacity(0.4),
+                color: AppColors.secondary.withAlpha(102),
                 thickness: 1,
                 indent: 10,
               ),
@@ -47,7 +47,7 @@ class SocialLoginButtons extends StatelessWidget {
           borderSide: BorderSide(
             width: 1,
             style: BorderStyle.solid,
-            color: AppColors.secondary.withOpacity(0.4),
+            color: AppColors.secondary.withAlpha(102),
           ),
         ),
         const SizedBox(height: 16),

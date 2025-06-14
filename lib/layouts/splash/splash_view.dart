@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smart_ecommerce/config/auth_session.dart';
 import '../../core/utils/assets.dart';
 import '../../core/utils/routes.dart';
+import '../../config/shared_preferences.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -11,7 +13,8 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> with SingleTickerProviderStateMixin {
+class _SplashViewState extends State<SplashView>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _opacityAnimation;
@@ -28,44 +31,41 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
       begin: const Offset(0, 0.4),
       end: Offset.zero,
     ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
-    _opacityAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
+    _opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
-    _progressAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeIn,
-      ),
+    _progressAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
 
     _animationController.forward();
 
-    _animationController.addStatusListener((status) {
+    _animationController.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
-       Navigator.pushReplacementNamed(context, Routes.onBoardingRouteName);
+        final navigator = Navigator.of(context);
+        final hasSeenOnboarding =
+            await SharedPreferencesFunctions.hasSeenOnBoarding();
+        final session = await AuthSession.getSession();
+        if (!hasSeenOnboarding) {
+          await SharedPreferencesFunctions.setOnBoardingSeen();
+          navigator.pushReplacementNamed(Routes.onBoardingRouteName);
+        } else if (session != null) {
+          navigator.pushReplacementNamed(Routes.homeView);
+        } else {
+          await AuthSession.clear();
+          navigator.pushReplacementNamed(Routes.loginViewRouteName);
+        }
       }
     });
   }
 
   @override
   void dispose() {
-   _animationController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -98,11 +98,11 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
                 Text(
                   "Inspire Shopping",
                   style: GoogleFonts.moonDance(
-                      fontSize: 28, fontWeight: FontWeight.w600),
+                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 SizedBox(
                   height: 15,
                   child: Padding(
@@ -133,4 +133,3 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
     );
   }
 }
-

@@ -10,7 +10,7 @@ class OnBoardingPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView(
       controller: pageController,
-      
+
       children: const [
         PageViewItem(
           imagePath: Assets.assetsImagesOnBoarding1,

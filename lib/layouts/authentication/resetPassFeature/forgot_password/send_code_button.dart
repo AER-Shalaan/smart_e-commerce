@@ -9,7 +9,11 @@ class SendCodeButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController emailController;
 
-  const SendCodeButton({super.key, required this.formKey, required this.emailController});
+  const SendCodeButton({
+    super.key,
+    required this.formKey,
+    required this.emailController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +28,20 @@ class SendCodeButton extends StatelessWidget {
         width: 1,
       ),
       isDisabled: !provider.isEmailValid,
-      onPressed: provider.isEmailValid
-          ? () {
-        if (formKey.currentState!.validate()) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Otp(email: emailController.text)));
-          // TODO: Add further logic after validation
-        }
-      }
-          : null,
+      onPressed:
+          provider.isEmailValid
+              ? () {
+                if (formKey.currentState!.validate()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Otp(email: emailController.text),
+                    ),
+                  );
+                  // TODO: Add further logic after validation
+                }
+              }
+              : null,
     );
   }
 }

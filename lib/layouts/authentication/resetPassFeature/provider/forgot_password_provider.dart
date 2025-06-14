@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants.dart';
+
 class ForgotPasswordProvider extends ChangeNotifier {
   bool _isEmailValid = false;
   String emailErrorMessage = "";

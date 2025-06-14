@@ -21,31 +21,37 @@ class HelpCenterView extends StatelessWidget {
 
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: AppColors.backGroundColor,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          iconTheme: const IconThemeData(size: 33),
-          centerTitle: true,
-          title: Text("Help Center",
-              style: TextStyles.headlineStyle.copyWith(fontSize: 24)),
+      backgroundColor: AppColors.backGroundColor,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(size: 33),
+        centerTitle: true,
+        title: Text(
+          "Help Center",
+          style: TextStyles.headlineStyle.copyWith(fontSize: 24),
         ),
-        body: Padding(
-          padding: EdgeInsets.all(screenWidth * 0.03),
-          child: ListView.builder(
-            itemCount: helpOptions.length,
-            itemBuilder: (context, index) {
-              return _buildSortByFilter(
-                context,
-                helpOptions[index]["icon"]!,
-                helpOptions[index]["label"]!,
-              );
-            },
-          ),
-        ));
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(screenWidth * 0.03),
+        child: ListView.builder(
+          itemCount: helpOptions.length,
+          itemBuilder: (context, index) {
+            return _buildSortByFilter(
+              context,
+              helpOptions[index]["icon"]!,
+              helpOptions[index]["label"]!,
+            );
+          },
+        ),
+      ),
+    );
   }
 
   Widget _buildSortByFilter(
-      BuildContext context, String iconpath, String label) {
+    BuildContext context,
+    String iconpath,
+    String label,
+  ) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return InkWell(
@@ -53,18 +59,16 @@ class HelpCenterView extends StatelessWidget {
       onTap: () {},
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.withOpacity(0.3)),
-            borderRadius: BorderRadius.circular(10)),
+          border: Border.all(color: Colors.grey.withAlpha(102)),
+          borderRadius: BorderRadius.circular(10),
+        ),
         padding: EdgeInsets.all(screenWidth * 0.04),
         margin: EdgeInsets.all(screenHeight * 0.01),
         child: Row(
           children: [
             SvgPicture.asset(iconpath),
             SizedBox(width: screenWidth * 0.05),
-            Text(
-              label,
-              style: TextStyles.accountLabels,
-            )
+            Text(label, style: TextStyles.accountLabels),
           ],
         ),
       ),

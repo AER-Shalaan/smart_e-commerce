@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/resuebale_componants/custom_auth_textfield.dart';
-import '../../../../core/resuebale_componants/titleMediumText.dart';
+import '../../../../core/resuebale_componants/title_medium_text.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets.dart';
 import '../Cubit/login_checks_cubit.dart';
@@ -39,9 +39,10 @@ class LoginTextFields extends StatelessWidget {
                       ? Colors.green
                       : state.isWrongEmail
                       ? Colors.red
-                      : AppColors.primary.withOpacity(0.4),
+                      : AppColors.primary.withAlpha(102),
             ),
             const SizedBox(height: 16),
+
             const TitleMediumtext(text: "Password", opacity: 1),
             const SizedBox(height: 4),
             CustomAuthTextField(
@@ -77,7 +78,7 @@ class LoginTextFields extends StatelessWidget {
                       ? Colors.green
                       : state.isWrongPassword
                       ? Colors.red
-                      : AppColors.primary.withOpacity(0.4),
+                      : AppColors.primary.withAlpha(102),
             ),
           ],
         );

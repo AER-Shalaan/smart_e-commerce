@@ -16,8 +16,9 @@ class FAQItem extends StatelessWidget {
       child: ExpansionTile(
         title: Text(faq.question, style: TextStyles.fAQsLabels),
         initiallyExpanded: faq.isExpanded,
-        collapsedShape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        collapsedShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         backgroundColor: Colors.white,
         dense: true,
@@ -26,7 +27,7 @@ class FAQItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(faq.answer, style: TextStyles.fAQsTexts),
-          )
+          ),
         ],
       ),
     );

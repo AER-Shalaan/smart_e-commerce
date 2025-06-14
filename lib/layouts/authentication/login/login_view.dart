@@ -1,7 +1,7 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_ecommerce/config/shared_preferences.dart';
+import 'package:smart_ecommerce/config/auth_session.dart';
+import 'package:smart_ecommerce/data/models/login_model/login_model.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_states.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/view_model/login_view_model.dart';
@@ -10,7 +10,6 @@ import 'package:smart_ecommerce/layouts/authentication/login/widgets/login_form.
 import 'package:smart_ecommerce/layouts/authentication/login/widgets/sign_up_prompt.dart';
 import '../../../core/resuebale_componants/dialogs.dart';
 import '../../../core/utils/routes.dart';
-import '../../../data/models/login_model/LoginModel.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -27,15 +26,18 @@ class LoginView extends StatelessWidget {
               current is LoginLoadingState,
       listener: (context, state) async {
         CustomDialogs.closeDialogs(context);
+
         if (state is LoginSuccessState) {
-          LoginModel loginModel = state.loginModel;
-          log(loginModel.token.toString());
-          SharedPreferencesFunctions.saveToken(loginModel.token.toString());
+          final LoginModel loginModel = state.loginModel;
+          final loginChecksCubit = context.read<LoginChecksCubit>();
+          final navigator = Navigator.of(context);
+          await AuthSession.saveSession(loginModel.token.toString());
+
+          loginChecksCubit.resetLoginData();
 
           Future.delayed(
             const Duration(seconds: 1),
-            () => Navigator.pushNamedAndRemoveUntil(
-              context,
+            () => navigator.pushNamedAndRemoveUntil(
               Routes.homeView,
               (route) => false,
             ),
