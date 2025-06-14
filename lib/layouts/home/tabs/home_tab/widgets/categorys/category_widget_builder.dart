@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/widgets/category_widget.dart';
 import 'package:smart_ecommerce/di/di.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/model_view/categories_states.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/model_view/categories_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_states.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/widgets/category_widget.dart';
+
 
 class CategoryWidgetBuilder extends StatelessWidget {
   const CategoryWidgetBuilder({super.key, required this.token});
@@ -13,7 +14,8 @@ class CategoryWidgetBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isTablet = MediaQuery.of(context).size.width >= 600;
+    
+ final bool isTablet = MediaQuery.of(context).size.width >= 600;
     final List<Color> softColors = [
       Colors.blue.withAlpha(30),
       Colors.green.withAlpha(30),
@@ -24,10 +26,10 @@ class CategoryWidgetBuilder extends StatelessWidget {
     ];
 
     return BlocProvider(
-      create: (_) => getIt<CategoriesViewModel>()..getCategories(token),
-      child: BlocBuilder<CategoriesViewModel, CategoriesState>(
+      create: (_) => getIt<HomeCategoriesViewModel>()..getCategories(token), 
+      child: BlocBuilder<HomeCategoriesViewModel, HomeCategoriesState>(
         builder: (context, state) {
-          if (state is CategoriesLoadingState) {
+          if (state is HomeCategoriesLoadingState) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child:
@@ -56,7 +58,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
                         ),
                       ),
             );
-          } else if (state is CategoriesErrorState) {
+          } else if (state is HomeCategoriesErrorState) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               AppSnackBar.show(
                 context: context,
@@ -67,7 +69,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
               );
             });
             return const SizedBox();
-          } else if (state is CategoriesSuccessState) {
+          } else if (state is HomeCategoriesSuccessState) {
             final categories = state.categories;
 
             if (categories.isEmpty) {
@@ -95,7 +97,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
                                   AnimatedCategoryItem(
                                     index: topIndex,
                                     child: CategoryWidget(
-                                      categories: categories[topIndex],
+                                      category: categories[topIndex],
                                       color:
                                           softColors[topIndex %
                                               softColors.length],
@@ -106,7 +108,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
                                   AnimatedCategoryItem(
                                     index: bottomIndex,
                                     child: CategoryWidget(
-                                      categories: categories[bottomIndex],
+                                      category: categories[bottomIndex],
                                       color:
                                           softColors[bottomIndex %
                                               softColors.length],
@@ -128,7 +130,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
                               (context, index) => AnimatedCategoryItem(
                                 index: index,
                                 child: CategoryWidget(
-                                  categories: categories[index],
+                                  category: categories[index],
                                   color: softColors[index % softColors.length],
                                 ),
                               ),
@@ -139,7 +141,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
 
           return const SizedBox.shrink();
         },
-      ),
+      )
     );
   }
 

@@ -1,15 +1,15 @@
-class Categories {
-  Categories({
+class Category {
+  Category({
       this.categoryID, 
       this.categoryName, 
       this.categoryImage,});
 
-  Categories.fromJson(dynamic json) {
+  Category.fromJson(dynamic json) {
     categoryID = json['Category_ID'];
     categoryName = json['Category_Name'];
     categoryImage = json['Category_Image'];
   }
-  num? categoryID;
+  int? categoryID;
   String? categoryName;
   String? categoryImage;
 

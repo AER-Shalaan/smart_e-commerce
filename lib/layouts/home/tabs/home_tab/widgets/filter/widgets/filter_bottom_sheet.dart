@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/text_styles.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_cubit.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_state.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/models/brands.dart';
 
 class FilterBottomSheet extends StatelessWidget {
   const FilterBottomSheet({super.key});
@@ -56,7 +54,7 @@ class FilterBottomSheet extends StatelessWidget {
                         const Divider(),
                         _buildRatingFilter(context, state),
                         const Divider(),
-                        _buildBrandFilter(context, state),
+                        //_buildBrandFilter(context, state),
                         const SizedBox(height: 10),
                       ],
                     ),
@@ -318,126 +316,126 @@ class FilterBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildBrandFilter(BuildContext context, FilterState state) {
-    final filteredBrands =
-        Brand.dummyBrands
-            .where(
-              (brand) => brand.subcategoryId == state.selectedSubcategory?.id,
-            )
-            .toList();
+  // Widget _buildBrandFilter(BuildContext context, FilterState state) {
+  //   final filteredBrands =
+  //       Brand.dummyBrands
+  //           .where(
+  //             (brand) => brand.subcategoryId == state.selectedSubcategory?.id,
+  //           )
+  //           .toList();
 
-    if (filteredBrands.length <= 2) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Brand",
-            style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
-          ),
-          const SizedBox(height: 5),
-          Row(
-            children:
-                filteredBrands
-                    .map(
-                      (brand) => Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: ChoiceChip(
-                          padding: const EdgeInsets.all(8),
-                          label: Text(brand.name),
-                          labelStyle: TextStyles.filterBottomSheetTitles
-                              .copyWith(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                          side: const BorderSide(color: Colors.transparent),
-                          avatar: SvgPicture.asset(brand.iconPath),
-                          showCheckmark: false,
-                          selected: state.selectedBrands.contains(brand.id),
-                          onSelected:
-                              (_) => context.read<FilterCubit>().toggleBrand(
-                                brand.id,
-                              ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-          ),
-        ],
-      );
-    }
+  //   if (filteredBrands.length <= 2) {
+  //     return Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           "Brand",
+  //           style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+  //         ),
+  //         const SizedBox(height: 5),
+  //         Row(
+  //           children:
+  //               filteredBrands
+  //                   .map(
+  //                     (brand) => Padding(
+  //                       padding: const EdgeInsets.only(right: 10),
+  //                       child: ChoiceChip(
+  //                         padding: const EdgeInsets.all(8),
+  //                         label: Text(brand.name),
+  //                         labelStyle: TextStyles.filterBottomSheetTitles
+  //                             .copyWith(
+  //                               fontSize: 16,
+  //                               fontWeight: FontWeight.w500,
+  //                             ),
+  //                         side: const BorderSide(color: Colors.transparent),
+  //                         avatar: SvgPicture.asset(brand.iconPath),
+  //                         showCheckmark: false,
+  //                         selected: state.selectedBrands.contains(brand.id),
+  //                         onSelected:
+  //                             (_) => context.read<FilterCubit>().toggleBrand(
+  //                               brand.id,
+  //                             ),
+  //                       ),
+  //                     ),
+  //                   )
+  //                   .toList(),
+  //         ),
+  //       ],
+  //     );
+  //   }
 
-    final ScrollController scrollController = ScrollController();
+  //   final ScrollController scrollController = ScrollController();
 
-    void scrollLeft() {
-      scrollController.animateTo(
-        scrollController.offset - 100,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
+  //   void scrollLeft() {
+  //     scrollController.animateTo(
+  //       scrollController.offset - 100,
+  //       duration: const Duration(milliseconds: 300),
+  //       curve: Curves.easeInOut,
+  //     );
+  //   }
 
-    void scrollRight() {
-      scrollController.animateTo(
-        scrollController.offset + 100,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
+  //   void scrollRight() {
+  //     scrollController.animateTo(
+  //       scrollController.offset + 100,
+  //       duration: const Duration(milliseconds: 300),
+  //       curve: Curves.easeInOut,
+  //     );
+  //   }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Brand",
-          style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: scrollLeft,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                controller: scrollController,
-                child: Row(
-                  children:
-                      filteredBrands
-                          .map(
-                            (brand) => Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 5,
-                              ),
-                              child: ChoiceChip(
-                                padding: const EdgeInsets.all(8),
-                                label: Text(brand.name),
-                                avatar: SvgPicture.asset(brand.iconPath),
-                                showCheckmark: false,
-                                selected: state.selectedBrands.contains(
-                                  brand.id,
-                                ),
-                                onSelected:
-                                    (_) => context
-                                        .read<FilterCubit>()
-                                        .toggleBrand(brand.id),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                ),
-              ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.arrow_forward_ios),
-              onPressed: scrollRight,
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         "Brand",
+  //         style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+  //       ),
+  //       const SizedBox(height: 10),
+  //       Row(
+  //         children: [
+  //           IconButton(
+  //             icon: const Icon(Icons.arrow_back_ios),
+  //             onPressed: scrollLeft,
+  //           ),
+  //           Expanded(
+  //             child: SingleChildScrollView(
+  //               scrollDirection: Axis.horizontal,
+  //               controller: scrollController,
+  //               child: Row(
+  //                 children:
+  //                     filteredBrands
+  //                         .map(
+  //                           (brand) => Padding(
+  //                             padding: const EdgeInsets.symmetric(
+  //                               horizontal: 5,
+  //                             ),
+  //                             child: ChoiceChip(
+  //                               padding: const EdgeInsets.all(8),
+  //                               label: Text(brand.name),
+  //                               avatar: SvgPicture.asset(brand.iconPath),
+  //                               showCheckmark: false,
+  //                               selected: state.selectedBrands.contains(
+  //                                 brand.id,
+  //                               ),
+  //                               onSelected:
+  //                                   (_) => context
+  //                                       .read<FilterCubit>()
+  //                                       .toggleBrand(brand.id),
+  //                             ),
+  //                           ),
+  //                         )
+  //                         .toList(),
+  //               ),
+  //             ),
+  //           ),
+  //           IconButton(
+  //             icon: const Icon(Icons.arrow_forward_ios),
+  //             onPressed: scrollRight,
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildActionButtons(BuildContext context) {
     return Row(

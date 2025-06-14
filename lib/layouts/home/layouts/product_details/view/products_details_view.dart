@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/product_details_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/product_details_nav_bar.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/product_details_view_app_bar.dart';
@@ -23,8 +24,11 @@ class ProductsDetailsView extends StatelessWidget {
                 productId: data[0] ?? "",
                 token: data[1] ?? "",
               ),
-      child: BlocProvider(
-        create: (context) => getIt<AddToCartViewModel>(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => getIt<AddToCartViewModel>()),
+          BlocProvider(create: (context) => getIt<AddToWishlistViewModel>()),
+        ],
         child: Scaffold(
           backgroundColor: AppColors.backGroundColor,
           appBar: productDetailsViewAppBar(context),

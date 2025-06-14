@@ -51,6 +51,19 @@ class ApiManger {
     );
   }
 
+  Future<Either<Failure, Response>> deleteRequest({
+    required String endPoints,
+    required String token,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return await ApiHelper.safeDelete(
+      dio,
+      endPoints,
+      headers: {'Authorization': "Bearer $token"},
+      queryParams: queryParameters,
+    );
+  }
+
   Future<Either<Failure, Response>> sendChatMessage(String message) async {
     return await ApiHelper.safePost(
       dio,

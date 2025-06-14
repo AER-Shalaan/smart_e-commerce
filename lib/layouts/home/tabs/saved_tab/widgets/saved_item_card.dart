@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/core/constants.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
+import 'package:smart_ecommerce/data/models/wishlist_models/wishlist_item_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/provider/wishlist_provider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/view_model/del_Item_from_wishlist/del_item_form_wishlist_view_model.dart';
 import '../../../../../core/utils/assets.dart';
 import '../../../../../core/utils/routes.dart';
 
-class SavedItemCard extends StatelessWidget {
+class SavedItemCard extends StatefulWidget {
   const SavedItemCard({
     super.key,
-    required this.imagePath,
-    required this.title,
-    required this.price,
-    required this.descount,
+    required this.wishlistItemModel,
+    required this.token,
+    required this.userId,
   });
-
-  final String imagePath;
-  final String title;
-  final String price;
-  final String descount;
+  final String token;
+  final String userId;
+  final WishlistItemModel wishlistItemModel;
 
   @override
+  State<SavedItemCard> createState() => _SavedItemCardState();
+}
+
+class _SavedItemCardState extends State<SavedItemCard> {
+  @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<WishlistProvider>(context);
     var width = MediaQuery.sizeOf(context).width;
     return Stack(
       alignment: Alignment.topRight,
@@ -27,7 +36,16 @@ class SavedItemCard extends StatelessWidget {
       children: [
         InkWell(
           enableFeedback: false,
-          onTap: () => Navigator.pushNamed(context, Routes.productDetailsView),
+          onTap:
+              () => Navigator.pushNamed(
+                context,
+                Routes.productDetailsView,
+                arguments: [
+                  widget.wishlistItemModel.itemId,
+                  widget.token,
+                  widget.userId,
+                ],
+              ),
           child: Container(
             width: width >= 600 ? 280 : 240,
             clipBehavior: Clip.antiAlias,
@@ -54,7 +72,7 @@ class SavedItemCard extends StatelessWidget {
                       topRight: Radius.circular(15),
                     ),
                     child: Image.network(
-                      imagePath,
+                      Constants.baseUrl + widget.wishlistItemModel.imageCover,
                       fit: BoxFit.contain,
                       width: double.infinity,
                       loadingBuilder: (context, child, loadingProgress) {
@@ -79,7 +97,7 @@ class SavedItemCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        widget.wishlistItemModel.itemName,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -91,34 +109,48 @@ class SavedItemCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          Text(
-                            "\$ $price",
-                            style: const TextStyle(
-                              color: Colors.black87,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          if (descount.isNotEmpty)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 6,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.redAccent,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Text(
-                                "-$descount%",
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            children: [
+                              Text(
+                                "\$${(widget.wishlistItemModel.priceOut).toStringAsFixed(2)}",
                                 style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                  decoration: TextDecoration.lineThrough,
                                 ),
                               ),
+                              const SizedBox(height: 4),
+                              Text(
+                                "\$${((widget.wishlistItemModel.priceOut) - (widget.wishlistItemModel.discount)).toStringAsFixed(2)}",
+                                style: const TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
                             ),
+                            decoration: BoxDecoration(
+                              color: Colors.redAccent,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              "-\$${widget.wishlistItemModel.discount}",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -132,7 +164,20 @@ class SavedItemCard extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: InkWell(
             overlayColor: WidgetStatePropertyAll(Colors.black.withAlpha(102)),
-            onTap: () {},
+            onTap: () {
+              BlocProvider.of<DelItemFormWishlistViewModel>(
+                context,
+              ).delItemFromWishlist(
+                token: widget.token,
+                userId: widget.userId,
+                itemId: widget.wishlistItemModel.itemId,
+              );
+              AppSnackBar.show(
+                context: context,
+                message: "Item removed successfully",
+              );
+              provider.removefromWishlist(widget.wishlistItemModel);
+            },
             child: Container(
               height: 30,
               width: 30,
