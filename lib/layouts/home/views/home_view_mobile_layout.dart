@@ -1,14 +1,11 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/item_widget/view_model/add_item_view_view_model.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
-import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/home/provider/home_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/account_tab_view.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/cart_tab.dart';
@@ -31,10 +28,7 @@ class HomeViewMobileLayout extends StatelessWidget {
     log(userId);
     log(provider.homeTapIndex.toString());
     final List<Widget> navWidget = [
-      BlocProvider(
-        create: (context) => getIt<AddItemViewViewModel>(),
-        child: HomeTab(token: token, userId: userId),
-      ),
+      HomeTab(token: token, userId: userId),
       const ComparisonTab(),
       ChangeNotifierProvider(
         create: (context) => WishlistProvider(),

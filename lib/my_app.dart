@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/core/api/api_manager.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/item_widget/view_model/add_item_view_view_model.dart';
 import 'package:smart_ecommerce/data/data_source_impl/home/home_tap_data_source_impl/categories_data_source_impl.dart';
 import 'package:smart_ecommerce/data/data_source_impl/home/home_tap_data_source_impl/subcategories_from_category_data_source_impl.dart';
+import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_view_model.dart';
@@ -26,8 +28,18 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OrdersCubit()),
         BlocProvider(create: (context) => NotificationSettingsCubit()),
         BlocProvider(create: (context) => FilterCubit()),
-        BlocProvider(create: (_) => CategoriesViewModel(CategoriesDataSourceImpl((ApiManger())))),
-        BlocProvider(create: (_) => SubcategoriesFromCategoryViewModel(SubcategoriesFromCategoryDataSourceImpl((ApiManger())))),
+        BlocProvider(
+          create:
+              (_) =>
+                  CategoriesViewModel(CategoriesDataSourceImpl((ApiManger()))),
+        ),
+        BlocProvider(
+          create:
+              (_) => SubcategoriesFromCategoryViewModel(
+                SubcategoriesFromCategoryDataSourceImpl((ApiManger())),
+              ),
+        ),
+        BlocProvider(create: (context) => getIt<AddItemViewViewModel>()),
         BlocProvider(create: (context) => ComparisonCubit()),
         BlocProvider(create: (context) => LoginChecksCubit()),
         BlocProvider(create: (context) => SignUpCheckCubit()),
