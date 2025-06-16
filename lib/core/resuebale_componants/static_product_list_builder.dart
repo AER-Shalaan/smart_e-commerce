@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/item_widget.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/item_widget/item_widget.dart';
 import 'package:smart_ecommerce/data/models/home_models/produdts_model/products.dart';
 import 'package:shimmer/shimmer.dart';
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smart_ecommerce/core/constants.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/item_widget/view_model/add_item_view_view_model.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
@@ -63,6 +65,11 @@ class _ItemWidgetState extends State<ItemWidget> {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
+            BlocProvider.of<AddItemViewViewModel>(context).addItemView(
+              token: widget.token,
+              userId: int.parse(widget.userId),
+              itemId: widget.productData.itemID!,
+            );
             Navigator.pushNamed(
               context,
               Routes.productDetailsView,

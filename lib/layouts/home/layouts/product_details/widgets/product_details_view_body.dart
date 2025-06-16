@@ -22,7 +22,7 @@ class ProductDetailsViewBody extends StatelessWidget {
             slivers: [
               PhotosWidgetPreview(productImages: images),
               ProductNameDetailsReviewPrice(productData: data),
-              // CommentsWidgetBuilder(),
+              //CommentsWidgetBuilder(),
             ],
           );
         }
