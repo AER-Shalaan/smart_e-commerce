@@ -9,7 +9,8 @@ class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AppBar(
-      backgroundColor: theme.appBarTheme.backgroundColor ?? theme.colorScheme.surface,
+      backgroundColor:
+          theme.appBarTheme.backgroundColor ?? theme.colorScheme.surface,
       elevation: 2,
       centerTitle: true,
       title: Row(
@@ -29,13 +30,7 @@ class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           const SizedBox(width: 8),
-          Text(
-            "Shopping assistant",
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: theme.textTheme.titleMedium?.color ?? Colors.black87,
-            ),
-          ),
+          Text("Shopping assistant"),
         ],
       ),
     );
