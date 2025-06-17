@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model_states.dart';
@@ -65,7 +67,7 @@ class _ChatBotBodyState extends State<ChatBotBody> {
 
         final List<ProductDetailsModel> recommendedItems =
             (state is ChatBotSuccessState) ? state.recommendedItems : [];
-
+        log(recommendedItems.toString());
         final isTyping = state is ChatBotLoadingState;
 
         return SafeArea(
