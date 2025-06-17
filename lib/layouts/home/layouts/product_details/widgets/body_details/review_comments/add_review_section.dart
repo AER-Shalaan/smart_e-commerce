@@ -10,12 +10,14 @@ class AddReviewSection extends StatefulWidget {
   final String token;
   final String itemId;
   final String buyerId;
+  final VoidCallback? onReviewAdded;
 
   const AddReviewSection({
     super.key,
     required this.token,
     required this.itemId,
     required this.buyerId,
+    this.onReviewAdded,
   });
 
   @override
@@ -106,6 +108,9 @@ class _AddReviewSectionState extends State<AddReviewSection> {
               );
               _controller.clear();
               setState(() => _rating = 0);
+              if (widget.onReviewAdded != null) {
+                widget.onReviewAdded!();
+              }
             }
           },
         ),

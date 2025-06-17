@@ -12,7 +12,7 @@ import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/bod
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/body_details/review_comments/add_review_section.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/body_details/review_comments/comments_widget_builder.dart';
 
-class ProductDetailsViewBody extends StatelessWidget {
+class ProductDetailsViewBody extends StatefulWidget {
   final String productId;
   final String userId;
   final String token;
@@ -24,6 +24,30 @@ class ProductDetailsViewBody extends StatelessWidget {
   });
 
   @override
+  State<ProductDetailsViewBody> createState() => _ProductDetailsViewBodyState();
+}
+
+class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
+  bool showAddReviewSection = false;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void handleReviewSuccess() {
+    setState(() {
+      showAddReviewSection = false;
+    });
+    context.read<GetReviewsViewModel>().getReviews(
+      token: widget.token,
+      itemId: widget.productId,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductDetailsViewModel, ProductDetailsViewModelStates>(
       builder: (context, state) {
@@ -31,74 +55,152 @@ class ProductDetailsViewBody extends StatelessWidget {
           ProductDetailsModel productDetailsModel = state.productDetailsModel;
           List<String> images = productDetailsModel.images?.itemImages ?? [];
           ProductsData data = productDetailsModel.data!;
+
           return CustomScrollView(
+            controller: _scrollController,
+            physics: const BouncingScrollPhysics(),
             slivers: [
-              PhotosWidgetPreview(productImages: images),
-              ProductNameDetailsReviewPrice(productData: data),
               SliverToBoxAdapter(
-                child: AddReviewSection(
-                  token: token,
-                  itemId: productId,
-                  buyerId: userId,
+                child: PhotosWidgetPreview(
+                  productImages: images,
+                  key: ValueKey(images.hashCode),
                 ),
               ),
+              SliverToBoxAdapter(
+                child: ProductNameDetailsReviewPrice(productData: data),
+              ),
               BlocBuilder<GetReviewsViewModel, GetReviewsState>(
-                builder: (context, state) {
-                  if (state is GetReviewsSuccessState) {
-                    if (state.reviews.isNotEmpty) {
-                      return CommentsWidgetBuilder(reviews: state.reviews);
+                builder: (context, reviewState) {
+                  if (reviewState is GetReviewsSuccessState) {
+                    if (reviewState.reviews.isNotEmpty) {
+                      return CommentsWidgetBuilder(
+                        reviews: reviewState.reviews,
+                        key: ValueKey(reviewState.reviews.length),
+                      );
                     } else {
                       return SliverToBoxAdapter(
-                        child: Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.comments_disabled_outlined,
-                                  size: 50,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 28.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.comments_disabled_outlined,
+                                size: 56,
+                                color: Colors.grey[400],
+                              ),
+                              const SizedBox(height: 12),
+                              const Text(
+                                'No Reviews',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                              Text(
+                                'Be the first to review this product',
+                                style: TextStyle(
+                                  fontSize: 15,
                                   color: Colors.grey,
                                 ),
-                                Text(
-                                  'No Reviews',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                Text(
-                                  'Be the first to review this product',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       );
                     }
                   }
-                  if (state is GetReviewsErrorState) {
+                  if (reviewState is GetReviewsErrorState) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       AppSnackBar.show(
                         context: context,
-                        message: state.failure.message,
+                        message: reviewState.failure.message,
                       );
                     });
-                    return SliverToBoxAdapter(child: SizedBox.shrink());
+                    return const SliverToBoxAdapter(child: SizedBox.shrink());
                   }
-
-                  return SliverToBoxAdapter(
-                    child: Center(child: CircularProgressIndicator.adaptive()),
+                  return const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 32),
+                      child: Center(
+                        child: SizedBox(
+                          height: 42,
+                          width: 42,
+                          child: CircularProgressIndicator(strokeWidth: 4),
+                        ),
+                      ),
+                    ),
                   );
                 },
+              ),
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (!showAddReviewSection)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 18.0,
+                          vertical: 8.0,
+                        ),
+                        child: ElevatedButton.icon(
+                          icon: const Icon(Icons.rate_review_rounded),
+                          label: const Text("Write a review"),
+                          onPressed: () {
+                            setState(() {
+                              showAddReviewSection = true;
+                            });
+                            Future.delayed(
+                              const Duration(milliseconds: 150),
+                              () {
+                                _scrollController.animateTo(
+                                  _scrollController.position.maxScrollExtent +
+                                      50,
+                                  duration: const Duration(milliseconds: 800),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).primaryColor,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                          ),
+                        ),
+                      ),
+                    if (showAddReviewSection)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 6.0,
+                        ),
+                        child: AddReviewSection(
+                          token: widget.token,
+                          itemId: widget.productId,
+                          buyerId: widget.userId,
+                          onReviewAdded: handleReviewSuccess,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ],
           );
         }
         if (state is ProductDetailsErrorState) {
-          return Center(child: Text(state.errorMessage));
+          return Center(
+            child: Text(
+              state.errorMessage,
+              style: const TextStyle(color: Colors.red),
+            ),
+          );
         }
-        return Center(child: CircularProgressIndicator.adaptive());
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }

@@ -9,9 +9,10 @@ class CommentsWidgetBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList(
-      delegate: SliverChildBuilderDelegate((context, index) {
-        return Column(children: [CommentsWidget(comment: reviews[index])]);
-      }, childCount: reviews.length),
+      delegate: SliverChildBuilderDelegate(
+        (context, index) => CommentsWidget(comment: reviews[index]),
+        childCount: reviews.length,
+      ),
     );
   }
 }
