@@ -6,6 +6,9 @@ class OnBoardingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: SafeArea(child: OnboardingViewBody()));
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: const SafeArea(child: OnboardingViewBody()),
+    );
   }
 }

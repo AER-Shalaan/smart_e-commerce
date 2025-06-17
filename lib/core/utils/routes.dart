@@ -7,11 +7,6 @@ import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/ad
 import '../../di/di.dart';
 import '../../layouts/authentication/logIn/login_view.dart';
 import '../../layouts/authentication/login/view_model/login_view_model.dart';
-import '../../layouts/authentication/resetPassFeature/OTP/otp.dart';
-import '../../layouts/authentication/resetPassFeature/Provider/forgot_password_provider.dart';
-import '../../layouts/authentication/resetPassFeature/Provider/reset_password_provider.dart';
-import '../../layouts/authentication/resetPassFeature/forgot_password/forgot_password.dart';
-import '../../layouts/authentication/resetPassFeature/reset_password/reset_password.dart';
 import '../../layouts/authentication/signUp/sign_up_view.dart';
 import '../../layouts/authentication/signup/view_model/sign_up_view_model.dart';
 import '../../layouts/home/layouts/product_details/view/products_details_view.dart';
@@ -19,7 +14,6 @@ import '../../layouts/home/provider/home_provider.dart';
 import '../../layouts/home/tabs/account_tab/widgets/FAQs/Providers/faq_provider.dart';
 import '../../layouts/home/tabs/account_tab/widgets/FAQs/f_a_qs_view.dart';
 import '../../layouts/home/tabs/account_tab/widgets/address_book/address_book_view.dart';
-import '../../layouts/home/tabs/account_tab/widgets/help_center/help_center_view.dart';
 import '../../layouts/home/tabs/account_tab/widgets/my_details/my_details_view.dart';
 import '../../layouts/home/tabs/account_tab/widgets/my_orders/my_orders_view.dart';
 import '../../layouts/home/tabs/account_tab/widgets/notifications/notifications_view.dart';
@@ -50,23 +44,12 @@ class Routes {
     return {
       splashRouteName: (_) => const SplashView(),
       onBoardingRouteName: (_) => const OnBoardingView(),
-      forgotPasswordRouteName:
-          (_) => ChangeNotifierProvider(
-            create: (_) => ForgotPasswordProvider(),
-            child: ForgotPassword(),
-          ),
-      otpRouteName: (_) => const Otp(email: ''),
-      resetPasswordRouteName:
-          (_) => ChangeNotifierProvider(
-            create: (_) => ResetPasswordProvider(),
-            child: ResetPassword(),
-          ),
       homeView:
           (_) => ChangeNotifierProvider(
             create: (_) => HomeProvider(),
             child: const UiLayoutBuilder(),
           ),
-      
+
       loginViewRouteName:
           (_) => BlocProvider(
             create: (_) => getIt<LoginViewModel>(),
@@ -78,7 +61,8 @@ class Routes {
             child: const SignUpView(),
           ),
 
-      chatBotViewRouteName: (_) => BlocProvider(
+      chatBotViewRouteName:
+          (_) => BlocProvider(
             create: (_) => getIt<ChatBotViewModel>(),
             child: const ChatBotView(),
           ),
@@ -93,7 +77,7 @@ class Routes {
             create: (context) => FAQProvider(),
             child: const FAQsView(),
           ),
-      helpCenterViewRouteName: (_) => const HelpCenterView(),
+
       myDetailsViewRouteName: (_) => const MyDetailsView(),
       myOrdersViewRouteName: (_) => const MyOrdersView(),
       notificationsViewRouteName: (_) => const NotificationsView(),

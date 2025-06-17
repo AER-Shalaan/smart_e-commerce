@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/core/constants.dart';
-import 'package:smart_ecommerce/core/utils/text_styles.dart';
 import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
 
 class CategoryWidget extends StatelessWidget {
@@ -11,17 +10,20 @@ class CategoryWidget extends StatelessWidget {
   });
 
   final Category category;
-  final Color color;
+  final Color
+  color; // لو عايز كمان تزود dynamic من theme شيل البراميتر واستدعيه من theme
 
   @override
   Widget build(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width >= 600;
+    final theme = Theme.of(context);
 
     return Container(
       width: isTablet ? 150 : 120,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: color,
+        color:
+            color, // ممكن تستخدم theme.colorScheme.primaryContainer مثلا لو عايزها بالكامل من theme
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
@@ -31,21 +33,21 @@ class CategoryWidget extends StatelessWidget {
             child: Container(
               width: isTablet ? 80 : 60,
               height: isTablet ? 80 : 60,
-              color: Colors.white,
+              color: theme.cardColor,
               child:
                   (category.categoryImage == null ||
                           category.categoryImage!.isEmpty)
-                      ? const Icon(
+                      ? Icon(
                         Icons.image_not_supported,
-                        color: Colors.grey,
+                        color: theme.disabledColor,
                       )
                       : Image.network(
                         Constants.baseUrl + category.categoryImage!,
                         fit: BoxFit.cover,
                         errorBuilder:
-                            (_, __, ___) => const Icon(
+                            (_, __, ___) => Icon(
                               Icons.broken_image,
-                              color: Colors.grey,
+                              color: theme.disabledColor,
                             ),
                       ),
             ),
@@ -55,7 +57,10 @@ class CategoryWidget extends StatelessWidget {
             category.categoryName ?? "No name",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyles.style14Simebold,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: theme.colorScheme.onPrimary, // أو أي لون من theme يناسبك
+            ),
           ),
         ],
       ),

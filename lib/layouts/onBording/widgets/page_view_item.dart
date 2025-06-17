@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 class PageViewItem extends StatelessWidget {
@@ -15,8 +14,10 @@ class PageViewItem extends StatelessWidget {
   final String title;
   final String description;
   final MainAxisAlignment mainAxisAlignment;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -29,7 +30,9 @@ class PageViewItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: mainAxisAlignment,
                 mainAxisSize: MainAxisSize.max,
-                children: [SvgPicture.asset(imagePath, fit: BoxFit.fill)],
+                children: [
+                  SvgPicture.asset(imagePath, fit: BoxFit.fill)
+                ],
               ),
             ),
           ),
@@ -38,8 +41,7 @@ class PageViewItem extends StatelessWidget {
         Expanded(
           child: TextAnimator(
             title,
-            style: GoogleFonts.poppins(
-              fontSize: 25,
+            style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.w700,
             ),
             incomingEffect: WidgetTransitionEffects.incomingScaleUp(
@@ -55,7 +57,7 @@ class PageViewItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: TextAnimator(
               description,
-              style: GoogleFonts.openSans(
+              style: theme.textTheme.bodyMedium?.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),

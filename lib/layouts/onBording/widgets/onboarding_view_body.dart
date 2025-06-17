@@ -34,6 +34,8 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
         Expanded(child: OnBoardingPageView(pageController: pageController)),
@@ -69,26 +71,25 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
             Visibility(
               visible: currentPage != 0,
               child: ElevatedButton(
-                onPressed:
-                    currentPage == 0
-                        ? null
-                        : () {
-                          pageController.animateToPage(
-                            currentPage - 1,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeOut,
-                          );
-                        },
+                onPressed: currentPage == 0
+                    ? null
+                    : () {
+                        pageController.animateToPage(
+                          currentPage - 1,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                        );
+                      },
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  backgroundColor: theme.colorScheme.secondary,
                   padding: const EdgeInsets.all(16),
-                  overlayColor: Colors.white.withAlpha(102),
+                  overlayColor: theme.colorScheme.onSecondary.withAlpha(60),
                 ),
                 child: Icon(
                   Icons.arrow_back_ios_rounded,
                   size: MediaQuery.sizeOf(context).width * 0.05,
-                  color: Colors.white,
+                  color: theme.colorScheme.onSecondary,
                 ),
               ),
             ),
@@ -98,9 +99,9 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
                 dotsCount: 3,
                 position: currentPage.toDouble(),
                 decorator: DotsDecorator(
-                  activeColor: Theme.of(context).colorScheme.primary,
+                  activeColor: theme.colorScheme.primary,
                   activeShape: const CircleBorder(),
-                  color: Theme.of(context).colorScheme.primary.withAlpha(102),
+                  color: theme.colorScheme.primary.withAlpha(102),
                   shape: const CircleBorder(),
                   activeSize: const Size(9, 9),
                   size: const Size(9, 9),
@@ -119,14 +120,14 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  backgroundColor: theme.colorScheme.secondary,
                   padding: const EdgeInsets.all(16),
-                  overlayColor: Colors.white.withAlpha(102),
+                  overlayColor: theme.colorScheme.onSecondary.withAlpha(60),
                 ),
                 child: Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: MediaQuery.sizeOf(context).width * 0.05,
-                  color: Colors.white,
+                  color: theme.colorScheme.onSecondary,
                 ),
               ),
             ),

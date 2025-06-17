@@ -30,6 +30,8 @@ class _SavedItemCardState extends State<SavedItemCard> {
   Widget build(BuildContext context) {
     var provider = Provider.of<WishlistProvider>(context);
     var width = MediaQuery.sizeOf(context).width;
+    final theme = Theme.of(context);
+
     return Stack(
       alignment: Alignment.topRight,
       clipBehavior: Clip.antiAlias,
@@ -50,9 +52,9 @@ class _SavedItemCardState extends State<SavedItemCard> {
             width: width >= 600 ? 280 : 240,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: theme.cardColor,
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Colors.grey[300]!),
+              border: Border.all(color: theme.dividerColor),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withAlpha(13),
@@ -77,14 +79,18 @@ class _SavedItemCardState extends State<SavedItemCard> {
                       width: double.infinity,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: theme.colorScheme.secondary,
+                          ),
+                        );
                       },
                       errorBuilder: (context, error, stackTrace) {
-                        return const Center(
+                        return Center(
                           child: Icon(
                             Icons.broken_image,
                             size: 50,
-                            color: Colors.grey,
+                            color: theme.disabledColor,
                           ),
                         );
                       },
@@ -98,10 +104,9 @@ class _SavedItemCardState extends State<SavedItemCard> {
                     children: [
                       Text(
                         widget.wishlistItemModel.itemName,
-                        style: TextStyle(
-                          fontSize: 16,
+                        style: theme.textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: theme.colorScheme.secondary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -111,46 +116,43 @@ class _SavedItemCardState extends State<SavedItemCard> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-
                             children: [
                               Text(
                                 "\$${(widget.wishlistItemModel.priceOut).toStringAsFixed(2)}",
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: theme.disabledColor,
                                   decoration: TextDecoration.lineThrough,
                                 ),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 "\$${((widget.wishlistItemModel.priceOut) - (widget.wishlistItemModel.discount)).toStringAsFixed(2)}",
-                                style: const TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 16,
+                                style: theme.textTheme.bodyLarge?.copyWith(
+                                  color: theme.textTheme.bodyLarge?.color,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ],
                           ),
                           const SizedBox(width: 6),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 6,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.redAccent,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Text(
-                              "-\$${widget.wishlistItemModel.discount}",
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                          if ((widget.wishlistItemModel.discount) > 0)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.error,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                "-\$${widget.wishlistItemModel.discount}",
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onError,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ],
@@ -163,7 +165,9 @@ class _SavedItemCardState extends State<SavedItemCard> {
         Padding(
           padding: const EdgeInsets.all(10),
           child: InkWell(
-            overlayColor: WidgetStatePropertyAll(Colors.black.withAlpha(102)),
+            overlayColor: WidgetStatePropertyAll(
+              theme.colorScheme.primary.withAlpha(70),
+            ),
             onTap: () {
               BlocProvider.of<DelItemFormWishlistViewModel>(
                 context,
@@ -184,7 +188,7 @@ class _SavedItemCardState extends State<SavedItemCard> {
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.transparent),
-                color: Colors.white,
+                color: theme.cardColor,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: SvgPicture.asset(Assets.assetsIconsHeartFilled),

@@ -13,9 +13,11 @@ class SavedTab extends StatelessWidget {
   const SavedTab({super.key, required this.token, required this.userId});
   final String token;
   final String userId;
+
   @override
   Widget build(BuildContext context) {
-        var provider = Provider.of<WishlistProvider>(context);
+    var provider = Provider.of<WishlistProvider>(context);
+    final theme = Theme.of(context);
 
     return MultiBlocProvider(
       providers: [
@@ -25,7 +27,9 @@ class SavedTab extends StatelessWidget {
                   getIt<GetUserWishlistViewModel>()
                     ..getUserWishlist(token: token, userId: userId),
         ),
-        BlocProvider(create: (context) => getIt<DelItemFormWishlistViewModel>()),
+        BlocProvider(
+          create: (context) => getIt<DelItemFormWishlistViewModel>(),
+        ),
       ],
       child: BlocBuilder<GetUserWishlistViewModel, GetUserWishlistStates>(
         builder: (context, state) {
@@ -38,20 +42,22 @@ class SavedTab extends StatelessWidget {
                     Icon(
                       Icons.heart_broken_outlined,
                       size: 64,
-                      color: Colors.grey.shade400,
+                      color: theme.disabledColor,
                     ),
                     const SizedBox(height: 10),
-                    const Text(
+                    Text(
                       "Your wishlist is empty!",
-                      style: TextStyle(
-                        fontSize: 18,
+                      style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 5),
-                    const Text(
+                    Text(
                       "Add items to your wishlist to get started.",
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.disabledColor,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),
@@ -71,7 +77,7 @@ class SavedTab extends StatelessWidget {
                 context: context,
                 message: state.message.message,
                 icon: Icons.error_outline,
-                backgroundColor: Colors.redAccent,
+                backgroundColor: theme.colorScheme.error,
                 fromTop: false,
               );
             });
@@ -79,11 +85,20 @@ class SavedTab extends StatelessWidget {
             return Center(
               child: Text(
                 "Failed to load wishlist.",
-                style: TextStyle(fontSize: 16, color: Colors.red),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontSize: 16,
+                  color: theme.colorScheme.error,
+                ),
               ),
             );
           }
-          return Center(child: CircularProgressIndicator.adaptive());
+          return Center(
+            child: CircularProgressIndicator.adaptive(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                theme.colorScheme.primary,
+              ),
+            ),
+          );
         },
       ),
     );
