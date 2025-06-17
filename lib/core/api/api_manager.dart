@@ -10,10 +10,13 @@ import '../constants.dart';
 class ApiManger {
   static late Dio dio;
   static late Dio dio2;
+  static late Dio dio3;
   static init() {
     dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
 
     dio2 = Dio(BaseOptions(baseUrl: Constants.baseUrl2));
+
+    dio3 = Dio(BaseOptions(baseUrl: Constants.baseUrl3));
   }
 
   Future<Either<Failure, Response>> getRequest({
@@ -34,6 +37,13 @@ class ApiManger {
     Map<String, dynamic>? body,
   }) async {
     return await ApiHelper.safePost(dio, endPoints, body: body);
+  }
+
+  Future<Either<Failure, Response>> postRequestAI({
+    required String endPoints,
+    Map<String, dynamic>? body,
+  }) async {
+    return await ApiHelper.safePost(dio3, endPoints, body: body);
   }
 
   Future<Either<Failure, Response>> postRequestForHme({

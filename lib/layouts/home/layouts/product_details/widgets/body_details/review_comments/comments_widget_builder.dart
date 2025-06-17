@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/body_details/review_comments/comments_widget.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/reviews_models/review_model.dart';
+import 'comments_widget.dart';
 
 class CommentsWidgetBuilder extends StatelessWidget {
-  const CommentsWidgetBuilder({super.key});
+  final List<ReviewModel> reviews;
+  const CommentsWidgetBuilder({super.key, required this.reviews});
 
   @override
   Widget build(BuildContext context) {
-    return SliverList.separated(
-      itemBuilder: (context, index) => const CommentsWidget(),
-      separatorBuilder: (context, index) => const SizedBox(height: 16),
-      itemCount: 5,
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((context, index) {
+        return Column(children: [CommentsWidget(comment: reviews[index])]);
+      }, childCount: reviews.length),
     );
   }
 }

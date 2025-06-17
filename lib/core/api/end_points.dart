@@ -17,4 +17,7 @@ class EndPoints {
   static const String getWhislistEndPoint = "Wishlist/GetUserProducts";
   // products endpoints
   static const String addItemViewEndPoint = "Products/AddItemView";
+  static const String getProductReviews = "Products/GetProductReviews";
+  static const String checkReview = "check_text";
+  static const String addProductReview = "Products/AddProductReview";
 }
