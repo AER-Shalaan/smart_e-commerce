@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_ecommerce/config/auth_session.dart';
 import '../../core/utils/assets.dart';
 import '../../core/utils/routes.dart';
@@ -72,6 +71,7 @@ class _SplashViewState extends State<SplashView>
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
+    final theme = Theme.of(context);
 
     return Scaffold(
       body: Column(
@@ -97,8 +97,7 @@ class _SplashViewState extends State<SplashView>
                 ),
                 Text(
                   "Inspire Shopping",
-                  style: GoogleFonts.moonDance(
-                    fontSize: 28,
+                  style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -111,9 +110,9 @@ class _SplashViewState extends State<SplashView>
                       animation: _progressAnimation,
                       builder: (context, child) {
                         return LinearProgressIndicator(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: theme.colorScheme.primary,
                           borderRadius: BorderRadius.circular(20),
-                          backgroundColor: Colors.black,
+                          backgroundColor: theme.colorScheme.surface,
                           value: _progressAnimation.value,
                         );
                       },

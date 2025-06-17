@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../core/utils/app_colors.dart';
-import '../../../../../../core/utils/text_styles.dart';
 import '../../cubits/notification_settings_cubit/notification_settings_cubit.dart';
 import '../../cubits/notification_settings_cubit/notification_settings_state.dart';
 
@@ -11,56 +9,59 @@ class NotificationsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        iconTheme: const IconThemeData(size: 33),
+        iconTheme: IconThemeData(
+          size: 33,
+          color: theme.iconTheme.color,
+        ),
         centerTitle: true,
         title: Text(
           "Notifications",
-          style: TextStyles.headlineStyle.copyWith(fontSize: 24),
+          style: theme.textTheme.headlineSmall?.copyWith(fontSize: 24),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child:
-            BlocBuilder<NotificationSettingsCubit, NotificationSettingsState>(
-              builder: (context, state) {
-                if (state is NotificationSettingsLoaded) {
-                  return ListView(
-                    children:
-                        state.settings.entries.map((entry) {
-                          return Column(
-                            children: [
-                              SwitchListTile(
-                                title: Text(
-                                  entry.key,
-                                  style: TextStyles.accountLabels.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                value: entry.value,
-                                activeColor: AppColors.primary,
-                                thumbColor: const WidgetStatePropertyAll(
-                                  Colors.white,
-                                ),
-                                activeTrackColor: AppColors.primary,
-                                dense: true,
-                                onChanged: (value) {
-                                  context
-                                      .read<NotificationSettingsCubit>()
-                                      .toggleSetting(entry.key);
-                                },
-                              ),
-                              const Divider(),
-                            ],
-                          );
-                        }).toList(),
+        child: BlocBuilder<NotificationSettingsCubit, NotificationSettingsState>(
+          builder: (context, state) {
+            if (state is NotificationSettingsLoaded) {
+              return ListView(
+                children: state.settings.entries.map((entry) {
+                  return Column(
+                    children: [
+                      SwitchListTile(
+                        title: Text(
+                          entry.key,
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        value: entry.value,
+                        activeColor: theme.colorScheme.primary,
+                        thumbColor: WidgetStatePropertyAll(
+                          theme.colorScheme.onPrimary,
+                        ),
+                        activeTrackColor: theme.colorScheme.primary.withAlpha(160),
+                        dense: true,
+                        onChanged: (value) {
+                          context
+                              .read<NotificationSettingsCubit>()
+                              .toggleSetting(entry.key);
+                        },
+                      ),
+                      Divider(color: theme.dividerColor),
+                    ],
                   );
-                }
-                return const Center(child: CircularProgressIndicator());
-              },
-            ),
+                }).toList(),
+              );
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }

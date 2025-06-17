@@ -16,6 +16,8 @@ class _CarouselImageState extends State<CarouselImage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return GestureDetector(
       onTap: () => _showFullScreenImage(widget.imageUrls, context),
       child: LayoutBuilder(
@@ -35,9 +37,7 @@ class _CarouselImageState extends State<CarouselImage> {
                     enableInfiniteScroll: true,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 2),
-                    autoPlayAnimationDuration: const Duration(
-                      milliseconds: 800,
-                    ),
+                    autoPlayAnimationDuration: const Duration(milliseconds: 800),
                     enlargeCenterPage: true,
                     viewportFraction: 1.0,
                     onPageChanged: (index, reason) {
@@ -46,19 +46,20 @@ class _CarouselImageState extends State<CarouselImage> {
                       });
                     },
                   ),
-                  items:
-                      widget.imageUrls
-                          .map(
-                            (url) => _buildImageWithLoader(
-                              url,
-                              imageHeight,
-                              screenWidth,
-                            ),
-                          )
-                          .toList(),
+                  items: widget.imageUrls
+                      .map(
+                        (url) => _buildImageWithLoader(
+                          url,
+                          imageHeight,
+                          screenWidth,
+                          theme.cardColor,
+                          theme.dividerColor,
+                        ),
+                      )
+                      .toList(),
                 ),
                 const SizedBox(height: 5),
-                _buildCarouselIndicator(indicatorSize),
+                _buildCarouselIndicator(indicatorSize, theme),
               ],
             ),
           );
@@ -67,26 +68,41 @@ class _CarouselImageState extends State<CarouselImage> {
     );
   }
 
-  Widget _buildImageWithLoader(String url, double height, double width) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Image.network(
-        url,
-        fit: BoxFit.fill,
-        width: width,
-        height: height,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return const Center(child: CircularProgressIndicator());
-        },
-        errorBuilder: (context, error, stackTrace) {
-          return const Icon(Icons.broken_image, size: 50, color: Colors.grey);
-        },
+  Widget _buildImageWithLoader(
+      String url, double height, double width, Color bg, Color border) {
+    return Container(
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: border),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          url,
+          fit: BoxFit.fill,
+          width: width,
+          height: height,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+                child: CircularProgressIndicator(
+              color: Theme.of(context).colorScheme.secondary,
+            ));
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return Icon(Icons.broken_image,
+                size: 50, color: Theme.of(context).disabledColor);
+          },
+        ),
       ),
     );
   }
 
-  Widget _buildCarouselIndicator(double indicatorSize) {
+  Widget _buildCarouselIndicator(double indicatorSize, ThemeData theme) {
+    final activeColor = theme.colorScheme.primary;
+    final inactiveColor = theme.disabledColor;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
@@ -98,7 +114,7 @@ class _CarouselImageState extends State<CarouselImage> {
           height: _currentIndex == index ? indicatorSize * 1.4 : indicatorSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _currentIndex == index ? Colors.black : Colors.grey,
+            color: _currentIndex == index ? activeColor : inactiveColor,
           ),
         ),
       ),

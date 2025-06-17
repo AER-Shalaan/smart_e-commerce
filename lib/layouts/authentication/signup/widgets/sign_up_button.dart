@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_states.dart';
-import '../../../../core/resuebale_componants/custom_main_button.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../view_model/sign_up_view_model.dart';
+import '../../../../core/resuebale_componants/custom_main_button.dart';
 
 class SignUpButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -12,6 +11,7 @@ class SignUpButton extends StatelessWidget {
   final String email;
   final String password;
   final String phone;
+
   const SignUpButton({
     super.key,
     required this.formKey,
@@ -23,45 +23,32 @@ class SignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocBuilder<SignUpCheckCubit, SignUpCheckState>(
       builder: (context, state) {
+        final isFormValid =
+            state.isFNCheck &&
+            state.isLNCheck &&
+            state.isEmailCheck &&
+            state.isPassCheck &&
+            state.isConfirmPassCheck;
+
         return CustomMainButton(
           label: 'Create an Account',
-          labelColor: Colors.white,
+          labelColor: theme.colorScheme.onSecondary,
           buttonColor:
-              state.isFNCheck &&
-                      state.isLNCheck &&
-                      state.isEmailCheck &&
-                      state.isPassCheck &&
-                      state.isConfirmPassCheck
-                  ? AppColors.secondary
-                  : Colors.grey,
+              isFormValid
+                  ? theme.colorScheme.secondary
+                  : theme.disabledColor.withAlpha(180),
           borderSide: BorderSide(
-            color:
-                state.isFNCheck &&
-                        state.isLNCheck &&
-                        state.isEmailCheck &&
-                        state.isPassCheck &&
-                        state.isConfirmPassCheck
-                    ? Colors.transparent
-                    : Colors.grey,
+            color: isFormValid ? Colors.transparent : theme.disabledColor,
             width: 1,
           ),
           onPressed: () {
-            if (formKey.currentState!.validate() &&
-                state.isFNCheck &&
-                state.isLNCheck &&
-                state.isEmailCheck &&
-                state.isPassCheck &&
-                state.isConfirmPassCheck) {
+            if (formKey.currentState!.validate() && isFormValid) {
               SignUpViewModel signUp = SignUpViewModel.get(context);
-              signUp.signUp(
-                buyerName,
-                email,
-                phone,
-                password,
-                context,
-              );
+              signUp.signUp(buyerName, email, phone, password, context);
             }
           },
         );

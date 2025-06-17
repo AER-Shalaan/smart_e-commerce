@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 class ProductNameDetailsReviewPrice extends StatelessWidget {
-  const ProductNameDetailsReviewPrice({super.key, required this.productData});
-  final ProductsData productData;
+  const ProductNameDetailsReviewPrice({super.key, required this.product});
+  final ProductDetailsModel product;
 
   @override
   Widget build(BuildContext context) {
     final double price =
-        double.tryParse(productData.priceOut.toString()) ?? 0.0;
+        double.tryParse(product.data!.priceOut.toString()) ?? 0.0;
     final double discount =
-        double.tryParse(productData.discount?.toString() ?? "0") ?? 0.0;
-    final double finalPrice = (discount > 0) ? price - discount : price;
+        double.tryParse(product.data!.discount?.toString() ?? "0") ?? 0.0;
+    final double finalPrice = discount > 0 ? price - discount : price;
+
+    final theme = Theme.of(context);
+    final primaryColor = theme.colorScheme.primary;
+    final secondaryColor = theme.colorScheme.secondary;
+    final grey300 = Colors.grey[300]!;
+    final grey600 = Colors.grey[600]!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -22,10 +27,11 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            productData.itemName ?? "",
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            product.data!.itemName ?? "",
+            style: theme.textTheme.headlineSmall?.copyWith(
               fontSize: 23,
               fontWeight: FontWeight.bold,
+              color: secondaryColor,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -36,8 +42,8 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
             children: [
               Text(
                 "\$${finalPrice.toStringAsFixed(2)}",
-                style: const TextStyle(
-                  color: AppColors.primary,
+                style: TextStyle(
+                  color: primaryColor,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                 ),
@@ -46,14 +52,13 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   "\$${price.toStringAsFixed(2)}",
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.grey,
                     fontSize: 16,
                     decoration: TextDecoration.lineThrough,
                   ),
                 ),
                 const SizedBox(width: 6),
-                // مربع الخصم
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
@@ -76,7 +81,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
               const Spacer(),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withAlpha(20),
+                  color: primaryColor.withAlpha(20),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 padding: const EdgeInsets.symmetric(
@@ -84,9 +89,9 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                   vertical: 5,
                 ),
                 child: Text(
-                  "Stock: ${productData.quantity}",
+                  "Stock: ${product.data!.quantity}",
                   style: TextStyle(
-                    color: AppColors.primary,
+                    color: primaryColor,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -97,25 +102,29 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              SvgPicture.asset(Assets.assetsIconsStarIcon, height: 19),
+              SvgPicture.asset(
+                Assets.assetsIconsStarIcon,
+                height: 19,
+                colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),
+              ),
               const SizedBox(width: 4),
               Text(
-                "${productData.rate}",
+                "${(product.rating?.averageRating ?? 0).toStringAsFixed(2)} / 5",
                 style: TextStyle(
-                  color: AppColors.secondary,
+                  color: secondaryColor,
                   fontSize: 15,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               const SizedBox(width: 7),
               Text(
-                "(${productData.viewCount} Reviews)",
-                style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                "(${product.rating!.totalReviews ?? 0} Reviews)",
+                style: TextStyle(color: grey600, fontSize: 14),
               ),
             ],
           ),
           const SizedBox(height: 13),
-          Divider(color: Colors.grey[300]),
+          Divider(color: grey300),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Row(
@@ -133,11 +142,11 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        productData.sellerName ?? 'Seller',
+                        product.data!.sellerName ?? 'Seller',
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.secondary,
+                          color: secondaryColor,
                         ),
                       ),
                       const Text(
@@ -153,7 +162,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withAlpha(22),
+                    color: primaryColor.withAlpha(22),
                     shape: BoxShape.circle,
                   ),
                   child: const Padding(
@@ -161,28 +170,29 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                     child: Icon(
                       Icons.arrow_forward_ios,
                       size: 19,
-                      color: AppColors.primary,
+                      color: Color(0xff0E947A),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          Divider(color: Colors.grey[300]),
+          Divider(color: grey300),
           const SizedBox(height: 14),
           Text(
             "Product Description",
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 20,
+              color: secondaryColor,
             ),
           ),
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
             child: Text(
-              productData.description ?? "",
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              product.data!.description ?? "",
+              style: theme.textTheme.bodyMedium?.copyWith(
                 fontSize: 15,
                 color: Colors.black87,
               ),

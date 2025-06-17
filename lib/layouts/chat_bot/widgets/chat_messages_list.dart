@@ -5,11 +5,13 @@ import 'package:smart_ecommerce/layouts/chat_bot/widgets/chat_message_bubble.dar
 class ChatMessagesList extends StatelessWidget {
   final List<ChatMessage> messages;
   final bool showTyping;
+  final ScrollController? controller;
 
   const ChatMessagesList({
     super.key,
     required this.messages,
     this.showTyping = false,
+    this.controller,
   });
 
   @override
@@ -21,10 +23,10 @@ class ChatMessagesList extends StatelessWidget {
     }
 
     return ListView.builder(
+      controller: controller,
       padding: const EdgeInsets.symmetric(vertical: 10),
-      shrinkWrap: true, 
-      physics:
-          const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: fullMessages.length,
       itemBuilder: (context, index) {
         final msg = fullMessages[index];

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_review_view_model/add_review_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model.dart';
@@ -19,6 +18,10 @@ class ProductsDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final snackBarBackgroundSuccess = theme.colorScheme.secondary;
+    final snackBarBackgroundError = theme.colorScheme.error;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<ProductDetailsViewModel>()),
@@ -30,32 +33,32 @@ class ProductsDetailsView extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
-          final List<String?> data =
-              ModalRoute.of(context)!.settings.arguments as List<String?>;
+          final List<dynamic> data =
+              ModalRoute.of(context)!.settings.arguments as List;
+          final productId = data[0] as String;
+          final token = data[1] as String;
+          final userId = data[2] as String;
 
           context.read<ProductDetailsViewModel>().getProductDetails(
-            productId: data[0] ?? "",
-            token: data[1] ?? "",
-          );
+                productId: productId,
+                token: token,
+              );
           context.read<GetReviewsViewModel>().getReviews(
-            token: data[1] ?? "",
-            itemId: data[0] ?? "",
-          );
+                token: token,
+                itemId: productId,
+              );
 
           return Scaffold(
-            backgroundColor: AppColors.backGroundColor,
+            backgroundColor: theme.scaffoldBackgroundColor,
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(60),
-              child: BlocListener<
-                AddToWishlistViewModel,
-                AddToWishlistViewModelStates
-              >(
+              child: BlocListener<AddToWishlistViewModel, AddToWishlistViewModelStates>(
                 listener: (context, state) {
                   if (state is AddToWishlistSuccess) {
                     AppSnackBar.show(
                       context: context,
                       message: state.response.messageToUser,
-                      backgroundColor: Colors.pink,
+                      backgroundColor: snackBarBackgroundSuccess,
                       icon: Icons.favorite,
                       duration: const Duration(seconds: 2),
                       fromTop: false,
@@ -64,7 +67,7 @@ class ProductsDetailsView extends StatelessWidget {
                     AppSnackBar.show(
                       context: context,
                       message: state.error.message,
-                      backgroundColor: Colors.red,
+                      backgroundColor: snackBarBackgroundError,
                       icon: Icons.error,
                       duration: const Duration(seconds: 2),
                       fromTop: false,
@@ -73,22 +76,22 @@ class ProductsDetailsView extends StatelessWidget {
                 },
                 child: productDetailsViewAppBar(
                   context,
-                  token: data[1] ?? "",
-                  productId: data[0] ?? "",
-                  userId: data[2] ?? "",
+                  token: token,
+                  productId: productId,
+                  userId: userId,
                 ),
               ),
             ),
             body: ProductDetailsViewBody(
-              key: ValueKey(data[0]),
-              token: data[1] ?? "",
-              productId: data[0] ?? "",
-              userId: data[2] ?? "",
+              key: ValueKey(productId),
+              token: token,
+              productId: productId,
+              userId: userId,
             ),
             bottomNavigationBar: ProductDetailsNavBar(
-              token: data[1] ?? "",
-              productId: data[0] ?? "",
-              userId: data[2] ?? "",
+              token: token,
+              productId: productId,
+              userId: userId,
             ),
           );
         },

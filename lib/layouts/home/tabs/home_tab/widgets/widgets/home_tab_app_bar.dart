@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_button.dart';
 
@@ -11,13 +10,15 @@ class HomeTabAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return SliverAppBar(
       floating: true,
       snap: true,
       elevation: 0,
       shadowColor: Colors.transparent,
       scrolledUnderElevation: 0,
-      backgroundColor: AppColors.backGroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       flexibleSpace: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -30,23 +31,24 @@ class HomeTabAppBar extends StatelessWidget {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: theme.colorScheme.secondary,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: theme.colorScheme.primary,
+                        width: 1.5,
                       ),
                     ),
                     hintText: "search",
-                    hintStyle: Theme.of(context).textTheme.titleMedium,
+                    hintStyle: theme.textTheme.titleMedium,
                     prefixIcon: Padding(
                       padding: const EdgeInsets.only(left: 20, right: 8),
                       child: SvgPicture.asset(
                         Assets.assetsIconsSearchIcon,
                         colorFilter: ColorFilter.mode(
-                          Theme.of(context).colorScheme.secondary,
+                          theme.colorScheme.secondary,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -57,6 +59,7 @@ class HomeTabAppBar extends StatelessWidget {
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                   ),
+                  style: theme.textTheme.bodyLarge,
                 ),
               ),
               const SizedBox(width: 15),

@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/core/constants.dart';
 import '../../layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_cubit.dart';
 import '../../layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_state.dart';
-import '../utils/app_colors.dart';
-import '../utils/text_styles.dart';
 
 class ReusableFilterDialog<T> extends StatelessWidget {
   final String title;
@@ -30,17 +28,32 @@ class ReusableFilterDialog<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return AlertDialog(
-      backgroundColor: AppColors.backGroundColor,
+      backgroundColor: theme.dialogBackgroundColor,
       title: Column(
         children: [
-          Text(title, style: TextStyles.filterBottomSheetTitles),
+          Text(title, style: theme.textTheme.titleMedium),
           TextField(
-            decoration: const InputDecoration(hintText: 'Search...'),
-            style: TextStyles.filterBottomSheetTitles.copyWith(
+            decoration: InputDecoration(
+              hintText: 'Search...',
+              hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.hintColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 12,
+              ),
+            ),
+            style: theme.textTheme.bodyMedium?.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: AppColors.secondary,
+              color: colorScheme.secondary,
             ),
             onChanged: (value) {
               context.read<FilterCubit>().updateSearchQuery(value);
@@ -86,8 +99,8 @@ class ReusableFilterDialog<T> extends StatelessWidget {
                       border: Border.all(
                         color:
                             isSelected
-                                ? AppColors.primary
-                                : AppColors.secondary.withAlpha(102),
+                                ? colorScheme.primary
+                                : colorScheme.secondary.withAlpha(102),
                         width: 1,
                       ),
                     ),
@@ -128,11 +141,11 @@ class ReusableFilterDialog<T> extends StatelessWidget {
                                     return Container(
                                       width: 40,
                                       height: 40,
-                                      color: Colors.grey.shade300,
-                                      child: const Icon(
+                                      color: theme.dividerColor,
+                                      child: Icon(
                                         Icons.broken_image,
                                         size: 24,
-                                        color: Colors.grey,
+                                        color: theme.disabledColor,
                                       ),
                                     );
                                   },
@@ -141,13 +154,14 @@ class ReusableFilterDialog<T> extends StatelessWidget {
                             const SizedBox(width: 15),
                             Text(
                               itemLabel(item),
-                              style: TextStyles.filterBottomSheetTitles
-                                  .copyWith(fontSize: 16),
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontSize: 16,
+                              ),
                             ),
                           ],
                         ),
                         isSelected
-                            ? const Icon(Icons.check, color: AppColors.primary)
+                            ? Icon(Icons.check, color: colorScheme.primary)
                             : const SizedBox.shrink(),
                       ],
                     ),
@@ -163,16 +177,16 @@ class ReusableFilterDialog<T> extends StatelessWidget {
           onPressed: onCancelPressed,
           child: Text(
             'Cancel',
-            style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 14),
+            style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),
           ),
         ),
         TextButton(
           onPressed: onConfirmPressed,
           child: Text(
             'Done',
-            style: TextStyles.filterBottomSheetTitles.copyWith(
+            style: theme.textTheme.bodyMedium?.copyWith(
               fontSize: 14,
-              color: Colors.cyan[800],
+              color: colorScheme.secondary,
             ),
           ),
         ),
@@ -180,9 +194,9 @@ class ReusableFilterDialog<T> extends StatelessWidget {
           onPressed: onNextPressed,
           child: Text(
             'Next',
-            style: TextStyles.filterBottomSheetTitles.copyWith(
+            style: theme.textTheme.bodyMedium?.copyWith(
               fontSize: 14,
-              color: AppColors.primary,
+              color: colorScheme.primary,
             ),
           ),
         ),

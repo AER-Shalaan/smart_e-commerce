@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 
 class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -8,8 +7,9 @@ class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return AppBar(
-      backgroundColor: const Color.fromARGB(255, 247, 221, 212),
+      backgroundColor: theme.appBarTheme.backgroundColor ?? theme.colorScheme.surface,
       elevation: 2,
       centerTitle: true,
       title: Row(
@@ -17,24 +17,23 @@ class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           CircleAvatar(
             radius: 18,
-            backgroundColor: AppColors.primary.withAlpha(180),
+            backgroundColor: theme.colorScheme.primary.withAlpha(180),
             child: SvgPicture.asset(
               Assets.assetsIconsChatBot,
               width: 20,
               height: 20,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
+              colorFilter: ColorFilter.mode(
+                theme.colorScheme.onPrimary,
                 BlendMode.srcIn,
               ),
             ),
           ),
           const SizedBox(width: 8),
-          const Text(
+          Text(
             "Shopping assistant",
-            style: TextStyle(
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600,
-              fontSize: 16,
-              color: Colors.black87,
+              color: theme.textTheme.titleMedium?.color ?? Colors.black87,
             ),
           ),
         ],

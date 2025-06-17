@@ -1,4 +1,5 @@
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products.dart';
+
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 class ProductsModel {
   ProductsModel({
@@ -19,7 +20,7 @@ class ProductsModel {
     if (json['products'] != null) {
       products = [];
       json['products'].forEach((v) {
-        products?.add(Products.fromJson(v));
+        products?.add(ProductDetailsModel.fromJson(v));
       });
     }
   }
@@ -28,7 +29,7 @@ class ProductsModel {
   num? pageSize;
   num? totalPages;
   num? totalItems;
-  List<Products>? products;
+  List<ProductDetailsModel>? products;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

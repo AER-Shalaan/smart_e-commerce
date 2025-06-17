@@ -1,5 +1,6 @@
 
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products.dart';
+
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 class RecommendedProductsModel {
   RecommendedProductsModel({
@@ -12,12 +13,12 @@ class RecommendedProductsModel {
     if (json['products'] != null) {
       products = [];
       json['products'].forEach((v) {
-        products?.add(Products.fromJson(v));
+        products?.add(ProductDetailsModel.fromJson(v));
       });
     }
   }
   String? message;
-  List<Products>? products;
+  List<ProductDetailsModel>? products;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

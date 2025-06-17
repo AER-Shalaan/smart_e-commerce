@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingLoginButton extends StatelessWidget {
   const OnboardingLoginButton({
@@ -9,29 +8,32 @@ class OnboardingLoginButton extends StatelessWidget {
   });
   final Function() onTap;
   final bool isLogin;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final buttonColor = isLogin
+        ? theme.colorScheme.secondary
+        : theme.colorScheme.primary;
+
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.4,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           enableFeedback: false,
-          overlayColor: Colors.white.withAlpha(102),
+          overlayColor: theme.colorScheme.onPrimary.withAlpha(102),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          backgroundColor:
-              isLogin
-                  ? const Color(0xff292C32)
-                  : Theme.of(context).colorScheme.primary,
+          backgroundColor: buttonColor,
         ),
         child: Text(
           isLogin ? "Login" : "Sign Up",
-          style: GoogleFonts.arima(
-            fontSize: 16,
+          style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w800,
-            color: Colors.white,
+            color: theme.colorScheme.onPrimary,
+            fontSize: 16,
           ),
         ),
       ),

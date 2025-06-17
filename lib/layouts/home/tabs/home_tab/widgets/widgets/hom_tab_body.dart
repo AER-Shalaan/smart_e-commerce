@@ -38,7 +38,7 @@ class _HomeTabBodyState extends State<HomeTabBody> {
         ),
         const SliverSizedBoxSpace(height: 30),
         SliverToBoxAdapter(child: CategoryWidgetBuilder(token: widget.token)),
-        // const SliverSizedBoxSpace(height: 20),
+        const SliverSizedBoxSpace(height: 20),
         // SliverToBoxAdapter(
         //   child: BlocProvider(
         //     create:

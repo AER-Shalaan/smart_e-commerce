@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/resuebale_componants/custom_auth_textfield.dart';
-import '../../../../core/resuebale_componants/title_medium_text.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets.dart';
 import '../Cubit/login_checks_cubit.dart';
@@ -13,13 +12,21 @@ class LoginTextFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocBuilder<LoginChecksCubit, LoginChecksState>(
       builder: (context, state) {
         final loginChecksCubit = context.read<LoginChecksCubit>();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TitleMediumtext(text: "Email", opacity: 1),
+            Text(
+              "Email",
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: theme.textTheme.titleMedium?.color?.withOpacity(1),
+              ),
+            ),
             const SizedBox(height: 4),
             CustomAuthTextField(
               hint: "email@example",
@@ -43,7 +50,13 @@ class LoginTextFields extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            const TitleMediumtext(text: "Password", opacity: 1),
+            Text(
+              "Password",
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: theme.textTheme.titleMedium?.color?.withOpacity(1),
+              ),
+            ),
             const SizedBox(height: 4),
             CustomAuthTextField(
               hint: "Enter your password",

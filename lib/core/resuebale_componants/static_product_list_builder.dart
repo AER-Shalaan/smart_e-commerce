@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/item_widget/item_widget.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 class StaticProductListBuilder extends StatelessWidget {
   const StaticProductListBuilder({
@@ -15,27 +15,28 @@ class StaticProductListBuilder extends StatelessWidget {
   final String label;
   final String token;
   final String userId;
-  final List<Products> products;
+  final List<ProductDetailsModel> products;
 
   Widget _buildProductItem(BuildContext context, int index) {
-    final product = products[index].data!;
+    final product = products[index];
     return ItemWidget(
-      key: ValueKey(product.itemID),
-      productData: product,
+      key: ValueKey(product.data!.itemID),
+      product: product,
       token: token,
       userId: userId,
     );
   }
 
-  Widget buildShimmerItem() {
+  Widget buildShimmerItem(BuildContext context) {
+    final theme = Theme.of(context);
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.white,
+      baseColor: theme.dividerColor,
+      highlightColor: theme.colorScheme.surface,
       child: Container(
         width: 240,
         margin: const EdgeInsets.only(right: 16),
         decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: theme.dividerColor,
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -44,6 +45,7 @@ class StaticProductListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final isTablet = MediaQuery.of(context).size.width >= 600;
 
     return Column(
@@ -55,15 +57,15 @@ class StaticProductListBuilder extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const Spacer(),
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 14,
-                color: Colors.grey,
+                color: theme.disabledColor,
               ),
             ],
           ),
@@ -75,7 +77,7 @@ class StaticProductListBuilder extends StatelessWidget {
               ? ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (_, __) => buildShimmerItem(),
+                  itemBuilder: (context, _) => buildShimmerItem(context),
                   separatorBuilder: (_, __) => const SizedBox(width: 16),
                   itemCount: 5,
                 )

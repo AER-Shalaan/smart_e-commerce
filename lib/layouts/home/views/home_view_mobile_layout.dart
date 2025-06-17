@@ -2,8 +2,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/layouts/home/provider/home_provider.dart';
@@ -22,6 +20,7 @@ class HomeViewMobileLayout extends StatelessWidget {
   });
   final String token;
   final String userId;
+
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = Provider.of<HomeProvider>(context);
@@ -37,15 +36,23 @@ class HomeViewMobileLayout extends StatelessWidget {
       CartTab(token: token, userId: userId),
       const AccountTabView(),
     ];
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backGroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,
-        backgroundColor: AppColors.backGroundColor,
-        title: const Align(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        title: Align(
           alignment: Alignment.centerLeft,
-          child: Headlinetext(text: "Inspire"),
+          child: Text(
+            "Inspire",
+            style: theme.textTheme.headlineSmall?.copyWith(
+              color: theme.colorScheme.primary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         actions: [
           Padding(
@@ -56,7 +63,7 @@ class HomeViewMobileLayout extends StatelessWidget {
                 Assets.assetsIconsNotifcations,
                 height: 25,
                 colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.secondary,
+                  theme.colorScheme.secondary,
                   BlendMode.srcIn,
                 ),
               ),
@@ -67,118 +74,110 @@ class HomeViewMobileLayout extends StatelessWidget {
       floatingActionButton:
           provider.homeTapIndex == 0 || provider.homeTapIndex == 4
               ? FloatingActionButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    Routes.chatBotViewRouteName,
-                    arguments: {'token': token, 'userId': userId},
-                  );
-                },
-                shape: const CircleBorder(),
-                backgroundColor: AppColors.primary,
-                child: const Icon(Icons.chat, color: AppColors.backGroundColor),
-              )
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.chatBotViewRouteName,
+                      arguments: {'token': token, 'userId': userId},
+                    );
+                  },
+                  shape: const CircleBorder(),
+                  backgroundColor: theme.colorScheme.primary,
+                  child: Icon(
+                    Icons.chat,
+                    color: theme.scaffoldBackgroundColor,
+                  ),
+                )
               : provider.homeTapIndex == 1
-              ? FloatingActionButton(
-                onPressed: () {
-                  debugPrint('table button pressed');
-                },
-                backgroundColor: AppColors.primary,
-                shape: const CircleBorder(),
-                child: const Icon(
-                  Icons.backup_table_rounded,
-                  color: AppColors.backGroundColor,
+                  ? FloatingActionButton(
+                      onPressed: () {
+                        debugPrint('table button pressed');
+                      },
+                      backgroundColor: theme.colorScheme.primary,
+                      shape: const CircleBorder(),
+                      child: Icon(
+                        Icons.backup_table_rounded,
+                        color: theme.scaffoldBackgroundColor,
+                      ),
+                    )
+                  : null,
+      bottomNavigationBar: MediaQuery.of(context).size.width <= 600
+          ? BottomNavigationBar(
+              backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
+              currentIndex: provider.homeTapIndex,
+              onTap: (value) {
+                provider.changeHomeTapIndex(newValue: value);
+              },
+              items: [
+                BottomNavigationBarItem(
+                  backgroundColor: theme.colorScheme.primary,
+                  icon: SvgPicture.asset(
+                    Assets.assetsIconsHomeIcon,
+                    colorFilter: ColorFilter.mode(
+                      provider.homeTapIndex == 0
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.secondary.withAlpha(77),
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  label: 'Home',
                 ),
-              )
-              : null,
-      bottomNavigationBar:
-          MediaQuery.of(context).size.width <= 600
-              ? BottomNavigationBar(
-                backgroundColor: Colors.white70,
-                currentIndex: provider.homeTapIndex,
-                onTap: (value) {
-                  provider.changeHomeTapIndex(newValue: value);
-                },
-                items: [
-                  BottomNavigationBarItem(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    icon: SvgPicture.asset(
-                      Assets.assetsIconsHomeIcon,
-                      colorFilter: ColorFilter.mode(
-                        provider.homeTapIndex == 0
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(
-                              context,
-                            ).colorScheme.secondary.withAlpha(77),
-                        BlendMode.srcIn,
-                      ),
+                BottomNavigationBarItem(
+                  backgroundColor: theme.colorScheme.primary,
+                  icon: SvgPicture.asset(
+                    Assets.assetsIconsCompareIcon,
+                    width: MediaQuery.of(context).size.width * 0.06,
+                    colorFilter: ColorFilter.mode(
+                      provider.homeTapIndex == 1
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.secondary.withAlpha(77),
+                      BlendMode.srcIn,
                     ),
-                    label: 'Home',
                   ),
-                  BottomNavigationBarItem(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    icon: SvgPicture.asset(
-                      Assets.assetsIconsCompareIcon,
-                      width: MediaQuery.of(context).size.width * 0.06,
-                      colorFilter: ColorFilter.mode(
-                        provider.homeTapIndex == 1
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(
-                              context,
-                            ).colorScheme.secondary.withAlpha(77),
-                        BlendMode.srcIn,
-                      ),
+                  label: 'Compare',
+                ),
+                BottomNavigationBarItem(
+                  backgroundColor: theme.colorScheme.primary,
+                  icon: SvgPicture.asset(
+                    Assets.assetsIconsSavedIcon,
+                    colorFilter: ColorFilter.mode(
+                      provider.homeTapIndex == 2
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.secondary.withAlpha(77),
+                      BlendMode.srcIn,
                     ),
-                    label: 'Compare',
                   ),
-                  BottomNavigationBarItem(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    icon: SvgPicture.asset(
-                      Assets.assetsIconsSavedIcon,
-                      colorFilter: ColorFilter.mode(
-                        provider.homeTapIndex == 2
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(
-                              context,
-                            ).colorScheme.secondary.withAlpha(77),
-                        BlendMode.srcIn,
-                      ),
+                  label: 'Saved',
+                ),
+                BottomNavigationBarItem(
+                  backgroundColor: theme.colorScheme.primary,
+                  icon: SvgPicture.asset(
+                    Assets.assetsIconsCartIcon,
+                    colorFilter: ColorFilter.mode(
+                      provider.homeTapIndex == 3
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.secondary.withAlpha(77),
+                      BlendMode.srcIn,
                     ),
-                    label: 'Saved',
                   ),
-                  BottomNavigationBarItem(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    icon: SvgPicture.asset(
-                      Assets.assetsIconsCartIcon,
-                      colorFilter: ColorFilter.mode(
-                        provider.homeTapIndex == 3
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(
-                              context,
-                            ).colorScheme.secondary.withAlpha(77),
-                        BlendMode.srcIn,
-                      ),
+                  label: 'Cart',
+                ),
+                BottomNavigationBarItem(
+                  backgroundColor: theme.colorScheme.primary,
+                  icon: SvgPicture.asset(
+                    Assets.assetsIconsAccountIcon,
+                    colorFilter: ColorFilter.mode(
+                      provider.homeTapIndex == 4
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.secondary.withAlpha(77),
+                      BlendMode.srcIn,
                     ),
-                    label: 'Cart',
                   ),
-                  BottomNavigationBarItem(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    icon: SvgPicture.asset(
-                      Assets.assetsIconsAccountIcon,
-                      colorFilter: ColorFilter.mode(
-                        provider.homeTapIndex == 4
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(
-                              context,
-                            ).colorScheme.secondary.withAlpha(77),
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    label: 'Account',
-                  ),
-                ],
-              )
-              : null,
+                  label: 'Account',
+                ),
+              ],
+            )
+          : null,
       body: navWidget[provider.homeTapIndex],
     );
   }
