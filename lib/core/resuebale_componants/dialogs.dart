@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../utils/app_colors.dart';
-import '../utils/text_styles.dart';
-
 class CustomDialogs {
   static void showErrorDialog(BuildContext context, String message) {
     _showDialog(
       context,
       icon: Icons.error_outline,
-      iconColor: Colors.red,
+      iconColor: Theme.of(context).colorScheme.error,
       title: 'Error',
       content: message,
       actions: [
         _buildDialogButton(
+          context: context,
           label: 'Try Again',
           onPressed: () => Navigator.pop(context),
-          color: Colors.redAccent,
+          color: Theme.of(context).colorScheme.error,
         ),
       ],
     );
   }
 
   static void showLoadingDialog(BuildContext context) {
+    final theme = Theme.of(context);
     _showDialog(
       context,
       icon: Icons.warning_amber_outlined,
-      iconColor: Colors.amber[700]!,
+      iconColor: theme.colorScheme.secondary,
       title: 'Loading...',
       customContent: LoadingAnimationWidget.fourRotatingDots(
-        color: AppColors.primary.withAlpha(153),
+        color: theme.colorScheme.primary.withAlpha(153),
         size: MediaQuery.of(context).size.width * 0.13,
       ),
       barrierDismissible: true,
@@ -57,13 +56,15 @@ class CustomDialogs {
       content: content,
       actions: [
         _buildDialogButton(
+          context: context,
           label: cancelLabel,
           onPressed: () => Navigator.pop(context),
-          color: Colors.grey,
+          color: Theme.of(context).disabledColor,
           isOutlined: true,
         ),
         const SizedBox(width: 16),
         _buildDialogButton(
+          context: context,
           label: confirmationLabel,
           onPressed: () {
             Navigator.pop(context);
@@ -97,6 +98,7 @@ class CustomDialogs {
       builder: (context) {
         final screenWidth = MediaQuery.of(context).size.width;
         final screenHeight = MediaQuery.of(context).size.height;
+        final theme = Theme.of(context);
 
         return Dialog(
           shape: RoundedRectangleBorder(
@@ -106,7 +108,7 @@ class CustomDialogs {
             width: screenWidth * 0.8,
             padding: EdgeInsets.all(screenWidth * 0.05),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: theme.dialogBackgroundColor,
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -116,7 +118,7 @@ class CustomDialogs {
                 SizedBox(height: screenHeight * 0.02),
                 Text(
                   title,
-                  style: TextStyles.dialogTitleStyle.copyWith(
+                  style: theme.textTheme.titleLarge?.copyWith(
                     fontSize: screenWidth * 0.05,
                   ),
                 ),
@@ -125,7 +127,7 @@ class CustomDialogs {
                   Text(
                     content,
                     textAlign: TextAlign.center,
-                    style: TextStyles.dialogMessageStyle.copyWith(
+                    style: theme.textTheme.bodyMedium?.copyWith(
                       fontSize: screenWidth * 0.035,
                     ),
                   ),
@@ -148,40 +150,45 @@ class CustomDialogs {
   }
 
   static Widget _buildDialogButton({
+    required BuildContext context,
     required String label,
     required VoidCallback onPressed,
     required Color color,
     bool isOutlined = false,
   }) {
+    final theme = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child:
-          isOutlined
-              ? OutlinedButton(
-                onPressed: onPressed,
-                style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  side: BorderSide(color: color),
+      child: isOutlined
+          ? OutlinedButton(
+              onPressed: onPressed,
+              style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(
-                  label,
-                  style: TextStyles.dialogLabelButtonStyle.copyWith(
-                    color: color,
-                  ),
-                ),
-              )
-              : ElevatedButton(
-                onPressed: onPressed,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: color,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(label, style: TextStyles.dialogLabelButtonStyle),
+                side: BorderSide(color: color),
               ),
+              child: Text(
+                label,
+                style: theme.textTheme.labelLarge?.copyWith(color: color),
+              ),
+            )
+          : ElevatedButton(
+              onPressed: onPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: color,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text(
+                label,
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: theme.colorScheme.onPrimary,
+                ),
+              ),
+            ),
     );
   }
 }

@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/custom_auth_textfield.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/title_medium_text.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_states.dart';
 import '../../../../core/constants.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets.dart';
 
 class SignUpTextFields extends StatelessWidget {
@@ -14,6 +12,7 @@ class SignUpTextFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<SignUpCheckCubit, SignUpCheckState>(
       builder: (context, state) {
         var cubit = context.read<SignUpCheckCubit>();
@@ -57,8 +56,6 @@ class SignUpTextFields extends StatelessWidget {
               prefixIcon: const Icon(Icons.email_outlined),
               isValid: state.isEmailCheck,
               isWrong: state.isWrongEmail,
-
-              /////////Change to Phone logic////////
               validator: (value) => _validateEmail(value),
               onChanged: cubit.validateEmail,
             ),
@@ -76,7 +73,6 @@ class SignUpTextFields extends StatelessWidget {
               validator: (value) => _validatePhone(value),
               onChanged: cubit.validatePhone,
             ),
-
             const SizedBox(height: 16),
             buildPasswordTextField(
               context: context,
@@ -102,16 +98,14 @@ class SignUpTextFields extends StatelessWidget {
               isValid: state.isConfirmPassCheck,
               isWrong: state.isWrongConfirmPass,
               toggleVisibility: cubit.toggleConfirmPasswordVisibility,
-              validator:
-                  (value) => _validateConfirmPassword(
-                    value,
-                    cubit.passController.text,
-                  ),
-              onChanged:
-                  (value) => cubit.validateConfirmPassword(
-                    cubit.passController.text,
-                    value,
-                  ),
+              validator: (value) => _validateConfirmPassword(
+                value,
+                cubit.passController.text,
+              ),
+              onChanged: (value) => cubit.validateConfirmPassword(
+                cubit.passController.text,
+                value,
+              ),
             ),
           ],
         );
@@ -132,10 +126,17 @@ class SignUpTextFields extends StatelessWidget {
     required Function(String) onChanged,
     TextInputType keyboardType = TextInputType.text,
   }) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleMediumtext(text: title, opacity: 1),
+        Text(
+          title,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
         const SizedBox(height: 4),
         CustomAuthTextField(
           hint: hint,
@@ -143,19 +144,17 @@ class SignUpTextFields extends StatelessWidget {
           focusNode: focusNode,
           keyboard: keyboardType,
           prefixIcon: prefixIcon,
-          suffixIcon:
-              isValid
-                  ? SvgPicture.asset(Assets.assetsIconsCheck)
-                  : isWrong
+          suffixIcon: isValid
+              ? SvgPicture.asset(Assets.assetsIconsCheck)
+              : isWrong
                   ? SvgPicture.asset(Assets.assetsIconsWarningCircle)
                   : null,
           suffixIconConstraints: BoxConstraints.tight(const Size(50, 30)),
-          borderColor:
-              isValid
-                  ? Colors.green
-                  : isWrong
+          borderColor: isValid
+              ? Colors.green
+              : isWrong
                   ? Colors.red
-                  : AppColors.primary.withAlpha(102),
+                  : theme.colorScheme.primary.withAlpha(102),
           validator: validator,
           onChanged: onChanged,
         ),
@@ -176,10 +175,17 @@ class SignUpTextFields extends StatelessWidget {
     required String? Function(String?) validator,
     required Function(String) onChanged,
   }) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleMediumtext(text: title, opacity: 1),
+        Text(
+          title,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
         const SizedBox(height: 4),
         CustomAuthTextField(
           hint: hint,
@@ -193,12 +199,11 @@ class SignUpTextFields extends StatelessWidget {
               isObscure ? Assets.assetsIconsEyeOff : Assets.assetsIconsEye,
             ),
           ),
-          borderColor:
-              isValid
-                  ? Colors.green
-                  : isWrong
+          borderColor: isValid
+              ? Colors.green
+              : isWrong
                   ? Colors.red
-                  : AppColors.primary.withAlpha(102),
+                  : theme.colorScheme.primary.withAlpha(102),
           validator: validator,
           onChanged: onChanged,
         ),

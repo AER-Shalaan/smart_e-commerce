@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model.dart';
 
 class ChatBotInputField extends StatefulWidget {
@@ -23,6 +22,8 @@ class _ChatBotInputFieldState extends State<ChatBotInputField> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Row(
@@ -33,24 +34,26 @@ class _ChatBotInputFieldState extends State<ChatBotInputField> {
               onSubmitted: (_) => _sendMessage(),
               decoration: InputDecoration(
                 hintText: "Type a message.....",
-                hintStyle: const TextStyle(color: Colors.grey),
+                hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: theme.cardColor,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: AppColors.primary),
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.primary.withAlpha(60),
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                    color: AppColors.primary,
+                  borderSide: BorderSide(
+                    color: theme.colorScheme.primary,
                     width: 1.5,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(
-                    color: AppColors.secondary.withAlpha(102),
+                    color: theme.colorScheme.secondary.withAlpha(102),
                   ),
                 ),
                 contentPadding: const EdgeInsets.symmetric(
@@ -64,13 +67,15 @@ class _ChatBotInputFieldState extends State<ChatBotInputField> {
           Container(
             height: 42,
             width: 42,
-            decoration: const BoxDecoration(
-              color: AppColors.primary,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary,
               shape: BoxShape.circle,
             ),
             child: IconButton(
               icon: const Icon(Icons.send, size: 20, color: Colors.white),
               onPressed: _sendMessage,
+              splashColor: theme.colorScheme.secondary.withAlpha(60),
+              tooltip: "Send",
             ),
           ),
         ],

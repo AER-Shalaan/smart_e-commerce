@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/config/shared_preferences.dart';
 import 'package:smart_ecommerce/core/api/api_manager.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/item_widget/view_model/add_item_view_view_model.dart';
 import 'package:smart_ecommerce/data/data_source_impl/home/home_tap_data_source_impl/categories_data_source_impl.dart';
@@ -20,6 +21,16 @@ import 'layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_cubit.dart
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  ThemeMode getThemeModeFromString(String themeString) {
+    switch (themeString) {
+      case 'dark':
+        return ThemeMode.dark;
+      case 'light':
+      default:
+        return ThemeMode.light;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +55,23 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LoginChecksCubit()),
         BlocProvider(create: (context) => SignUpCheckCubit()),
       ],
-      child: MaterialApp(
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        debugShowCheckedModeBanner: false,
-        routes: Routes.getRoutes(),
-        initialRoute: Routes.splashRouteName,
-        theme: AppTheme.lightTheme,
+      child: FutureBuilder<String>(
+        future: SharedPreferencesFunctions.getThemeMode(),
+        builder: (context, snapshot) {
+          //String themeString = snapshot.data ?? 'light';
+          //ThemeMode themeMode = getThemeModeFromString(themeString);
+
+          return MaterialApp(
+            locale: DevicePreview.locale(context),
+            builder: DevicePreview.appBuilder,
+            debugShowCheckedModeBanner: false,
+            routes: Routes.getRoutes(),
+            initialRoute: Routes.splashRouteName,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: ThemeMode.system,
+          );
+        },
       ),
     );
   }

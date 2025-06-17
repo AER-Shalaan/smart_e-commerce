@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_states.dart';
 import '../../../../core/resuebale_componants/custom_main_button.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../view_model/login_view_model.dart';
 
 class LoginButton extends StatelessWidget {
@@ -16,10 +15,13 @@ class LoginButton extends StatelessWidget {
     return BlocBuilder<LoginChecksCubit, LoginChecksState>(
       builder: (context, state) {
         bool isFormValid = state.isEmailCheck && state.isPassCheck;
+        final theme = Theme.of(context);
         return CustomMainButton(
           label: 'Login',
           labelColor: Colors.white,
-          buttonColor: isFormValid ? AppColors.secondary : Colors.grey,
+          buttonColor: isFormValid
+              ? theme.colorScheme.secondary
+              : Colors.grey,
           borderSide: BorderSide(
             color: isFormValid ? Colors.transparent : Colors.grey,
             width: 1,
@@ -27,8 +29,7 @@ class LoginButton extends StatelessWidget {
           isDisabled: !isFormValid,
           onPressed: () {
             if (!isFormValid) return;
-            if (formKey.currentState == null ||
-                !formKey.currentState!.validate()) {
+            if (formKey.currentState == null || !formKey.currentState!.validate()) {
               return;
             }
 

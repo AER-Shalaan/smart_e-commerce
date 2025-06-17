@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/reusable_filter_dialog.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
@@ -19,10 +19,11 @@ class FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        overlayColor: Colors.white.withAlpha(102),
+        backgroundColor: theme.colorScheme.secondary,
+        overlayColor: theme.colorScheme.primary.withAlpha(40),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.all(10),
         minimumSize: const Size(50, 50),
@@ -37,6 +38,7 @@ class FilterButton extends StatelessWidget {
   }
 
   void _showCategoryDialog(BuildContext context) {
+    final theme = Theme.of(context);
     showDialog(
       context: context,
       builder: (context) {
@@ -70,8 +72,6 @@ class FilterButton extends StatelessWidget {
                 },
                 onConfirmPressed: () {
                   Navigator.pop(context);
-                  debugPrint('Confirm Pressed');
-                  // ممكن هنا تستدعي API لجلب المنتجات حسب التصنيف المختار
                 },
                 onCancelPressed: () {
                   context.read<FilterCubit>().clearFilters();
@@ -80,12 +80,12 @@ class FilterButton extends StatelessWidget {
               );
             } else if (state is CategoriesErrorState) {
               return AlertDialog(
-                title: const Text("خطأ"),
-                content: Text(state.message),
+                title: Text("Error", style: theme.textTheme.titleMedium),
+                content: Text(state.message, style: theme.textTheme.bodyMedium),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text("إغلاق"),
+                    child: Text("Close", style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.primary)),
                   ),
                 ],
               );
@@ -99,6 +99,7 @@ class FilterButton extends StatelessWidget {
   }
 
   void _showSubcategoryDialog(BuildContext context) {
+    final theme = Theme.of(context);
     showDialog(
       context: context,
       builder: (context) {
@@ -141,12 +142,12 @@ class FilterButton extends StatelessWidget {
               );
             } else if (state is SubcategoriesFromCategoryErrorState) {
               return AlertDialog(
-                title: const Text("خطأ"),
-                content: Text(state.message),
+                title: Text("Error", style: theme.textTheme.titleMedium),
+                content: Text(state.message, style: theme.textTheme.bodyMedium),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text("إغلاق"),
+                    child: Text("Close", style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.primary)),
                   ),
                 ],
               );
@@ -160,8 +161,13 @@ class FilterButton extends StatelessWidget {
   }
 
   void _showSnackbar(BuildContext context, String message) {
+    final theme = Theme.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), duration: const Duration(seconds: 2)),
+      SnackBar(
+        content: Text(message, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onPrimary)),
+        backgroundColor: theme.colorScheme.primary,
+        duration: const Duration(seconds: 2),
+      ),
     );
   }
 }

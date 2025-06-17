@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import '../utils/app_colors.dart';
-import '../utils/text_styles.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WideArrowButton extends StatelessWidget {
   final String imagePath;
@@ -17,6 +15,8 @@ class WideArrowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return InkWell(
       enableFeedback: false,
       onTap: () {
@@ -29,18 +29,21 @@ class WideArrowButton extends StatelessWidget {
             SvgPicture.asset(
               imagePath,
               height: 24,
-              colorFilter: const ColorFilter.mode(
-                AppColors.primary,
+              colorFilter: ColorFilter.mode(
+                theme.colorScheme.primary,
                 BlendMode.srcIn,
               ),
             ),
             const SizedBox(width: 16),
-            Text(label, style: TextStyles.accountLabels),
+            Text(
+              label,
+              style: theme.textTheme.bodyLarge,
+            ),
             const Spacer(),
-            const Icon(
-              color: AppColors.primary,
+            Icon(
               Icons.arrow_forward_ios_sharp,
               size: 24,
+              color: theme.colorScheme.primary,
             ),
           ],
         ),

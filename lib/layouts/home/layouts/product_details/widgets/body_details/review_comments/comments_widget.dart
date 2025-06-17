@@ -10,8 +10,35 @@ class CommentsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = DateFormat('yyyy-MM-dd HH:mm').parse(comment.createdAt);
+    DateTime? date;
+    try {
+      date = DateFormat('yyyy-MM-dd HH:mm').parse(comment.createdAt);
+    } catch (_) {
+      date = DateTime.now();
+    }
     final formattedDate = DateFormat('dd MMM yyyy • hh:mm a').format(date);
+
+    final theme = Theme.of(context);
+
+    final buyerNameStyle = theme.textTheme.bodyLarge?.copyWith(
+      fontWeight: FontWeight.w600,
+      color: theme.colorScheme.onSurface,
+      letterSpacing: 0.2,
+      fontSize: 16,
+    );
+
+    final dateStyle = theme.textTheme.bodySmall?.copyWith(
+      color: theme.colorScheme.onSurface.withOpacity(0.6),
+      letterSpacing: 0.1,
+      fontSize: 11,
+    );
+
+    final commentTextStyle = theme.textTheme.bodyMedium?.copyWith(
+      fontWeight: FontWeight.w400,
+      height: 1.6,
+      fontSize: 15,
+      color: theme.colorScheme.onSurface,
+    );
 
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(begin: 0.94, end: 1),
@@ -27,11 +54,11 @@ class CommentsWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.cardColor,
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withAlpha(22),
+                      color: theme.shadowColor.withAlpha((255 * 0.1).toInt()),
                       blurRadius: 10,
                       spreadRadius: 1,
                       offset: const Offset(0, 3),
@@ -52,18 +79,21 @@ class CommentsWidget extends StatelessWidget {
                               shape: BoxShape.circle,
                               gradient: LinearGradient(
                                 colors: [
-                                  Colors.blue.shade200,
-                                  Colors.purple.shade100,
+                                  theme.colorScheme.primaryContainer.withAlpha(
+                                    (255 * 0.6).toInt(),
+                                  ),
+                                  theme.colorScheme.secondaryContainer
+                                      .withAlpha((255 * 0.4).toInt()),
                                 ],
                               ),
                             ),
                             child: CircleAvatar(
                               radius: 22,
-                              backgroundColor: Colors.grey.shade50,
+                              backgroundColor: theme.colorScheme.surfaceVariant,
                               child: Icon(
                                 Icons.person,
                                 size: 28,
-                                color: Colors.grey.shade500,
+                                color: theme.colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ),
@@ -76,23 +106,10 @@ class CommentsWidget extends StatelessWidget {
                                   children: [
                                     Text(
                                       comment.buyerName,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black87,
-                                        letterSpacing: 0.2,
-                                      ),
+                                      style: buyerNameStyle,
                                     ),
                                     const Spacer(),
-                                    Text(
-                                      formattedDate,
-                                      style: TextStyle(
-                                        color: Colors.grey.shade500,
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: 0.1,
-                                      ),
-                                    ),
+                                    Text(formattedDate, style: dateStyle),
                                   ],
                                 ),
                                 Row(
@@ -107,6 +124,17 @@ class CommentsWidget extends StatelessWidget {
                                             : Assets.assetsImagesUnCheckedStar,
                                         height: 17,
                                         width: 17,
+                                        colorFilter: ColorFilter.mode(
+                                          index < comment.rating
+                                              ? theme.colorScheme.primary
+                                              : theme.colorScheme.onSurface
+                                                  .withOpacity(0.3),
+                                          BlendMode.srcIn,
+                                        ),
+                                        semanticsLabel:
+                                            index < comment.rating
+                                                ? 'Filled star'
+                                                : 'Empty star',
                                       ),
                                     );
                                   }),
@@ -117,16 +145,7 @@ class CommentsWidget extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 13),
-                      // The comment text
-                      Text(
-                        comment.comment,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w400,
-                          height: 1.6,
-                        ),
-                      ),
+                      Text(comment.comment, style: commentTextStyle),
                     ],
                   ),
                 ),

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../utils/app_colors.dart';
 
 class CustomMainButton extends StatelessWidget {
   final Widget? icon;
@@ -20,7 +17,7 @@ class CustomMainButton extends StatelessWidget {
     this.icon,
     required this.label,
     this.labelColor,
-    this.buttonColor = AppColors.secondary,
+    this.buttonColor,
     this.onPressed,
     this.width = 341,
     this.height = 55,
@@ -31,6 +28,8 @@ class CustomMainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Center(
       child: SizedBox(
         width: width,
@@ -41,9 +40,9 @@ class CustomMainButton extends StatelessWidget {
             alignment: Alignment.center,
             backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
               if (isDisabled) {
-                return Colors.grey;
+                return theme.disabledColor.withOpacity(0.7);
               }
-              return buttonColor!;
+              return buttonColor ?? theme.colorScheme.secondary;
             }),
             shape: WidgetStateProperty.all(
               RoundedRectangleBorder(
@@ -53,7 +52,9 @@ class CustomMainButton extends StatelessWidget {
             ),
             overlayColor: WidgetStateProperty.resolveWith<Color?>(
               (states) =>
-                  states.contains(WidgetState.pressed) ? Colors.black12 : null,
+                  states.contains(WidgetState.pressed)
+                      ? theme.colorScheme.primary.withOpacity(0.08)
+                      : null,
             ),
             elevation: WidgetStateProperty.resolveWith<double>(
               (states) => isDisabled ? 0 : 4,
@@ -65,10 +66,10 @@ class CustomMainButton extends StatelessWidget {
               if (icon != null) ...[icon!, const SizedBox(width: 10)],
               Text(
                 label,
-                style: GoogleFonts.dmSans(
-                  color: labelColor ?? Colors.white,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: labelColor ?? theme.colorScheme.onSecondary,
+                  fontWeight: FontWeight.w600,
                   fontSize: fontSize,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],

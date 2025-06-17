@@ -1,27 +1,27 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../../../../core/utils/app_colors.dart';
 
 class TermsAndPoliciesAndCookiesText extends StatelessWidget {
   const TermsAndPoliciesAndCookiesText({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return RichText(
       text: TextSpan(
         text: 'By signing up you agree to our ',
-        style: GoogleFonts.dmSans(
+        style: theme.textTheme.bodySmall?.copyWith(
           fontWeight: FontWeight.w400,
-          color: AppColors.primary.withAlpha(153),
+          color: theme.colorScheme.primary.withAlpha(153),
           fontSize: 14,
         ),
         children: <TextSpan>[
           TextSpan(
             text: 'Terms',
-            style: GoogleFonts.dmSans(
+            style: theme.textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w500,
-              color: AppColors.primary,
+              color: theme.colorScheme.primary,
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
@@ -29,14 +29,15 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
           ),
           TextSpan(
             text: ', ',
-            style: TextStyle(color: AppColors.primary.withAlpha(153)),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.primary.withAlpha(153),
+            ),
           ),
-
           TextSpan(
             text: 'Privacy Policy',
-            style: GoogleFonts.dmSans(
+            style: theme.textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w500,
-              color: AppColors.primary,
+              color: theme.colorScheme.primary,
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
@@ -44,25 +45,21 @@ class TermsAndPoliciesAndCookiesText extends StatelessWidget {
           ),
           TextSpan(
             text: ', and ',
-            style: GoogleFonts.dmSans(
+            style: theme.textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w400,
-              color: AppColors.primary.withAlpha(153),
+              color: theme.colorScheme.primary.withAlpha(153),
               fontSize: 14,
             ),
           ),
           TextSpan(
             text: 'Cookie Use',
-            style: GoogleFonts.dmSans(
+            style: theme.textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w500,
-              color: AppColors.primary,
+              color: theme.colorScheme.primary,
               fontSize: 14,
               decoration: TextDecoration.underline,
             ),
-            recognizer:
-                TapGestureRecognizer()
-                  ..onTap = () {
-                    // Reset password functionality
-                  },
+            recognizer: TapGestureRecognizer()..onTap = () {},
           ),
         ],
       ),

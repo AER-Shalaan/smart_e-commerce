@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
 import '../../../core/utils/assets.dart';
 import '../provider/home_provider.dart';
 
@@ -10,15 +9,23 @@ class TabletDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Drawer(
       shape: const LinearBorder(),
-      backgroundColor: Colors.white,
+      backgroundColor: theme.colorScheme.background,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
-            const Headlinetext(text: "Options"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Options",
+                style: theme.textTheme.titleLarge,
+              ),
+            ),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.only(left: 8),
@@ -62,7 +69,13 @@ class TabletDrawer extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            const Headlinetext(text: "Category"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Category",
+                style: theme.textTheme.titleLarge,
+              ),
+            ),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.only(left: 8),
@@ -74,18 +87,7 @@ class TabletDrawer extends StatelessWidget {
                     title: "All",
                     index: 0,
                   ),
-                  // const SizedBox(height: 8),
-                  // ...Categorys.categoryList.map(
-                  //   (e) => Padding(
-                  //     padding: const EdgeInsets.only(bottom: 8),
-                  //     child: selectedOption(
-                  //       imagePath: e.image,
-                  //       context: context,
-                  //       title: e.label,
-                  //       index: e.index,
-                  //     ),
-                  //   ),
-                  // ),
+                  // ... Add more options if needed
                 ],
               ),
             ),
@@ -101,6 +103,7 @@ class TabletDrawer extends StatelessWidget {
     required String title,
     required int index,
   }) {
+    final theme = Theme.of(context);
     var provider = Provider.of<HomeProvider>(context, listen: true);
     bool isSelected = (provider.homeTapIndex == index);
     return GestureDetector(
@@ -114,8 +117,8 @@ class TabletDrawer extends StatelessWidget {
               imagePath,
               colorFilter: ColorFilter.mode(
                 isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.secondary,
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.secondary,
                 BlendMode.srcIn,
               ),
             ),
@@ -126,11 +129,10 @@ class TabletDrawer extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.clip,
-              style: TextStyle(
-                color:
-                    isSelected
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.secondary,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: isSelected
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.secondary,
                 fontSize: isSelected ? 22 : 20,
                 fontWeight: FontWeight.w600,
               ),
@@ -147,6 +149,7 @@ class TabletDrawer extends StatelessWidget {
     required String title,
     required int index,
   }) {
+    final theme = Theme.of(context);
     var provider = Provider.of<HomeProvider>(context, listen: true);
     bool isSelected = (provider.selectedCatedgoryIndex == index);
     return GestureDetector(
@@ -160,8 +163,8 @@ class TabletDrawer extends StatelessWidget {
               imagePath,
               colorFilter: ColorFilter.mode(
                 isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.secondary,
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.secondary,
                 BlendMode.srcIn,
               ),
             ),
@@ -172,11 +175,10 @@ class TabletDrawer extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.clip,
-              style: TextStyle(
-                color:
-                    isSelected
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.secondary,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: isSelected
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.secondary,
                 fontSize: isSelected ? 22 : 20,
                 fontWeight: FontWeight.w600,
               ),

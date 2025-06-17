@@ -53,7 +53,10 @@ class _ItemWidgetState extends State<ItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.sizeOf(context).width;
+    final width = MediaQuery.sizeOf(context).width;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return AnimatedScale(
       scale: _scale,
       duration: const Duration(milliseconds: 100),
@@ -61,7 +64,9 @@ class _ItemWidgetState extends State<ItemWidget> {
       child: Material(
         elevation: _elevation,
         borderRadius: BorderRadius.circular(15),
-        shadowColor: Colors.black.withAlpha(25),
+        shadowColor: Colors.black.withAlpha(
+          theme.brightness == Brightness.dark ? 80 : 25,
+        ),
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
@@ -73,21 +78,25 @@ class _ItemWidgetState extends State<ItemWidget> {
             Navigator.pushNamed(
               context,
               Routes.productDetailsView,
-              arguments: [widget.product.data!.itemID, widget.token, widget.userId],
+              arguments: [
+                widget.product.data!.itemID,
+                widget.token,
+                widget.userId,
+              ],
             );
           },
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,
           onTapCancel: _onTapCancel,
-          splashColor: Theme.of(context).colorScheme.primary.withAlpha(25),
+          splashColor: colorScheme.primary.withAlpha(25),
           highlightColor: Colors.transparent,
           borderRadius: BorderRadius.circular(15),
           child: Container(
             width: width >= 600 ? 280 : 240,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: theme.cardColor,
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Colors.grey[300]!),
+              border: Border.all(color: theme.dividerColor),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,20 +109,24 @@ class _ItemWidgetState extends State<ItemWidget> {
                     ),
                     child: Image.network(
                       "${Constants.baseUrl}${widget.product.data!.imageCover}",
-                      fit: BoxFit.contain,
+                      fit: BoxFit.fill,
                       width: double.infinity,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) {
                           return FadeIn(child: child);
                         }
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: colorScheme.secondary,
+                          ),
+                        );
                       },
                       errorBuilder: (context, error, stackTrace) {
-                        return const Center(
+                        return Center(
                           child: Icon(
                             Icons.broken_image,
                             size: 50,
-                            color: Colors.grey,
+                            color: theme.disabledColor,
                           ),
                         );
                       },
@@ -127,10 +140,10 @@ class _ItemWidgetState extends State<ItemWidget> {
                     children: [
                       Text(
                         widget.product.data!.itemName ?? "",
-                        style: TextStyle(
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: colorScheme.secondary,
+                          fontWeight: FontWeight.w600,
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.secondary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -144,19 +157,19 @@ class _ItemWidgetState extends State<ItemWidget> {
                               if ((widget.product.data!.discount ?? 0) != 0)
                                 Text(
                                   "\$${(widget.product.data!.priceOut ?? 0).toStringAsFixed(2)}",
-                                  style: const TextStyle(
-                                    fontSize: 14,
+                                  style: theme.textTheme.bodyMedium?.copyWith(
                                     color: Colors.grey,
+                                    fontSize: 14,
                                     decoration: TextDecoration.lineThrough,
                                   ),
                                 ),
                               const SizedBox(height: 4),
                               Text(
                                 "\$${((widget.product.data!.priceOut ?? 0) - (widget.product.data!.discount ?? 0)).toStringAsFixed(2)}",
-                                style: const TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 16,
+                                style: theme.textTheme.bodyLarge?.copyWith(
+                                  color: theme.textTheme.bodyLarge?.color,
                                   fontWeight: FontWeight.w600,
+                                  fontSize: 16,
                                 ),
                               ),
                             ],
@@ -174,10 +187,10 @@ class _ItemWidgetState extends State<ItemWidget> {
                               ),
                               child: Text(
                                 "-\$${(widget.product.data!.discount ?? 0).toStringAsFixed(2)}",
-                                style: const TextStyle(
+                                style: theme.textTheme.bodySmall?.copyWith(
                                   color: Colors.white,
-                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 12,
                                 ),
                               ),
                             ),
@@ -201,16 +214,15 @@ class _ItemWidgetState extends State<ItemWidget> {
                                 ? widget.product.rating!.averageRating!
                                     .toStringAsFixed(2)
                                 : "0.00",
-                            style: TextStyle(
+                            style: theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.grey[700],
                               fontSize: 14,
                             ),
                           ),
-
                           const Spacer(),
                           Text(
                             "(${widget.product.rating!.totalReviews} Reviews)",
-                            style: TextStyle(
+                            style: theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.grey[700],
                               fontSize: 14,
                             ),

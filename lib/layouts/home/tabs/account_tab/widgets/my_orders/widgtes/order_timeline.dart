@@ -14,6 +14,8 @@ class OrderTimeLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return FixedTimeline.tileBuilder(
       builder: TimelineTileBuilder.connectedFromStyle(
         contentsAlign: ContentsAlign.alternating,
@@ -34,6 +36,7 @@ class OrderTimeLine extends StatelessWidget {
         itemCount: orderStatuses.length,
         contentsBuilder: (context, index) {
           final order = orderStatuses[index];
+          final isActive = (index <= selectedStatusIndex);
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -41,22 +44,28 @@ class OrderTimeLine extends StatelessWidget {
               children: [
                 Text(
                   order.status,
-                  style: TextStyle(
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color:
-                        (index <= selectedStatusIndex)
-                            ? Colors.blue
-                            : Colors.grey,
+                        isActive
+                            ? theme.colorScheme.primary
+                            : theme.disabledColor,
                   ),
                 ),
                 Text(
                   order.location,
-                  style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: 14,
+                    color: theme.hintColor,
+                  ),
                 ),
                 Text(
                   DateFormat('yyyy-MM-dd HH:mm').format(order.timestamp),
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontSize: 12,
+                    color: theme.disabledColor,
+                  ),
                 ),
               ],
             ),

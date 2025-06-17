@@ -99,15 +99,16 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
     );
   }
 
-  Widget buildShimmerItem() {
+  Widget buildShimmerItem(BuildContext context) {
+    final theme = Theme.of(context);
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.white,
+      baseColor: theme.dividerColor,
+      highlightColor: theme.colorScheme.surface,
       child: Container(
         width: 240,
         margin: const EdgeInsets.only(right: 16),
         decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: theme.dividerColor,
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -129,6 +130,7 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final isTablet = MediaQuery.of(context).size.width >= 600;
 
     return Column(
@@ -140,16 +142,13 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
             children: [
               Text(
                 widget.label,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(fontWeight: FontWeight.bold),
+                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               const Spacer(),
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 14,
-                color: Colors.grey,
+                color: theme.disabledColor,
               ),
             ],
           ),
@@ -162,20 +161,26 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.warning_amber_rounded,
                         size: 48,
-                        color: Colors.red,
+                        color: theme.colorScheme.error,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         _error!,
-                        style: const TextStyle(color: Colors.red),
+                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.error),
                       ),
                       const SizedBox(height: 12),
                       ElevatedButton(
                         onPressed: _fetchInitialProducts,
-                        child: const Text("Try Again"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.colorScheme.error,
+                        ),
+                        child: Text(
+                          "Try Again",
+                          style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.onError),
+                        ),
                       ),
                     ],
                   ),
@@ -184,7 +189,7 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
                   ? ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (_, __) => buildShimmerItem(),
+                      itemBuilder: (_, __) => buildShimmerItem(context),
                       separatorBuilder: (_, __) => const SizedBox(width: 16),
                       itemCount: 5,
                     )

@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_ecommerce/core/constants.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/data/models/cart_model/cart_model.dart';
 
 class ShoppingCartItem extends StatelessWidget {
-  // final ValueChanged<int> onQuantityChanged;
-  // final VoidCallback onDelete;
   final CartModel cartModel;
   final String token, userId;
+
   const ShoppingCartItem({
     super.key,
-
-    // required this.onQuantityChanged,
-    // required this.onDelete,
     required this.cartModel,
     required this.token,
     required this.userId,
@@ -23,7 +17,9 @@ class ShoppingCartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final theme = Theme.of(context);
     List<String>? data = [cartModel.itemID!, token, userId];
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -33,7 +29,7 @@ class ShoppingCartItem extends StatelessWidget {
         );
       },
       child: Card(
-        color: Colors.white,
+        color: theme.cardColor,
         elevation: 5,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -44,10 +40,9 @@ class ShoppingCartItem extends StatelessWidget {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Image Section
                   SizedBox(
-                    width: screenWidth * 0.2,
-                    height: screenWidth * 0.15,
+                    width: screenWidth * 0.25,
+                    height: screenWidth * 0.2,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -64,11 +59,11 @@ class ShoppingCartItem extends StatelessWidget {
                           );
                         },
                         errorBuilder: (context, error, stackTrace) {
-                          return const Center(
+                          return Center(
                             child: Icon(
                               Icons.broken_image,
                               size: 50,
-                              color: Colors.grey,
+                              color: theme.disabledColor,
                             ),
                           );
                         },
@@ -83,7 +78,7 @@ class ShoppingCartItem extends StatelessWidget {
                       children: [
                         Text(
                           cartModel.itemName ?? "",
-                          style: GoogleFonts.dmSans(
+                          style: theme.textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
                           ),
@@ -92,37 +87,22 @@ class ShoppingCartItem extends StatelessWidget {
                         ),
                         Text(
                           cartModel.categoryName ?? "",
-                          style: GoogleFonts.dmSans(
+                          style: theme.textTheme.bodySmall?.copyWith(
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
-                            color: Colors.grey,
+                            color: theme.disabledColor,
                           ),
                         ),
-                        // Text(
-                        //   '⭐ ${cartModel.rate.toStringAsFixed(1)}',
-                        //   style: GoogleFonts.dmSans(
-                        //     fontWeight: FontWeight.w400,
-                        //     fontSize: 14,
-                        //   ),
-                        // ),
                         Text(
                           '${cartModel.subCategoryName}',
-                          style: GoogleFonts.dmSans(
+                          style: theme.textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
                           ),
                         ),
-                        // Text(
-                        //   isAvailable ? 'Available' : 'Out of Stock',
-                        //   style: GoogleFonts.dmSans(
-                        //     fontWeight: FontWeight.w400,
-                        //     fontSize: 14,
-                        //     color: isAvailable ? Colors.green : Colors.red,
-                        //   ),
-                        // ),
                         Text(
                           'Available',
-                          style: GoogleFonts.dmSans(
+                          style: theme.textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
                             color: Colors.green,
@@ -133,59 +113,18 @@ class ShoppingCartItem extends StatelessWidget {
                           children: [
                             Text(
                               '\$ ${cartModel.priceOut}',
-                              style: GoogleFonts.dmSans(
+                              style: theme.textTheme.bodySmall?.copyWith(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
-                                color: AppColors.secondary,
+                                color: theme.colorScheme.secondary,
                               ),
                             ),
                             const SizedBox(width: 5),
-                            // Text(
-                            //   '\$ ${cartModel}',
-                            //   style: GoogleFonts.dmSans(
-                            //     fontWeight: FontWeight.w600,
-                            //     fontSize: 14,
-                            //     color: Colors.black,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  // Actions Section
-                  // Column(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   crossAxisAlignment: CrossAxisAlignment.end,
-                  //   children: [
-                  //     IconButton(
-                  //       icon: const Icon(
-                  //         Icons.remove_shopping_cart_outlined,
-                  //         color: Colors.red,
-                  //       ),
-                  //       onPressed: onDelete,
-                  //     ),
-                  //     Row(
-                  //       children: [
-                  //         IconButton(
-                  //           icon: const Icon(Icons.remove_circle_outline),
-                  //           onPressed: () {
-                  //             if (quantity > 1) {
-                  //               onQuantityChanged(quantity - 1);
-                  //             }
-                  //           },
-                  //         ),
-                  //         Text('$quantity', style: const TextStyle(fontSize: 16)),
-                  //         IconButton(
-                  //           icon: const Icon(Icons.add_circle_outline),
-                  //           onPressed: () {
-                  //             onQuantityChanged(quantity + 1);
-                  //           },
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ],
-                  // ),
                 ],
               );
             },

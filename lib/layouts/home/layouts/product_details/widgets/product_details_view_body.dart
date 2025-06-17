@@ -48,12 +48,13 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocBuilder<ProductDetailsViewModel, ProductDetailsViewModelStates>(
       builder: (context, state) {
         if (state is ProductDetailsSuccessState) {
           ProductDetailsModel productDetailsModel = state.productDetailsModel;
           List<String> images = productDetailsModel.images?.itemImages ?? [];
-          
 
           return CustomScrollView(
             controller: _scrollController,
@@ -86,22 +87,20 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                               Icon(
                                 Icons.comments_disabled_outlined,
                                 size: 56,
-                                color: Colors.grey[400],
+                                color: theme.colorScheme.onSurface.withOpacity(0.4),
                               ),
                               const SizedBox(height: 12),
-                              const Text(
+                              Text(
                                 'No Reviews',
-                                style: TextStyle(
-                                  fontSize: 17,
+                                style: theme.textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black54,
+                                  color: theme.colorScheme.onSurface.withOpacity(0.6),
                                 ),
                               ),
                               Text(
                                 'Be the first to review this product',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.grey,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: theme.colorScheme.onSurface.withOpacity(0.5),
                                 ),
                               ),
                             ],
@@ -134,16 +133,13 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                 },
               ),
               SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (!showAddReviewSection)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 18.0,
-                          vertical: 8.0,
-                        ),
-                        child: ElevatedButton.icon(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (!showAddReviewSection)
+                        ElevatedButton.icon(
                           icon: const Icon(Icons.rate_review_rounded),
                           label: const Text("Write a review"),
                           onPressed: () {
@@ -154,8 +150,7 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                               const Duration(milliseconds: 150),
                               () {
                                 _scrollController.animateTo(
-                                  _scrollController.position.maxScrollExtent +
-                                      50,
+                                  _scrollController.position.maxScrollExtent + 50,
                                   duration: const Duration(milliseconds: 800),
                                   curve: Curves.easeInOut,
                                 );
@@ -163,29 +158,26 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).primaryColor,
-                            foregroundColor: Colors.white,
+                            backgroundColor: theme.colorScheme.primary,
+                            foregroundColor: theme.colorScheme.onPrimary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 14),
                           ),
                         ),
-                      ),
-                    if (showAddReviewSection)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 6.0,
+                      if (showAddReviewSection)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                          child: AddReviewSection(
+                            token: widget.token,
+                            itemId: widget.productId,
+                            buyerId: widget.userId,
+                            onReviewAdded: handleReviewSuccess,
+                          ),
                         ),
-                        child: AddReviewSection(
-                          token: widget.token,
-                          itemId: widget.productId,
-                          buyerId: widget.userId,
-                          onReviewAdded: handleReviewSuccess,
-                        ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -195,11 +187,15 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
           return Center(
             child: Text(
               state.errorMessage,
-              style: const TextStyle(color: Colors.red),
+              style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.error),
             ),
           );
         }
-        return const Center(child: CircularProgressIndicator());
+        return Center(
+          child: CircularProgressIndicator(
+            color: theme.colorScheme.primary,
+          ),
+        );
       },
     );
   }

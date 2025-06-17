@@ -86,7 +86,11 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
   @override
   Widget build(BuildContext context) {
     if (token == null || userId == null) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(
+        child: CircularProgressIndicator(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      );
     }
 
     return LayoutBuilder(

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../../../core/resuebale_componants/custom_main_button.dart';
-import '../../../../../../../core/utils/app_colors.dart';
-import '../../../../../../../core/utils/text_styles.dart';
 
 class MyDetailsBody extends StatelessWidget {
   const MyDetailsBody({super.key});
@@ -42,9 +39,6 @@ class MyDetailsBody extends StatelessWidget {
                 // Api
               },
             ),
-            // _buildDetailItem(context, "Gender", "Male", Icons.male, () {
-            //   // Api
-            // }),
             _buildDetailItem(
               context,
               "Phone Number",
@@ -74,12 +68,20 @@ class MyDetailsBody extends StatelessWidget {
     IconData icon,
     void Function() onEdit,
   ) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TextStyles.myDetailsLabels),
+          Text(
+            title,
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: theme.colorScheme.secondary,
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+            ),
+          ),
           const SizedBox(height: 4),
           Row(
             children: [
@@ -92,16 +94,28 @@ class MyDetailsBody extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: AppColors.secondary.withAlpha(128),
+                    color: theme.colorScheme.secondary.withAlpha(128),
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
-                    Icon(icon, color: AppColors.secondary.withAlpha(128)),
+                    Icon(
+                      icon,
+                      color: theme.colorScheme.secondary.withAlpha(128),
+                    ),
                     const SizedBox(width: 5),
                     Expanded(
-                      child: Text(value, style: TextStyles.myDetailsTexts),
+                      child: Text(
+                        value,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.textTheme.bodyMedium?.color,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
@@ -111,7 +125,7 @@ class MyDetailsBody extends StatelessWidget {
                 onPressed: onEdit,
                 icon: Icon(
                   Icons.edit_square,
-                  color: AppColors.secondary.withAlpha(180),
+                  color: theme.colorScheme.secondary.withAlpha(180),
                 ),
               ),
             ],

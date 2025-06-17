@@ -64,7 +64,6 @@ class _AddReviewSectionState extends State<AddReviewSection> {
             } else if (state is CheckReviewSuccessState) {
               setState(() => _waitingAI = false);
               if (state.aiCheckModel.isClean == true) {
-                // Review is clean, submit
                 setState(() => _waitingAdd = true);
                 context.read<AddReviewViewModel>().addReview(
                   token: widget.token,
@@ -76,11 +75,10 @@ class _AddReviewSectionState extends State<AddReviewSection> {
               } else {
                 AppSnackBar.show(
                   context: context,
-                  message:
-                      state.aiCheckModel.message ??
+                  message: state.aiCheckModel.message ??
                       "Your review contains inappropriate words.",
                   icon: Icons.warning_amber_rounded,
-                  backgroundColor: Colors.red,
+                  backgroundColor: theme.colorScheme.error,
                 );
               }
             }
@@ -96,7 +94,7 @@ class _AddReviewSectionState extends State<AddReviewSection> {
                 context: context,
                 message: state.failure.message,
                 icon: Icons.error,
-                backgroundColor: Colors.red,
+                backgroundColor: theme.colorScheme.error,
               );
             } else if (state is AddReviewSuccessState) {
               setState(() => _waitingAdd = false);
@@ -104,7 +102,7 @@ class _AddReviewSectionState extends State<AddReviewSection> {
                 context: context,
                 message: "Review added successfully.",
                 icon: Icons.check_circle,
-                backgroundColor: Colors.green,
+                backgroundColor: Colors.green.shade600,
               );
               _controller.clear();
               setState(() => _rating = 0);
@@ -136,7 +134,6 @@ class _AddReviewSectionState extends State<AddReviewSection> {
                   ),
                 ),
                 const SizedBox(height: 14),
-                // Rating stars
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(5, (index) {
@@ -144,16 +141,12 @@ class _AddReviewSectionState extends State<AddReviewSection> {
                     return IconButton(
                       splashRadius: 22,
                       icon: Icon(
-                        selected
-                            ? Icons.star_rounded
-                            : Icons.star_border_rounded,
-                        color: selected ? Colors.amber : Colors.grey[400],
+                        selected ? Icons.star_rounded : Icons.star_border_rounded,
+                        color: selected ? Colors.amber : theme.disabledColor,
                         size: 32,
                       ),
                       onPressed:
-                          _waitingAI || _waitingAdd
-                              ? null
-                              : () => setState(() => _rating = index + 1),
+                          _waitingAI || _waitingAdd ? null : () => setState(() => _rating = index + 1),
                     );
                   }),
                 ),
@@ -164,15 +157,15 @@ class _AddReviewSectionState extends State<AddReviewSection> {
                   minLines: 2,
                   maxLines: 5,
                   textAlign: TextAlign.start,
-                  style: const TextStyle(fontSize: 16),
+                  style: theme.textTheme.bodyMedium,
                   decoration: InputDecoration(
                     hintText: "Write your review...",
-                    hintStyle: TextStyle(color: Colors.grey[500]),
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey[500]),
                     filled: true,
-                    fillColor: Colors.grey[100],
+                    fillColor: theme.colorScheme.surfaceVariant,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
+                      borderSide: BorderSide(color: theme.dividerColor),
                     ),
                     contentPadding: const EdgeInsets.all(12),
                   ),
@@ -183,31 +176,30 @@ class _AddReviewSectionState extends State<AddReviewSection> {
                   child: ElevatedButton(
                     onPressed: _waitingAI || _waitingAdd ? null : _onSubmit,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: theme.primaryColor,
+                      backgroundColor: theme.colorScheme.primary,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       elevation: 1,
                     ),
-                    child:
-                        _waitingAI || _waitingAdd
-                            ? const SizedBox(
-                              width: 22,
-                              height: 22,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2.3,
-                                color: Colors.white,
-                              ),
-                            )
-                            : Text(
-                              "Submit Review",
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                    child: _waitingAI || _waitingAdd
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.3,
+                              color: Colors.white,
                             ),
+                          )
+                        : Text(
+                            "Submit Review",
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
                   ),
                 ),
               ],
