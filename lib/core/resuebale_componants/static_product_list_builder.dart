@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/item_widget/item_widget.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 class StaticProductListBuilder extends StatelessWidget {
   const StaticProductListBuilder({
@@ -15,13 +15,13 @@ class StaticProductListBuilder extends StatelessWidget {
   final String label;
   final String token;
   final String userId;
-  final List<Products> products;
+  final List<ProductDetailsModel> products;
 
   Widget _buildProductItem(BuildContext context, int index) {
-    final product = products[index].data!;
+    final product = products[index];
     return ItemWidget(
-      key: ValueKey(product.itemID),
-      productData: product,
+      key: ValueKey(product.data!.itemID),
+      product: product,
       token: token,
       userId: userId,
     );

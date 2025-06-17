@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:smart_ecommerce/core/api/failure.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 abstract class BestSellerDataSource {
-  Future<Either<Failure, List<Products>>> getMostSelling({
+  Future<Either<Failure, List<ProductDetailsModel>>> getMostSelling({
     required String token,
     required int page,
   });

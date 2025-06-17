@@ -6,18 +6,18 @@ import 'package:smart_ecommerce/core/constants.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/item_widget/view_model/add_item_view_view_model.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 class ItemWidget extends StatefulWidget {
   const ItemWidget({
     super.key,
-    required this.productData,
+    required this.product,
     required this.token,
     required this.userId,
   });
 
-  final ProductsData productData;
+  final ProductDetailsModel product;
   final String token;
   final String userId;
 
@@ -68,16 +68,12 @@ class _ItemWidgetState extends State<ItemWidget> {
             BlocProvider.of<AddItemViewViewModel>(context).addItemView(
               token: widget.token,
               userId: int.parse(widget.userId),
-              itemId: widget.productData.itemID!,
+              itemId: widget.product.data!.itemID!,
             );
             Navigator.pushNamed(
               context,
               Routes.productDetailsView,
-              arguments: [
-                widget.productData.itemID,
-                widget.token,
-                widget.userId,
-              ],
+              arguments: [widget.product.data!.itemID, widget.token, widget.userId],
             );
           },
           onTapDown: _onTapDown,
@@ -103,7 +99,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                       topRight: Radius.circular(15),
                     ),
                     child: Image.network(
-                      "${Constants.baseUrl}${widget.productData.imageCover}",
+                      "${Constants.baseUrl}${widget.product.data!.imageCover}",
                       fit: BoxFit.contain,
                       width: double.infinity,
                       loadingBuilder: (context, child, loadingProgress) {
@@ -130,7 +126,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.productData.itemName ?? "",
+                        widget.product.data!.itemName ?? "",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -145,9 +141,9 @@ class _ItemWidgetState extends State<ItemWidget> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if ((widget.productData.discount ?? 0) != 0)
+                              if ((widget.product.data!.discount ?? 0) != 0)
                                 Text(
-                                  "\$${(widget.productData.priceOut ?? 0).toStringAsFixed(2)}",
+                                  "\$${(widget.product.data!.priceOut ?? 0).toStringAsFixed(2)}",
                                   style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey,
@@ -156,7 +152,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                                 ),
                               const SizedBox(height: 4),
                               Text(
-                                "\$${((widget.productData.priceOut ?? 0) - (widget.productData.discount ?? 0)).toStringAsFixed(2)}",
+                                "\$${((widget.product.data!.priceOut ?? 0) - (widget.product.data!.discount ?? 0)).toStringAsFixed(2)}",
                                 style: const TextStyle(
                                   color: Colors.black87,
                                   fontSize: 16,
@@ -166,7 +162,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                             ],
                           ),
                           const Spacer(),
-                          if ((widget.productData.discount ?? 0) != 0)
+                          if ((widget.product.data!.discount ?? 0) != 0)
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 6,
@@ -177,7 +173,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
-                                "-\$${(widget.productData.discount ?? 0).toStringAsFixed(2)}",
+                                "-\$${(widget.product.data!.discount ?? 0).toStringAsFixed(2)}",
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -201,15 +197,19 @@ class _ItemWidgetState extends State<ItemWidget> {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            "${widget.productData.rate}",
+                            widget.product.rating?.averageRating != null
+                                ? widget.product.rating!.averageRating!
+                                    .toStringAsFixed(2)
+                                : "0.00",
                             style: TextStyle(
                               color: Colors.grey[700],
                               fontSize: 14,
                             ),
                           ),
+
                           const Spacer(),
                           Text(
-                            "(${widget.productData.viewCount} Reviews)",
+                            "(${widget.product.rating!.totalReviews} Reviews)",
                             style: TextStyle(
                               color: Colors.grey[700],
                               fontSize: 14,

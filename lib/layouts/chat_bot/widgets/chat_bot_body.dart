@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model_states.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/widgets/chat_bot_input_field.dart';
@@ -62,7 +62,7 @@ class _ChatBotBodyState extends State<ChatBotBody> {
             ? state.messages
             : chatBotViewModel.messages;
 
-        final List<ProductsData> recommendedItems =
+        final List<ProductDetailsModel> recommendedItems =
             (state is ChatBotSuccessState) ? state.recommendedItems : [];
 
         final isTyping = state is ChatBotLoadingState;

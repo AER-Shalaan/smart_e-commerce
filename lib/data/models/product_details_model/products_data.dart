@@ -8,7 +8,6 @@ class ProductsData {
     this.priceOut,
     this.quantity,
     this.discount,
-    this.rate,
     this.categoryName,
     this.subCategoryName,
     this.sellerName,
@@ -27,7 +26,6 @@ class ProductsData {
     priceOut = json['Price_out'];
     quantity = json['Quantity'];
     discount = json['Discount'];
-    rate = json['Rate'];
     categoryName = json['Category_Name'];
     subCategoryName = json['Sub_Category_Name'];
     sellerName = json['seller_Name'];
@@ -44,7 +42,6 @@ class ProductsData {
   num? priceOut;
   num? quantity;
   num? discount;
-  num? rate;
   String? categoryName;
   String? subCategoryName;
   String? sellerName;
@@ -63,7 +60,6 @@ class ProductsData {
     map['Price_out'] = priceOut;
     map['Quantity'] = quantity;
     map['Discount'] = discount;
-    map['Rate'] = rate;
     map['Category_Name'] = categoryName;
     map['Sub_Category_Name'] = subCategoryName;
     map['seller_Name'] = sellerName;

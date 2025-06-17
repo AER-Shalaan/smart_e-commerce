@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/item_widget/item_widget.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 class ChatBotProductListBuilder extends StatelessWidget {
-  final List<ProductsData> products;
+  final List<ProductDetailsModel> products;
   final String? label;
   final String token;
   final String userId;
@@ -43,8 +43,8 @@ class ChatBotProductListBuilder extends StatelessWidget {
               return SizedBox(
                 width: MediaQuery.sizeOf(context).width * 0.4,
                 child: ItemWidget(
-                  key: ValueKey(product.itemID),
-                  productData: product,
+                  key: ValueKey(product.data!.itemID),
+                  product: product,
                   token: token,
                   userId: userId,
                 ),

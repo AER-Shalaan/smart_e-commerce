@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 class ProductNameDetailsReviewPrice extends StatelessWidget {
-  const ProductNameDetailsReviewPrice({super.key, required this.productData});
-  final ProductsData productData;
+  const ProductNameDetailsReviewPrice({super.key, required this.product});
+  final ProductDetailsModel product;
 
   @override
   Widget build(BuildContext context) {
     final double price =
-        double.tryParse(productData.priceOut.toString()) ?? 0.0;
+        double.tryParse(product.data!.priceOut.toString()) ?? 0.0;
     final double discount =
-        double.tryParse(productData.discount?.toString() ?? "0") ?? 0.0;
+        double.tryParse(product.data!.discount?.toString() ?? "0") ?? 0.0;
     final double finalPrice = (discount > 0) ? price - discount : price;
 
     return Padding(
@@ -22,7 +22,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            productData.itemName ?? "",
+            product.data!.itemName ?? "",
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontSize: 23,
               fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                   vertical: 5,
                 ),
                 child: Text(
-                  "Stock: ${productData.quantity}",
+                  "Stock: ${product.data!.quantity}",
                   style: TextStyle(
                     color: AppColors.primary,
                     fontSize: 14,
@@ -100,7 +100,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
               SvgPicture.asset(Assets.assetsIconsStarIcon, height: 19),
               const SizedBox(width: 4),
               Text(
-                "${productData.rate}",
+                "${(product.rating?.averageRating ?? 0).toStringAsFixed(2)} / 5",
                 style: TextStyle(
                   color: AppColors.secondary,
                   fontSize: 15,
@@ -109,7 +109,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
               ),
               const SizedBox(width: 7),
               Text(
-                "(${productData.viewCount} Reviews)",
+                "(${product.rating!.totalReviews ?? 0} Reviews)",
                 style: TextStyle(color: Colors.grey[600], fontSize: 14),
               ),
             ],
@@ -133,7 +133,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        productData.sellerName ?? 'Seller',
+                        product.data!.sellerName ?? 'Seller',
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w700,
@@ -181,7 +181,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
             child: Text(
-              productData.description ?? "",
+              product.data!.description ?? "",
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: 15,
                 color: Colors.black87,

@@ -1,8 +1,8 @@
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 
 class ChatBotResponse {
   final String reply;
-  final List<ProductsData> recommendedItems;
+  final List<ProductDetailsModel> recommendedItems;
 
   ChatBotResponse({
     required this.reply,
@@ -13,7 +13,7 @@ class ChatBotResponse {
     return ChatBotResponse(
       reply: json['reply'] ?? '',
       recommendedItems: (json['recommended_items'] as List<dynamic>?)
-              ?.map((e) => ProductsData.fromJson(e))
+              ?.map((e) => ProductDetailsModel.fromJson(e))
               .toList() ??
           [],
     );

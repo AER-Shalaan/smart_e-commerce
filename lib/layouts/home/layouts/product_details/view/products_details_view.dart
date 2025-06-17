@@ -30,16 +30,19 @@ class ProductsDetailsView extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
-          final List<String?> data =
-              ModalRoute.of(context)!.settings.arguments as List<String?>;
+          final List<dynamic> data =
+              ModalRoute.of(context)!.settings.arguments as List;
+          final productId = data[0] as String;
+          final token = data[1] as String;
+          final userId = data[2] as String;
 
           context.read<ProductDetailsViewModel>().getProductDetails(
-            productId: data[0] ?? "",
-            token: data[1] ?? "",
+            productId: productId,
+            token: token,
           );
           context.read<GetReviewsViewModel>().getReviews(
-            token: data[1] ?? "",
-            itemId: data[0] ?? "",
+            token: token,
+            itemId: productId,
           );
 
           return Scaffold(
@@ -73,22 +76,22 @@ class ProductsDetailsView extends StatelessWidget {
                 },
                 child: productDetailsViewAppBar(
                   context,
-                  token: data[1] ?? "",
-                  productId: data[0] ?? "",
-                  userId: data[2] ?? "",
+                  token: token,
+                  productId: productId,
+                  userId: userId,
                 ),
               ),
             ),
             body: ProductDetailsViewBody(
-              key: ValueKey(data[0]),
-              token: data[1] ?? "",
-              productId: data[0] ?? "",
-              userId: data[2] ?? "",
+              key: ValueKey(productId),
+              token: token,
+              productId: productId,
+              userId: userId,
             ),
             bottomNavigationBar: ProductDetailsNavBar(
-              token: data[1] ?? "",
-              productId: data[0] ?? "",
-              userId: data[2] ?? "",
+              token: token,
+              productId: productId,
+              userId: userId,
             ),
           );
         },

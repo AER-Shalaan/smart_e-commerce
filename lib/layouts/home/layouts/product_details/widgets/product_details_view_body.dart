@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
 import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/get_reviews_view_model/get_reviews_state.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/get_reviews_view_model/get_reviews_view_model.dart';
@@ -54,7 +53,7 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
         if (state is ProductDetailsSuccessState) {
           ProductDetailsModel productDetailsModel = state.productDetailsModel;
           List<String> images = productDetailsModel.images?.itemImages ?? [];
-          ProductsData data = productDetailsModel.data!;
+          
 
           return CustomScrollView(
             controller: _scrollController,
@@ -67,7 +66,7 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: ProductNameDetailsReviewPrice(productData: data),
+                child: ProductNameDetailsReviewPrice(product: productDetailsModel),
               ),
               BlocBuilder<GetReviewsViewModel, GetReviewsState>(
                 builder: (context, reviewState) {
