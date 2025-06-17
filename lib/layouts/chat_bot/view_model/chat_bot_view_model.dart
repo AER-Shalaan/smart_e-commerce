@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:smart_ecommerce/data/data_source/home/chat_bot_data_source/chat_bot_data_source.dart';
 import 'package:smart_ecommerce/data/models/chat_bot/chat_message.dart';
+
 import 'chat_bot_view_model_states.dart';
 
 @injectable
@@ -16,7 +17,6 @@ class ChatBotViewModel extends Cubit<ChatBotViewModelStates> {
   Future<void> sendMessage(String message) async {
     if (message.trim().isEmpty) return;
 
-    // Add user message
     messages.add(ChatMessage(message: message, isUser: true));
     emit(ChatBotLoadingState());
 
@@ -28,11 +28,11 @@ class ChatBotViewModel extends Cubit<ChatBotViewModelStates> {
         emit(ChatBotErrorState(failure));
       },
       (response) {
-        messages.add(ChatMessage(message: response.reply, isUser: false));
+        messages.add(ChatMessage(message: response.reply ?? "", isUser: false));
         emit(
           ChatBotSuccessState(
-            response.reply,
-            response.recommendedItems,
+            response.reply ?? "",
+            response.products ?? [],
             List.from(messages),
           ),
         );
