@@ -20,13 +20,7 @@ class LoginTextFields extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Email",
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: theme.textTheme.titleMedium?.color?.withOpacity(1),
-              ),
-            ),
+            Text("Email", style: theme.textTheme.titleMedium),
             const SizedBox(height: 4),
             CustomAuthTextField(
               hint: "email@example",
@@ -50,13 +44,7 @@ class LoginTextFields extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            Text(
-              "Password",
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: theme.textTheme.titleMedium?.color?.withOpacity(1),
-              ),
-            ),
+            Text("Password", style: theme.textTheme.titleMedium),
             const SizedBox(height: 4),
             CustomAuthTextField(
               hint: "Enter your password",
@@ -82,6 +70,10 @@ class LoginTextFields extends StatelessWidget {
                       state.isPasswordObscure
                           ? Assets.assetsIconsEyeOff
                           : Assets.assetsIconsEye,
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.primary,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
                 ],

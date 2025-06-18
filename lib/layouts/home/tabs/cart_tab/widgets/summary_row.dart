@@ -2,30 +2,17 @@ import 'package:flutter/material.dart';
 
 class SummaryRow extends StatelessWidget {
   final String label;
-  final int value;
-  final bool isBold;
-  final bool isBlack;
+  final double value;
 
-  const SummaryRow({
-    super.key,
-    required this.label,
-    required this.value,
-    this.isBlack = false,
-    this.isBold = false,
-  });
+  const SummaryRow({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final labelStyle = theme.textTheme.bodyLarge?.copyWith(
-      fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-      color: isBlack ? theme.colorScheme.onSurface : theme.disabledColor,
-      fontSize: 16,
-    );
+    final labelStyle = theme.textTheme.bodyLarge;
 
     final valueStyle = theme.textTheme.bodyLarge?.copyWith(
-      fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-      fontSize: 16,
+      fontWeight: FontWeight.bold,
       color: theme.colorScheme.primary,
     );
 

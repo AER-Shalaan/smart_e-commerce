@@ -89,7 +89,7 @@ class CommentsWidget extends StatelessWidget {
                             ),
                             child: CircleAvatar(
                               radius: 22,
-                              backgroundColor: theme.colorScheme.surfaceVariant,
+                              backgroundColor: theme.colorScheme.surfaceContainerHighest,
                               child: Icon(
                                 Icons.person,
                                 size: 28,

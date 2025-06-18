@@ -20,7 +20,7 @@ class ChatMessageBubble extends StatelessWidget {
     // ألوان الفقاعات حسب الثيم
     final Color userBubble = theme.colorScheme.primary;
     final Color assistantBubble = theme.brightness == Brightness.dark
-        ? theme.colorScheme.surfaceVariant.withAlpha(180)
+        ? theme.colorScheme.surfaceContainerHighest.withAlpha(180)
         : Colors.grey.shade200;
 
     final Color userTextColor = theme.colorScheme.onPrimary;

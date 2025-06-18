@@ -18,7 +18,7 @@ AppBar productDetailsViewAppBar(
     centerTitle: true,
     leading: IconButton(
       onPressed: () => Navigator.pop(context),
-      icon: Icon(Icons.arrow_back_ios, color: colorScheme.onBackground),
+      icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
     ),
     actions: [
       Padding(

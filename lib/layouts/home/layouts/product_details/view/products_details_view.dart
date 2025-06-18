@@ -12,6 +12,7 @@ import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/pro
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/widgets/product_details_view_body.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model_states.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model_states.dart';
 
 class ProductsDetailsView extends StatelessWidget {
   const ProductsDetailsView({super.key});
@@ -40,19 +41,20 @@ class ProductsDetailsView extends StatelessWidget {
           final userId = data[2] as String;
 
           context.read<ProductDetailsViewModel>().getProductDetails(
-                productId: productId,
-                token: token,
-              );
+            productId: productId,
+            token: token,
+          );
           context.read<GetReviewsViewModel>().getReviews(
-                token: token,
-                itemId: productId,
-              );
+            token: token,
+            itemId: productId,
+          );
 
-          return Scaffold(
-            backgroundColor: theme.scaffoldBackgroundColor,
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(60),
-              child: BlocListener<AddToWishlistViewModel, AddToWishlistViewModelStates>(
+          return MultiBlocListener(
+            listeners: [
+              BlocListener<
+                AddToWishlistViewModel,
+                AddToWishlistViewModelStates
+              >(
                 listener: (context, state) {
                   if (state is AddToWishlistSuccess) {
                     AppSnackBar.show(
@@ -74,6 +76,36 @@ class ProductsDetailsView extends StatelessWidget {
                     );
                   }
                 },
+              ),
+              BlocListener<AddToCartViewModel, AddToCartViewModelStates>(
+                listener: (context, state) {
+                  if (state is AddToCartSuccessState) {
+                    AppSnackBar.show(
+                      context: context,
+                      message: "Added to cart successfully",
+                      backgroundColor: theme.colorScheme.primary,
+                      icon: Icons.done,
+                      duration: const Duration(seconds: 2),
+                      fromTop: false,
+                    );
+                  }
+                  if (state is AddToCartErrorState) {
+                    AppSnackBar.show(
+                      context: context,
+                      message: state.errorMessage,
+                      backgroundColor: theme.colorScheme.error,
+                      icon: Icons.error,
+                      duration: const Duration(seconds: 2),
+                      fromTop: false,
+                    );
+                  }
+                },
+              ),
+            ],
+            child: Scaffold(
+              backgroundColor: theme.scaffoldBackgroundColor,
+              appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(60),
                 child: productDetailsViewAppBar(
                   context,
                   token: token,
@@ -81,17 +113,16 @@ class ProductsDetailsView extends StatelessWidget {
                   userId: userId,
                 ),
               ),
-            ),
-            body: ProductDetailsViewBody(
-              key: ValueKey(productId),
-              token: token,
-              productId: productId,
-              userId: userId,
-            ),
-            bottomNavigationBar: ProductDetailsNavBar(
-              token: token,
-              productId: productId,
-              userId: userId,
+              body: ProductDetailsViewBody(
+                token: token,
+                productId: productId,
+                userId: userId,
+              ),
+              bottomNavigationBar: ProductDetailsNavBar(
+                token: token,
+                productId: productId,
+                userId: userId,
+              ),
             ),
           );
         },
