@@ -23,6 +23,8 @@ import '../data/data_source/home/cart_tap_data_source/del_from_cart_data_source.
     as _i298;
 import '../data/data_source/home/cart_tap_data_source/get_cart_data_source.dart'
     as _i262;
+import '../data/data_source/home/cart_tap_data_source/update_cart_data_source.dart'
+    as _i233;
 import '../data/data_source/home/chat_bot_data_source/chat_bot_data_source.dart'
     as _i508;
 import '../data/data_source/home/home_tap_data_source/best_seller_data_source.dart'
@@ -63,6 +65,8 @@ import '../data/data_source_impl/home/cart_tap_data_source_impl/del_from_cart_da
     as _i546;
 import '../data/data_source_impl/home/cart_tap_data_source_impl/get_cart_data_source_impl.dart'
     as _i114;
+import '../data/data_source_impl/home/cart_tap_data_source_impl/update_cart_data_source_impl.dart'
+    as _i140;
 import '../data/data_source_impl/home/chat_bot_data_source_impl/chat_bot_data_source_impl.dart'
     as _i706;
 import '../data/data_source_impl/home/home_tap_data_source_impl/categories_data_source_impl.dart'
@@ -116,6 +120,8 @@ import '../layouts/home/tabs/cart_tab/view_model/del_item_from_cart_view_model/d
     as _i571;
 import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model/get_cart_view_model.dart'
     as _i579;
+import '../layouts/home/tabs/cart_tab/view_model/update_cart_view_model/update_cart_view_model.dart'
+    as _i605;
 import '../layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_view_model.dart'
     as _i573;
 import '../layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_view_model.dart'
@@ -188,6 +194,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i359.TopRatedDataSource>(
       () => _i22.TopRatedDataSourceImpl(gh<_i108.ApiManger>()),
     );
+    gh.factory<_i233.UpdateCartDataSource>(
+      () => _i140.UpdateCartDataSourceImpl(gh<_i108.ApiManger>()),
+    );
     gh.factory<_i153.LoginDataSource>(
       () => _i335.LoginDataSourceImpl(gh<_i108.ApiManger>()),
     );
@@ -243,6 +252,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i774.GetUserWishlistViewModel>(
       () =>
           _i774.GetUserWishlistViewModel(gh<_i585.GetUserWishlistDataSource>()),
+    );
+    gh.factory<_i605.UpdateCartViewModel>(
+      () => _i605.UpdateCartViewModel(gh<_i233.UpdateCartDataSource>()),
     );
     gh.factory<_i869.ProductDetailsViewModel>(
       () => _i869.ProductDetailsViewModel(gh<_i688.ProductDetailsDataSource>()),

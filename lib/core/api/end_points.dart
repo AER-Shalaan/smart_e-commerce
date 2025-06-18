@@ -15,8 +15,7 @@ class EndPoints {
   static const String getCartEndPoint = "Cart/GetUserCart";
   static const String addToCartEndPoint = "Cart/AddToCart";
   static const String removeFromCartEndPoint = "Cart/RemoveFromCart";
-
-
+  static const String updateCartEndPoint = "Cart/UpdateToCart";
 
   // whislist endpoints
   static const String addToWhislistEndPoint = "Wishlist/AddProduct";

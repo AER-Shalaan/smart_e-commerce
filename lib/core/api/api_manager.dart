@@ -11,11 +11,10 @@ class ApiManger {
   static late Dio dio;
   static late Dio dio2;
   static late Dio dio3;
+
   static init() {
     dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
-
     dio2 = Dio(BaseOptions(baseUrl: Constants.baseUrl2));
-
     dio3 = Dio(BaseOptions(baseUrl: Constants.baseUrl3));
   }
 
@@ -69,6 +68,21 @@ class ApiManger {
     return await ApiHelper.safeDelete(
       dio,
       endPoints,
+      headers: {'Authorization': "Bearer $token"},
+      queryParams: queryParameters,
+    );
+  }
+
+  Future<Either<Failure, Response>> putRequest({
+    required String endPoints,
+    required String token,
+    Map<String, dynamic>? body,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return await ApiHelper.safePut(
+      dio,
+      endPoints,
+      body: body,
       headers: {'Authorization': "Bearer $token"},
       queryParams: queryParameters,
     );

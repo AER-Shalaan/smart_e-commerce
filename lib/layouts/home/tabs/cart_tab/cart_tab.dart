@@ -6,10 +6,12 @@ import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/del_item_f
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/del_item_from_cart_view_model/del_item_from_cart_view_model_states.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model/get_cart_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model/get_cart_view_model_states.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/update_cart_view_model/update_cart_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/update_cart_view_model/update_cart_view_model_states.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/widgets/shopping_cart_item.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/widgets/summary_row.dart';
-import '../../../../core/resuebale_componants/custom_main_button.dart';
 import 'package:smart_ecommerce/data/models/cart_model/cart_model.dart';
+import '../../../../core/resuebale_componants/custom_main_button.dart';
 
 class CartTab extends StatelessWidget {
   const CartTab({super.key, required this.token, required this.userId});
@@ -36,6 +38,7 @@ class CartTab extends StatelessWidget {
                     ..getCart(token: token, userId: userId),
         ),
         BlocProvider(create: (_) => getIt<DelItemFromCartViewModel>()),
+        BlocProvider(create: (_) => getIt<UpdateCartViewModel>()),
       ],
       child: BlocListener<
         DelItemFromCartViewModel,
@@ -63,23 +66,47 @@ class CartTab extends StatelessWidget {
             );
           }
         },
-        child: BlocBuilder<GetCartViewModel, GetCartViewModelStates>(
-          builder: (context, state) {
-            if (state is GetCartViewModelLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is GetCartViewModelError) {
-              return Center(
-                child: Text(
-                  'Error: ${state.message}',
-                  style: const TextStyle(color: Colors.red),
-                ),
+        child: BlocListener<UpdateCartViewModel, UpdateCartViewModelStates>(
+          listener: (context, state) {
+            if (state is UpdateCartErrorState) {
+              AppSnackBar.show(
+                context: context,
+                message:
+                    state.errorMessage.isNotEmpty
+                        ? state.errorMessage
+                        : "Failed to update quantity.",
+                icon: Icons.error_outline,
+                backgroundColor: Colors.red,
               );
-            } else if (state is GetCartViewModelSuccess) {
-              final cartItems = state.cartModel;
-              if (cartItems.isEmpty) {
-                // <-- كده الرسالة دايمًا في وسط الشاشة مهما كان حجمها -->
-                return Expanded(
-                  child: Center(
+            }
+            if (state is UpdateCartSuccessState) {
+              context.read<GetCartViewModel>().getCart(
+                token: token,
+                userId: userId,
+              );
+              AppSnackBar.show(
+                context: context,
+                message: "Quantity updated successfully.",
+                icon: Icons.check_circle,
+                backgroundColor: Colors.green,
+              );
+            }
+          },
+          child: BlocBuilder<GetCartViewModel, GetCartViewModelStates>(
+            builder: (context, state) {
+              if (state is GetCartViewModelLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is GetCartViewModelError) {
+                return Center(
+                  child: Text(
+                    'Error: ${state.message}',
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                );
+              } else if (state is GetCartViewModelSuccess) {
+                final cartItems = state.cartModel;
+                if (cartItems.isEmpty) {
+                  return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -99,44 +126,48 @@ class CartTab extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                );
-              }
-              final total = calculateCartTotal(cartItems);
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      itemCount: cartItems.length,
-                      itemBuilder: (context, index) {
-                        final item = cartItems[index];
-                        return ShoppingCartItem(
-                          item: item,
-                          token: token,
-                          userId: userId,
-                        );
-                      },
-                    ),
-                  ),
-                  SafeArea(
-                    top: false,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-                      child: Column(
-                        children: [
-                          SummaryRow(label: "Total", value: total),
-                          const SizedBox(height: 12),
-                          CustomMainButton(label: 'Checkout', onPressed: () {}),
-                        ],
+                  );
+                }
+                final total = calculateCartTotal(cartItems);
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        itemCount: cartItems.length,
+                        itemBuilder: (context, index) {
+                          final item = cartItems[index];
+                          return ShoppingCartItem(
+                            item: item,
+                            token: token,
+                            userId: userId,
+                          );
+                        },
                       ),
                     ),
-                  ),
-                ],
-              );
-            }
-            return const SizedBox();
-          },
+                    SafeArea(
+                      top: false,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 12),
+                            SummaryRow(label: "Total", value: total),
+                            const SizedBox(height: 12),
+                            CustomMainButton(
+                              label: 'Checkout',
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox();
+            },
+          ),
         ),
       ),
     );
