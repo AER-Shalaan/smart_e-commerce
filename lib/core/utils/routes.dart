@@ -67,10 +67,11 @@ class Routes {
             child: const ChatBotView(),
           ),
       productDetailsView:
-          (_) => ChangeNotifierProvider(
+          (context) => ChangeNotifierProvider(
             create: (_) => AddCartProvider(),
             child: const ProductsDetailsView(),
           ),
+
       addressBookViewRouteName: (_) => const AddressBookView(),
       fAQsViewRouteName:
           (_) => ChangeNotifierProvider(

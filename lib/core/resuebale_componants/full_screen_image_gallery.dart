@@ -32,7 +32,7 @@ class FullScreenImageGallery extends StatelessWidget {
             child: IconButton(
               icon: Icon(
                 Icons.close,
-                color: theme.colorScheme.onBackground,
+                color: theme.colorScheme.onSurface,
                 size: 30,
               ),
               onPressed: () => Navigator.pop(context),

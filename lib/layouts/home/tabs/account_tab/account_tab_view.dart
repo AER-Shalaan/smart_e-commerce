@@ -6,7 +6,6 @@ import 'package:smart_ecommerce/core/resuebale_componants/wide_arrow_button.dart
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 
-
 class AccountTabView extends StatelessWidget {
   const AccountTabView({super.key});
 
@@ -17,11 +16,7 @@ class AccountTabView extends StatelessWidget {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
-        Divider(
-          indent: 25,
-          endIndent: 25,
-          color: theme.dividerColor,
-        ),
+        Divider(indent: 25, endIndent: 25, color: theme.dividerColor),
         const WideArrowButton(
           label: 'My Orders',
           imagePath: Assets.assetsIconsBox,
@@ -37,21 +32,13 @@ class AccountTabView extends StatelessWidget {
           imagePath: Assets.assetsIconsDetails,
           routeName: Routes.myDetailsViewRouteName,
         ),
-        Divider(
-          indent: 25,
-          endIndent: 25,
-          color: theme.dividerColor,
-        ),
+        Divider(indent: 25, endIndent: 25, color: theme.dividerColor),
         const WideArrowButton(
           label: 'Address Book',
           imagePath: Assets.assetsIconsAddress,
           routeName: Routes.addressBookViewRouteName,
         ),
-        Divider(
-          indent: 25,
-          endIndent: 25,
-          color: theme.dividerColor,
-        ),
+        Divider(indent: 25, endIndent: 25, color: theme.dividerColor),
         const WideArrowButton(
           label: 'Notifications',
           imagePath: Assets.assetsIconsBell,
@@ -67,11 +54,6 @@ class AccountTabView extends StatelessWidget {
           imagePath: Assets.assetsIconsQuestion,
           routeName: Routes.fAQsViewRouteName,
         ),
-        Divider(
-          indent: 25,
-          endIndent: 25,
-          color: theme.dividerColor,
-        ),   
         Container(
           color: theme.dividerColor.withAlpha(30),
           height: 8,

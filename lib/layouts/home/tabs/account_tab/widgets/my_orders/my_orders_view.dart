@@ -54,7 +54,7 @@ class MyOrdersView extends StatelessWidget {
                     ),
                     selectedBorderColor: Colors.transparent,
                     borderColor: Colors.transparent,
-                    fillColor: theme.colorScheme.background,
+                    fillColor: theme.colorScheme.surface,
                     color: theme.disabledColor,
                     selectedColor: theme.colorScheme.primary,
                     splashColor: theme.colorScheme.primary.withAlpha(25),

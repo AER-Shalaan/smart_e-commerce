@@ -1,31 +1,39 @@
 class CartModel {
+  final String itemID;
+  final String itemName;
+  final String imageCover;
+  final double rate;
+  final double priceOut;
+  final double discount;
+  final int quantity;
+  final String categoryName;
+  final String subCategoryName;
+
   CartModel({
-    this.itemID,
-    this.itemName,
-    this.imageCover,
-    this.priceOut,
-    this.quantity,
-    this.categoryName,
-    this.subCategoryName,
+    required this.itemID,
+    required this.itemName,
+    required this.imageCover,
+    required this.rate,
+    required this.priceOut,
+    required this.discount,
+    required this.quantity,
+    required this.categoryName,
+    required this.subCategoryName,
   });
 
-  CartModel.fromJson(dynamic json) {
-    itemID = json['Item_ID'];
-    itemName = json['Item_Name'];
-    imageCover = json['Image_Cover'];
-    priceOut = json['Price_out'];
-    quantity = json['Quantity'];
-    categoryName = json['Category_Name'];
-    subCategoryName = json['Sub_Category_Name'];
+  factory CartModel.fromJson(Map<String, dynamic> json) {
+    return CartModel(
+      itemID: json['Item_ID'],
+      itemName: json['Item_Name'],
+      imageCover: json['Image_Cover'],
+      rate: (json['Rate'] ?? 0).toDouble(),
+      priceOut: (json['Price_out'] ?? 0).toDouble(),
+      discount: (json['Discount'] ?? 0).toDouble(),
+      quantity: (json['Quantity'] ?? 0).toInt(),
+      categoryName: json['Category_Name'],
+      subCategoryName: json['Sub_Category_Name'],
+    );
   }
-  String? itemID;
-  String? itemName;
-  String? imageCover;
-  num? priceOut;
-  num? quantity;
-  String? categoryName;
-  String? subCategoryName;
-
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['Item_ID'] = itemID;
@@ -33,6 +41,7 @@ class CartModel {
     map['Image_Cover'] = imageCover;
     map['Price_out'] = priceOut;
     map['Quantity'] = quantity;
+    map['Discount'] = discount;
     map['Category_Name'] = categoryName;
     map['Sub_Category_Name'] = subCategoryName;
     return map;

@@ -12,7 +12,6 @@ class SignUpTextFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<SignUpCheckCubit, SignUpCheckState>(
       builder: (context, state) {
         var cubit = context.read<SignUpCheckCubit>();
@@ -98,14 +97,16 @@ class SignUpTextFields extends StatelessWidget {
               isValid: state.isConfirmPassCheck,
               isWrong: state.isWrongConfirmPass,
               toggleVisibility: cubit.toggleConfirmPasswordVisibility,
-              validator: (value) => _validateConfirmPassword(
-                value,
-                cubit.passController.text,
-              ),
-              onChanged: (value) => cubit.validateConfirmPassword(
-                cubit.passController.text,
-                value,
-              ),
+              validator:
+                  (value) => _validateConfirmPassword(
+                    value,
+                    cubit.passController.text,
+                  ),
+              onChanged:
+                  (value) => cubit.validateConfirmPassword(
+                    cubit.passController.text,
+                    value,
+                  ),
             ),
           ],
         );
@@ -130,13 +131,7 @@ class SignUpTextFields extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: theme.colorScheme.onSurface,
-          ),
-        ),
+        Text(title, style: theme.textTheme.titleMedium),
         const SizedBox(height: 4),
         CustomAuthTextField(
           hint: hint,
@@ -144,15 +139,17 @@ class SignUpTextFields extends StatelessWidget {
           focusNode: focusNode,
           keyboard: keyboardType,
           prefixIcon: prefixIcon,
-          suffixIcon: isValid
-              ? SvgPicture.asset(Assets.assetsIconsCheck)
-              : isWrong
+          suffixIcon:
+              isValid
+                  ? SvgPicture.asset(Assets.assetsIconsCheck)
+                  : isWrong
                   ? SvgPicture.asset(Assets.assetsIconsWarningCircle)
                   : null,
           suffixIconConstraints: BoxConstraints.tight(const Size(50, 30)),
-          borderColor: isValid
-              ? Colors.green
-              : isWrong
+          borderColor:
+              isValid
+                  ? Colors.green
+                  : isWrong
                   ? Colors.red
                   : theme.colorScheme.primary.withAlpha(102),
           validator: validator,
@@ -197,11 +194,16 @@ class SignUpTextFields extends StatelessWidget {
             onPressed: toggleVisibility,
             icon: SvgPicture.asset(
               isObscure ? Assets.assetsIconsEyeOff : Assets.assetsIconsEye,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.primary,
+                BlendMode.srcIn,
+              ),
             ),
           ),
-          borderColor: isValid
-              ? Colors.green
-              : isWrong
+          borderColor:
+              isValid
+                  ? Colors.green
+                  : isWrong
                   ? Colors.red
                   : theme.colorScheme.primary.withAlpha(102),
           validator: validator,

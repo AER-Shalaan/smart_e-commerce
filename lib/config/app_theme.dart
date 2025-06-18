@@ -12,12 +12,21 @@ class AppTheme {
         primary: AppColors.primary,
         secondary: AppColors.secondary,
         surface: Colors.white,
-        background: AppColors.backGroundColor,
         error: AppColors.error,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
         onSurface: Colors.black87,
         onError: Colors.white,
+        shadow: Colors.black26,
+      ),
+
+      // Card Theme
+      cardTheme: CardTheme(
+        color: Colors.white,
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        shadowColor: Colors.black.withAlpha((0.08 * 255).toInt()),
       ),
 
       // Text Styles
@@ -40,10 +49,7 @@ class AppTheme {
         backgroundColor: AppColors.primary,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white, size: 24),
-        titleTextStyle: Styles.header3Semibold.copyWith(
-          color: Colors.white,
-          fontSize: 20,
-        ),
+        titleTextStyle: Styles.header2Semibold.copyWith(color: Colors.white),
         centerTitle: true,
         surfaceTintColor: Colors.transparent,
       ),
@@ -73,7 +79,6 @@ class AppTheme {
         showUnselectedLabels: true,
       ),
 
-      // Input decoration (TextField style)
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Colors.white,
@@ -98,7 +103,6 @@ class AppTheme {
         errorStyle: TextStyle(color: AppColors.error),
       ),
 
-      // Icon theme globally
       iconTheme: const IconThemeData(color: AppColors.primary, size: 26),
 
       dividerColor: Colors.grey.shade300,
@@ -115,13 +119,22 @@ class AppTheme {
       colorScheme: ColorScheme.dark(
         primary: AppColors.darkPrimary,
         secondary: AppColors.darkSecondary,
-        surface: const Color(0xFF1E1E1E),
-        background: AppColors.darkBackground,
+        surface: const Color(0xFF232323),
         error: AppColors.darkError,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
         onSurface: Colors.white70,
         onError: Colors.white,
+        shadow: Colors.white24,
+      ),
+
+      // Card Theme (dark)
+      cardTheme: CardTheme(
+        color: const Color(0xFF222326),
+        elevation: 5,
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        shadowColor: Colors.white24,
       ),
 
       // Text Styles for dark mode

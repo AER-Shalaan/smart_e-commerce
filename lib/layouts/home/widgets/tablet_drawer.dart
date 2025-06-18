@@ -13,7 +13,7 @@ class TabletDrawer extends StatelessWidget {
 
     return Drawer(
       shape: const LinearBorder(),
-      backgroundColor: theme.colorScheme.background,
+      backgroundColor: theme.colorScheme.surface,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

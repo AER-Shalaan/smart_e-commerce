@@ -40,7 +40,7 @@ class CustomMainButton extends StatelessWidget {
             alignment: Alignment.center,
             backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
               if (isDisabled) {
-                return theme.disabledColor.withOpacity(0.7);
+                return theme.disabledColor.withAlpha((0.7 * 255).toInt());
               }
               return buttonColor ?? theme.colorScheme.secondary;
             }),
@@ -53,7 +53,9 @@ class CustomMainButton extends StatelessWidget {
             overlayColor: WidgetStateProperty.resolveWith<Color?>(
               (states) =>
                   states.contains(WidgetState.pressed)
-                      ? theme.colorScheme.primary.withOpacity(0.08)
+                      ? theme.colorScheme.primary.withAlpha(
+                        (0.08 * 255).toInt(),
+                      )
                       : null,
             ),
             elevation: WidgetStateProperty.resolveWith<double>(

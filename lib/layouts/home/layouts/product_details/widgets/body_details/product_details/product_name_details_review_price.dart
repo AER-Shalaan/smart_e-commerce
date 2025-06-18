@@ -129,12 +129,30 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
-                CircleAvatar(
-                  backgroundImage: const AssetImage(
-                    Assets.assetsImagesSallerImage,
+                Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [
+                        theme.colorScheme.primaryContainer.withAlpha(
+                          (255 * 0.6).toInt(),
+                        ),
+                        theme.colorScheme.secondaryContainer.withAlpha(
+                          (255 * 0.4).toInt(),
+                        ),
+                      ],
+                    ),
                   ),
-                  backgroundColor: Colors.grey[200],
-                  radius: 24,
+                  child: CircleAvatar(
+                    radius: 26,
+                    backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                    child: Icon(
+                      Icons.person,
+                      size: 28,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -149,14 +167,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                           color: secondaryColor,
                         ),
                       ),
-                      const Text(
-                        "Official Store",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
+                      Text("Official Store", style: theme.textTheme.bodyMedium),
                     ],
                   ),
                 ),
@@ -165,12 +176,12 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
                     color: primaryColor.withAlpha(22),
                     shape: BoxShape.circle,
                   ),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(7.0),
                     child: Icon(
                       Icons.arrow_forward_ios,
                       size: 19,
-                      color: Color(0xff0E947A),
+                      color: theme.colorScheme.primary,
                     ),
                   ),
                 ),
@@ -192,10 +203,7 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
             child: Text(
               product.data!.description ?? "",
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontSize: 15,
-                color: Colors.black87,
-              ),
+              style: theme.textTheme.bodyMedium,
               maxLines: 7,
               overflow: TextOverflow.ellipsis,
             ),

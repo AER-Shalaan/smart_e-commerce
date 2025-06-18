@@ -12,19 +12,13 @@ AppBar productDetailsViewAppBar(
   final colorScheme = theme.colorScheme;
 
   return AppBar(
-    title: Text(
-      "Product Details",
-      style: theme.textTheme.bodyMedium,
-    ),
+    title: Text("Product Details"),
     backgroundColor: theme.scaffoldBackgroundColor,
     surfaceTintColor: Colors.transparent,
     centerTitle: true,
     leading: IconButton(
       onPressed: () => Navigator.pop(context),
-      icon: Icon(
-        Icons.arrow_back_ios,
-        color: colorScheme.onBackground,
-      ),
+      icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
     ),
     actions: [
       Padding(
@@ -43,10 +37,7 @@ AppBar productDetailsViewAppBar(
             backgroundColor: colorScheme.primary.withOpacity(0.1),
             elevation: 0,
           ),
-          child: Icon(
-            Icons.favorite_border,
-            color: colorScheme.primary,
-          ),
+          child: Icon(Icons.favorite_border, color: colorScheme.primary),
         ),
       ),
     ],

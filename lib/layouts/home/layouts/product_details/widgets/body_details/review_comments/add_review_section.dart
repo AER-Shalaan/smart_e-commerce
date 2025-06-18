@@ -5,6 +5,8 @@ import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/check_review_view_model/check_review_state.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_review_view_model/add_review_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_review_view_model/add_review_states.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/get_reviews_view_model/get_reviews_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/product_details_view_model.dart';
 
 class AddReviewSection extends StatefulWidget {
   final String token;
@@ -75,7 +77,8 @@ class _AddReviewSectionState extends State<AddReviewSection> {
               } else {
                 AppSnackBar.show(
                   context: context,
-                  message: state.aiCheckModel.message ??
+                  message:
+                      state.aiCheckModel.message ??
                       "Your review contains inappropriate words.",
                   icon: Icons.warning_amber_rounded,
                   backgroundColor: theme.colorScheme.error,
@@ -106,6 +109,15 @@ class _AddReviewSectionState extends State<AddReviewSection> {
               );
               _controller.clear();
               setState(() => _rating = 0);
+              context.read<ProductDetailsViewModel>().getProductDetails(
+                productId: widget.itemId,
+                token: widget.token,
+              );
+              context.read<GetReviewsViewModel>().getReviews(
+                token: widget.token,
+                itemId: widget.itemId,
+              );
+
               if (widget.onReviewAdded != null) {
                 widget.onReviewAdded!();
               }
@@ -141,12 +153,16 @@ class _AddReviewSectionState extends State<AddReviewSection> {
                     return IconButton(
                       splashRadius: 22,
                       icon: Icon(
-                        selected ? Icons.star_rounded : Icons.star_border_rounded,
+                        selected
+                            ? Icons.star_rounded
+                            : Icons.star_border_rounded,
                         color: selected ? Colors.amber : theme.disabledColor,
                         size: 32,
                       ),
                       onPressed:
-                          _waitingAI || _waitingAdd ? null : () => setState(() => _rating = index + 1),
+                          _waitingAI || _waitingAdd
+                              ? null
+                              : () => setState(() => _rating = index + 1),
                     );
                   }),
                 ),
@@ -160,9 +176,11 @@ class _AddReviewSectionState extends State<AddReviewSection> {
                   style: theme.textTheme.bodyMedium,
                   decoration: InputDecoration(
                     hintText: "Write your review...",
-                    hintStyle: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey[500]),
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.grey[500],
+                    ),
                     filled: true,
-                    fillColor: theme.colorScheme.surfaceVariant,
+                    fillColor: theme.colorScheme.surfaceContainerHighest,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(color: theme.dividerColor),
@@ -183,23 +201,24 @@ class _AddReviewSectionState extends State<AddReviewSection> {
                       ),
                       elevation: 1,
                     ),
-                    child: _waitingAI || _waitingAdd
-                        ? const SizedBox(
-                            width: 22,
-                            height: 22,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.3,
-                              color: Colors.white,
+                    child:
+                        _waitingAI || _waitingAdd
+                            ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.3,
+                                color: Colors.white,
+                              ),
+                            )
+                            : Text(
+                              "Submit Review",
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          )
-                        : Text(
-                            "Submit Review",
-                            style: theme.textTheme.bodyLarge?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
                   ),
                 ),
               ],

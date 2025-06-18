@@ -26,7 +26,6 @@ class _CommentsWidgetBuilderState extends State<CommentsWidgetBuilder> {
         if (index < visibleReviews.length) {
           return CommentsWidget(comment: visibleReviews[index]);
         } else {
-          // زر "See more" أو "See less"
           return Center(
             child: TextButton(
               onPressed: () {
