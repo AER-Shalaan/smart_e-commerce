@@ -11,6 +11,7 @@ void main() {
   ApiManger.init();
   configureDependencies();
   return runApp(
+    
     ScreenUtilInit(
       designSize: Size(375, 812),
       minTextAdapt: true,
