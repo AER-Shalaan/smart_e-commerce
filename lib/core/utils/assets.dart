@@ -222,6 +222,10 @@ class Assets {
   /// assets/images/main_logo.png
   static const String assetsImagesMainLogo = "assets/images/main_logo.png";
 
+  /// Assets for assetsImagesManAvatar
+  /// assets/images/man_avatar.jpg
+  static const String assetsImagesManAvatar = "assets/images/man_avatar.jpg";
+
   /// Assets for assetsImagesOnBoarding1
   /// assets/images/onBoarding1.svg
   static const String assetsImagesOnBoarding1 = "assets/images/onBoarding1.svg";

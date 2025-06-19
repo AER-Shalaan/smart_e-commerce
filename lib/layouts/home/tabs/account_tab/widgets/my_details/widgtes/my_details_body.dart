@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../../core/resuebale_componants/custom_main_button.dart';
 
 class MyDetailsBody extends StatelessWidget {
-  const MyDetailsBody({super.key});
+  const MyDetailsBody({super.key,});
 
   @override
   Widget build(BuildContext context) {

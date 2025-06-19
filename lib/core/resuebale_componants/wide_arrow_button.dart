@@ -5,12 +5,15 @@ class WideArrowButton extends StatelessWidget {
   final String imagePath;
   final String label;
   final String routeName;
+   final String token;
+  final String userId;
 
   const WideArrowButton({
     super.key,
     required this.imagePath,
     required this.label,
     required this.routeName,
+     required this.token, required this.userId
   });
 
   @override
@@ -20,7 +23,7 @@ class WideArrowButton extends StatelessWidget {
     return InkWell(
       enableFeedback: false,
       onTap: () {
-        Navigator.pushNamed(context, routeName);
+        Navigator.pushNamed(context, routeName,arguments: [token,userId]);
       },
       child: Padding(
         padding: const EdgeInsets.all(25),
