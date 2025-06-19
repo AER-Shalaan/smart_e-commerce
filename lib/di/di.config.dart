@@ -43,6 +43,8 @@ import '../data/data_source/home/home_tap_data_source/new_arrivals_data_source.d
     as _i354;
 import '../data/data_source/home/home_tap_data_source/recommended_list_data_souce.dart'
     as _i220;
+import '../data/data_source/home/home_tap_data_source/search_data_source.dart'
+    as _i1015;
 import '../data/data_source/home/home_tap_data_source/subcategories_from_category_data_source.dart'
     as _i965;
 import '../data/data_source/home/home_tap_data_source/top_rated_data_source.dart'
@@ -89,6 +91,8 @@ import '../data/data_source_impl/home/home_tap_data_source_impl/new_arrivals_dat
     as _i765;
 import '../data/data_source_impl/home/home_tap_data_source_impl/recommended_list_data_source_impl.dart'
     as _i396;
+import '../data/data_source_impl/home/home_tap_data_source_impl/search_data_source_impl.dart'
+    as _i347;
 import '../data/data_source_impl/home/home_tap_data_source_impl/subcategories_from_category_data_source_impl.dart'
     as _i879;
 import '../data/data_source_impl/home/home_tap_data_source_impl/top_rated_data_source_impl.dart'
@@ -140,6 +144,8 @@ import '../layouts/home/tabs/cart_tab/view_model/update_cart_view_model/update_c
     as _i605;
 import '../layouts/home/tabs/comparison_tab/view_model/comparison_view_model.dart'
     as _i713;
+import '../layouts/home/tabs/home_tab/search_feature/view_model/search_view_model.dart'
+    as _i980;
 import '../layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_view_model.dart'
     as _i573;
 import '../layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_view_model.dart'
@@ -193,6 +199,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i323.CategoriesDataSourceImpl(gh<_i108.ApiManger>()));
     gh.factory<_i125.SignUpDataSource>(
         () => _i764.SignUpDataSourceImpl(gh<_i108.ApiManger>()));
+    gh.factory<_i1015.SearchDataSource>(
+        () => _i347.SearchDataSourceImpl(gh<_i108.ApiManger>()));
     gh.factory<_i220.RecommendedListDataSource>(
         () => _i396.RecommendedListDataSourceImpl(gh<_i108.ApiManger>()));
     gh.factory<_i354.NewArrivalsDataSource>(
@@ -236,6 +244,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i509.AddReviewViewModel(gh<_i143.AddReviewDataSource>()));
     gh.factory<_i124.RecommendedProductsCubit>(() =>
         _i124.RecommendedProductsCubit(gh<_i220.RecommendedListDataSource>()));
+    gh.factory<_i980.SearchTabViewModel>(
+        () => _i980.SearchTabViewModel(gh<_i1015.SearchDataSource>()));
     gh.factory<_i857.LoginViewModel>(
         () => _i857.LoginViewModel(gh<_i153.LoginDataSource>()));
     gh.factory<_i228.CheckReviewViewModel>(
