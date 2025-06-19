@@ -11,8 +11,10 @@ import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
 import 'package:smart_ecommerce/layouts/home/provider/comparison_category_provider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/search_feature/view_model/search_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/subcategories_from_category_view_model/subcategories_from_category_view_model.dart';
+
 import 'config/app_theme.dart';
 import 'core/utils/routes.dart';
 import 'layouts/home/tabs/account_tab/cubits/my_orders_cubit/orders_cubit.dart';
@@ -54,6 +56,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<AddItemViewViewModel>()),
         BlocProvider(create: (context) => LoginChecksCubit()),
         BlocProvider(create: (context) => SignUpCheckCubit()),
+        BlocProvider(create: (context) => getIt<SearchTabViewModel>()),
       ],
       child: FutureBuilder<String>(
         future: SharedPreferencesFunctions.getThemeMode(),
