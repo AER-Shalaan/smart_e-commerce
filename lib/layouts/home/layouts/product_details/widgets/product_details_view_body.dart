@@ -72,6 +72,23 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                   product: productDetailsModel,
                 ),
               ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8,
+                  ),
+                  child: Text(
+                    "Product Reviews",
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                      color: theme.colorScheme.secondary,
+                    ),
+                  ),
+                ),
+              ),
+
               BlocBuilder<GetReviewsViewModel, GetReviewsState>(
                 builder: (context, reviewState) {
                   if (reviewState is GetReviewsSuccessState) {

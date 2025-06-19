@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/di/di.dart';
@@ -35,7 +37,8 @@ class ProductsDetailsView extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
-          final List<dynamic> data = ModalRoute.of(context)!.settings.arguments as List;
+          final List<dynamic> data =
+              ModalRoute.of(context)!.settings.arguments as List;
           final productId = data[0] as String;
           final token = data[1] as String;
           final userId = data[2] as String;
@@ -51,7 +54,10 @@ class ProductsDetailsView extends StatelessWidget {
 
           return MultiBlocListener(
             listeners: [
-              BlocListener<AddToWishlistViewModel, AddToWishlistViewModelStates>(
+              BlocListener<
+                AddToWishlistViewModel,
+                AddToWishlistViewModelStates
+              >(
                 listener: (context, state) {
                   if (state is AddToWishlistSuccess) {
                     AppSnackBar.show(
@@ -103,16 +109,17 @@ class ProductsDetailsView extends StatelessWidget {
                   if (state is AddToComparisonSuccess) {
                     AppSnackBar.show(
                       context: context,
-                      message: state.message,
+                      message: state.response.messageToUser,
                       backgroundColor: theme.colorScheme.secondary,
                       icon: Icons.compare_arrows_rounded,
                       duration: const Duration(seconds: 2),
                       fromTop: false,
                     );
                   } else if (state is AddToComparisonError) {
+                    log(state.response.messageToUser);
                     AppSnackBar.show(
                       context: context,
-                      message: state.error,
+                      message: state.response.messageToUser,
                       backgroundColor: theme.colorScheme.error,
                       icon: Icons.error,
                       duration: const Duration(seconds: 2),

@@ -20,7 +20,13 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
     final secondaryColor = theme.colorScheme.secondary;
     final grey300 = Colors.grey[300]!;
     final grey600 = Colors.grey[600]!;
+    final Set<String> excludedKeys = {'Item_ID'};
+    final filteredDetails =
+        product.details!.entries
+            .where((entry) => !excludedKeys.contains(entry.key))
+            .toList();
 
+    // log(product.data!.itemID.toString());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Column(
@@ -37,6 +43,20 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 8),
+          Row(
+            children: [
+              Text(
+                product.data!.categoryName ?? "",
+                style: theme.textTheme.titleMedium,
+              ),
+              SizedBox(width: 8),
+              Text(
+                product.data!.subCategoryName ?? "",
+                style: theme.textTheme.titleSmall,
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -208,6 +228,71 @@ class ProductNameDetailsReviewPrice extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          const SizedBox(height: 8),
+          Text(
+            "Product Features",
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w700,
+              fontSize: 20,
+              color: secondaryColor,
+            ),
+          ),
+
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children:
+                    filteredDetails.map((entry) {
+                      String displayKey = entry.key.replaceAll('_', ' ');
+                      displayKey = displayKey
+                          .split(' ')
+                          .map(
+                            (word) =>
+                                word.isEmpty
+                                    ? word
+                                    : '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}',
+                          )
+                          .join(' ');
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 120,
+                              child: Text(
+                                displayKey,
+                                style: theme.textTheme.bodyLarge?.copyWith(
+                                  color: theme.colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                "${entry.value ?? ''}",
+                                style: theme.textTheme.bodyLarge?.copyWith(
+                                  color: theme.colorScheme.onSurface,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+              ),
+            ),
+          ),
+         
         ],
       ),
     );

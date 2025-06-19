@@ -17,6 +17,8 @@ import '../core/resuebale_componants/item_widget/view_model/add_item_view_view_m
     as _i1024;
 import '../data/data_source/ai_check_data_source/ai_check_data_source.dart'
     as _i608;
+import '../data/data_source/home/account_tab_data_source/profile_data_source/profile_data_source.dart'
+    as _i439;
 import '../data/data_source/home/cart_tap_data_source/add_to_cart_data_source.dart'
     as _i928;
 import '../data/data_source/home/cart_tap_data_source/del_from_cart_data_source.dart'
@@ -99,6 +101,8 @@ import '../data/data_source_impl/home/product_details_data_source_impl/reviews_d
     as _i675;
 import '../data/data_source_impl/home/product_details_data_source_impl/reviews_data_sources_impls/reviews_data_source_impl.dart'
     as _i579;
+import '../data/data_source_impl/home/profile_data_source_impl/profile_data_source_impl.dart'
+    as _i731;
 import '../data/data_source_impl/home/save_tab_data_source_impl/add_product_to_wishlist_data_source_impl.dart'
     as _i474;
 import '../data/data_source_impl/home/save_tab_data_source_impl/del_product_from_wishlist_data_source_impl.dart'
@@ -126,6 +130,8 @@ import '../layouts/home/layouts/product_details/veiw_model/get_reviews_view_mode
     as _i1035;
 import '../layouts/home/layouts/product_details/veiw_model/product_details_view_model.dart'
     as _i869;
+import '../layouts/home/tabs/account_tab/widgets/my_details/view_model/profile_view_model.dart'
+    as _i278;
 import '../layouts/home/tabs/cart_tab/view_model/del_item_from_cart_view_model/del_item_from_cart_view_model.dart'
     as _i571;
 import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model/get_cart_view_model.dart'
@@ -235,14 +241,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1065.DelItmeFromWishlsitDataSource>(
       () => _i752.DelProductFromWishlistDataSourceImpl(gh<_i108.ApiManger>()),
     );
+    gh.factory<_i439.ProfileDataSource>(
+      () => _i731.ProfileDataSourceImpl(gh<_i108.ApiManger>()),
+    );
     gh.factory<_i200.ChatBotViewModel>(
       () => _i200.ChatBotViewModel(gh<_i508.ChatBotDataSource>()),
     );
-    gh.factory<_i172.CategoriesViewModel>(
-      () => _i172.CategoriesViewModel(gh<_i1050.CategoriesDataSource>()),
-    );
     gh.factory<_i573.HomeCategoriesViewModel>(
       () => _i573.HomeCategoriesViewModel(gh<_i1050.CategoriesDataSource>()),
+    );
+    gh.factory<_i172.CategoriesViewModel>(
+      () => _i172.CategoriesViewModel(gh<_i1050.CategoriesDataSource>()),
     );
     gh.factory<_i1035.GetReviewsViewModel>(
       () => _i1035.GetReviewsViewModel(gh<_i35.ReviewsDataSource>()),
@@ -273,6 +282,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i55.SignUpViewModel>(
       () => _i55.SignUpViewModel(gh<_i125.SignUpDataSource>()),
+    );
+    gh.factory<_i278.ProfileViewModel>(
+      () => _i278.ProfileViewModel(gh<_i439.ProfileDataSource>()),
     );
     gh.factory<_i774.GetUserWishlistViewModel>(
       () =>

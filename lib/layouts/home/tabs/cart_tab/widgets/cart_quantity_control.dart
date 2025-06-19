@@ -19,12 +19,11 @@ class CartQuantityControl extends StatelessWidget {
     final theme = Theme.of(context);
 
     final screenWidth = MediaQuery.of(context).size.width;
-    double iconSize = screenWidth * 0.065;    // تقريبًا 24 على شاشة 370
-    double fontSize = screenWidth * 0.036;    // تقريبًا 13.5 على شاشة 375
-    double boxHeight = screenWidth * 0.09;    // تقريبًا 34 على شاشة 375
-    double boxPaddingH = screenWidth * 0.021; // تقريبًا 8 على شاشة 375
+    double iconSize = screenWidth * 0.065;
+    double fontSize = screenWidth * 0.036;
+    double boxHeight = screenWidth * 0.09;
+    double boxPaddingH = screenWidth * 0.021;
 
-    // عشان الشكل يفضل طبيعي على كل الشاشات
     iconSize = iconSize.clamp(18.0, 28.0);
     fontSize = fontSize.clamp(11.0, 16.0);
     boxHeight = boxHeight.clamp(22.0, 38.0);
@@ -60,7 +59,7 @@ class CartQuantityControl extends StatelessWidget {
                 height: boxHeight,
                 padding: EdgeInsets.symmetric(horizontal: boxPaddingH, vertical: 2),
                 decoration: BoxDecoration(
-                  color: theme.primaryColor.withOpacity(0.09),
+                  color: theme.primaryColor.withAlpha((0.09 * 255).toInt()),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.center,
