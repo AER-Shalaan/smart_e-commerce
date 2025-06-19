@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_review_view_model/add_review_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_comparison_view_model/add_to_comparison_states.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_comparison_view_model/add_to_comparison_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/check_review_view_model/check_review_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/get_reviews_view_model/get_reviews_view_model.dart';
@@ -20,8 +22,6 @@ class ProductsDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final snackBarBackgroundSuccess = theme.colorScheme.secondary;
-    final snackBarBackgroundError = theme.colorScheme.error;
 
     return MultiBlocProvider(
       providers: [
@@ -31,11 +31,11 @@ class ProductsDetailsView extends StatelessWidget {
         BlocProvider(create: (context) => getIt<GetReviewsViewModel>()),
         BlocProvider(create: (context) => getIt<CheckReviewViewModel>()),
         BlocProvider(create: (context) => getIt<AddReviewViewModel>()),
+        BlocProvider(create: (context) => getIt<AddToComparisonViewModel>()),
       ],
       child: Builder(
         builder: (context) {
-          final List<dynamic> data =
-              ModalRoute.of(context)!.settings.arguments as List;
+          final List<dynamic> data = ModalRoute.of(context)!.settings.arguments as List;
           final productId = data[0] as String;
           final token = data[1] as String;
           final userId = data[2] as String;
@@ -51,16 +51,13 @@ class ProductsDetailsView extends StatelessWidget {
 
           return MultiBlocListener(
             listeners: [
-              BlocListener<
-                AddToWishlistViewModel,
-                AddToWishlistViewModelStates
-              >(
+              BlocListener<AddToWishlistViewModel, AddToWishlistViewModelStates>(
                 listener: (context, state) {
                   if (state is AddToWishlistSuccess) {
                     AppSnackBar.show(
                       context: context,
                       message: state.response.messageToUser,
-                      backgroundColor: snackBarBackgroundSuccess,
+                      backgroundColor: theme.colorScheme.secondary,
                       icon: Icons.favorite,
                       duration: const Duration(seconds: 2),
                       fromTop: false,
@@ -69,7 +66,7 @@ class ProductsDetailsView extends StatelessWidget {
                     AppSnackBar.show(
                       context: context,
                       message: state.error.message,
-                      backgroundColor: snackBarBackgroundError,
+                      backgroundColor: theme.colorScheme.error,
                       icon: Icons.error,
                       duration: const Duration(seconds: 2),
                       fromTop: false,
@@ -93,6 +90,29 @@ class ProductsDetailsView extends StatelessWidget {
                     AppSnackBar.show(
                       context: context,
                       message: state.errorMessage,
+                      backgroundColor: theme.colorScheme.error,
+                      icon: Icons.error,
+                      duration: const Duration(seconds: 2),
+                      fromTop: false,
+                    );
+                  }
+                },
+              ),
+              BlocListener<AddToComparisonViewModel, AddToComparisonStates>(
+                listener: (context, state) {
+                  if (state is AddToComparisonSuccess) {
+                    AppSnackBar.show(
+                      context: context,
+                      message: state.message,
+                      backgroundColor: theme.colorScheme.secondary,
+                      icon: Icons.compare_arrows_rounded,
+                      duration: const Duration(seconds: 2),
+                      fromTop: false,
+                    );
+                  } else if (state is AddToComparisonError) {
+                    AppSnackBar.show(
+                      context: context,
+                      message: state.error,
                       backgroundColor: theme.colorScheme.error,
                       icon: Icons.error,
                       duration: const Duration(seconds: 2),

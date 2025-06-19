@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:smart_ecommerce/core/constants.dart';
 import 'full_screen_image_gallery.dart';
 
 class CarouselImage extends StatefulWidget {
   final List<String> imageUrls;
+  final double width;
+  final double height;
 
-  const CarouselImage({super.key, required this.imageUrls});
+  const CarouselImage({
+    super.key,
+    required this.imageUrls,
+    this.width = 120,
+    this.height = 60,
+  });
 
   @override
   State<CarouselImage> createState() => _CarouselImageState();
@@ -20,56 +28,51 @@ class _CarouselImageState extends State<CarouselImage> {
 
     return GestureDetector(
       onTap: () => _showFullScreenImage(widget.imageUrls, context),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          double screenWidth = MediaQuery.of(context).size.width;
-          double imageHeight = constraints.maxHeight * 0.85;
-          double indicatorSize = 5;
-
-          return SizedBox(
-            width: constraints.maxWidth,
-            height: constraints.maxHeight,
-            child: Column(
-              children: [
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: imageHeight,
-                    enableInfiniteScroll: true,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 2),
-                    autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                    enlargeCenterPage: true,
-                    viewportFraction: 1.0,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
-                  ),
-                  items: widget.imageUrls
+      child: SizedBox(
+        width: widget.width,
+        height: widget.height + 14, // Extra for indicator
+        child: Column(
+          children: [
+            CarouselSlider(
+              options: CarouselOptions(
+                height: widget.height,
+                enableInfiniteScroll: true,
+                autoPlay: true,
+                viewportFraction: 1.0,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+              ),
+              items:
+                  widget.imageUrls
                       .map(
                         (url) => _buildImageWithLoader(
                           url,
-                          imageHeight,
-                          screenWidth,
+                          widget.height,
+                          widget.width,
                           theme.cardColor,
                           theme.dividerColor,
                         ),
                       )
                       .toList(),
-                ),
-                const SizedBox(height: 5),
-                _buildCarouselIndicator(indicatorSize, theme),
-              ],
             ),
-          );
-        },
+            const SizedBox(height: 4),
+            _buildCarouselIndicator(5, theme),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildImageWithLoader(
-      String url, double height, double width, Color bg, Color border) {
+    String url,
+    double height,
+    double width,
+    Color bg,
+    Color border,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: bg,
@@ -79,20 +82,24 @@ class _CarouselImageState extends State<CarouselImage> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Image.network(
-          url,
-          fit: BoxFit.fill,
+          Constants.baseUrl + url,
+          fit: BoxFit.cover,
           width: width,
           height: height,
           loadingBuilder: (context, child, loadingProgress) {
             if (loadingProgress == null) return child;
             return Center(
-                child: CircularProgressIndicator(
-              color: Theme.of(context).colorScheme.secondary,
-            ));
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            );
           },
           errorBuilder: (context, error, stackTrace) {
-            return Icon(Icons.broken_image,
-                size: 50, color: Theme.of(context).disabledColor);
+            return Icon(
+              Icons.broken_image,
+              size: 50,
+              color: Theme.of(context).disabledColor,
+            );
           },
         ),
       ),

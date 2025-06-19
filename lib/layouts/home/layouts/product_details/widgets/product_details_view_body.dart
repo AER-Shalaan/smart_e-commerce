@@ -55,6 +55,7 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
         if (state is ProductDetailsSuccessState) {
           ProductDetailsModel productDetailsModel = state.productDetailsModel;
           List<String> images = productDetailsModel.images?.itemImages ?? [];
+          images.insert(0, productDetailsModel.data?.imageCover ?? '');
 
           return CustomScrollView(
             controller: _scrollController,
@@ -67,7 +68,9 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: ProductNameDetailsReviewPrice(product: productDetailsModel),
+                child: ProductNameDetailsReviewPrice(
+                  product: productDetailsModel,
+                ),
               ),
               BlocBuilder<GetReviewsViewModel, GetReviewsState>(
                 builder: (context, reviewState) {
@@ -87,20 +90,24 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                               Icon(
                                 Icons.comments_disabled_outlined,
                                 size: 56,
-                                color: theme.colorScheme.onSurface.withOpacity(0.4),
+                                color: theme.colorScheme.onSurface.withOpacity(
+                                  0.4,
+                                ),
                               ),
                               const SizedBox(height: 12),
                               Text(
                                 'No Reviews',
                                 style: theme.textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: theme.colorScheme.onSurface.withOpacity(0.6),
+                                  color: theme.colorScheme.onSurface
+                                      .withOpacity(0.6),
                                 ),
                               ),
                               Text(
                                 'Be the first to review this product',
                                 style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                                  color: theme.colorScheme.onSurface
+                                      .withOpacity(0.5),
                                 ),
                               ),
                             ],
@@ -134,7 +141,10 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18.0,
+                    vertical: 8.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -150,7 +160,8 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                               const Duration(milliseconds: 150),
                               () {
                                 _scrollController.animateTo(
-                                  _scrollController.position.maxScrollExtent + 50,
+                                  _scrollController.position.maxScrollExtent +
+                                      50,
                                   duration: const Duration(milliseconds: 800),
                                   curve: Curves.easeInOut,
                                 );
@@ -168,7 +179,10 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                         ),
                       if (showAddReviewSection)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                            vertical: 6.0,
+                          ),
                           child: AddReviewSection(
                             token: widget.token,
                             itemId: widget.productId,
@@ -187,14 +201,14 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
           return Center(
             child: Text(
               state.errorMessage,
-              style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.error),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.error,
+              ),
             ),
           );
         }
         return Center(
-          child: CircularProgressIndicator(
-            color: theme.colorScheme.primary,
-          ),
+          child: CircularProgressIndicator(color: theme.colorScheme.primary),
         );
       },
     );
