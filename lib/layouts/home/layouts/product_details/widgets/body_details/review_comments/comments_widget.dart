@@ -28,7 +28,7 @@ class CommentsWidget extends StatelessWidget {
     );
 
     final dateStyle = theme.textTheme.bodySmall?.copyWith(
-      color: theme.colorScheme.onSurface.withOpacity(0.6),
+      color: theme.colorScheme.onSurface.withAlpha((0.6 * 255).toInt()),
       letterSpacing: 0.1,
       fontSize: 11,
     );
@@ -89,7 +89,8 @@ class CommentsWidget extends StatelessWidget {
                             ),
                             child: CircleAvatar(
                               radius: 22,
-                              backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                              backgroundColor:
+                                  theme.colorScheme.surfaceContainerHighest,
                               child: Icon(
                                 Icons.person,
                                 size: 28,
@@ -102,16 +103,9 @@ class CommentsWidget extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      comment.buyerName,
-                                      style: buyerNameStyle,
-                                    ),
-                                    const Spacer(),
-                                    Text(formattedDate, style: dateStyle),
-                                  ],
-                                ),
+                                Text(comment.buyerName, style: buyerNameStyle),
+                                Text(formattedDate, style: dateStyle),
+                                SizedBox(height: 4),
                                 Row(
                                   children: List.generate(5, (index) {
                                     return Padding(
@@ -128,7 +122,9 @@ class CommentsWidget extends StatelessWidget {
                                           index < comment.rating
                                               ? theme.colorScheme.primary
                                               : theme.colorScheme.onSurface
-                                                  .withOpacity(0.3),
+                                                  .withAlpha(
+                                                    (0.3 * 255).toInt(),
+                                                  ),
                                           BlendMode.srcIn,
                                         ),
                                         semanticsLabel:

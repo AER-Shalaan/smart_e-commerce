@@ -62,12 +62,12 @@ class _ComparisonTabState extends State<ComparisonTab> {
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    "No products to compare in this category",
+                    "No products to compare",
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Start adding products to see the comparison table",
+                    "Start adding products to see the comparison",
                     style: TextStyle(color: Colors.grey[600]),
                   ),
                 ],
