@@ -18,7 +18,7 @@ class SearchBody extends StatelessWidget {
     return BlocBuilder<SearchTabViewModel, SearchTabStates>(
       builder: (context, state) {
         if (state is SearchTabSuccessState) {
-          log("success");
+          
           List<ProductDetailsModel>  result = state.searchResult.products??[];
          
           return Padding(
@@ -28,20 +28,7 @@ class SearchBody extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ItemWidget(product: result[index], token: token, userId: userId);
 
-                // result[index].name == null
-                //     ? 
-                //     MovieCard(
-                //         imageBath: result[index].posterPath ?? "",
-                //         id: result[index].id?.toInt() ?? 0,
-                //         title: result[index].title ?? "",
-                //         releaseDate: result[index].releaseDate ?? "",
-                //         backdropPath: result[index].backdropPath ?? "")
-                //     : SeriesCard(
-                //         posterPath: result[index].posterPath ?? "",
-                //         id: result[index].id?.toInt() ?? 0,
-                //         name: result[index].name ?? "",
-                //         firstAirDate: result[index].firstAirDate ?? "",
-                //         backdropPath: result[index].backdropPath ?? "");
+           
               },
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

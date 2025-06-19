@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:smart_ecommerce/core/api/api_manager.dart';
@@ -20,7 +18,6 @@ class ChatBotDataSourceImpl extends ChatBotDataSource {
   }) async {
     final result = await apiManager.sendChatMessage(message);
     return result.map((response) {
-      log(response.data.toString());
       return ChatBotResponse.fromJson(response.data);
     });
   }

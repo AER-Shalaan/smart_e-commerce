@@ -11,7 +11,6 @@ class FilterState extends Equatable {
   final double end;
   final String sortBy;
   final int selectedRating;
-  final List<int> selectedBrands;
 
   const FilterState({
     this.selectedCategory,
@@ -19,10 +18,9 @@ class FilterState extends Equatable {
     this.selectedItemForBorder,
     this.searchQuery = '',
     this.start = 0.0,
-    this.end = 10000.0,
+    this.end = 100000.0,
     this.sortBy = "Newest",
     this.selectedRating = 1,
-    this.selectedBrands = const [],
   });
 
   FilterState copyWith({
@@ -46,7 +44,6 @@ class FilterState extends Equatable {
       end: end ?? this.end,
       sortBy: sortBy ?? this.sortBy,
       selectedRating: selectedRating ?? this.selectedRating,
-      selectedBrands: selectedBrands ?? this.selectedBrands,
     );
   }
 
@@ -60,7 +57,6 @@ class FilterState extends Equatable {
     end,
     sortBy,
     selectedRating,
-    selectedBrands,
   ];
 }
 
@@ -74,7 +70,6 @@ class FilterInitial extends FilterState {
     super.end = 100000.0,
     super.sortBy = "Newest",
     super.selectedRating = 1,
-    super.selectedBrands = const [],
   });
 }
 
@@ -90,7 +85,6 @@ class FilterSuccess extends FilterState {
     super.end,
     super.sortBy,
     super.selectedRating,
-    super.selectedBrands,
   });
 }
 
@@ -104,7 +98,6 @@ class FilterUpdated extends FilterState {
     super.end,
     super.sortBy,
     super.selectedRating,
-    super.selectedBrands,
   });
 }
 
