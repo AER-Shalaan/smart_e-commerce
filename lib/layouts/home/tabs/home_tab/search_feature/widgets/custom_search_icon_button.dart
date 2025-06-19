@@ -11,18 +11,15 @@ class SearchButtonWidget extends StatelessWidget {
   final String userId;
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.sizeOf(context).width;
-    return Padding(
-      padding: EdgeInsets.only(right: width * 0.05),
-      child: GestureDetector(
-        onTap: () {
-          showSearch(
-            context: context,
-            delegate: SearchScreen(token: token, userId: userId),
-          );
-        },
-        child: Icon(Icons.search, color: Colors.black),
-      ),
+    var theme = Theme.of(context);
+    return IconButton(
+      icon: Icon(Icons.search, color: theme.colorScheme.secondary, size: 30),
+      onPressed: () {
+        showSearch(
+          context: context,
+          delegate: SearchScreen(token: token, userId: userId),
+        );
+      },
     );
   }
 }

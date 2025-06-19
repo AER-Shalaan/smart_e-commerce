@@ -43,7 +43,6 @@ class HomeViewMobileLayout extends StatelessWidget {
         ];
         return Stack(
           children: [
-            // يغلق الـ Overlay لما تدوس برا النافذة
             Positioned.fill(
               child: GestureDetector(
                 onTap: () => entry.remove(),
@@ -64,7 +63,9 @@ class HomeViewMobileLayout extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: theme.shadowColor.withOpacity(0.13),
+                        color: theme.shadowColor.withAlpha(
+                          (0.13 * 255).toInt(),
+                        ),
                         blurRadius: 12,
                         spreadRadius: 3,
                       ),
@@ -162,9 +163,9 @@ class HomeViewMobileLayout extends StatelessWidget {
         actions: [
           SearchButtonWidget(token: token, userId: userId),
           Padding(
-            padding: const EdgeInsets.only(right: 20, top: 10),
+            padding: const EdgeInsets.only(right: 20),
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: SvgPicture.asset(
                 Assets.assetsIconsNotifcations,
                 height: 25,

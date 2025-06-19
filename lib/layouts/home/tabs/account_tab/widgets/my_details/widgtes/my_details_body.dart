@@ -6,9 +6,7 @@ import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/my_details
 import '../../../../../../../core/resuebale_componants/custom_main_button.dart';
 
 class MyDetailsBody extends StatelessWidget {
-  const MyDetailsBody({
-    super.key,
-  });
+  const MyDetailsBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +23,12 @@ class MyDetailsBody extends StatelessWidget {
                 children: [
                   Center(
                     child: CircleAvatar(
-                        radius: 80,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(80),
-                            child: Image.asset(Assets.assetsImagesManAvatar))),
+                      radius: 80,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(80),
+                        child: Image.asset(Assets.assetsImagesManAvatar),
+                      ),
+                    ),
                   ),
                   _buildDetailItem(
                     context,
@@ -81,16 +81,13 @@ class MyDetailsBody extends StatelessWidget {
     IconData icon,
     void Function() onEdit,
   ) {
-    final theme = Theme.of(context);
     return TextFormField(
-        decoration: InputDecoration(
-      prefixIcon: Icon(icon),
-      enabled: false,
-      labelText: title,
-      suffixIcon: IconButton(
-        icon: const Icon(Icons.edit),
-        onPressed: onEdit,
+      decoration: InputDecoration(
+        prefixIcon: Icon(icon),
+        enabled: false,
+        labelText: title,
+        suffixIcon: IconButton(icon: const Icon(Icons.edit), onPressed: onEdit),
       ),
-    ));
+    );
   }
 }

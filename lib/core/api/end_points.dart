@@ -30,6 +30,10 @@ class EndPoints {
   static const String getProductReviews = "Products/GetProductReviews";
   static const String checkReview = "check_text";
   static const String addProductReview = "Products/AddProductReview";
+
+  // address endpoints
+  static const String getAddressEndPoint = "api/Adresses/GetUserAddresses";
+
   //profile endpoints
   static const String getProfileDetailsEndPoint = "api/Profile/GetUserProfile";
 
