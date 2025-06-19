@@ -7,7 +7,7 @@ class CartQuantityControl extends StatelessWidget {
   final VoidCallback? onDecrease;
 
   const CartQuantityControl({
-    super.key, 
+    super.key,
     required this.quantity,
     required this.isUpdating,
     this.onIncrease,
@@ -17,49 +17,70 @@ class CartQuantityControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    double iconSize = screenWidth * 0.065;    // تقريبًا 24 على شاشة 370
+    double fontSize = screenWidth * 0.036;    // تقريبًا 13.5 على شاشة 375
+    double boxHeight = screenWidth * 0.09;    // تقريبًا 34 على شاشة 375
+    double boxPaddingH = screenWidth * 0.021; // تقريبًا 8 على شاشة 375
+
+    // عشان الشكل يفضل طبيعي على كل الشاشات
+    iconSize = iconSize.clamp(18.0, 28.0);
+    fontSize = fontSize.clamp(11.0, 16.0);
+    boxHeight = boxHeight.clamp(22.0, 38.0);
+    boxPaddingH = boxPaddingH.clamp(6.0, 14.0);
+
     return Row(
       children: [
         Text(
           "Quantity:",
-          style: theme.textTheme.bodyMedium?.copyWith(fontSize: 13.5),
+          style: theme.textTheme.bodyMedium?.copyWith(fontSize: fontSize),
         ),
-        const SizedBox(width: 4),
+        SizedBox(width: 4),
         if (isUpdating)
-          const SizedBox(
-            width: 28,
-            height: 28,
-            child: CircularProgressIndicator(strokeWidth: 2.1),
+          SizedBox(
+            width: boxHeight,
+            height: boxHeight,
+            child: CircularProgressIndicator(strokeWidth: iconSize / 11),
           )
         else
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.remove_circle_outline),
-                splashRadius: 15,
+                icon: Icon(Icons.remove_circle_outline, size: iconSize),
+                splashRadius: iconSize + 3,
                 padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
+                constraints: BoxConstraints(
+                  minWidth: boxHeight,
+                  minHeight: boxHeight,
+                ),
                 onPressed: onDecrease,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                height: boxHeight,
+                padding: EdgeInsets.symmetric(horizontal: boxPaddingH, vertical: 2),
                 decoration: BoxDecoration(
                   color: theme.primaryColor.withOpacity(0.09),
                   borderRadius: BorderRadius.circular(8),
                 ),
+                alignment: Alignment.center,
                 child: Text(
                   "$quantity",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 13.5,
+                    fontSize: fontSize,
                     color: theme.colorScheme.secondary,
                   ),
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.add_circle_outline),
-                splashRadius: 15,
+                icon: Icon(Icons.add_circle_outline, size: iconSize),
+                splashRadius: iconSize + 3,
                 padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
+                constraints: BoxConstraints(
+                  minWidth: boxHeight,
+                  minHeight: boxHeight,
+                ),
                 onPressed: onIncrease,
               ),
             ],

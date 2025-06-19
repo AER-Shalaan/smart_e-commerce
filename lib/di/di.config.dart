@@ -27,6 +27,10 @@ import '../data/data_source/home/cart_tap_data_source/update_cart_data_source.da
     as _i233;
 import '../data/data_source/home/chat_bot_data_source/chat_bot_data_source.dart'
     as _i508;
+import '../data/data_source/home/comparison_tab_data_source/add_to_comparison_data_source.dart'
+    as _i922;
+import '../data/data_source/home/comparison_tab_data_source/comparison_data_source.dart'
+    as _i941;
 import '../data/data_source/home/home_tap_data_source/best_seller_data_source.dart'
     as _i141;
 import '../data/data_source/home/home_tap_data_source/categories_data_source.dart'
@@ -69,6 +73,10 @@ import '../data/data_source_impl/home/cart_tap_data_source_impl/update_cart_data
     as _i140;
 import '../data/data_source_impl/home/chat_bot_data_source_impl/chat_bot_data_source_impl.dart'
     as _i706;
+import '../data/data_source_impl/home/comparison_tab_data_source_impl/add_to_comparison_data_source_impl.dart'
+    as _i1022;
+import '../data/data_source_impl/home/comparison_tab_data_source_impl/comparison_data_source_impl.dart'
+    as _i996;
 import '../data/data_source_impl/home/home_tap_data_source_impl/categories_data_source_impl.dart'
     as _i323;
 import '../data/data_source_impl/home/home_tap_data_source_impl/featured_product_data_source_impl.dart'
@@ -108,6 +116,8 @@ import '../layouts/home/layouts/product_details/veiw_model/add_review_view_model
     as _i509;
 import '../layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model.dart'
     as _i242;
+import '../layouts/home/layouts/product_details/veiw_model/add_to_comparison_view_model/add_to_comparison_view_model.dart'
+    as _i850;
 import '../layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model.dart'
     as _i676;
 import '../layouts/home/layouts/product_details/veiw_model/check_review_view_model/check_review_view_model.dart'
@@ -122,6 +132,8 @@ import '../layouts/home/tabs/cart_tab/view_model/get_cart_view_model/get_cart_vi
     as _i579;
 import '../layouts/home/tabs/cart_tab/view_model/update_cart_view_model/update_cart_view_model.dart'
     as _i605;
+import '../layouts/home/tabs/comparison_tab/view_model/comparison_view_model.dart'
+    as _i713;
 import '../layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_view_model.dart'
     as _i573;
 import '../layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_view_model.dart'
@@ -146,8 +158,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i27.FeaturedProductDataSource>(
       () => _i52.FeaturedProductDataSourceImpl(gh<_i108.ApiManger>()),
     );
+    gh.factory<_i922.AddToComparisonDataSource>(
+      () => _i1022.AddToComparisonDataSourceImpl(gh<_i108.ApiManger>()),
+    );
     gh.factory<_i585.GetUserWishlistDataSource>(
       () => _i492.GetUserWishlistDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i850.AddToComparisonViewModel>(
+      () =>
+          _i850.AddToComparisonViewModel(gh<_i922.AddToComparisonDataSource>()),
     );
     gh.factory<_i143.AddReviewDataSource>(
       () => _i675.AddReviewDataSourceImpl(gh<_i108.ApiManger>()),
@@ -163,6 +182,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i35.ReviewsDataSource>(
       () => _i579.ReviewsDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i941.ComparisonDataSource>(
+      () => _i996.ComparisonDataSourceImpl(gh<_i108.ApiManger>()),
     );
     gh.factory<_i659.AddItmeToWishlistDataSource>(
       () => _i474.AddProductToWishlistDataSourceImpl(gh<_i108.ApiManger>()),
@@ -245,6 +267,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i228.CheckReviewViewModel>(
       () => _i228.CheckReviewViewModel(gh<_i608.AICheckDataSource>()),
+    );
+    gh.factory<_i713.ComparisonViewModel>(
+      () => _i713.ComparisonViewModel(gh<_i941.ComparisonDataSource>()),
     );
     gh.factory<_i55.SignUpViewModel>(
       () => _i55.SignUpViewModel(gh<_i125.SignUpDataSource>()),
