@@ -12,6 +12,8 @@ class EndPoints {
   static const String getRecommendedList = "recommend_list";
   //comparison endpoints
   static const String addToComparisonEndPoint = "Comparison/AddToComparison";
+  static const String removeFromComparisonEndPoint = "Comparison/RemoveFromComparisons";
+  static const String getComparisonEndPoint = "Comparison/GetAllComparisons";
 
   // cart endpoints
   static const String getCartEndPoint = "Cart/GetUserCart";

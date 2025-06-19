@@ -17,7 +17,7 @@ class AppTheme {
         onSecondary: Colors.white,
         onSurface: Colors.black87,
         onError: Colors.white,
-        shadow: Colors.black26,
+        shadow: Colors.grey.shade700,
       ),
 
       // Card Theme
@@ -125,7 +125,7 @@ class AppTheme {
         onSecondary: Colors.white,
         onSurface: Colors.white70,
         onError: Colors.white,
-        shadow: Colors.white24,
+        shadow: Colors.grey.shade700,
       ),
 
       // Card Theme (dark)
