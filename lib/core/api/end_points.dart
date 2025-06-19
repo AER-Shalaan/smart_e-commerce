@@ -10,6 +10,8 @@ class EndPoints {
   static const String sendChatMessageEndPoint =
       "https://saleschatbot.up.railway.app/chat";
   static const String getRecommendedList = "recommend_list";
+  //comparison endpoints
+  static const String addToComparisonEndPoint = "Comparison/AddToComparison";
 
   // cart endpoints
   static const String getCartEndPoint = "Cart/GetUserCart";
