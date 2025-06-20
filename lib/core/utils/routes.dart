@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/OTP/otp.dart';
+import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/Provider/forgot_password_provider.dart';
+import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/forgot_password/forgot_password.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/chat_bot_view.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/layouts/checkout/checkout_view.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_screen.dart';
+
 import '../../di/di.dart';
 import '../../layouts/authentication/logIn/login_view.dart';
 import '../../layouts/authentication/login/view_model/login_view_model.dart';
@@ -47,6 +51,12 @@ class Routes {
     return {
       splashRouteName: (_) => const SplashView(),
       onBoardingRouteName: (_) => const OnBoardingView(),
+      forgotPasswordRouteName:
+          (_) => ChangeNotifierProvider(
+            create: (_) => ForgotPasswordProvider(),
+            child: ForgotPassword(),
+          ),
+      otpRouteName: (_) => const Otp(email: ''),
       homeView:
           (_) => ChangeNotifierProvider(
             create: (_) => HomeProvider(),
