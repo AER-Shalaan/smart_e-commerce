@@ -1,12 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
+import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
 import 'package:smart_ecommerce/di/di.dart';
-import 'package:smart_ecommerce/layouts/home/provider/category_provider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/provider/category_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_states.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/filter_view_model/filter_view_model.dart';
 
 import '../../../core/utils/assets.dart';
 import '../provider/home_provider.dart';
@@ -18,8 +22,7 @@ class TabletDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    var provider = Provider.of<CategoryProvider>(context,);
-    return Drawer( 
+    return Drawer(
       shape: const LinearBorder(),
       backgroundColor: theme.colorScheme.surface,
       child: SingleChildScrollView(
@@ -83,14 +86,12 @@ class TabletDrawer extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8),
               child: Column(
                 children: [
-                  GestureDetector(
-                    onTap: () => provider.setSelectedCategory(null),
-                    child: selectedOption(
-                      imagePath: Assets.assetsIconsAllCategory,
-                      context: context,
-                      title: "All",
-                      index: 0,
-                    ),
+                  selectedOption(
+                    imagePath: Assets.assetsIconsAllCategory,
+                    context: context,
+                    title: "All",
+                    index: 0,
+                    category: null,
                   ),
                   BlocProvider(
                     create:
@@ -129,14 +130,12 @@ class TabletDrawer extends StatelessWidget {
                             separatorBuilder:
                                 (_, __) => const SizedBox(height: 16),
                             itemBuilder: (context, i) {
-                              return GestureDetector(
-                                onTap: () => provider.setSelectedCategory(categories[i]),
-                                child: selectedOption(
-                                  imagePath: Assets.assetsIconsAllCategory,
-                                  context: context,
-                                  title: categories[i].categoryName ?? '',
-                                  index: i + 1,
-                                ),
+                              return selectedOption(
+                                imagePath: Assets.assetsIconsAllCategory,
+                                context: context,
+                                title: categories[i].categoryName ?? '',
+                                index: i + 1,
+                                category: categories[i],
                               );
                             },
                           );
@@ -206,12 +205,28 @@ class TabletDrawer extends StatelessWidget {
     required BuildContext context,
     required String title,
     required int index,
+    required Category? category,
   }) {
     final theme = Theme.of(context);
     var provider = Provider.of<HomeProvider>(context, listen: true);
+    var categoryProvider = Provider.of<CategoryProvider>(context, listen: true);
+
     bool isSelected = (provider.selectedCatedgoryIndex == index);
     return GestureDetector(
-      onTap: () => provider.changeSelectedCatedgoryIndex(newValue: index),
+      onTap: () {
+        if (title == "All") {
+          categoryProvider.setSelectedCategory(null);
+        } else {
+          log(category?.categoryName ?? "");
+          categoryProvider.setSelectedCategory(category);
+          FilterViewModel.getObject(context).getFilteredData(
+            token: token,
+            categoryId: category?.categoryID,
+            page: 1,
+          );
+        }
+        provider.changeSelectedCatedgoryIndex(newValue: index);
+      },
       child: Row(
         children: [
           SizedBox(

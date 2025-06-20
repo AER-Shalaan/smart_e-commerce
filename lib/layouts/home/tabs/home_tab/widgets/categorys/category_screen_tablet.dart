@@ -6,14 +6,16 @@ import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/filter_view_model/filter_view_model_state.dart';
 
 class CategoryScreenTablet extends StatelessWidget {
-  const CategoryScreenTablet({super.key, required this.token, required this.userId});
+  const CategoryScreenTablet({
+    super.key,
+    required this.token,
+    required this.userId,
+  });
   final String token;
   final String userId;
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
-      appBar: AppBar(),
       body: BlocBuilder<FilterViewModel, FilterViewModelState>(
         builder: (context, state) {
           if (state is FilterViewModelSuccess) {
@@ -33,6 +35,7 @@ class CategoryScreenTablet extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(
                 itemCount: result.length,
+
                 itemBuilder: (context, index) {
                   return ItemWidget(
                     product: result[index],
@@ -40,8 +43,9 @@ class CategoryScreenTablet extends StatelessWidget {
                     userId: userId,
                   );
                 },
+
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                  crossAxisCount: 3,
                   childAspectRatio: 2,
                   mainAxisExtent: MediaQuery.sizeOf(context).height * 0.30,
                   mainAxisSpacing: 20,

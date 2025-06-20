@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/di/di.dart';
-import 'package:smart_ecommerce/layouts/home/provider/category_provider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/provider/category_provider.dart';
 import 'package:smart_ecommerce/layouts/home/provider/comparison_category_provider.dart';
 import 'package:smart_ecommerce/layouts/home/provider/home_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/account_tab_view.dart';
@@ -125,7 +125,7 @@ class HomeViewMobileLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = Provider.of<HomeProvider>(context);
-    var categoryProvider = Provider.of<CategoryProvider>(context,);
+    var categoryProvider = Provider.of<CategoryProvider>(context);
     final List<Widget> navWidget = [
       HomeTab(token: token, userId: userId),
       BlocProvider(
@@ -143,7 +143,7 @@ class HomeViewMobileLayout extends StatelessWidget {
     ];
     final theme = Theme.of(context);
 
-    return categoryProvider.selectedCategory == null ? Scaffold(
+    return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
@@ -282,7 +282,10 @@ class HomeViewMobileLayout extends StatelessWidget {
                 ],
               )
               : null,
-      body: navWidget[provider.homeTapIndex],
-    ):CategoryScreenTablet(token: token, userId: userId,);
+      body:
+          categoryProvider.selectedCategory == null
+              ? navWidget[provider.homeTapIndex]
+              : CategoryScreenTablet(token: token, userId: userId),
+    );
   }
 }
