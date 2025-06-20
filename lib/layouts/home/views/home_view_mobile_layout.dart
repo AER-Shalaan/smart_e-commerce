@@ -153,7 +153,7 @@ class HomeViewMobileLayout extends StatelessWidget {
         title: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            "Inspire",
+            "SDFA",
             style: theme.textTheme.headlineSmall?.copyWith(
               color: theme.colorScheme.primary,
               fontWeight: FontWeight.bold,

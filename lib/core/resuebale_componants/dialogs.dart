@@ -29,7 +29,7 @@ class CustomDialogs {
       title: 'Loading...',
       customContent: LoadingAnimationWidget.fourRotatingDots(
         color: theme.colorScheme.primary.withAlpha(153),
-        size: MediaQuery.of(context).size.width * 0.13,
+        size: _responsiveSize(context, mobile: 48, tablet: 64, desktop: 72),
       ),
       barrierDismissible: true,
     );
@@ -97,16 +97,22 @@ class CustomDialogs {
       barrierDismissible: barrierDismissible,
       builder: (context) {
         final screenWidth = MediaQuery.of(context).size.width;
-        final screenHeight = MediaQuery.of(context).size.height;
         final theme = Theme.of(context);
+
+        // Responsive max width
+        double maxWidth = 400; // max for tablet & desktop
+        double dialogWidth = screenWidth * 0.8;
+        if (dialogWidth > maxWidth) dialogWidth = maxWidth;
 
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
-            width: screenWidth * 0.8,
-            padding: EdgeInsets.all(screenWidth * 0.05),
+            width: dialogWidth,
+            padding: EdgeInsets.all(
+              _responsiveSize(context, mobile: 20, tablet: 28, desktop: 32),
+            ),
             decoration: BoxDecoration(
               color: theme.colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
@@ -114,27 +120,67 @@ class CustomDialogs {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(icon, color: iconColor, size: screenWidth * 0.12),
-                SizedBox(height: screenHeight * 0.02),
+                Icon(
+                  icon,
+                  color: iconColor,
+                  size: _responsiveSize(
+                    context,
+                    mobile: 40,
+                    tablet: 48,
+                    desktop: 56,
+                  ),
+                ),
+                SizedBox(
+                  height: _responsiveSize(
+                    context,
+                    mobile: 12,
+                    tablet: 18,
+                    desktop: 22,
+                  ),
+                ),
                 Text(
                   title,
                   style: theme.textTheme.titleLarge?.copyWith(
-                    fontSize: screenWidth * 0.05,
+                    fontSize: _responsiveSize(
+                      context,
+                      mobile: 20,
+                      tablet: 22,
+                      desktop: 24,
+                    ),
                   ),
                 ),
                 if (content != null) ...[
-                  SizedBox(height: screenHeight * 0.01),
+                  SizedBox(
+                    height: _responsiveSize(
+                      context,
+                      mobile: 8,
+                      tablet: 12,
+                      desktop: 14,
+                    ),
+                  ),
                   Text(
                     content,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      fontSize: screenWidth * 0.035,
+                      fontSize: _responsiveSize(
+                        context,
+                        mobile: 15,
+                        tablet: 16,
+                        desktop: 17,
+                      ),
                     ),
                   ),
                 ],
                 if (customContent != null) ...[customContent],
                 if (actions != null) ...[
-                  SizedBox(height: screenHeight * 0.03),
+                  SizedBox(
+                    height: _responsiveSize(
+                      context,
+                      mobile: 22,
+                      tablet: 28,
+                      desktop: 32,
+                    ),
+                  ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -169,6 +215,14 @@ class CustomDialogs {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   side: BorderSide(color: color),
+                  padding: EdgeInsets.symmetric(
+                    vertical: _responsiveSize(
+                      context,
+                      mobile: 10,
+                      tablet: 14,
+                      desktop: 16,
+                    ),
+                  ),
                 ),
                 child: Text(
                   label,
@@ -182,6 +236,14 @@ class CustomDialogs {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
+                  padding: EdgeInsets.symmetric(
+                    vertical: _responsiveSize(
+                      context,
+                      mobile: 10,
+                      tablet: 14,
+                      desktop: 16,
+                    ),
+                  ),
                 ),
                 child: Text(
                   label,
@@ -191,5 +253,18 @@ class CustomDialogs {
                 ),
               ),
     );
+  }
+
+  // Helper function for responsive sizes
+  static double _responsiveSize(
+    BuildContext context, {
+    required double mobile,
+    required double tablet,
+    required double desktop,
+  }) {
+    final width = MediaQuery.of(context).size.width;
+    if (width >= 900) return desktop;
+    if (width >= 600) return tablet;
+    return mobile;
   }
 }

@@ -26,10 +26,7 @@ class MyDetailsView extends StatelessWidget {
           centerTitle: true,
           title: Text(
             "My Details",
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: theme.textTheme.titleMedium
           ),
         ),
         body: MyDetailsBody(),

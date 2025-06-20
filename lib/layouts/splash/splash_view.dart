@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_ecommerce/config/auth_session.dart';
 import '../../core/utils/assets.dart';
 import '../../core/utils/routes.dart';
@@ -96,9 +97,11 @@ class _SplashViewState extends State<SplashView>
                   ),
                 ),
                 Text(
-                  "Inspire Shopping",
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
+                  "SDFA",
+                  style: GoogleFonts.moonDance(
+                      fontSize: 28, fontWeight: FontWeight.w600 ,
+                    color: theme.colorScheme.primary
+
                   ),
                 ),
                 const SizedBox(height: 10),
