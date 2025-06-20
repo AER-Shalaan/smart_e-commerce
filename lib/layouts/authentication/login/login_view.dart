@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/config/auth_session.dart';
-import 'package:smart_ecommerce/data/models/login_model/login_model.dart';
+import 'package:smart_ecommerce/data/models/auth_model/login_model/login_model.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_states.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/view_model/login_view_model.dart';

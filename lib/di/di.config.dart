@@ -65,8 +65,8 @@ import '../data/data_source/home/save_tab_data_source/del_itme_from_wishlsit_dat
     as _i1065;
 import '../data/data_source/home/save_tab_data_source/get_user_wishlist_data_source.dart'
     as _i585;
-import '../data/data_source/login/login_data_source.dart' as _i153;
-import '../data/data_source/signup/signup_data_source.dart' as _i125;
+import '../data/data_source/auth/login/login_data_source.dart' as _i153;
+import '../data/data_source/auth/signup/signup_data_source.dart' as _i125;
 import '../data/data_source_impl/ai_check_data_source_impl/ai_check_data_source_impl.dart'
     as _i481;
 import '../data/data_source_impl/home/cart_tap_data_source_impl/add_tap_data_source_impl.dart'
@@ -117,8 +117,8 @@ import '../data/data_source_impl/home/save_tab_data_source_impl/del_product_from
     as _i752;
 import '../data/data_source_impl/home/save_tab_data_source_impl/get_user_wishlist_data_source_impl.dart'
     as _i492;
-import '../data/data_source_impl/login/login_data_source_impl.dart' as _i335;
-import '../data/data_source_impl/signup/sign_up_data_source_impl.dart' as _i764;
+import '../data/data_source_impl/auth/login/login_data_source_impl.dart' as _i335;
+import '../data/data_source_impl/auth/signup/sign_up_data_source_impl.dart' as _i764;
 import '../layouts/authentication/login/view_model/login_view_model.dart'
     as _i857;
 import '../layouts/authentication/signup/view_model/sign_up_view_model.dart'

@@ -3,8 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:smart_ecommerce/core/api/api_manager.dart';
 import 'package:smart_ecommerce/core/api/end_points.dart';
 import 'package:smart_ecommerce/core/api/failure.dart';
-import 'package:smart_ecommerce/data/data_source/login/login_data_source.dart';
-import 'package:smart_ecommerce/data/models/login_model/login_model.dart';
+import 'package:smart_ecommerce/data/data_source/auth/login/login_data_source.dart';
+import 'package:smart_ecommerce/data/models/auth_model/login_model/login_model.dart';
 
 @Injectable(as: LoginDataSource)
 class LoginDataSourceImpl extends LoginDataSource {

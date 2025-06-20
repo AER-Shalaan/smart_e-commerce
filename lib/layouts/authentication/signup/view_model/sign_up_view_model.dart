@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/view_model/sign_up_view_model_state.dart';
 
-import '../../../../data/data_source/signup/signup_data_source.dart';
+import '../../../../data/data_source/auth/signup/signup_data_source.dart';
 
 @injectable
 class SignUpViewModel extends Cubit<SignUpState> {
