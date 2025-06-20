@@ -11,7 +11,7 @@ class PaymentViewModel extends Cubit<PaymentState> {
 
   Future<void> startPayment({
     required int integrationId,
-    required int userId,
+    required String userId,
     required int addressId,
     required String token,
   }) async {
