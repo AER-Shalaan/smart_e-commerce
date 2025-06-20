@@ -47,6 +47,7 @@ class ForgotPassword extends StatelessWidget {
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(size: 33),
           title: const Text("Reset Password"),
+        ),
         resizeToAvoidBottomInset: true,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
