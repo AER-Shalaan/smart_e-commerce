@@ -4,7 +4,19 @@ import 'package:smart_ecommerce/data/models/home_models/categories_model/sub_cat
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_state.dart';
 
 class FilterCubit extends Cubit<FilterState> {
-  FilterCubit() : super(const FilterInitial());
+  FilterCubit()
+    : super(
+        const FilterSuccess(
+          selectedCategory: null,
+          selectedSubcategory: null,
+          selectedItemForBorder: null,
+          searchQuery: '',
+          start: 0.0,
+          end: 100000.0,
+          sortBy: "Newest",
+          selectedRating: 1,
+        ),
+      );
 
   void initializeFilters() {
     emit(
@@ -17,12 +29,11 @@ class FilterCubit extends Cubit<FilterState> {
         end: 100000.0,
         sortBy: "Newest",
         selectedRating: 1,
-        selectedBrands: [],
       ),
     );
   }
 
-  void setCategory( Category category) {
+  void setCategory(Category category) {
     emit(state.copyWith(selectedCategory: category));
   }
 
@@ -50,19 +61,9 @@ class FilterCubit extends Cubit<FilterState> {
     emit(state.copyWith(selectedRating: rating));
   }
 
-  void toggleBrand(int brandId) {
-    List<int> updatedBrands = List.from(state.selectedBrands);
-    if (updatedBrands.contains(brandId)) {
-      updatedBrands.remove(brandId);
-    } else {
-      updatedBrands.add(brandId);
-    }
-    emit(state.copyWith(selectedBrands: updatedBrands));
-  }
-
   void clearFilters() {
     emit(
-      const FilterInitial(
+      const FilterSuccess(
         selectedCategory: null,
         selectedSubcategory: null,
         selectedItemForBorder: null,
@@ -71,7 +72,6 @@ class FilterCubit extends Cubit<FilterState> {
         end: 100000.0,
         sortBy: "Newest",
         selectedRating: 1,
-        selectedBrands: [],
       ),
     );
   }
@@ -83,7 +83,6 @@ class FilterCubit extends Cubit<FilterState> {
         end: 100000.0,
         sortBy: "Newest",
         selectedRating: 1,
-        selectedBrands: [],
       ),
     );
   }

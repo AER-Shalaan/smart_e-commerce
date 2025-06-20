@@ -43,6 +43,8 @@ import '../data/data_source/home/home_tap_data_source/categories_data_source.dar
     as _i1050;
 import '../data/data_source/home/home_tap_data_source/featured_product_data_source.dart'
     as _i27;
+import '../data/data_source/home/home_tap_data_source/filter_data_source.dart'
+    as _i973;
 import '../data/data_source/home/home_tap_data_source/new_arrivals_data_source.dart'
     as _i354;
 import '../data/data_source/home/home_tap_data_source/recommended_list_data_souce.dart'
@@ -93,6 +95,8 @@ import '../data/data_source_impl/home/home_tap_data_source_impl/categories_data_
     as _i323;
 import '../data/data_source_impl/home/home_tap_data_source_impl/featured_product_data_source_impl.dart'
     as _i52;
+import '../data/data_source_impl/home/home_tap_data_source_impl/filter_data_source_impl.dart'
+    as _i640;
 import '../data/data_source_impl/home/home_tap_data_source_impl/most_selling_data_source_impl.dart'
     as _i543;
 import '../data/data_source_impl/home/home_tap_data_source_impl/new_arrivals_data_source_impl.dart'
@@ -162,6 +166,8 @@ import '../layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categori
     as _i573;
 import '../layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_view_model.dart'
     as _i172;
+import '../layouts/home/tabs/home_tab/widgets/filter/model_view/filter_view_model/filter_view_model.dart'
+    as _i426;
 import '../layouts/home/tabs/home_tab/widgets/filter/model_view/subcategories_from_category_view_model/subcategories_from_category_view_model.dart'
     as _i816;
 import '../layouts/home/tabs/home_tab/widgets/recommended/view_model/recommended_cubit.dart'
@@ -216,8 +222,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i141.BestSellerDataSource>(
       () => _i543.MostSellingDataSourceImpl(gh<_i108.ApiManger>()),
     );
+
     gh.factory<_i417.GetAddressDataSource>(
       () => _i479.GetAddressDataSourceImpl(gh<_i108.ApiManger>()),
+
+    gh.factory<_i973.FilterDataSource>(
+      () => _i640.FilterDataSourceImpl(gh<_i108.ApiManger>()),
     );
     gh.factory<_i1050.CategoriesDataSource>(
       () => _i323.CategoriesDataSourceImpl(gh<_i108.ApiManger>()),
@@ -300,6 +310,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i980.SearchTabViewModel>(
       () => _i980.SearchTabViewModel(gh<_i1015.SearchDataSource>()),
+    );
+    gh.factory<_i426.FilterViewModel>(
+      () => _i426.FilterViewModel(gh<_i973.FilterDataSource>()),
     );
     gh.factory<_i857.LoginViewModel>(
       () => _i857.LoginViewModel(gh<_i153.LoginDataSource>()),

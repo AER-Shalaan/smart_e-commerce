@@ -25,7 +25,8 @@ class _HomeTabBodyState extends State<HomeTabBody> {
 
   @override
   Widget build(BuildContext context) {
-    // final userId = int.parse(widget.userId);
+    final userId = widget.userId;
+    var width = MediaQuery.sizeOf(context).width;
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
@@ -37,7 +38,12 @@ class _HomeTabBodyState extends State<HomeTabBody> {
           ),
         ),
         const SliverSizedBoxSpace(height: 30),
-        SliverToBoxAdapter(child: CategoryWidgetBuilder(token: widget.token)),
+        SliverToBoxAdapter(
+          child: Visibility(
+            visible: width <= 500,
+            child: CategoryWidgetBuilder(token: widget.token, userId: userId),
+          ),
+        ),
         const SliverSizedBoxSpace(height: 20),
         // SliverToBoxAdapter(
         //   child: BlocProvider(

@@ -1,12 +1,21 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_cubit.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_state.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/filter_view_model/filter_view_model.dart';
 
 class FilterBottomSheet extends StatelessWidget {
-  const FilterBottomSheet({super.key});
-
+  const FilterBottomSheet({
+    super.key,
+    required this.token,
+    required this.userId,
+  });
+  final String token;
+  final String userId;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -54,7 +63,7 @@ class FilterBottomSheet extends StatelessWidget {
                       ],
                     ),
                   ),
-                  _buildActionButtons(context, theme),
+                  _buildActionButtons(context, theme, token: token),
                 ],
               );
             },
@@ -242,14 +251,7 @@ class FilterBottomSheet extends StatelessWidget {
   Widget _buildSortByFilter(BuildContext context, FilterState state) {
     final theme = Theme.of(context);
     final ScrollController scrollController = ScrollController();
-    final List<String> options = [
-      "Newest",
-      "Best Sellers",
-      "Top Rated",
-      "Price: Low to High",
-      "Price: High to Low",
-      "Top Viewed",
-    ];
+    final List<String> options = ["Newest", "Best Sellers", "Top Viewed"];
 
     void scrollLeft() {
       scrollController.animateTo(
@@ -323,7 +325,11 @@ class FilterBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(BuildContext context, ThemeData theme) {
+  Widget _buildActionButtons(
+    BuildContext context,
+    ThemeData theme, {
+    required String token,
+  }) {
     return Row(
       children: [
         Expanded(
@@ -345,7 +351,46 @@ class FilterBottomSheet extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              var selectedCategory =
+                  context.read<FilterCubit>().state.selectedCategory;
+              var selectedSubCategory =
+                  context.read<FilterCubit>().state.selectedSubcategory;
+              bool? newWest;
+              bool? mostViewed;
+              bool? mostSold;
+              int? rate = context.read<FilterCubit>().state.selectedRating;
+              double? maxPrice = context.read<FilterCubit>().state.start;
+              double? minPrice = context.read<FilterCubit>().state.end;
+
+              if (context.read<FilterCubit>().state.sortBy == "Newest") {
+                newWest = true;
+              } else if (context.read<FilterCubit>().state.sortBy ==
+                  "Best Sellers") {
+                mostSold = true;
+              } else if (context.read<FilterCubit>().state.sortBy ==
+                  "Top Viewed") {
+                mostViewed = true;
+              }
+              FilterViewModel.getObject(context).getFilteredData(
+                token: token,
+                categoryId: selectedCategory?.categoryID ?? 0,
+                subCategoryId: selectedSubCategory?.subCategoryID ?? 0,
+                page: 1,
+                maxPrice: minPrice,
+                minPrice: maxPrice,
+                rate: rate,
+                mostViewed: mostViewed,
+                newwest: newWest,
+                mostSold: mostSold,
+              );
+              Navigator.pop(context);
+              Navigator.pushNamed(
+                context,
+                Routes.filterViewRouteName,
+                arguments: [token, userId],
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: theme.colorScheme.primary,
             ),

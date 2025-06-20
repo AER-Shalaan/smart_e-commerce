@@ -67,7 +67,7 @@ class _ChatBotBodyState extends State<ChatBotBody> {
 
         final List<ProductDetailsModel> recommendedItems =
             (state is ChatBotSuccessState) ? state.recommendedItems : [];
-        log(recommendedItems.toString());
+       
         final isTyping = state is ChatBotLoadingState;
 
         return SafeArea(

@@ -112,7 +112,6 @@ class SearchScreen extends SearchDelegate {
       child: Text(
         "search for products",
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: Theme.of(context).colorScheme.primary,
           fontWeight: FontWeight.w500,
         ),
         textAlign: TextAlign.center,

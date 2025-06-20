@@ -98,7 +98,7 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
         if (constraints.minWidth > 600) {
           return Row(
             children: [
-              const Expanded(child: TabletDrawer()),
+               Expanded(child: TabletDrawer(token: token!, userId: userId!,)),
               Expanded(
                 flex: 3,
                 child: HomeViewMobileLayout(token: token!, userId: userId!),
