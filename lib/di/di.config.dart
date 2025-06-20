@@ -222,10 +222,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i141.BestSellerDataSource>(
       () => _i543.MostSellingDataSourceImpl(gh<_i108.ApiManger>()),
     );
-
     gh.factory<_i417.GetAddressDataSource>(
       () => _i479.GetAddressDataSourceImpl(gh<_i108.ApiManger>()),
-
+    );
     gh.factory<_i973.FilterDataSource>(
       () => _i640.FilterDataSourceImpl(gh<_i108.ApiManger>()),
     );
