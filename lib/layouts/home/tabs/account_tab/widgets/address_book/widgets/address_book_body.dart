@@ -7,10 +7,12 @@ import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/address_bo
 class AddressBookBody extends StatefulWidget {
   final String token;
   final String userId;
+  final Function(dynamic address)? onSelect;
   const AddressBookBody({
     super.key,
     required this.token,
     required this.userId,
+    this.onSelect,
   });
 
   @override
@@ -61,7 +63,6 @@ class _AddressBookBodyState extends State<AddressBookBody> {
                   return Center(child: Text(state.message));
                 } else if (state is AddressSuccess) {
                   final addresses = state.addresses;
-                  final selectedId = state.selectedAddressId;
                   if (addresses.isEmpty) {
                     return const Center(child: Text("No addresses found."));
                   }
@@ -73,42 +74,29 @@ class _AddressBookBodyState extends State<AddressBookBody> {
                     itemCount: addresses.length,
                     itemBuilder: (context, index) {
                       final address = addresses[index];
-                      final isSelected = address.id == selectedId;
                       return GestureDetector(
                         onTap: () {
-                          context.read<AddressViewModel>().selectAddress(
-                            address.id,
-                            addresses,
-                          );
+                          if (widget.onSelect != null) {
+                            widget.onSelect!(address);
+                          }
+                          // ممكن تضيف أكشن تاني هنا زي فتح صفحة تعديل العنوان
                         },
                         child: Card(
                           margin: const EdgeInsets.only(bottom: 8),
                           shape: RoundedRectangleBorder(
-                            side: isSelected
-                                ? BorderSide(
-                                    color: theme.colorScheme.primary,
-                                    width: 2,
-                                  )
-                                : BorderSide.none,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          color: isSelected
-                              ? theme.colorScheme.primary.withAlpha(30)
-                              : theme.cardColor,
+                          color: theme.cardColor,
                           child: ListTile(
                             leading: Icon(
                               Icons.location_on,
-                              color: isSelected
-                                  ? theme.colorScheme.primary
-                                  : theme.iconTheme.color,
+                              color: theme.iconTheme.color,
                             ),
                             title: Text(
                               address.firstName,
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: isSelected
-                                    ? theme.colorScheme.primary
-                                    : theme.colorScheme.onSecondary,
+                                color: theme.colorScheme.onSecondary,
                               ),
                             ),
                             subtitle: Text(
@@ -164,8 +152,7 @@ class _AddressBookBodyState extends State<AddressBookBody> {
                     token: widget.token,
                     userId: widget.userId,
                     onAddressAdded: handleAddressAdded,
-                    onCancel:
-                        () => setState(() => showAddAddressSection = false),
+                    onCancel: () => setState(() => showAddAddressSection = false),
                   ),
                 ),
             ],

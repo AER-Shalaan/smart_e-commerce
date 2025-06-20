@@ -13,6 +13,9 @@ class AddressBookView extends StatelessWidget {
     var arguments = ModalRoute.of(context)!.settings.arguments as List<dynamic>;
     final token = arguments[0] as String;
     final userId = arguments[1] as String;
+    final bool forSelection =
+        arguments.length > 2 ? arguments[2] as bool : false;
+
     log(userId);
     return BlocProvider(
       create: (context) => getIt<AddAddressCubit>(),
@@ -23,7 +26,15 @@ class AddressBookView extends StatelessWidget {
           centerTitle: true,
           title: const Text("AddressBook"),
         ),
-        body: AddressBookBody(token: token, userId: userId),
+        body: AddressBookBody(
+          token: token,
+          userId: userId,
+          onSelect: forSelection
+              ? (selectedAddress) {
+                  Navigator.pop(context, selectedAddress);
+                }
+              : null,
+          ),
       ),
     );
   }
