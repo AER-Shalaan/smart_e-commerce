@@ -13,7 +13,6 @@ import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/cart_tab.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/comparison_tab/comparison_tab.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/comparison_tab/view_model/comparison_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/home_tab.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/search_feature/widgets/custom_search_icon_button.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/category_screen_tablet.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/provider/wishlist_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/saved_tab.dart';
