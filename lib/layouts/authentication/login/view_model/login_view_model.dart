@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../data/data_source/login/login_data_source.dart';
+import '../../../../data/data_source/auth/login/login_data_source.dart';
 import 'login_view_model_state.dart';
 
 @injectable
