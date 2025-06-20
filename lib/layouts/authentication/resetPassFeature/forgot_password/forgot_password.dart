@@ -22,14 +22,15 @@ class ForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ForgotPasswordProvider>(context);
+
     final theme = Theme.of(context);
     return BlocListener<ResetPassordViewModel, ResetPassordViewModelState>(
       listener: (context, state) {
+
         if (state is ResetPassordSendOtpLoading) {
           CustomDialogs.showLoadingDialog(context);
         } else if (state is ResetPassordSendOtpSuccess) {
           CustomDialogs.closeDialogs(context);
-
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -46,7 +47,6 @@ class ForgotPassword extends StatelessWidget {
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(size: 33),
           title: const Text("Reset Password"),
-        ),
         resizeToAvoidBottomInset: true,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -58,6 +58,7 @@ class ForgotPassword extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
                       const SizedBox(height: 8),
                       Text(
                         "Enter your email for the verification process. We will send a 6-digit code to your email.",
@@ -89,6 +90,7 @@ class ForgotPassword extends StatelessWidget {
                               ),
                           ],
                         ),
+
                         borderColor:
                             provider.isEmailValid
                                 ? Colors.green

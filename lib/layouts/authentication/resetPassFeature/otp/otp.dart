@@ -29,7 +29,6 @@ class _OtpState extends State<Otp> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return BlocListener<ResetPassordViewModel, ResetPassordViewModelState>(
       listenWhen:
           (previous, current) =>

@@ -65,7 +65,7 @@ class PinInputForm extends StatelessWidget {
           ),
         ),
         onCompleted: (pin) {
-          debugPrint("Pin entered: $pin");
+
         },
       ),
     );

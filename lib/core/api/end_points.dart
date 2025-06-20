@@ -41,6 +41,7 @@ class EndPoints {
 
   // payment endpoints
   static const String paymentMethodsEndPoint = "api/Payment/start";
+
   // reset password endpoints
   static const String sendOtpEndPoint = "Auth/SendOTP";
   static const String verifyOtpEndPoint = "Auth/VerifyOTPAndResetPassword";
@@ -48,4 +49,5 @@ class EndPoints {
   // orders endpoints
   static const String getOrdersEndPoint = "api/Orders/GetUserOrders";
   static const String getOrderItemsEndPoint = "api/Orders/GetOrderItems";
+
 }
