@@ -160,7 +160,6 @@ class HomeViewMobileLayout extends StatelessWidget {
           ),
         ),
         actions: [
-          SearchButtonWidget(token: token, userId: userId),
           Padding(
             padding: const EdgeInsets.only(right: 20),
             child: Align(
