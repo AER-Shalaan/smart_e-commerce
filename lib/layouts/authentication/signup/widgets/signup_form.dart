@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/title_medium_text.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/sign_up_button.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/widgets/signup_text_fields.dart';
@@ -16,15 +14,26 @@ class SignUpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var signUpChecksCubit = context.watch<SignUpCheckCubit>();
+    final theme = Theme.of(context);
+
     return Form(
       key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Headlinetext(text: "Create an account"),
-          const TitleMediumtext(
-            text: "Let’s create your account.",
-            opacity: 0.6,
+          Text(
+            "Create an account",
+            style: theme.textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Let’s create your account.",
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: theme.hintColor.withOpacity(0.8),
+              fontWeight: FontWeight.w400,
+            ),
           ),
           const SizedBox(height: 24),
           const SignUpTextFields(),

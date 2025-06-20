@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
-import 'package:smart_ecommerce/core/utils/text_styles.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_cubit.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_state.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/filter_view_model/filter_view_model.dart';
 
 class FilterBottomSheet extends StatelessWidget {
-  const FilterBottomSheet({super.key});
-
+  const FilterBottomSheet({
+    super.key,
+    required this.token,
+    required this.userId,
+  });
+  final String token;
+  final String userId;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
           padding: const EdgeInsets.all(16.0),
           height: MediaQuery.sizeOf(context).height * 0.6,
           decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
+            color: theme.scaffoldBackgroundColor,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -30,17 +36,14 @@ class FilterBottomSheet extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        "Filters",
-                        style: TextStyles.filterBottomSheetTitles,
-                      ),
+                      Text("Filters", style: theme.textTheme.titleLarge),
                       const Spacer(),
                       IconButton(
                         onPressed: () {
                           Navigator.pop(context);
                           context.read<FilterCubit>().clearFilters();
                         },
-                        icon: const Icon(Icons.close),
+                        icon: Icon(Icons.close, color: theme.iconTheme.color),
                       ),
                     ],
                   ),
@@ -54,12 +57,11 @@ class FilterBottomSheet extends StatelessWidget {
                         const Divider(),
                         _buildRatingFilter(context, state),
                         const Divider(),
-                        //_buildBrandFilter(context, state),
                         const SizedBox(height: 10),
                       ],
                     ),
                   ),
-                  _buildActionButtons(context),
+                  _buildActionButtons(context, theme, token: token),
                 ],
               );
             },
@@ -70,6 +72,7 @@ class FilterBottomSheet extends StatelessWidget {
   }
 
   Widget _buildPriceFilter(BuildContext context, FilterState state) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -77,12 +80,12 @@ class FilterBottomSheet extends StatelessWidget {
           children: [
             Text(
               "Price",
-              style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+              style: theme.textTheme.titleMedium?.copyWith(fontSize: 18),
             ),
             const Spacer(),
             Text(
               "\$ ",
-              style: TextStyles.filterBottomSheetTitles.copyWith(
+              style: theme.textTheme.titleMedium?.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
@@ -101,8 +104,8 @@ class FilterBottomSheet extends StatelessWidget {
           min: 0,
           max: 100000,
           divisions: 1000,
-          activeColor: Theme.of(context).colorScheme.primary,
-          inactiveColor: Theme.of(context).colorScheme.primary.withAlpha(102),
+          activeColor: theme.colorScheme.primary,
+          inactiveColor: theme.colorScheme.primary.withAlpha(102),
           onChanged: (RangeValues values) {
             context.read<FilterCubit>().updateRange(values.start, values.end);
           },
@@ -117,11 +120,12 @@ class FilterBottomSheet extends StatelessWidget {
     double value,
     Function(double) onValueChanged,
   ) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: () => _showPriceInputDialog(context, label, value, onValueChanged),
       child: Text(
         "${value.round()}",
-        style: TextStyles.filterBottomSheetTitles.copyWith(
+        style: theme.textTheme.bodyLarge?.copyWith(
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
@@ -135,6 +139,7 @@ class FilterBottomSheet extends StatelessWidget {
     double currentValue,
     Function(double) onValueChanged,
   ) {
+    final theme = Theme.of(context);
     TextEditingController controller = TextEditingController(
       text: currentValue.round().toString(),
     );
@@ -142,14 +147,17 @@ class FilterBottomSheet extends StatelessWidget {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text("Enter $label Price", textAlign: TextAlign.center),
-            titleTextStyle: TextStyles.filterBottomSheetTitles,
+            title: Text(
+              "Enter $label Price",
+              textAlign: TextAlign.center,
+              style: theme.textTheme.titleMedium,
+            ),
             content: TextField(
               controller: controller,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: const InputDecoration(hintText: "Enter value"),
-              style: TextStyles.filterBottomSheetTitles.copyWith(
+              style: theme.textTheme.bodyLarge?.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
@@ -160,7 +168,7 @@ class FilterBottomSheet extends StatelessWidget {
                 onPressed: () => Navigator.pop(context),
                 child: Text(
                   "Cancel",
-                  style: TextStyles.filterBottomSheetTitles.copyWith(
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
@@ -174,18 +182,24 @@ class FilterBottomSheet extends StatelessWidget {
                     Navigator.pop(context);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Please enter a valid number."),
+                      SnackBar(
+                        content: Text(
+                          "Please enter a valid number.",
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onPrimary,
+                          ),
+                        ),
+                        backgroundColor: theme.colorScheme.primary,
                       ),
                     );
                   }
                 },
                 child: Text(
                   "Confirm",
-                  style: TextStyles.filterBottomSheetTitles.copyWith(
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.primary,
+                    color: theme.colorScheme.primary,
                   ),
                 ),
               ),
@@ -195,13 +209,14 @@ class FilterBottomSheet extends StatelessWidget {
   }
 
   Widget _buildRatingFilter(BuildContext context, FilterState state) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "Rating",
-          style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+          style: theme.textTheme.titleMedium?.copyWith(fontSize: 18),
         ),
         Expanded(
           child: Padding(
@@ -232,15 +247,9 @@ class FilterBottomSheet extends StatelessWidget {
   }
 
   Widget _buildSortByFilter(BuildContext context, FilterState state) {
+    final theme = Theme.of(context);
     final ScrollController scrollController = ScrollController();
-    final List<String> options = [
-      "Newest",
-      "Best Sellers",
-      "Top Rated",
-      "Price: Low to High",
-      "Price: High to Low",
-      "Top Viewed",
-    ];
+    final List<String> options = ["Newest", "Best Sellers", "Top Viewed"];
 
     void scrollLeft() {
       scrollController.animateTo(
@@ -263,7 +272,7 @@ class FilterBottomSheet extends StatelessWidget {
       children: [
         Text(
           "Sort by",
-          style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
+          style: theme.textTheme.titleMedium?.copyWith(fontSize: 18),
         ),
         const SizedBox(height: 10),
         Row(
@@ -278,31 +287,29 @@ class FilterBottomSheet extends StatelessWidget {
                 controller: scrollController,
                 child: Row(
                   children:
-                      options
-                          .map(
-                            (option) => Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 5,
-                              ),
-                              child: ChoiceChip(
-                                label: Text(option),
-                                labelStyle: TextStyles.filterBottomSheetTitles
-                                    .copyWith(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                side: const BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                                selected: state.sortBy == option,
-                                onSelected:
-                                    (_) => context
-                                        .read<FilterCubit>()
-                                        .setSortBy(option),
+                      options.map((option) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: ChoiceChip(
+                            label: Text(
+                              option,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                          )
-                          .toList(),
+                            side: const BorderSide(color: Colors.transparent),
+                            selected: state.sortBy == option,
+                            onSelected:
+                                (_) => context.read<FilterCubit>().setSortBy(
+                                  option,
+                                ),
+                            selectedColor: theme.colorScheme.primary.withAlpha(
+                              50,
+                            ),
+                            backgroundColor: theme.disabledColor.withAlpha(15),
+                          ),
+                        );
+                      }).toList(),
                 ),
               ),
             ),
@@ -316,128 +323,11 @@ class FilterBottomSheet extends StatelessWidget {
     );
   }
 
-  // Widget _buildBrandFilter(BuildContext context, FilterState state) {
-  //   final filteredBrands =
-  //       Brand.dummyBrands
-  //           .where(
-  //             (brand) => brand.subcategoryId == state.selectedSubcategory?.id,
-  //           )
-  //           .toList();
-
-  //   if (filteredBrands.length <= 2) {
-  //     return Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Text(
-  //           "Brand",
-  //           style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
-  //         ),
-  //         const SizedBox(height: 5),
-  //         Row(
-  //           children:
-  //               filteredBrands
-  //                   .map(
-  //                     (brand) => Padding(
-  //                       padding: const EdgeInsets.only(right: 10),
-  //                       child: ChoiceChip(
-  //                         padding: const EdgeInsets.all(8),
-  //                         label: Text(brand.name),
-  //                         labelStyle: TextStyles.filterBottomSheetTitles
-  //                             .copyWith(
-  //                               fontSize: 16,
-  //                               fontWeight: FontWeight.w500,
-  //                             ),
-  //                         side: const BorderSide(color: Colors.transparent),
-  //                         avatar: SvgPicture.asset(brand.iconPath),
-  //                         showCheckmark: false,
-  //                         selected: state.selectedBrands.contains(brand.id),
-  //                         onSelected:
-  //                             (_) => context.read<FilterCubit>().toggleBrand(
-  //                               brand.id,
-  //                             ),
-  //                       ),
-  //                     ),
-  //                   )
-  //                   .toList(),
-  //         ),
-  //       ],
-  //     );
-  //   }
-
-  //   final ScrollController scrollController = ScrollController();
-
-  //   void scrollLeft() {
-  //     scrollController.animateTo(
-  //       scrollController.offset - 100,
-  //       duration: const Duration(milliseconds: 300),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   }
-
-  //   void scrollRight() {
-  //     scrollController.animateTo(
-  //       scrollController.offset + 100,
-  //       duration: const Duration(milliseconds: 300),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   }
-
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Text(
-  //         "Brand",
-  //         style: TextStyles.filterBottomSheetTitles.copyWith(fontSize: 18),
-  //       ),
-  //       const SizedBox(height: 10),
-  //       Row(
-  //         children: [
-  //           IconButton(
-  //             icon: const Icon(Icons.arrow_back_ios),
-  //             onPressed: scrollLeft,
-  //           ),
-  //           Expanded(
-  //             child: SingleChildScrollView(
-  //               scrollDirection: Axis.horizontal,
-  //               controller: scrollController,
-  //               child: Row(
-  //                 children:
-  //                     filteredBrands
-  //                         .map(
-  //                           (brand) => Padding(
-  //                             padding: const EdgeInsets.symmetric(
-  //                               horizontal: 5,
-  //                             ),
-  //                             child: ChoiceChip(
-  //                               padding: const EdgeInsets.all(8),
-  //                               label: Text(brand.name),
-  //                               avatar: SvgPicture.asset(brand.iconPath),
-  //                               showCheckmark: false,
-  //                               selected: state.selectedBrands.contains(
-  //                                 brand.id,
-  //                               ),
-  //                               onSelected:
-  //                                   (_) => context
-  //                                       .read<FilterCubit>()
-  //                                       .toggleBrand(brand.id),
-  //                             ),
-  //                           ),
-  //                         )
-  //                         .toList(),
-  //               ),
-  //             ),
-  //           ),
-  //           IconButton(
-  //             icon: const Icon(Icons.arrow_forward_ios),
-  //             onPressed: scrollRight,
-  //           ),
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  Widget _buildActionButtons(BuildContext context) {
+  Widget _buildActionButtons(
+    BuildContext context,
+    ThemeData theme, {
+    required String token,
+  }) {
     return Row(
       children: [
         Expanded(
@@ -445,18 +335,69 @@ class FilterBottomSheet extends StatelessWidget {
             onPressed: () {
               context.read<FilterCubit>().clearSubFilters();
             },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[300]),
-            child: const Text("Reset", style: TextStyle(color: Colors.black)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: theme.disabledColor.withAlpha(30),
+            ),
+            child: Text(
+              "Reset",
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
           child: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              var selectedCategory =
+                  context.read<FilterCubit>().state.selectedCategory;
+              var selectedSubCategory =
+                  context.read<FilterCubit>().state.selectedSubcategory;
+              bool? newWest;
+              bool? mostViewed;
+              bool? mostSold;
+              int? rate = context.read<FilterCubit>().state.selectedRating;
+              double? maxPrice = context.read<FilterCubit>().state.start;
+              double? minPrice = context.read<FilterCubit>().state.end;
+
+              if (context.read<FilterCubit>().state.sortBy == "Newest") {
+                newWest = true;
+              } else if (context.read<FilterCubit>().state.sortBy ==
+                  "Best Sellers") {
+                mostSold = true;
+              } else if (context.read<FilterCubit>().state.sortBy ==
+                  "Top Viewed") {
+                mostViewed = true;
+              }
+              FilterViewModel.getObject(context).getFilteredData(
+                token: token,
+                categoryId: selectedCategory?.categoryID ?? 0,
+                subCategoryId: selectedSubCategory?.subCategoryID ?? 0,
+                page: 1,
+                maxPrice: minPrice,
+                minPrice: maxPrice,
+                rate: rate,
+                mostViewed: mostViewed,
+                newwest: newWest,
+                mostSold: mostSold,
+              );
+              Navigator.pop(context);
+              Navigator.pushNamed(
+                context,
+                Routes.filterViewRouteName,
+                arguments: [token, userId],
+              );
+            },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: theme.colorScheme.primary,
             ),
-            child: const Text("Apply", style: TextStyle(color: Colors.white)),
+            child: Text(
+              "Apply",
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onPrimary,
+              ),
+            ),
           ),
         ),
       ],

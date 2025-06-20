@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/routes.dart';
@@ -10,31 +9,29 @@ class SignUpPrompt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return RichText(
       text: TextSpan(
         text: 'Don’t have an account? ',
-        style: GoogleFonts.dmSans(
-          fontWeight: FontWeight.w400,
+        style: theme.textTheme.bodyMedium?.copyWith(
           color: AppColors.primary.withAlpha(153),
-          fontSize: 16,
+          fontWeight: FontWeight.w400,
         ),
-        children: <TextSpan>[
+        children: [
           TextSpan(
             text: 'Join',
-            style: GoogleFonts.dmSans(
-              fontWeight: FontWeight.w500,
+            style: theme.textTheme.bodyMedium?.copyWith(
               color: AppColors.primary,
-              fontSize: 16,
+              fontWeight: FontWeight.w600,
               decoration: TextDecoration.underline,
             ),
-            recognizer:
-                TapGestureRecognizer()
-                  ..onTap = () {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      Routes.signUpViewRouteName,
-                    );
-                  },
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  Routes.signUpViewRouteName,
+                );
+              },
           ),
         ],
       ),

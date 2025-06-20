@@ -4,8 +4,8 @@ import 'package:smart_ecommerce/core/api/api_manager.dart';
 import 'package:smart_ecommerce/core/api/end_points.dart';
 import 'package:smart_ecommerce/core/api/failure.dart';
 import 'package:smart_ecommerce/data/data_source/home/home_tap_data_source/featured_product_data_source.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_model.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/products_model.dart';
 
 @Injectable(as: FeaturedProductDataSource)
 class FeaturedProductDataSourceImpl extends FeaturedProductDataSource {
@@ -15,7 +15,7 @@ class FeaturedProductDataSourceImpl extends FeaturedProductDataSource {
   FeaturedProductDataSourceImpl(this.apiManger);
 
   @override
-  Future<Either<Failure, List<Products>>> getFeaturedProducts({
+  Future<Either<Failure, List<ProductDetailsModel>>> getFeaturedProducts({
     required String token,
     required int page,
   }) async {
@@ -30,8 +30,8 @@ class FeaturedProductDataSourceImpl extends FeaturedProductDataSource {
       },
     );
 
-    return result.map((response) {
-      return ProductsModel.fromJson(response.data).products ?? [];
-    });
+    return result.fold(
+      (failure) => Left(failure), 
+      (response) => Right(ProductsModel.fromJson(response.data).products ?? []));
   }
 }

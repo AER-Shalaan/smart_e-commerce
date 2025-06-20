@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/FAQs/widgtes/f_a_q_item.dart';
-import '../../../../../../core/utils/text_styles.dart';
 import 'Providers/faq_provider.dart';
 
 class FAQsView extends StatelessWidget {
@@ -9,6 +8,7 @@ class FAQsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final faqProvider = Provider.of<FAQProvider>(context);
 
     return Scaffold(
@@ -18,21 +18,42 @@ class FAQsView extends StatelessWidget {
         centerTitle: true,
         title: Text(
           "FAQs",
-          style: TextStyles.headlineStyle.copyWith(fontSize: 24),
+          style: theme.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.w700,
+            color: theme.colorScheme.primary,
+          ),
         ),
+        elevation: 0,
       ),
-      body: Padding(
+      body: Container(
+        color: theme.scaffoldBackgroundColor,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               onChanged: (query) => faqProvider.filterFAQs(query),
+              style: theme.textTheme.bodyMedium,
               decoration: InputDecoration(
                 hintText: 'Search for questions...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.hintColor,
                 ),
+                prefixIcon: Icon(Icons.search, color: theme.iconTheme.color),
+                filled: true,
+                fillColor: theme.cardColor.withAlpha(225),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: theme.dividerColor),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: theme.dividerColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: theme.colorScheme.primary, width: 1.8),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
               ),
             ),
             const SizedBox(height: 10),

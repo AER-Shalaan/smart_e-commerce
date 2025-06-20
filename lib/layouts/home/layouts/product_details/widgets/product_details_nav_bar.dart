@@ -1,15 +1,11 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/dialogs.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model.dart';
-import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_cart_view_model/add_to_cart_view_model_states.dart';
-import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model.dart';
-import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_wishlist_view_model/add_to_wishlist_view_model_states.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_comparison_view_model/add_to_comparison_states.dart';
+import 'package:smart_ecommerce/layouts/home/layouts/product_details/veiw_model/add_to_comparison_view_model/add_to_comparison_view_model.dart';
 
 class ProductDetailsNavBar extends StatelessWidget {
   const ProductDetailsNavBar({
@@ -25,114 +21,126 @@ class ProductDetailsNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AddCartProvider addCartProvider = Provider.of<AddCartProvider>(context);
+    final theme = Theme.of(context);
 
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<AddToCartViewModel, AddToCartViewModelStates>(
-          listener: (context, state) {
-            if (state is AddToCartSuccessState) {
-              AppSnackBar.show(
-                context: context,
-                message: "Added to cart successfully",
-                backgroundColor: AppColors.primary,
-                icon: Icons.done,
-                duration: const Duration(seconds: 2),
-                fromTop: false,
-              );
-            }
-            if (state is AddToCartErrorState) {
-              log(state.errorMessage);
-            }
-          },
-        ),
-        BlocListener<AddToWishlistViewModel, AddToWishlistViewModelStates>(
-          listener: (context, state) {
-            if (state is AddToWishlistSuccess) {
-              AppSnackBar.show(
-                context: context,
-                message: state.response.messageToUser,
-                backgroundColor: Colors.pink,
-                icon: Icons.favorite,
-                duration: const Duration(seconds: 2),
-                fromTop: false,
-              );
-            } else if (state is AddToWishlistFailure) {
-              AppSnackBar.show(
-                context: context,
-                message: state.error.message,
-                backgroundColor: Colors.red,
-                icon: Icons.error,
-                duration: const Duration(seconds: 2),
-                fromTop: false,
-              );
-            }
-          },
-        ),
-      ],
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {
-                  CustomDialogs.showConfirmationDialog(
-                    context,
-                    title: "Quantify",
-                    content: "How many do you want to add to cart",
-                    customContent: ChangeNotifierProvider(
-                      create: (context) => AddCartProvider(),
-                      child: const ConfirmAddToCart(),
+    return BlocBuilder<AddToComparisonViewModel, AddToComparisonStates>(
+      builder: (context, state) {
+        final isComparing = state is AddToComparisonLoading;
+        return Container(
+          decoration: BoxDecoration(
+            color: theme.scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(22),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Row(
+            children: [
+              // زر إضافة للعربة
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    CustomDialogs.showConfirmationDialog(
+                      context,
+                      title: "Quantity",
+                      content: "How many do you want to add to cart",
+                      customContent: ChangeNotifierProvider.value(
+                        value: context.read<AddCartProvider>(),
+                        child: const ConfirmAddToCart(),
+                      ),
+                      onConfirm: () {
+                        final addCartProvider = context.read<AddCartProvider>();
+                        AddToCartViewModel.get(context).addToCart(
+                          productId: productId,
+                          token: token,
+                          quantity: addCartProvider.quantity,
+                          userId: userId,
+                        );
+                      },
+                      icon: Icons.add_circle_outline,
+                      iconColor: theme.colorScheme.primary,
+                      cancelLabel: "Cancel",
+                      confirmationLabel: "Add Now",
+                      confirmationColor: theme.colorScheme.primary,
+                    );
+                  },
+                  icon: Icon(
+                    Icons.shopping_cart_outlined,
+                    size: 26,
+                    color: theme.colorScheme.onPrimary,
+                  ),
+                  label: Text(
+                    "Add To Cart",
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onPrimary,
+                      fontWeight: FontWeight.w700,
                     ),
-                    onConfirm: () {
-                      log(addCartProvider.quantity.toString());
-                      AddToCartViewModel.get(context).addToCart(
-                        productId: productId,
-                        token: token,
-                        quantity: addCartProvider.quantity,
-                        userId: userId,
-                      );
-                    },
-                    icon: Icons.add_circle_outline,
-                    iconColor: AppColors.primary,
-                    cancelLabel: "Cancel",
-                    confirmationLabel: "Add, Now",
-                    confirmationColor: AppColors.primary,
-                  );
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Add To Cart"),
-                    SizedBox(width: 8),
-                    Icon(Icons.shopping_cart_outlined),
-                  ],
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: theme.colorScheme.primary,
+                    foregroundColor: theme.colorScheme.onPrimary,
+                    elevation: 2.5,
+                    minimumSize: const Size(110, 46),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    shadowColor: theme.colorScheme.primary.withAlpha(
+                      (0.14 * 255).toInt(),
+                    ),
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 8),
-            ElevatedButton(
-              onPressed: () {
-                context.read<AddToWishlistViewModel>().addToWishlist(
-                  token: token,
-                  userId: userId,
-                  itemId: productId,
-                );
-              },
-              style: ElevatedButton.styleFrom(shape: const CircleBorder()),
-              child: const Icon(Icons.favorite_border),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // TODO : Add to compare logic
-              },
-              style: ElevatedButton.styleFrom(shape: const CircleBorder()),
-              child: const Icon(Icons.compare_arrows_outlined),
-            ),
-          ],
-        ),
-      ),
+              const SizedBox(width: 16),
+              // زر المقارنة
+              GestureDetector(
+                onTap:
+                    isComparing
+                        ? null // لا تضيف للمقارنة أثناء اللودينج
+                        : () {
+                          context.read<AddToComparisonViewModel>().addItem(
+                            token: token,
+                            itemId: productId,
+                            buyerId: userId,
+                          );
+                        },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 160),
+                  curve: Curves.easeOutBack,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: theme.colorScheme.primary.withAlpha(
+                      (0.1 * 255).toInt(),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child:
+                        isComparing
+                            ? SizedBox(
+                              width: 26,
+                              height: 26,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.6,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  theme.colorScheme.primary,
+                                ),
+                              ),
+                            )
+                            : Icon(
+                              Icons.compare_arrows_outlined,
+                              color: theme.colorScheme.primary,
+                              size: 29,
+                            ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -142,25 +150,32 @@ class ConfirmAddToCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AddCartProvider addCartProvider = Provider.of<AddCartProvider>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
           icon: const Icon(Icons.remove_circle_outline),
-          onPressed: () {
-            addCartProvider.decrement();
-          },
+          onPressed: () => context.read<AddCartProvider>().decrement(),
         ),
-        Text(
-          '${addCartProvider.quantity}',
-          style: const TextStyle(fontSize: 16),
+        Selector<AddCartProvider, int>(
+          selector: (_, provider) => provider.quantity,
+          builder: (_, quantity, __) {
+            return AnimatedSwitcher(
+              duration: const Duration(milliseconds: 240),
+              child: Text(
+                '$quantity',
+                key: ValueKey(quantity),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+          },
         ),
         IconButton(
           icon: const Icon(Icons.add_circle_outline),
-          onPressed: () {
-            addCartProvider.increment();
-          },
+          onPressed: () => context.read<AddCartProvider>().increment(),
         ),
       ],
     );

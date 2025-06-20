@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/config/auth_session.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/provider/category_provider.dart';
 import 'package:smart_ecommerce/layouts/home/views/home_view_mobile_layout.dart';
 import 'package:smart_ecommerce/layouts/home/widgets/tablet_drawer.dart';
-import 'dart:async';
 
 class UiLayoutBuilder extends StatefulWidget {
   const UiLayoutBuilder({super.key});
@@ -85,8 +88,14 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
 
   @override
   Widget build(BuildContext context) {
+    var categoryProvider = Provider.of<CategoryProvider>(context);
+
     if (token == null || userId == null) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(
+        child: CircularProgressIndicator(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      );
     }
 
     return LayoutBuilder(
@@ -94,7 +103,7 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
         if (constraints.minWidth > 600) {
           return Row(
             children: [
-              const Expanded(child: TabletDrawer()),
+              Expanded(child: TabletDrawer(token: token!, userId: userId!)),
               Expanded(
                 flex: 3,
                 child: HomeViewMobileLayout(token: token!, userId: userId!),

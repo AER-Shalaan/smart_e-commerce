@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/widgets/typing_indicator.dart';
 
 class ChatMessageBubble extends StatelessWidget {
@@ -16,19 +15,28 @@ class ChatMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    // ألوان الفقاعات حسب الثيم
+    final Color userBubble = theme.colorScheme.primary;
+    final Color assistantBubble = theme.brightness == Brightness.dark
+        ? theme.colorScheme.surfaceContainerHighest.withAlpha(180)
+        : Colors.grey.shade200;
+
+    final Color userTextColor = theme.colorScheme.onPrimary;
+    final Color assistantTextColor = theme.colorScheme.onSurface;
+
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-        padding: isLoading
-            ? const EdgeInsets.symmetric(vertical: 10, horizontal: 14)
-            : const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
         decoration: BoxDecoration(
           color: isUser
-              ? AppColors.primary
+              ? userBubble
               : isLoading
                   ? Colors.transparent
-                  : Colors.grey.shade300,
+                  : assistantBubble,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -39,14 +47,14 @@ class ChatMessageBubble extends StatelessWidget {
           ),
         ),
         child: isLoading
-            ? const TypingIndicator(
-                flashingCircleBrightColor: AppColors.primary,
-                flashingCircleDarkColor: Color(0xFFD3D3D3),
+            ? TypingIndicator(
+                brightColor: theme.colorScheme.primary,
+                darkColor: theme.disabledColor,
               )
             : Text(
                 message,
-                style: TextStyle(
-                  color: isUser ? Colors.white : Colors.black,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: isUser ? userTextColor : assistantTextColor,
                   fontSize: 14,
                 ),
               ),

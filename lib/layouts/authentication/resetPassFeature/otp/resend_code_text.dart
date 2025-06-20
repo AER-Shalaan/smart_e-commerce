@@ -1,10 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../../../core/utils/app_colors.dart';
+import '../view_model/reset_passord_view_model.dart';
 
 class ResendCodeText extends StatelessWidget {
-  const ResendCodeText({super.key});
+  final String email;
+
+  const ResendCodeText({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,10 @@ class ResendCodeText extends StatelessWidget {
             recognizer:
                 TapGestureRecognizer()
                   ..onTap = () {
-                    //TODO
+                    ResetPassordViewModel.get(context).sendOtp(email: email);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Resend request sent')),
+                    );
                   },
           ),
         ],

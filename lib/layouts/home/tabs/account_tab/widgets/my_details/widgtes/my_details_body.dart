@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/my_details/view_model/profile_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/my_details/view_model/profile_view_model_state.dart';
 import '../../../../../../../core/resuebale_componants/custom_main_button.dart';
-import '../../../../../../../core/utils/app_colors.dart';
-import '../../../../../../../core/utils/text_styles.dart';
 
 class MyDetailsBody extends StatelessWidget {
   const MyDetailsBody({super.key});
@@ -10,59 +11,65 @@ class MyDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildDetailItem(
-              context,
-              "Full Name",
-              "AbdEl-Rahamn Shalaan",
-              Icons.person_outline,
-              () {
-                // Api
-              },
-            ),
-            _buildDetailItem(
-              context,
-              "Email Address",
-              "abdelrahman.shalaan03@gmail.com",
-              Icons.email_outlined,
-              () {
-                // Api
-              },
-            ),
-            _buildDetailItem(
-              context,
-              "Date of Birth",
-              "01/06/2003",
-              Icons.calendar_today,
-              () {
-                // Api
-              },
-            ),
-            // _buildDetailItem(context, "Gender", "Male", Icons.male, () {
-            //   // Api
-            // }),
-            _buildDetailItem(
-              context,
-              "Phone Number",
-              "+20 155 929 6111",
-              Icons.call_outlined,
-              () {
-                // Api
-              },
-            ),
-            const Spacer(),
-            const CustomMainButton(
-              label: "Submit",
-              isDisabled: true,
-              width: double.infinity,
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
+      body: BlocBuilder<ProfileViewModel, ProfileViewModelState>(
+        builder: (context, state) {
+          if (state is ProfileViewModelSuccess) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                spacing: 10,
+                children: [
+                  Center(
+                    child: CircleAvatar(
+                      radius: 80,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(80),
+                        child: Image.asset(Assets.assetsImagesManAvatar),
+                      ),
+                    ),
+                  ),
+                  _buildDetailItem(
+                    context,
+                    state.profileModel.userProfile?.buyerName ?? "",
+                    Icons.person_outline,
+                    () {
+                      // Api
+                    },
+                  ),
+                  _buildDetailItem(
+                    context,
+                    state.profileModel.userProfile?.email ?? "",
+                    Icons.email_outlined,
+                    () {
+                      // Api
+                    },
+                  ),
+                  _buildDetailItem(
+                    context,
+                    state.profileModel.userProfile?.phone ?? "",
+                    Icons.phone,
+                    () {
+                      // Api
+                    },
+                  ),
+                  const Spacer(),
+                  const CustomMainButton(
+                    label: "Submit",
+                    isDisabled: true,
+                    width: double.infinity,
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            );
+          }
+          if (state is ProfileViewModelError) {
+            return Center(child: Text(state.failure.message.toString()));
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
@@ -70,53 +77,16 @@ class MyDetailsBody extends StatelessWidget {
   Widget _buildDetailItem(
     BuildContext context,
     String title,
-    String value,
+    // String value,
     IconData icon,
     void Function() onEdit,
   ) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: TextStyles.myDetailsLabels),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.06,
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 16,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColors.secondary.withAlpha(128),
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Icon(icon, color: AppColors.secondary.withAlpha(128)),
-                    const SizedBox(width: 5),
-                    Expanded(
-                      child: Text(value, style: TextStyles.myDetailsTexts),
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: onEdit,
-                icon: Icon(
-                  Icons.edit_square,
-                  color: AppColors.secondary.withAlpha(180),
-                ),
-              ),
-            ],
-          ),
-        ],
+    return TextFormField(
+      decoration: InputDecoration(
+        prefixIcon: Icon(icon),
+        enabled: false,
+        labelText: title,
+        suffixIcon: IconButton(icon: const Icon(Icons.edit), onPressed: onEdit),
       ),
     );
   }

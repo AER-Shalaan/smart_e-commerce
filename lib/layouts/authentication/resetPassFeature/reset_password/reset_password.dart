@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
-import '../../../../core/resuebale_componants/title_medium_text.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets.dart';
-import '../../../../core/utils/text_styles.dart';
 import '../../../../core/resuebale_componants/custom_auth_textfield.dart';
 import '../../../../core/resuebale_componants/custom_main_button.dart';
 import '../Provider/reset_password_provider.dart';
@@ -22,7 +19,7 @@ class ResetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final resetPasswordProvider = Provider.of<ResetPasswordProvider>(context);
-
+    final TextStyles = Theme.of(context).textTheme;
     passwordFocusNode.addListener(() {
       if (!passwordFocusNode.hasFocus) {
         resetPasswordProvider.validatePassword(passwordController.text);
@@ -53,15 +50,12 @@ class ResetPassword extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Headlinetext(text: "Reset Password"),
+                   Text("Reset Password",style: TextStyles.headlineSmall?.copyWith(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 8),
-                  const TitleMediumtext(
-                    text:
-                        "Set the new password for your account so you can login and access all the features.",
-                    opacity: 1,
-                  ),
+                   Text("Set the new password for your account so you can login and access all the features.",
+                      style: TextStyles.titleMedium),
                   const SizedBox(height: 24),
-                  Text("New Password", style: TextStyles.titleMediumStyle),
+                  Text("New Password",),
                   const SizedBox(height: 4),
                   CustomAuthTextField(
                     hint: "Enter your new password",
@@ -108,7 +102,7 @@ class ResetPassword extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     "Confirm New Password",
-                    style: TextStyles.titleMediumStyle,
+                    style: TextStyles.bodySmall,
                   ),
                   const SizedBox(height: 4),
                   CustomAuthTextField(

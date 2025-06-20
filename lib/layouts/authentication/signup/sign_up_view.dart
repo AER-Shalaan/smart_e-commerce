@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/config/auth_session.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/dialogs.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
-import 'package:smart_ecommerce/data/models/signup_model/sign_up_model.dart';
+import 'package:smart_ecommerce/data/models/auth_model/signup_model/sign_up_model.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_states.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/view_model/sign_up_view_model.dart';

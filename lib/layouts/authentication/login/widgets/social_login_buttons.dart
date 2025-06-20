@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../core/resuebale_componants/custom_main_button.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/assets.dart';
 
 class SocialLoginButtons extends StatelessWidget {
@@ -11,27 +8,28 @@ class SocialLoginButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       children: [
         Row(
           children: [
             Expanded(
               child: Divider(
-                color: AppColors.secondary.withAlpha(102),
+                color: theme.colorScheme.secondary.withAlpha(102),
                 endIndent: 10,
               ),
             ),
             Text(
               'Or',
-              style: GoogleFonts.dmSans(
-                fontSize: 14,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.secondary.withAlpha(165),
                 fontWeight: FontWeight.w400,
-                color: AppColors.secondary.withAlpha(165),
+                fontSize: 14,
               ),
             ),
             Expanded(
               child: Divider(
-                color: AppColors.secondary.withAlpha(102),
+                color: theme.colorScheme.secondary.withAlpha(102),
                 thickness: 1,
                 indent: 10,
               ),
@@ -47,7 +45,7 @@ class SocialLoginButtons extends StatelessWidget {
           borderSide: BorderSide(
             width: 1,
             style: BorderStyle.solid,
-            color: AppColors.secondary.withAlpha(102),
+            color: theme.colorScheme.secondary.withAlpha(102),
           ),
         ),
         const SizedBox(height: 16),

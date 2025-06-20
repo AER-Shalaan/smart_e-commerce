@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/view_model/reset_passord_view_model.dart';
+
 import '../../../../../core/resuebale_componants/custom_main_button.dart';
 import '../../../../../core/utils/app_colors.dart';
-import '../OTP/otp.dart';
 import '../Provider/forgot_password_provider.dart';
 
 class SendCodeButton extends StatelessWidget {
@@ -32,13 +33,15 @@ class SendCodeButton extends StatelessWidget {
           provider.isEmailValid
               ? () {
                 if (formKey.currentState!.validate()) {
-                  Navigator.push(
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => Otp(email: emailController.text),
+                  //   ),
+                  // );
+                  ResetPassordViewModel.get(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => Otp(email: emailController.text),
-                    ),
-                  );
-                  // TODO: Add further logic after validation
+                  ).sendOtp(email: emailController.text);
                 }
               }
               : null,

@@ -7,8 +7,10 @@ class FullScreenImageGallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.black,
+      //TODO: make sure it works color
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Stack(
         children: [
           PageView.builder(
@@ -18,7 +20,9 @@ class FullScreenImageGallery extends StatelessWidget {
                 panEnabled: true,
                 minScale: 1.0,
                 maxScale: 4.0,
-                child: Center(child: _buildImageWithLoader(imageUrls[index])),
+                child: Center(
+                  child: _buildImageWithLoader(imageUrls[index], theme),
+                ),
               );
             },
           ),
@@ -26,7 +30,11 @@ class FullScreenImageGallery extends StatelessWidget {
             top: 40,
             right: 20,
             child: IconButton(
-              icon: const Icon(Icons.close, color: Colors.white, size: 30),
+              icon: Icon(
+                Icons.close,
+                color: theme.colorScheme.onSurface,
+                size: 30,
+              ),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -35,7 +43,7 @@ class FullScreenImageGallery extends StatelessWidget {
     );
   }
 
-  Widget _buildImageWithLoader(String url) {
+  Widget _buildImageWithLoader(String url, ThemeData theme) {
     return Image.network(
       url,
       fit: BoxFit.contain,
@@ -43,11 +51,13 @@ class FullScreenImageGallery extends StatelessWidget {
         if (loadingProgress == null) {
           return child;
         }
-        return const Center(child: CircularProgressIndicator());
+        return Center(
+          child: CircularProgressIndicator(color: theme.colorScheme.secondary),
+        );
       },
       errorBuilder: (context, error, stackTrace) {
-        return const Center(
-          child: Icon(Icons.broken_image, size: 50, color: Colors.grey),
+        return Center(
+          child: Icon(Icons.broken_image, size: 50, color: theme.disabledColor),
         );
       },
     );

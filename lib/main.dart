@@ -9,5 +9,7 @@ void main() {
   Bloc.observer = MyBlocObserver();
   ApiManger.init();
   configureDependencies();
-  return runApp(const MyApp());
+
+  return runApp(MyApp());
+
 }

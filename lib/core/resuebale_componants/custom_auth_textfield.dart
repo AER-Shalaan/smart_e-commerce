@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../utils/app_colors.dart';
 
 typedef FieldValidation = String? Function(String?)?;
 typedef OnChanged = void Function(String)?;
@@ -17,7 +14,7 @@ class CustomAuthTextField extends StatelessWidget {
   final FieldValidation validator;
   final TextEditingController? controller;
   final OnChanged? onChanged;
-  final Color borderColor;
+  final Color? borderColor;
   final FocusNode? focusNode;
   final OnEditingComplete? onEditingComplete;
   final String? errorMessage;
@@ -33,7 +30,7 @@ class CustomAuthTextField extends StatelessWidget {
     required this.controller,
     this.onChanged,
     this.suffixIconConstraints,
-    this.borderColor = AppColors.primary,
+    this.borderColor,
     this.focusNode,
     this.onEditingComplete,
     this.errorMessage,
@@ -41,6 +38,11 @@ class CustomAuthTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final Color effectiveBorderColor =
+        borderColor ?? theme.colorScheme.primary;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -54,51 +56,51 @@ class CustomAuthTextField extends StatelessWidget {
           validator: validator,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: GoogleFonts.dmSans(
+            hintStyle: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.hintColor,
               fontWeight: FontWeight.w400,
-              color: AppColors.primary.withAlpha(102),
-              fontSize: 16,
             ),
             suffixIcon: suffixIcon,
             suffixIconConstraints: suffixIconConstraints,
             prefixIcon: prefixIcon,
             border: OutlineInputBorder(
               borderSide: BorderSide(
-                color: AppColors.primary.withAlpha(102),
+                color: theme.dividerColor,
                 width: 1,
               ),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: borderColor, width: 2),
+              borderSide: BorderSide(color: effectiveBorderColor, width: 2),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: borderColor, width: 2),
+              borderSide: BorderSide(color: effectiveBorderColor, width: 2),
             ),
-            disabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.primary, width: 1),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: theme.disabledColor, width: 1),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red, width: 2),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
           ),
-          style: GoogleFonts.dmSans(
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: theme.colorScheme.primary,
             fontWeight: FontWeight.w400,
-            color: AppColors.primary,
-            fontSize: 16,
           ),
         ),
-        // Display error message if any
         if (errorMessage != null && errorMessage!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 5),
             child: Text(
               errorMessage!,
-              style: const TextStyle(color: Colors.red, fontSize: 12),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: Colors.red,
+                fontSize: 12,
+              ),
             ),
           ),
       ],

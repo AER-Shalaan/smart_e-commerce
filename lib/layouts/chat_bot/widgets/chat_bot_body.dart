@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:smart_ecommerce/data/models/home_models/produdts_model/products_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/product_details_model.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model_states.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/widgets/chat_bot_input_field.dart';
@@ -58,13 +58,14 @@ class _ChatBotBodyState extends State<ChatBotBody> {
         }
       },
       builder: (context, state) {
-        final messages = (state is ChatBotSuccessState)
-            ? state.messages
-            : chatBotViewModel.messages;
+        final messages =
+            (state is ChatBotSuccessState)
+                ? state.messages
+                : chatBotViewModel.messages;
 
-        final List<ProductsData> recommendedItems =
+        final List<ProductDetailsModel> recommendedItems =
             (state is ChatBotSuccessState) ? state.recommendedItems : [];
-
+       
         final isTyping = state is ChatBotLoadingState;
 
         return SafeArea(
@@ -84,18 +85,35 @@ class _ChatBotBodyState extends State<ChatBotBody> {
                         physics: const AlwaysScrollableScrollPhysics(),
                         slivers: [
                           SliverPadding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                            sliver: SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) {
-                                  return ChatMessageBubble(
-                                    message: messages[index].message,
-                                    isUser: messages[index].isUser,
-                                  );
-                                },
-                                childCount: messages.length,
-                              ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 10,
                             ),
+                            sliver:
+                                messages.isEmpty
+                                    ? SliverToBoxAdapter(
+                                      child: Center(
+                                        child: Text(
+                                          "Start chatting with our Shopping Assistant!",
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.copyWith(
+                                            color: Colors.grey[700],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    : SliverList(
+                                      delegate: SliverChildBuilderDelegate((
+                                        context,
+                                        index,
+                                      ) {
+                                        return ChatMessageBubble(
+                                          message: messages[index].message,
+                                          isUser: messages[index].isUser,
+                                        );
+                                      }, childCount: messages.length),
+                                    ),
                           ),
                           if (isTyping)
                             const SliverToBoxAdapter(
@@ -108,7 +126,9 @@ class _ChatBotBodyState extends State<ChatBotBody> {
                           if (recommendedItems.isNotEmpty)
                             SliverToBoxAdapter(
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
                                 child: ChatBotProductListBuilder(
                                   products: recommendedItems,
                                   label: "Recommended Products",

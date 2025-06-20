@@ -7,16 +7,14 @@ class PhotosWidgetPreview extends StatelessWidget {
   final List<String> productImages;
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.minWidth > 600) {
-            return ProductPhotosTablet(productImages: productImages);
-          } else {
-            return ProductPhotosMobile(productImages: productImages);
-          }
-        },
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 600) {
+          return ProductPhotosTablet(productImages: productImages);
+        } else {
+          return ProductPhotosMobile(productImages: productImages);
+        }
+      },
     );
   }
 }

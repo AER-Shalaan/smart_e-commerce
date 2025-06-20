@@ -1,129 +1,181 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/di/di.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model_states.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/del_item_from_cart_view_model/del_item_from_cart_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/del_item_from_cart_view_model/del_item_from_cart_view_model_states.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model/get_cart_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/get_cart_view_model/get_cart_view_model_states.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/update_cart_view_model/update_cart_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/update_cart_view_model/update_cart_view_model_states.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/widgets/shopping_cart_item.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/widgets/summary_row.dart';
-
+import 'package:smart_ecommerce/data/models/cart_model/cart_model.dart';
 import '../../../../core/resuebale_componants/custom_main_button.dart';
-import '../../../../core/utils/assets.dart';
 
 class CartTab extends StatelessWidget {
   const CartTab({super.key, required this.token, required this.userId});
-  double calculateSubTotal(List<Map<String, dynamic>> cartItems) {
-    return cartItems.fold(0, (sum, item) {
-      double discountedPrice =
-          item['price'] - (item['price'] * item['discountPercentage'] / 100);
-      return sum + (discountedPrice * item['quantity']);
-    });
-  }
-
-  double calculateVat(double subTotal, double vatPercentage) {
-    return subTotal * vatPercentage / 100;
-  }
-
-  double calculateShippingFee(double subTotal) {
-    return subTotal > 10000 ? 0 : 50;
-  }
-
   final String token;
   final String userId;
+
+  double calculateCartTotal(List<CartModel> cartItems) {
+    double total = 0;
+    for (final item in cartItems) {
+      final discountedPrice = item.priceOut - item.discount;
+      total += discountedPrice * item.quantity;
+    }
+    return total;
+  }
+
   @override
   Widget build(BuildContext context) {
-    double subTotal = 222;
-    double vat = 15;
-    double shippingFee = calculateShippingFee(subTotal);
-    double total = subTotal + vat + shippingFee;
-
-    return BlocProvider(
-      create:
-          (context) =>
-              getIt<GetCartViewModel>()..getCart(token: token, userId: userId),
-      child: BlocBuilder<GetCartViewModel, GetCartViewModelStates>(
-        builder: (context, state) {
-          if (state is GetCartViewModelSuccess) {
-            if (state.cartModel.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      Assets.assetsImagesCartDuotone,
-                      width: 64,
-                      height: 64,
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "Your Cart Is Empty!",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    const Text(
-                      "When you add products, they'll appear here.",
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: state.cartModel.length,
-                      itemBuilder: (context, index) {
-                        var item = state.cartModel[index];
-
-                        // double discountedPrice =
-                        //     item['price'] -
-                        //     (item['price'] * item['discountPercentage'] / 100);
-                        return ShoppingCartItem(
-                          cartModel: item,
-                          token: token,
-                          userId: userId,
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SummaryRow(label: 'Sub-total', value: subTotal.toInt()),
-                        SummaryRow(
-                          label: 'VAT (%)',
-                          value: calculateVat(subTotal, vat).toInt(),
-                        ),
-                        SummaryRow(
-                          label: 'Shipping fee',
-                          value: shippingFee.toInt(),
-                        ),
-                        const Divider(height: 1, color: Colors.grey),
-                        SummaryRow(
-                          label: 'Total',
-                          value: total.toInt(),
-                          isBold: true,
-                          isBlack: true,
-                        ),
-                        const SizedBox(height: 30),
-                        const CustomMainButton(label: "Go To Checkout"),
-                      ],
-                    ),
-                  ),
-                ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:
+              (_) =>
+                  getIt<GetCartViewModel>()
+                    ..getCart(token: token, userId: userId),
+        ),
+        BlocProvider(create: (_) => getIt<DelItemFromCartViewModel>()),
+        BlocProvider(create: (_) => getIt<UpdateCartViewModel>()),
+      ],
+      child: BlocListener<
+        DelItemFromCartViewModel,
+        DelItemFromCartViewModelStates
+      >(
+        listener: (context, state) {
+          if (state is DelItemFromCartSuccessState) {
+            context.read<GetCartViewModel>().getCart(
+              token: token,
+              userId: userId,
+            );
+            AppSnackBar.show(
+              context: context,
+              message: "Item removed from cart successfully.",
+              icon: Icons.check_circle,
+              backgroundColor: Colors.green,
+            );
+          }
+          if (state is DelItemFromCartErrorState) {
+            AppSnackBar.show(
+              context: context,
+              message: state.errorMessage,
+              icon: Icons.error,
+              backgroundColor: Colors.red,
+            );
+          }
+        },
+        child: BlocListener<UpdateCartViewModel, UpdateCartViewModelStates>(
+          listener: (context, state) {
+            if (state is UpdateCartErrorState) {
+              AppSnackBar.show(
+                context: context,
+                message:
+                    state.errorMessage.isNotEmpty
+                        ? state.errorMessage
+                        : "Failed to update quantity.",
+                icon: Icons.error_outline,
+                backgroundColor: Colors.red,
               );
             }
-          }
-          if (state is GetCartViewModelError) {
-            return Text(state.message);
-          }
-          return Center(child: CircularProgressIndicator.adaptive());
-        },
+            if (state is UpdateCartSuccessState) {
+              context.read<GetCartViewModel>().getCart(
+                token: token,
+                userId: userId,
+              );
+              AppSnackBar.show(
+                context: context,
+                message: "Quantity updated successfully.",
+                icon: Icons.check_circle,
+                backgroundColor: Colors.green,
+              );
+            }
+          },
+          child: BlocBuilder<GetCartViewModel, GetCartViewModelStates>(
+            builder: (context, state) {
+              if (state is GetCartViewModelLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is GetCartViewModelError) {
+                return Center(
+                  child: Text(
+                    'Error: ${state.message}',
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                );
+              } else if (state is GetCartViewModelSuccess) {
+                final cartItems = state.cartModel;
+                if (cartItems.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.shopping_cart, size: 80, color: Colors.grey),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'Your cart is empty!',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          'Add items to your cart to checkout.',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                final total = calculateCartTotal(cartItems);
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        itemCount: cartItems.length,
+                        itemBuilder: (context, index) {
+                          final item = cartItems[index];
+                          return ShoppingCartItem(
+                            item: item,
+                            token: token,
+                            userId: userId,
+                          );
+                        },
+                      ),
+                    ),
+                    SafeArea(
+                      top: false,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 12),
+                            SummaryRow(label: "Total", value: total),
+                            const SizedBox(height: 12),
+                            CustomMainButton(
+                              label: 'Checkout',
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.checkoutViewRouteName,
+                                  arguments: {'token': token, 'userId': userId ,"cartItems": cartItems, "total": total },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox();
+            },
+          ),
+        ),
       ),
     );
   }

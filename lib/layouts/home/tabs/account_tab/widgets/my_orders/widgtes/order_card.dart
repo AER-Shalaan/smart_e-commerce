@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/carousel_image.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/custom_main_button.dart';
-import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/cubits/my_orders_cubit/orders_cubit.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/cubits/my_orders_cubit/orders_state.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/my_orders/widgtes/order_timeline.dart';
@@ -63,11 +62,14 @@ class OrderImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return order.images.isNotEmpty
         ? SizedBox(
-          height: screenHeight * 0.1,
-          width: screenWidth * 0.23,
-          child: CarouselImage(imageUrls: order.images),
-        )
-        : const Center(child: Text("No images available"));
+            height: screenHeight * 0.1,
+            width: screenWidth * 0.23,
+            child: CarouselImage(imageUrls: order.images),
+          )
+        : Center(
+            child: Text("No images available",
+                style: Theme.of(context).textTheme.bodyMedium),
+          );
   }
 }
 
@@ -79,12 +81,14 @@ class OrderDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 400;
+    final theme = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           order.items.join(", "),
-          style: TextStyle(
+          style: theme.textTheme.bodyLarge?.copyWith(
             fontSize: isSmallScreen ? 12 : 14,
             fontWeight: FontWeight.bold,
           ),
@@ -92,9 +96,9 @@ class OrderDetails extends StatelessWidget {
         const SizedBox(height: 5),
         Text(
           "Total: \$${order.totalPrice.toStringAsFixed(2)}",
-          style: TextStyle(
+          style: theme.textTheme.bodyMedium?.copyWith(
             fontSize: isSmallScreen ? 10 : 12,
-            color: Colors.grey,
+            color: theme.hintColor,
           ),
         ),
       ],
@@ -116,6 +120,7 @@ class OrderActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -127,13 +132,8 @@ class OrderActions extends StatelessWidget {
             width: screenWidth * 0.32,
             label: "Track Order",
             fontSize: screenWidth * 0.028,
-            onPressed:
-                () => _showTrackingModal(
-                  context,
-                  order,
-                  screenWidth,
-                  screenHeight,
-                ),
+            onPressed: () =>
+                _showTrackingModal(context, order, screenWidth, screenHeight),
           )
         else if (order.rating == 0)
           CustomMainButton(
@@ -141,19 +141,18 @@ class OrderActions extends StatelessWidget {
             width: screenWidth * 0.32,
             label: "Leave Review",
             fontSize: screenWidth * 0.028,
-            onPressed:
-                () => _showReviewModal(
-                  context,
-                  order.id,
-                  screenWidth,
-                  screenHeight,
-                  () {
-                    // api
-                  },
-                ),
+            onPressed: () => _showReviewModal(
+              context,
+              order.id,
+              screenWidth,
+              screenHeight,
+              () {
+                // api
+              },
+            ),
           )
         else
-          _buildRatingDisplay(order, screenWidth, screenHeight),
+          _buildRatingDisplay(order, screenWidth, screenHeight, theme),
       ],
     );
   }
@@ -165,24 +164,26 @@ class OrderStatusTages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final isDelivered = order.currentStatus.status == 'Delivered';
+
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color:
-            order.currentStatus.status != 'Delivered'
-                ? Colors.orange.withAlpha(102)
-                : Colors.green.withAlpha(102),
+        color: isDelivered
+            ? theme.colorScheme.secondary.withAlpha(102)
+            : theme.colorScheme.primary.withAlpha(102),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         order.currentStatus.status,
-        style: TextStyle(
+        style: theme.textTheme.bodySmall?.copyWith(
           fontSize: 12,
           fontWeight: FontWeight.bold,
-          color:
-              order.currentStatus.status != 'Delivered'
-                  ? Colors.orange
-                  : Colors.green,
+          color: isDelivered
+              ? theme.colorScheme.secondary
+              : theme.colorScheme.primary,
         ),
       ),
     );
@@ -193,12 +194,13 @@ Widget _buildRatingDisplay(
   OrderModel order,
   double screenWidth,
   double screenHeight,
+  ThemeData theme,
 ) {
   return Container(
     height: screenHeight * 0.04,
     width: screenWidth * 0.2,
     decoration: BoxDecoration(
-      border: Border.all(color: Colors.grey),
+      border: Border.all(color: theme.dividerColor),
       borderRadius: BorderRadius.circular(8),
     ),
     child: Row(
@@ -207,7 +209,10 @@ Widget _buildRatingDisplay(
         SvgPicture.asset(Assets.assetsImagesActaivStar),
         Text(
           " ${order.rating}/5",
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          style: theme.textTheme.bodySmall?.copyWith(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ],
     ),
@@ -221,96 +226,105 @@ void _showReviewModal(
   double screenHeight,
   void Function()? onReviewSubmitted,
 ) {
+  final theme = Theme.of(context);
+
   showModalBottomSheet(
     context: context,
     enableDrag: false,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder:
-        (context) => Container(
-          padding: EdgeInsets.all(screenWidth * 0.04),
-          height: screenHeight * 0.5,
-          decoration: const BoxDecoration(
-            color: AppColors.backGroundColor,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    builder: (context) => Container(
+      padding: EdgeInsets.all(screenWidth * 0.04),
+      height: screenHeight * 0.5,
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  const Text(
-                    "Leave a Review",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.close, size: 24),
-                  ),
-                ],
-              ),
-              const Divider(thickness: 1),
-              SizedBox(height: screenHeight * 0.01),
-              const Text(
-                "How was your order?",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: screenHeight * 0.005),
-              const Text(
-                "Please give your Rating",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              ),
-              BlocBuilder<OrdersCubit, OrdersState>(
-                builder: (context, state) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.1,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(5, (index) {
-                        return IconButton(
-                          icon: Icon(
-                            index < state.selectedRating
-                                ? Icons.star_rounded
-                                : Icons.star_border_rounded,
-                            size: screenWidth * 0.08,
-                            color: Colors.amber,
-                          ),
-                          onPressed: () {
-                            context.read<OrdersCubit>().setRating(index + 1);
-                            context.read<OrdersCubit>().currntrating =
-                                index + 1;
-                          },
-                        );
-                      }),
-                    ),
-                  );
-                },
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: Colors.grey, width: 1),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  hintText: "Please give your review.",
-                  hintStyle: TextStyle(color: Colors.grey),
+              Text(
+                "Leave a Review",
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
-                maxLines: 4,
               ),
               const Spacer(),
-              CustomMainButton(
-                label: "Submit",
-                width: double.infinity,
-                onPressed: onReviewSubmitted,
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.close, size: 24, color: theme.iconTheme.color),
               ),
             ],
           ),
-        ),
+          const Divider(thickness: 1),
+          SizedBox(height: screenHeight * 0.01),
+          Text(
+            "How was your order?",
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: screenHeight * 0.005),
+          Text(
+            "Please give your Rating",
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.hintColor,
+            ),
+          ),
+          BlocBuilder<OrdersCubit, OrdersState>(
+            builder: (context, state) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.1,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(5, (index) {
+                    return IconButton(
+                      icon: Icon(
+                        index < state.selectedRating
+                            ? Icons.star_rounded
+                            : Icons.star_border_rounded,
+                        size: screenWidth * 0.08,
+                        color: Colors.amber,
+                      ),
+                      onPressed: () {
+                        context.read<OrdersCubit>().setRating(index + 1);
+                        context.read<OrdersCubit>().currntrating = index + 1;
+                      },
+                    );
+                  }),
+                ),
+              );
+            },
+          ),
+          TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide:
+                    BorderSide(color: theme.dividerColor, width: 1),
+              ),
+              contentPadding: const EdgeInsets.all(10),
+              hintText: "Please give your review.",
+              hintStyle: theme.textTheme.bodySmall?.copyWith(
+                color: theme.hintColor,
+              ),
+            ),
+            maxLines: 4,
+          ),
+          const Spacer(),
+          CustomMainButton(
+            label: "Submit",
+            width: double.infinity,
+            onPressed: onReviewSubmitted,
+          ),
+        ],
+      ),
+    ),
   );
 }
 
@@ -320,32 +334,39 @@ void _showTrackingModal(
   double screenWidth,
   double screenHeight,
 ) {
+  final theme = Theme.of(context);
+
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder:
-        (context) => Container(
-          padding: EdgeInsets.all(screenWidth * 0.04),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Order Status",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const Divider(thickness: 1),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: OrderTimeLine(
-                    selectedStatusIndex: order.currentStatusIndex,
-                    orderStatuses: order.tracking,
-                  ),
-                ),
-              ),
-            ],
+    builder: (context) => Container(
+      padding: EdgeInsets.all(screenWidth * 0.04),
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Order Status",
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
+          const Divider(thickness: 1),
+          Expanded(
+            child: SingleChildScrollView(
+              child: OrderTimeLine(
+                selectedStatusIndex: order.currentStatusIndex,
+                orderStatuses: order.tracking,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
   );
 }

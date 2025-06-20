@@ -1,24 +1,39 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_ecommerce/core/resuebale_componants/headline_text.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
+import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
+import 'package:smart_ecommerce/di/di.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/provider/category_provider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_states.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/filter_view_model/filter_view_model.dart';
+
 import '../../../core/utils/assets.dart';
 import '../provider/home_provider.dart';
 
 class TabletDrawer extends StatelessWidget {
-  const TabletDrawer({super.key});
-
+  const TabletDrawer({super.key, required this.token, required this.userId});
+  final String token;
+  final String userId;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Drawer(
       shape: const LinearBorder(),
-      backgroundColor: Colors.white,
+      backgroundColor: theme.colorScheme.surface,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
-            const Headlinetext(text: "Options"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text("Options", style: theme.textTheme.titleLarge),
+            ),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.only(left: 8),
@@ -62,7 +77,10 @@ class TabletDrawer extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            const Headlinetext(text: "Category"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text("Category", style: theme.textTheme.titleLarge),
+            ),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.only(left: 8),
@@ -73,19 +91,59 @@ class TabletDrawer extends StatelessWidget {
                     context: context,
                     title: "All",
                     index: 0,
+                    category: null,
                   ),
-                  // const SizedBox(height: 8),
-                  // ...Categorys.categoryList.map(
-                  //   (e) => Padding(
-                  //     padding: const EdgeInsets.only(bottom: 8),
-                  //     child: selectedOption(
-                  //       imagePath: e.image,
-                  //       context: context,
-                  //       title: e.label,
-                  //       index: e.index,
-                  //     ),
-                  //   ),
-                  // ),
+                  BlocProvider(
+                    create:
+                        (_) =>
+                            getIt<HomeCategoriesViewModel>()
+                              ..getCategories(token),
+                    child: BlocBuilder<
+                      HomeCategoriesViewModel,
+                      HomeCategoriesState
+                    >(
+                      builder: (context, state) {
+                        if (state is HomeCategoriesErrorState) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            AppSnackBar.show(
+                              context: context,
+                              message: state.message,
+                              icon: Icons.error,
+                              backgroundColor: Colors.red,
+                              fromTop: true,
+                            );
+                          });
+                          return const SizedBox();
+                        } else if (state is HomeCategoriesSuccessState) {
+                          final categories = state.categories;
+
+                          if (categories.isEmpty) {
+                            return const Center(
+                              child: Text("No categories found"),
+                            );
+                          }
+
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: categories.length,
+                            separatorBuilder:
+                                (_, __) => const SizedBox(height: 16),
+                            itemBuilder: (context, i) {
+                              return selectedOption(
+                                imagePath: Assets.assetsIconsAllCategory,
+                                context: context,
+                                title: categories[i].categoryName ?? '',
+                                index: i + 1,
+                                category: categories[i],
+                              );
+                            },
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -101,6 +159,7 @@ class TabletDrawer extends StatelessWidget {
     required String title,
     required int index,
   }) {
+    final theme = Theme.of(context);
     var provider = Provider.of<HomeProvider>(context, listen: true);
     bool isSelected = (provider.homeTapIndex == index);
     return GestureDetector(
@@ -114,8 +173,8 @@ class TabletDrawer extends StatelessWidget {
               imagePath,
               colorFilter: ColorFilter.mode(
                 isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.secondary,
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.secondary,
                 BlendMode.srcIn,
               ),
             ),
@@ -126,11 +185,11 @@ class TabletDrawer extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.clip,
-              style: TextStyle(
+              style: theme.textTheme.bodyLarge?.copyWith(
                 color:
                     isSelected
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.secondary,
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.secondary,
                 fontSize: isSelected ? 22 : 20,
                 fontWeight: FontWeight.w600,
               ),
@@ -146,11 +205,28 @@ class TabletDrawer extends StatelessWidget {
     required BuildContext context,
     required String title,
     required int index,
+    required Category? category,
   }) {
+    final theme = Theme.of(context);
     var provider = Provider.of<HomeProvider>(context, listen: true);
+    var categoryProvider = Provider.of<CategoryProvider>(context, listen: true);
+
     bool isSelected = (provider.selectedCatedgoryIndex == index);
     return GestureDetector(
-      onTap: () => provider.changeSelectedCatedgoryIndex(newValue: index),
+      onTap: () {
+        if (title == "All") {
+          categoryProvider.setSelectedCategory(null);
+        } else {
+          log(category?.categoryName ?? "");
+          categoryProvider.setSelectedCategory(category);
+          FilterViewModel.getObject(context).getFilteredData(
+            token: token,
+            categoryId: category?.categoryID,
+            page: 1,
+          );
+        }
+        provider.changeSelectedCatedgoryIndex(newValue: index);
+      },
       child: Row(
         children: [
           SizedBox(
@@ -160,8 +236,8 @@ class TabletDrawer extends StatelessWidget {
               imagePath,
               colorFilter: ColorFilter.mode(
                 isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.secondary,
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.secondary,
                 BlendMode.srcIn,
               ),
             ),
@@ -172,11 +248,11 @@ class TabletDrawer extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.clip,
-              style: TextStyle(
+              style: theme.textTheme.bodyLarge?.copyWith(
                 color:
                     isSelected
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.secondary,
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.secondary,
                 fontSize: isSelected ? 22 : 20,
                 fontWeight: FontWeight.w600,
               ),
