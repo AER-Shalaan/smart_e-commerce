@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/address_book/view_model/add_address_view_model/add_address_view_model.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/address_book/view_model/get_addresses_view_model/address_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/address_book/widgets/address_book_body.dart';
 
 class AddressBookView extends StatelessWidget {
@@ -16,16 +14,8 @@ class AddressBookView extends StatelessWidget {
     final token = arguments[0] as String;
     final userId = arguments[1] as String;
     log(userId);
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create:
-              (context) =>
-                  getIt<AddressViewModel>()
-                    ..fetchAddresses(token: token, userId: userId),
-        ),
-        BlocProvider(create: (context) => getIt<AddAddressCubit>()),
-      ],
+    return BlocProvider(
+      create: (context) => getIt<AddAddressCubit>(),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,

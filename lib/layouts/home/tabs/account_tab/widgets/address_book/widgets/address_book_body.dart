@@ -7,7 +7,11 @@ import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/address_bo
 class AddressBookBody extends StatefulWidget {
   final String token;
   final String userId;
-  const AddressBookBody({super.key, required this.token, required this.userId});
+  const AddressBookBody({
+    super.key,
+    required this.token,
+    required this.userId,
+  });
 
   @override
   State<AddressBookBody> createState() => _AddressBookBodyState();
@@ -15,6 +19,7 @@ class AddressBookBody extends StatefulWidget {
 
 class _AddressBookBodyState extends State<AddressBookBody> {
   bool showAddAddressSection = false;
+  bool _isLoaded = false;
 
   void handleAddressAdded() {
     setState(() => showAddAddressSection = false);
@@ -22,6 +27,20 @@ class _AddressBookBodyState extends State<AddressBookBody> {
       token: widget.token,
       userId: widget.userId,
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_isLoaded) {
+        context.read<AddressViewModel>().fetchAddresses(
+          token: widget.token,
+          userId: widget.userId,
+        );
+        _isLoaded = true;
+      }
+    });
   }
 
   @override
@@ -65,35 +84,31 @@ class _AddressBookBodyState extends State<AddressBookBody> {
                         child: Card(
                           margin: const EdgeInsets.only(bottom: 8),
                           shape: RoundedRectangleBorder(
-                            side:
-                                isSelected
-                                    ? BorderSide(
-                                      color: theme.colorScheme.primary,
-                                      width: 2,
-                                    )
-                                    : BorderSide.none,
+                            side: isSelected
+                                ? BorderSide(
+                                    color: theme.colorScheme.primary,
+                                    width: 2,
+                                  )
+                                : BorderSide.none,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          color:
-                              isSelected
-                                  ? theme.colorScheme.primary.withAlpha(30)
-                                  : theme.cardColor,
+                          color: isSelected
+                              ? theme.colorScheme.primary.withAlpha(30)
+                              : theme.cardColor,
                           child: ListTile(
                             leading: Icon(
                               Icons.location_on,
-                              color:
-                                  isSelected
-                                      ? theme.colorScheme.primary
-                                      : theme.iconTheme.color,
+                              color: isSelected
+                                  ? theme.colorScheme.primary
+                                  : theme.iconTheme.color,
                             ),
                             title: Text(
                               address.firstName,
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color:
-                                    isSelected
-                                        ? theme.colorScheme.primary
-                                        : theme.colorScheme.onSecondary,
+                                color: isSelected
+                                    ? theme.colorScheme.primary
+                                    : theme.colorScheme.onSecondary,
                               ),
                             ),
                             subtitle: Text(

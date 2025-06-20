@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/del_item_from_cart_view_model/del_item_from_cart_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/view_model/del_item_from_cart_view_model/del_item_from_cart_view_model_states.dart';
@@ -156,7 +157,13 @@ class CartTab extends StatelessWidget {
                             const SizedBox(height: 12),
                             CustomMainButton(
                               label: 'Checkout',
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.checkoutViewRouteName,
+                                  arguments: {'token': token, 'userId': userId ,"cartItems": cartItems, "total": total },
+                                );
+                              },
                             ),
                           ],
                         ),

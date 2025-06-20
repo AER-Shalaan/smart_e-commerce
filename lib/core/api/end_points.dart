@@ -38,4 +38,7 @@ class EndPoints {
 
   //profile endpoints
   static const String getProfileDetailsEndPoint = "api/Profile/GetUserProfile";
+
+  // payment endpoints
+  static const String paymentMethodsEndPoint = "api/Payment/start";
 }

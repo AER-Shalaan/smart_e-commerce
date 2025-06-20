@@ -11,10 +11,8 @@ class AddressViewModel extends Cubit<AddressState> {
   @factoryMethod
   AddressViewModel(this.getAddressDataSource) : super(AddressInitial());
 
-  // هنضيف هنا selectedAddressId بشكل مؤقت داخل الCubit 
   int? _selectedAddressId;
 
-  // استخدم دي بعد تحميل العناوين
   Future<void> fetchAddresses({
     required String token,
     required String userId,
@@ -26,25 +24,30 @@ class AddressViewModel extends Cubit<AddressState> {
       userId: userId,
     );
 
-    // بنشوف لو في ID محفوظ في الـSharedPref
     final savedId = await SharedPreferencesFunctions.getSelectedAddressId();
 
-    result.fold(
-      (failure) => emit(AddressFailure(failure.message)),
-      (addresses) {
-        _selectedAddressId = savedId;
-        emit(AddressSuccess(addresses.data, selectedAddressId: savedId));
-      },
-    );
+    result.fold((failure) => emit(AddressFailure(failure.message)), (
+      addresses,
+    ) {
+      _selectedAddressId = savedId;
+      emit(AddressSuccess(addresses.data, selectedAddressId: savedId));
+    });
   }
 
-  // اختيار عنوان وحفظه
   Future<void> selectAddress(int id, List<Address> addresses) async {
     _selectedAddressId = id;
     await SharedPreferencesFunctions.setSelectedAddressId(id);
     emit(AddressSuccess(addresses, selectedAddressId: id));
   }
 
-  // جلب العنوان المختار الحالي (لو عايز تبعته لصفحة تانية)
   int? get selectedAddressId => _selectedAddressId;
+  Address? get selectedAddress {
+    if (state is AddressSuccess && _selectedAddressId != null) {
+      return (state as AddressSuccess).addresses
+          .where((addr) => addr.id == _selectedAddressId)
+          .cast<Address?>()
+          .firstOrNull;
+    }
+    return null;
+  }
 }

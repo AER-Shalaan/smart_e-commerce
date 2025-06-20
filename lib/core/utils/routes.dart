@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/chat_bot_view.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/layouts/checkout/checkout_view.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_screen.dart';
 import '../../di/di.dart';
 import '../../layouts/authentication/logIn/login_view.dart';
@@ -38,7 +39,7 @@ class Routes {
   static const String myDetailsViewRouteName = "myDetailsView";
   static const String myOrdersViewRouteName = "myOrdersView";
   static const String notificationsViewRouteName = "NotificationsView";
-  static const String paymentMethodsViewRouteName = "PaymentMethodsView";
+  static const String checkoutViewRouteName = "CheckoutView";
   static const String chatBotViewRouteName = "ChatBotView";
   static const String filterViewRouteName = "FilterView";
 
@@ -85,6 +86,7 @@ class Routes {
       myOrdersViewRouteName: (_) => const MyOrdersView(),
       notificationsViewRouteName: (_) => const NotificationsView(),
       filterViewRouteName: (_) => const FilterScreen(),
+      checkoutViewRouteName: (_) => const CheckoutView(),
     };
   }
 }
