@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:smart_ecommerce/config/shared_preferences.dart';
 import 'package:smart_ecommerce/data/data_source/home/address_data_source/get_address_data_source.dart';
 import 'package:smart_ecommerce/data/models/address_model/address.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/address_book/view_model/address_state.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/account_tab/widgets/address_book/view_model/get_addresses_view_model/address_state.dart';
 
 @injectable
 class AddressViewModel extends Cubit<AddressState> {

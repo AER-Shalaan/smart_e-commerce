@@ -12,7 +12,8 @@ class EndPoints {
   static const String getRecommendedList = "recommend_list";
   //comparison endpoints
   static const String addToComparisonEndPoint = "Comparison/AddToComparison";
-  static const String removeFromComparisonEndPoint = "Comparison/RemoveFromComparisons";
+  static const String removeFromComparisonEndPoint =
+      "Comparison/RemoveFromComparisons";
   static const String getComparisonEndPoint = "Comparison/GetAllComparisons";
 
   // cart endpoints
@@ -33,8 +34,8 @@ class EndPoints {
 
   // address endpoints
   static const String getAddressEndPoint = "api/Adresses/GetUserAddresses";
+  static const String addAddressEndPoint = "api/Adresses/AddAddress";
 
   //profile endpoints
   static const String getProfileDetailsEndPoint = "api/Profile/GetUserProfile";
-
 }
