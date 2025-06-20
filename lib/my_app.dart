@@ -9,6 +9,7 @@ import 'package:smart_ecommerce/data/data_source_impl/home/home_tap_data_source_
 import 'package:smart_ecommerce/data/data_source_impl/home/home_tap_data_source_impl/subcategories_from_category_data_source_impl.dart';
 import 'package:smart_ecommerce/di/di.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/Cubit/login_checks_cubit.dart';
+import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/view_model/reset_passord_view_model.dart';
 import 'package:smart_ecommerce/layouts/authentication/signup/cubit/sign_up_check_cubit.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/provider/category_provider.dart';
 import 'package:smart_ecommerce/layouts/home/provider/comparison_category_provider.dart';
@@ -62,13 +63,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<SearchTabViewModel>()),
         BlocProvider(create: (context) => getIt<FilterViewModel>()),
         BlocProvider(create: (context) => getIt<AddressViewModel>()),
+        BlocProvider(create: (context) => getIt<ResetPassordViewModel>()),
       ],
       child: FutureBuilder<String>(
         future: SharedPreferencesFunctions.getThemeMode(),
         builder: (context, snapshot) {
-          //String themeString = snapshot.data ?? 'light';
-          //ThemeMode themeMode = getThemeModeFromString(themeString);
-
           return ChangeNotifierProvider(
             create: (context) => CategoryProvider(),
             child: MaterialApp(

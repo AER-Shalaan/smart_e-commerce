@@ -17,6 +17,10 @@ import '../core/resuebale_componants/item_widget/view_model/add_item_view_view_m
     as _i1024;
 import '../data/data_source/ai_check_data_source/ai_check_data_source.dart'
     as _i608;
+import '../data/data_source/auth/login/login_data_source.dart' as _i343;
+import '../data/data_source/auth/reset_password/reset_password_data_source.dart'
+    as _i628;
+import '../data/data_source/auth/signup/signup_data_source.dart' as _i427;
 import '../data/data_source/home/account_tab_data_source/profile_data_source/profile_data_source.dart'
     as _i439;
 import '../data/data_source/home/address_data_source/add_address_data_source.dart'
@@ -71,10 +75,14 @@ import '../data/data_source/home/save_tab_data_source/del_itme_from_wishlsit_dat
     as _i1065;
 import '../data/data_source/home/save_tab_data_source/get_user_wishlist_data_source.dart'
     as _i585;
-import '../data/data_source/auth/login/login_data_source.dart' as _i153;
-import '../data/data_source/auth/signup/signup_data_source.dart' as _i125;
 import '../data/data_source_impl/ai_check_data_source_impl/ai_check_data_source_impl.dart'
     as _i481;
+import '../data/data_source_impl/auth/login/login_data_source_impl.dart'
+    as _i754;
+import '../data/data_source_impl/auth/reset_password/reset_password_data_source_impl.dart'
+    as _i2;
+import '../data/data_source_impl/auth/signup/sign_up_data_source_impl.dart'
+    as _i884;
 import '../data/data_source_impl/home/address_data_source_impl/add_address_data_source_impl.dart'
     as _i1026;
 import '../data/data_source_impl/home/address_data_source_impl/get_address_data_source_impl.dart'
@@ -129,10 +137,10 @@ import '../data/data_source_impl/home/save_tab_data_source_impl/del_product_from
     as _i752;
 import '../data/data_source_impl/home/save_tab_data_source_impl/get_user_wishlist_data_source_impl.dart'
     as _i492;
-import '../data/data_source_impl/auth/login/login_data_source_impl.dart' as _i335;
-import '../data/data_source_impl/auth/signup/sign_up_data_source_impl.dart' as _i764;
 import '../layouts/authentication/login/view_model/login_view_model.dart'
     as _i857;
+import '../layouts/authentication/resetPassFeature/view_model/reset_passord_view_model.dart'
+    as _i126;
 import '../layouts/authentication/signup/view_model/sign_up_view_model.dart'
     as _i55;
 import '../layouts/chat_bot/view_model/chat_bot_view_model.dart' as _i200;
@@ -200,6 +208,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i585.GetUserWishlistDataSource>(
       () => _i492.GetUserWishlistDataSourceImpl(gh<_i108.ApiManger>()),
     );
+    gh.factory<_i628.ResetPasswordDataSource>(
+      () => _i2.ResetPasswordDataSourceImpl(gh<_i108.ApiManger>()),
+    );
     gh.factory<_i850.AddToComparisonViewModel>(
       () =>
           _i850.AddToComparisonViewModel(gh<_i922.AddToComparisonDataSource>()),
@@ -237,9 +248,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1050.CategoriesDataSource>(
       () => _i323.CategoriesDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i125.SignUpDataSource>(
-      () => _i764.SignUpDataSourceImpl(gh<_i108.ApiManger>()),
-    );
     gh.factory<_i1015.SearchDataSource>(
       () => _i347.SearchDataSourceImpl(gh<_i108.ApiManger>()),
     );
@@ -248,6 +256,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i354.NewArrivalsDataSource>(
       () => _i765.NewArrivalsDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i427.SignUpDataSource>(
+      () => _i884.SignUpDataSourceImpl(gh<_i108.ApiManger>()),
     );
     gh.lazySingleton<_i511.AddAddressDataSource>(
       () => _i1026.AddAddressDataSourceImpl(gh<_i108.ApiManger>()),
@@ -267,8 +278,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i233.UpdateCartDataSource>(
       () => _i140.UpdateCartDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i153.LoginDataSource>(
-      () => _i335.LoginDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i126.ResetPassordViewModel>(
+      () => _i126.ResetPassordViewModel(gh<_i628.ResetPasswordDataSource>()),
+    );
+    gh.factory<_i343.LoginDataSource>(
+      () => _i754.LoginDataSourceImpl(gh<_i108.ApiManger>()),
     );
     gh.factory<_i965.SubcategoriesFromCategoryDataSource>(
       () =>
@@ -294,6 +308,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i172.CategoriesViewModel>(
       () => _i172.CategoriesViewModel(gh<_i1050.CategoriesDataSource>()),
+    );
+    gh.factory<_i55.SignUpViewModel>(
+      () => _i55.SignUpViewModel(gh<_i427.SignUpDataSource>()),
     );
     gh.factory<_i1035.GetReviewsViewModel>(
       () => _i1035.GetReviewsViewModel(gh<_i35.ReviewsDataSource>()),
@@ -322,17 +339,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i426.FilterViewModel>(
       () => _i426.FilterViewModel(gh<_i973.FilterDataSource>()),
     );
-    gh.factory<_i857.LoginViewModel>(
-      () => _i857.LoginViewModel(gh<_i153.LoginDataSource>()),
-    );
     gh.factory<_i228.CheckReviewViewModel>(
       () => _i228.CheckReviewViewModel(gh<_i608.AICheckDataSource>()),
     );
     gh.factory<_i713.ComparisonViewModel>(
       () => _i713.ComparisonViewModel(gh<_i941.ComparisonDataSource>()),
-    );
-    gh.factory<_i55.SignUpViewModel>(
-      () => _i55.SignUpViewModel(gh<_i125.SignUpDataSource>()),
     );
     gh.factory<_i278.ProfileViewModel>(
       () => _i278.ProfileViewModel(gh<_i439.ProfileDataSource>()),
@@ -372,6 +383,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i335.AddAddressCubit>(
       () => _i335.AddAddressCubit(gh<_i511.AddAddressDataSource>()),
+    );
+    gh.factory<_i857.LoginViewModel>(
+      () => _i857.LoginViewModel(gh<_i343.LoginDataSource>()),
     );
     return this;
   }

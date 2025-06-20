@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/search_feature/widgets/search_screen.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_button.dart';
 
 class HomeTabAppBar extends StatelessWidget {
@@ -27,6 +28,13 @@ class HomeTabAppBar extends StatelessWidget {
               Expanded(
                 flex: 15,
                 child: TextFormField(
+                  readOnly: true, // ⛔️ يمنع الكتابة المباشرة
+                  onTap: () {
+                    showSearch(
+                      context: context,
+                      delegate: SearchScreen(token: token, userId: userId),
+                    );
+                  },
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
@@ -63,7 +71,10 @@ class HomeTabAppBar extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 15),
-              Expanded(flex: 2, child: FilterButton(token: token, userId: userId,)),
+              Expanded(
+                flex: 2,
+                child: FilterButton(token: token, userId: userId),
+              ),
             ],
           ),
         ),

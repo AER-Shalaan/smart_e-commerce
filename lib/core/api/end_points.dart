@@ -41,4 +41,7 @@ class EndPoints {
 
   // payment endpoints
   static const String paymentMethodsEndPoint = "api/Payment/start";
+
+  static const String sendOtpEndPoint = "Auth/SendOTP";
+  static const String verifyOtpEndPoint = "Auth/VerifyOTPAndResetPassword";
 }
