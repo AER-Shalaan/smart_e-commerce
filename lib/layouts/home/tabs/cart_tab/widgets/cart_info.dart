@@ -88,10 +88,9 @@ class CartInfo extends StatelessWidget {
                 ),
               ),
               CartDeleteButton(
-                isDeleting: isDeleting,
-                onDelete: () {
-                  // logic of delete
-                },
+                token: token,
+                userId: userId,
+                itemId: item.itemID,
               ),
             ],
           ),

@@ -22,11 +22,8 @@ class AppTheme {
 
       // Card Theme
       cardTheme: CardTheme(
-        color: Colors.white,
-        elevation: 5,
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        shadowColor: Colors.black.withAlpha((0.08 * 255).toInt()),
       ),
 
       // Text Styles
@@ -130,11 +127,8 @@ class AppTheme {
 
       // Card Theme (dark)
       cardTheme: CardTheme(
-        color: const Color(0xFF222326),
-        elevation: 5,
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        shadowColor: Colors.white24,
       ),
 
       // Text Styles for dark mode

@@ -28,4 +28,14 @@ class SharedPreferencesFunctions {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('theme_mode');
   }
+
+  static Future<void> setSelectedAddressId(int id) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setInt('selected_address_id', id);
+}
+
+static Future<int?> getSelectedAddressId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('selected_address_id');
+}
 }
