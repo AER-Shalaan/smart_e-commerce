@@ -108,7 +108,7 @@ class CustomDialogs {
             width: screenWidth * 0.8,
             padding: EdgeInsets.all(screenWidth * 0.05),
             decoration: BoxDecoration(
-              color: theme.dialogBackgroundColor,
+              color: theme.colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -160,35 +160,36 @@ class CustomDialogs {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: isOutlined
-          ? OutlinedButton(
-              onPressed: onPressed,
-              style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+      child:
+          isOutlined
+              ? OutlinedButton(
+                onPressed: onPressed,
+                style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  side: BorderSide(color: color),
                 ),
-                side: BorderSide(color: color),
-              ),
-              child: Text(
-                label,
-                style: theme.textTheme.labelLarge?.copyWith(color: color),
-              ),
-            )
-          : ElevatedButton(
-              onPressed: onPressed,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: color,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                child: Text(
+                  label,
+                  style: theme.textTheme.labelLarge?.copyWith(color: color),
+                ),
+              )
+              : ElevatedButton(
+                onPressed: onPressed,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: color,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  label,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.onPrimary,
+                  ),
                 ),
               ),
-              child: Text(
-                label,
-                style: theme.textTheme.labelLarge?.copyWith(
-                  color: theme.colorScheme.onPrimary,
-                ),
-              ),
-            ),
     );
   }
 }

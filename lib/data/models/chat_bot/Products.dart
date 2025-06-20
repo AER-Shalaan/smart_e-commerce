@@ -1,5 +1,6 @@
-import 'Brand.dart';
-import 'Data.dart';
+import 'package:smart_ecommerce/data/models/chat_bot/Data.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/brand.dart';
+
 import 'Rating.dart';
 
 class Products {

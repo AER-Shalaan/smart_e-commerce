@@ -39,9 +39,14 @@ class _PaymentWebViewState extends State<PaymentWebView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Complete Payment'),
-        backgroundColor:
-            theme.appBarTheme.backgroundColor ?? theme.colorScheme.primary,
         iconTheme: theme.appBarTheme.iconTheme,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        ),
         titleTextStyle:
             theme.appBarTheme.titleTextStyle ?? theme.textTheme.titleLarge,
         elevation: 1,

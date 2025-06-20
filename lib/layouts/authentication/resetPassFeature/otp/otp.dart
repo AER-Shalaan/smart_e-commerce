@@ -28,7 +28,7 @@ class _OtpState extends State<Otp> {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyles = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
 
     return BlocListener<ResetPassordViewModel, ResetPassordViewModelState>(
       listenWhen:
@@ -37,7 +37,6 @@ class _OtpState extends State<Otp> {
               current is ResetPassordVerifySuccess ||
               current is ResetPassordVerifyError,
       listener: (context, state) {
-        /// ✅ حالات تحقق الـ OTP فقط
         if (state is ResetPassordVerifyLoading) {
           CustomDialogs.showLoadingDialog(context);
         } else {
@@ -71,6 +70,7 @@ class _OtpState extends State<Otp> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(size: 33),
+          title: const Text("OTP"),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -81,20 +81,13 @@ class _OtpState extends State<Otp> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "OTP",
-                      style: TextStyles.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
                     RichText(
                       text: TextSpan(
                         children: [
                           TextSpan(
                             text:
                                 "Enter the 6 digit code that you received on your email ",
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: theme.textTheme.bodyLarge,
                           ),
                           TextSpan(
                             text: "(${widget.email})",

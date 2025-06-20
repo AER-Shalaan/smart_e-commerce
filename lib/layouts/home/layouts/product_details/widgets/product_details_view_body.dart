@@ -107,8 +107,8 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                               Icon(
                                 Icons.comments_disabled_outlined,
                                 size: 56,
-                                color: theme.colorScheme.onSurface.withOpacity(
-                                  0.4,
+                                color: theme.colorScheme.onSurface.withAlpha(
+                                  (0.4 * 255).toInt(),
                                 ),
                               ),
                               const SizedBox(height: 12),
@@ -117,14 +117,14 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                                 style: theme.textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: theme.colorScheme.onSurface
-                                      .withOpacity(0.6),
+                                      .withAlpha((0.6 * 255).toInt()),
                                 ),
                               ),
                               Text(
                                 'Be the first to review this product',
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: theme.colorScheme.onSurface
-                                      .withOpacity(0.5),
+                                      .withAlpha((0.5 * 255).toInt()),
                                 ),
                               ),
                             ],

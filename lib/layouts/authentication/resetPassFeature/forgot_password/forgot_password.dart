@@ -22,17 +22,14 @@ class ForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ForgotPasswordProvider>(context);
-    final textStyles = Theme.of(context).textTheme;
-
+    final theme = Theme.of(context);
     return BlocListener<ResetPassordViewModel, ResetPassordViewModelState>(
       listener: (context, state) {
-        /// ✅ الحالات الخاصة بـ إرسال OTP فقط
         if (state is ResetPassordSendOtpLoading) {
           CustomDialogs.showLoadingDialog(context);
         } else if (state is ResetPassordSendOtpSuccess) {
           CustomDialogs.closeDialogs(context);
 
-          // التنقل إلى شاشة OTP بعد النجاح
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -48,6 +45,7 @@ class ForgotPassword extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(size: 33),
+          title: const Text("Reset Password"),
         ),
         resizeToAvoidBottomInset: true,
         body: Padding(
@@ -60,16 +58,10 @@ class ForgotPassword extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Forgot password",
-                        style: textStyles.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       const SizedBox(height: 8),
                       Text(
                         "Enter your email for the verification process. We will send a 6-digit code to your email.",
-                        style: textStyles.titleMedium,
+                        style: theme.textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 24),
                       const Text("Email"),
@@ -78,8 +70,9 @@ class ForgotPassword extends StatelessWidget {
                         hint: "email@example.com",
                         controller: emailController,
                         keyboard: TextInputType.emailAddress,
-                        suffixIconConstraints:
-                            BoxConstraints.tight(const Size(50, 30)),
+                        suffixIconConstraints: BoxConstraints.tight(
+                          const Size(50, 30),
+                        ),
                         prefixIcon: const Icon(Icons.email_outlined),
                         suffixIcon: Row(
                           children: [
@@ -96,9 +89,10 @@ class ForgotPassword extends StatelessWidget {
                               ),
                           ],
                         ),
-                        borderColor: provider.isEmailValid
-                            ? Colors.green
-                            : provider.emailErrorMessage.isNotEmpty
+                        borderColor:
+                            provider.isEmailValid
+                                ? Colors.green
+                                : provider.emailErrorMessage.isNotEmpty
                                 ? Colors.red
                                 : AppColors.primary.withAlpha(102),
                         onChanged: (value) {},

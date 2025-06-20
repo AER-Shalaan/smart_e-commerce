@@ -4,7 +4,7 @@ import 'package:smart_ecommerce/core/api/api_manager.dart';
 import 'package:smart_ecommerce/core/api/end_points.dart';
 import 'package:smart_ecommerce/core/api/failure.dart';
 import 'package:smart_ecommerce/data/data_source/auth/reset_password/reset_password_data_source.dart';
-import 'package:smart_ecommerce/data/models/auth_model/reset_password_model/ResetPasswordModel.dart';
+import 'package:smart_ecommerce/data/models/auth_model/reset_password_model/reset_password_model.dart';
 
 @Injectable(as: ResetPasswordDataSource)
 class ResetPasswordDataSourceImpl extends ResetPasswordDataSource {

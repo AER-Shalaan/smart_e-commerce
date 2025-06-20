@@ -32,7 +32,7 @@ class ReusableFilterDialog<T> extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return AlertDialog(
-      backgroundColor: theme.dialogBackgroundColor,
+      backgroundColor: theme.colorScheme.surface,
       title: Column(
         children: [
           Text(title, style: theme.textTheme.titleMedium),

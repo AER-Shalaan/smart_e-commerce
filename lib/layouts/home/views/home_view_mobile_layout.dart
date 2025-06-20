@@ -45,7 +45,9 @@ class HomeViewMobileLayout extends StatelessWidget {
             Positioned.fill(
               child: GestureDetector(
                 onTap: () => entry.remove(),
-                child: Container(color: Colors.black.withOpacity(0.25)),
+                child: Container(
+                  color: Colors.black.withAlpha((0.25 * 255).toInt()),
+                ),
               ),
             ),
             Center(

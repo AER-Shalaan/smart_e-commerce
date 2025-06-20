@@ -1,5 +1,5 @@
 import 'package:smart_ecommerce/core/api/failure.dart';
-import 'package:smart_ecommerce/data/models/auth_model/reset_password_model/ResetPasswordModel.dart';
+import 'package:smart_ecommerce/data/models/auth_model/reset_password_model/reset_password_model.dart';
 
 /// الحالة الأساسية
 abstract class ResetPassordViewModelState {}

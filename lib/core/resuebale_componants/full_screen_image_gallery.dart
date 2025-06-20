@@ -9,7 +9,6 @@ class FullScreenImageGallery extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      //TODO: make sure it works color
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Stack(
         children: [
