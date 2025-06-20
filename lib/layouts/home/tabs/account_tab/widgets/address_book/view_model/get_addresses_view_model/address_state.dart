@@ -8,8 +8,8 @@ class AddressLoading extends AddressState {}
 
 class AddressSuccess extends AddressState {
   final List<Address> addresses;
-  final int? selectedAddressId;
-  AddressSuccess(this.addresses, {this.selectedAddressId});
+
+  AddressSuccess(this.addresses);
 }
 
 class AddressFailure extends AddressState {

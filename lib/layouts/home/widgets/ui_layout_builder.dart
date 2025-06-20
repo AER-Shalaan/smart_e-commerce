@@ -1,10 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/config/auth_session.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/provider/category_provider.dart';
 import 'package:smart_ecommerce/layouts/home/views/home_view_mobile_layout.dart';
 import 'package:smart_ecommerce/layouts/home/widgets/tablet_drawer.dart';
 
@@ -88,8 +85,6 @@ class _UiLayoutBuilderState extends State<UiLayoutBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    var categoryProvider = Provider.of<CategoryProvider>(context);
-
     if (token == null || userId == null) {
       return Center(
         child: CircularProgressIndicator(
