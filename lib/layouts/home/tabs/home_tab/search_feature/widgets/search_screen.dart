@@ -16,35 +16,67 @@ class SearchScreen extends SearchDelegate {
             query = '';
             showSuggestions(context);
           },
-          icon: Icon(Icons.clear, color: Theme.of(context).colorScheme.primary),
+          icon: Icon(
+            Icons.clear,
+            color: Theme.of(context).colorScheme.primary,
+            size: 24,
+          ),
+          tooltip: 'delete',
         ),
       ),
     ];
   }
 
   @override
-  TextStyle? get searchFieldStyle => const TextStyle(fontSize: 18);
+  TextStyle? get searchFieldStyle => null;
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    final baseTheme = Theme.of(context);
+    final theme = Theme.of(context);
 
-    return baseTheme.copyWith(
-      appBarTheme: baseTheme.appBarTheme.copyWith(
-        backgroundColor: Colors.black54,
-        surfaceTintColor: baseTheme.colorScheme.surfaceTint,
-        toolbarTextStyle: baseTheme.textTheme.bodyMedium?.copyWith(
+    return theme.copyWith(
+      appBarTheme: theme.appBarTheme.copyWith(
+        backgroundColor: theme.colorScheme.surface.withAlpha(
+          242,
+        ), // شفافية بسيطة
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: IconThemeData(color: theme.colorScheme.primary, size: 28),
+        titleTextStyle: theme.textTheme.titleLarge?.copyWith(
+          color: theme.colorScheme.onSurface,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        toolbarTextStyle: theme.textTheme.bodyMedium?.copyWith(
           fontSize: 18,
+          color: theme.colorScheme.onSurface,
         ),
       ),
-      inputDecorationTheme: baseTheme.inputDecorationTheme.copyWith(
-        hintStyle: baseTheme.textTheme.labelSmall?.copyWith(
-          color:
-              baseTheme.brightness == Brightness.dark
-                  ? Colors.white60
-                  : Colors.black45,
+      inputDecorationTheme: theme.inputDecorationTheme.copyWith(
+        filled: true,
+        fillColor: theme.colorScheme.surface.withAlpha(235),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 20,
         ),
-        border: InputBorder.none,
+        hintStyle: theme.textTheme.bodyMedium?.copyWith(
+          color:
+              theme.brightness == Brightness.dark
+                  ? Colors.white60
+                  : Colors.black54,
+          fontWeight: FontWeight.w400,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: theme.colorScheme.primary, width: 1.7),
+        ),
+      ),
+      textSelectionTheme: theme.textSelectionTheme.copyWith(
+        cursorColor: theme.colorScheme.primary,
       ),
     );
   }
@@ -52,13 +84,13 @@ class SearchScreen extends SearchDelegate {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        close(context, null);
-      },
+      onPressed: () => close(context, null),
       icon: Icon(
-        Icons.arrow_back_ios,
+        Icons.arrow_back_ios_new_rounded,
         color: Theme.of(context).colorScheme.primary,
+        size: 24,
       ),
+      tooltip: 'back',
     );
   }
 
@@ -69,7 +101,6 @@ class SearchScreen extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // Trigger the search on each change
     if (query.isNotEmpty) {
       SearchTabViewModel.getObject(
         context,
@@ -79,12 +110,11 @@ class SearchScreen extends SearchDelegate {
 
     return Center(
       child: Text(
-        'Search for products',
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
+        "search for products",
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.w500,
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }
