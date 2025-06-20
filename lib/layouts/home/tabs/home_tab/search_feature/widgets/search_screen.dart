@@ -79,7 +79,7 @@ class SearchScreen extends SearchDelegate {
 
     return Center(
       child: Text(
-        'Search for a movie or tv series',
+        'Search for products',
         style: TextStyle(
           color: Theme.of(context).colorScheme.primary,
           fontSize: 18,

@@ -7,15 +7,18 @@ import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/vie
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/widgets/category_widget.dart';
 
-
 class CategoryWidgetBuilder extends StatelessWidget {
-  const CategoryWidgetBuilder({super.key, required this.token});
+  const CategoryWidgetBuilder({
+    super.key,
+    required this.token,
+    required this.userId,
+  });
   final String token;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
-    
- final bool isTablet = MediaQuery.of(context).size.width >= 600;
+    final bool isTablet = MediaQuery.of(context).size.width >= 600;
     final List<Color> softColors = [
       Colors.blue.withAlpha(30),
       Colors.green.withAlpha(30),
@@ -26,7 +29,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
     ];
 
     return BlocProvider(
-      create: (_) => getIt<HomeCategoriesViewModel>()..getCategories(token), 
+      create: (_) => getIt<HomeCategoriesViewModel>()..getCategories(token),
       child: BlocBuilder<HomeCategoriesViewModel, HomeCategoriesState>(
         builder: (context, state) {
           if (state is HomeCategoriesLoadingState) {
@@ -101,6 +104,8 @@ class CategoryWidgetBuilder extends StatelessWidget {
                                       color:
                                           softColors[topIndex %
                                               softColors.length],
+                                      token: token,
+                                      userId: userId,
                                     ),
                                   ),
                                 const SizedBox(height: 12),
@@ -112,6 +117,8 @@ class CategoryWidgetBuilder extends StatelessWidget {
                                       color:
                                           softColors[bottomIndex %
                                               softColors.length],
+                                      token: token,
+                                      userId: userId,
                                     ),
                                   ),
                               ],
@@ -132,6 +139,8 @@ class CategoryWidgetBuilder extends StatelessWidget {
                                 child: CategoryWidget(
                                   category: categories[index],
                                   color: softColors[index % softColors.length],
+                                  token: token,
+                                  userId: userId,
                                 ),
                               ),
                         ),
@@ -141,7 +150,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
 
           return const SizedBox.shrink();
         },
-      )
+      ),
     );
   }
 

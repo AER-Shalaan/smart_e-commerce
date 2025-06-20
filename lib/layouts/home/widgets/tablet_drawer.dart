@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_ecommerce/core/resuebale_componants/app_snack_bar.dart';
+import 'package:smart_ecommerce/di/di.dart';
+import 'package:smart_ecommerce/layouts/home/provider/category_provider.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_states.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/view_model/home_categories_view_model.dart';
+
 import '../../../core/utils/assets.dart';
 import '../provider/home_provider.dart';
 
 class TabletDrawer extends StatelessWidget {
-  const TabletDrawer({super.key});
-
+  const TabletDrawer({super.key, required this.token, required this.userId});
+  final String token;
+  final String userId;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    return Drawer(
+    var provider = Provider.of<CategoryProvider>(context,);
+    return Drawer( 
       shape: const LinearBorder(),
       backgroundColor: theme.colorScheme.surface,
       child: SingleChildScrollView(
@@ -21,10 +29,7 @@ class TabletDrawer extends StatelessWidget {
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Options",
-                style: theme.textTheme.titleLarge,
-              ),
+              child: Text("Options", style: theme.textTheme.titleLarge),
             ),
             const SizedBox(height: 30),
             Padding(
@@ -71,23 +76,75 @@ class TabletDrawer extends StatelessWidget {
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Category",
-                style: theme.textTheme.titleLarge,
-              ),
+              child: Text("Category", style: theme.textTheme.titleLarge),
             ),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Column(
                 children: [
-                  selectedOption(
-                    imagePath: Assets.assetsIconsAllCategory,
-                    context: context,
-                    title: "All",
-                    index: 0,
+                  GestureDetector(
+                    onTap: () => provider.setSelectedCategory(null),
+                    child: selectedOption(
+                      imagePath: Assets.assetsIconsAllCategory,
+                      context: context,
+                      title: "All",
+                      index: 0,
+                    ),
                   ),
-                  // ... Add more options if needed
+                  BlocProvider(
+                    create:
+                        (_) =>
+                            getIt<HomeCategoriesViewModel>()
+                              ..getCategories(token),
+                    child: BlocBuilder<
+                      HomeCategoriesViewModel,
+                      HomeCategoriesState
+                    >(
+                      builder: (context, state) {
+                        if (state is HomeCategoriesErrorState) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            AppSnackBar.show(
+                              context: context,
+                              message: state.message,
+                              icon: Icons.error,
+                              backgroundColor: Colors.red,
+                              fromTop: true,
+                            );
+                          });
+                          return const SizedBox();
+                        } else if (state is HomeCategoriesSuccessState) {
+                          final categories = state.categories;
+
+                          if (categories.isEmpty) {
+                            return const Center(
+                              child: Text("No categories found"),
+                            );
+                          }
+
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: categories.length,
+                            separatorBuilder:
+                                (_, __) => const SizedBox(height: 16),
+                            itemBuilder: (context, i) {
+                              return GestureDetector(
+                                onTap: () => provider.setSelectedCategory(categories[i]),
+                                child: selectedOption(
+                                  imagePath: Assets.assetsIconsAllCategory,
+                                  context: context,
+                                  title: categories[i].categoryName ?? '',
+                                  index: i + 1,
+                                ),
+                              );
+                            },
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -130,9 +187,10 @@ class TabletDrawer extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.clip,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: isSelected
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.secondary,
+                color:
+                    isSelected
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.secondary,
                 fontSize: isSelected ? 22 : 20,
                 fontWeight: FontWeight.w600,
               ),
@@ -176,9 +234,10 @@ class TabletDrawer extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.clip,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: isSelected
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.secondary,
+                color:
+                    isSelected
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.secondary,
                 fontSize: isSelected ? 22 : 20,
                 fontWeight: FontWeight.w600,
               ),

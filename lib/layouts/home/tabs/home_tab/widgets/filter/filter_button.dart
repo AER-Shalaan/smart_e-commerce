@@ -1,13 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_ecommerce/core/resuebale_componants/reusable_filter_dialog.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
+import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/data/models/home_models/categories_model/category.dart';
 import 'package:smart_ecommerce/data/models/home_models/categories_model/sub_category.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_cubit.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_states.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/categories_view_model/categories_view_model.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/filter_view_model/filter_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/subcategories_from_category_view_model/subcategories_from_category_states.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_view/subcategories_from_category_view_model/subcategories_from_category_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/widgets/filter_bottom_sheet.dart';
@@ -45,7 +49,12 @@ class FilterButton extends StatelessWidget {
         return BlocBuilder<CategoriesViewModel, CategoriesState>(
           builder: (context, state) {
             if (state is CategoriesLoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return const AlertDialog(
+                content: SizedBox(
+                  height: 100,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              );
             } else if (state is CategoriesSuccessState) {
               final categories = state.categories;
 
@@ -67,11 +76,34 @@ class FilterButton extends StatelessWidget {
                     context
                         .read<SubcategoriesFromCategoryViewModel>()
                         .getCategories(token, selectedCategory.categoryID!);
-                    _showSubcategoryDialog(context);
+                    _showSubcategoryDialog(context, token: token);
                   }
                 },
                 onConfirmPressed: () {
+                  final selectedCategory =
+                      context.read<FilterCubit>().state.selectedCategory;
+                  log(
+                    "category id: ${selectedCategory?.categoryID.toString()}",
+                  );
+                  FilterViewModel.getObject(context).getFilteredData(
+                    token: token,
+                    categoryId: selectedCategory?.categoryID,
+                    subCategoryId: null,
+                    page: 1,
+                    maxPrice: null,
+                    minPrice: null,
+                    rate: null,
+                    mostViewed: null,
+                    newwest: null,
+                    mostSold: null,
+                  );
+
                   Navigator.pop(context);
+                  Navigator.pushNamed(
+                    context,
+                    Routes.filterViewRouteName,
+                    arguments: [token,userId],
+                  );
                 },
                 onCancelPressed: () {
                   context.read<FilterCubit>().clearFilters();
@@ -85,12 +117,22 @@ class FilterButton extends StatelessWidget {
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text("Close", style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.primary)),
+                    child: Text(
+                      "Close",
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
                   ),
                 ],
               );
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return const AlertDialog(
+                content: SizedBox(
+                  height: 100,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              );
             }
           },
         );
@@ -98,20 +140,34 @@ class FilterButton extends StatelessWidget {
     );
   }
 
-  void _showSubcategoryDialog(BuildContext context) {
+  void _showSubcategoryDialog(BuildContext context, {required String token}) {
     final theme = Theme.of(context);
     showDialog(
       context: context,
       builder: (context) {
-        return BlocBuilder<SubcategoriesFromCategoryViewModel, SubcategoriesFromCategoryStates>(
+        return BlocBuilder<
+          SubcategoriesFromCategoryViewModel,
+          SubcategoriesFromCategoryStates
+        >(
           builder: (context, state) {
             if (state is SubcategoriesFromCategoryLoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return const AlertDialog(
+                content: SizedBox(
+                  height: 100,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              );
             } else if (state is SubcategoriesFromCategorySuccessState) {
               final subcategories = state.subCategories;
 
               return ReusableFilterDialog<SubCategory>(
-                title: context.read<FilterCubit>().state.selectedCategory?.categoryName ?? 'Select Subcategory',
+                title:
+                    context
+                        .read<FilterCubit>()
+                        .state
+                        .selectedCategory
+                        ?.categoryName ??
+                    'Select Subcategory',
                 items: subcategories,
                 itemLabel: (subcategory) => subcategory.subCategoryName ?? '',
                 itemImage: (subcategory) => subcategory.subCategoryImage ?? '',
@@ -122,18 +178,47 @@ class FilterButton extends StatelessWidget {
                   final selectedSubCategory =
                       context.read<FilterCubit>().state.selectedSubcategory;
                   if (selectedSubCategory == null) {
-                    _showSnackbar(context, 'Please select a subcategory first.');
+                    _showSnackbar(
+                      context,
+                      'Please select a subcategory first.',
+                    );
                   } else {
                     Navigator.pop(context);
                     showModalBottomSheet(
                       context: context,
                       enableDrag: false,
-                      builder: (context) => const FilterBottomSheet(),
+                      builder:
+                          (context) =>
+                              FilterBottomSheet(token: token, userId: userId, ),
                     );
                   }
                 },
                 onConfirmPressed: () {
+                  final selectedCategory =
+                      context.read<FilterCubit>().state.selectedCategory;
+                  final selectedSubCategory =
+                      context.read<FilterCubit>().state.selectedSubcategory;
+                  log(
+                    "sub category id: ${selectedSubCategory?.categoryID.toString()}",
+                  );
+                  FilterViewModel.getObject(context).getFilteredData(
+                    token: token,
+                    categoryId: selectedCategory?.categoryID,
+                    subCategoryId: selectedSubCategory?.subCategoryID,
+                    page: 1,
+                    maxPrice: null,
+                    minPrice: null,
+                    rate: null,
+                    mostViewed: null,
+                    newwest: null,
+                    mostSold: null,
+                  );
                   Navigator.pop(context);
+                  Navigator.pushNamed(
+                    context,
+                    Routes.filterViewRouteName,
+                    arguments: [token,userId],
+                  );
                 },
                 onCancelPressed: () {
                   context.read<FilterCubit>().clearFilters();
@@ -147,12 +232,22 @@ class FilterButton extends StatelessWidget {
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text("Close", style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.primary)),
+                    child: Text(
+                      "Close",
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
                   ),
                 ],
               );
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return const AlertDialog(
+                content: SizedBox(
+                  height: 100,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              );
             }
           },
         );
@@ -164,7 +259,12 @@ class FilterButton extends StatelessWidget {
     final theme = Theme.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onPrimary)),
+        content: Text(
+          message,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: theme.colorScheme.onPrimary,
+          ),
+        ),
         backgroundColor: theme.colorScheme.primary,
         duration: const Duration(seconds: 2),
       ),

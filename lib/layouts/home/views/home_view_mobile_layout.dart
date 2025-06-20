@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
 import 'package:smart_ecommerce/di/di.dart';
+import 'package:smart_ecommerce/layouts/home/provider/category_provider.dart';
 import 'package:smart_ecommerce/layouts/home/provider/comparison_category_provider.dart';
 import 'package:smart_ecommerce/layouts/home/provider/home_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/account_tab/account_tab_view.dart';
@@ -15,6 +14,7 @@ import 'package:smart_ecommerce/layouts/home/tabs/comparison_tab/comparison_tab.
 import 'package:smart_ecommerce/layouts/home/tabs/comparison_tab/view_model/comparison_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/home_tab.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/search_feature/widgets/custom_search_icon_button.dart';
+import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/category_screen_tablet.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/provider/wishlist_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/saved_tab.dart';
 
@@ -124,8 +124,7 @@ class HomeViewMobileLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = Provider.of<HomeProvider>(context);
-    log(userId);
-    log(provider.homeTapIndex.toString());
+    var categoryProvider = Provider.of<CategoryProvider>(context,);
     final List<Widget> navWidget = [
       HomeTab(token: token, userId: userId),
       BlocProvider(
@@ -143,7 +142,7 @@ class HomeViewMobileLayout extends StatelessWidget {
     ];
     final theme = Theme.of(context);
 
-    return Scaffold(
+    return categoryProvider.selectedCategory == null ? Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
@@ -283,6 +282,6 @@ class HomeViewMobileLayout extends StatelessWidget {
               )
               : null,
       body: navWidget[provider.homeTapIndex],
-    );
+    ):CategoryScreenTablet(token: token, userId: userId,);
   }
 }
