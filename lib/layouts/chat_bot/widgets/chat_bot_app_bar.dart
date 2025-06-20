@@ -30,7 +30,10 @@ class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           const SizedBox(width: 8),
-          Text("Shopping assistant"),
+          Text(
+            "Shopping assistant",
+            style: theme.textTheme.titleMedium?.copyWith(color: Colors.white),
+          ),
         ],
       ),
     );

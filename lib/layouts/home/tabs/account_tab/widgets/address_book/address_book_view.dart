@@ -15,7 +15,7 @@ class AddressBookView extends StatelessWidget {
     final userId = arguments[1] as String;
     final bool forSelection =
         arguments.length > 2 ? arguments[2] as bool : false;
-
+    final theme = Theme.of(context);
     log(userId);
     return BlocProvider(
       create: (context) => getIt<AddAddressCubit>(),
@@ -24,17 +24,18 @@ class AddressBookView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(size: 33),
           centerTitle: true,
-          title: const Text("AddressBook"),
+          title: Text("AddressBook", style: theme.textTheme.titleMedium),
         ),
         body: AddressBookBody(
           token: token,
           userId: userId,
-          onSelect: forSelection
-              ? (selectedAddress) {
-                  Navigator.pop(context, selectedAddress);
-                }
-              : null,
-          ),
+          onSelect:
+              forSelection
+                  ? (selectedAddress) {
+                    Navigator.pop(context, selectedAddress);
+                  }
+                  : null,
+        ),
       ),
     );
   }

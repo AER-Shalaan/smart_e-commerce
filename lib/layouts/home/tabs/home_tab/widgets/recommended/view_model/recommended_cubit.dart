@@ -11,7 +11,7 @@ class RecommendedProductsCubit extends Cubit<RecommendedState> {
 
   RecommendedListDataSource recommendedListDataSource;
 
-  Future<void> getRecommendedList({required int userId}) async {
+  Future<void> getRecommendedList({required String userId}) async {
     emit(RecommendedLoading());
     final result = await recommendedListDataSource.getRecommendedList(
       userId: userId,

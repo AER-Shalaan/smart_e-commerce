@@ -59,6 +59,8 @@ import '../data/data_source/home/home_tap_data_source/subcategories_from_categor
     as _i965;
 import '../data/data_source/home/home_tap_data_source/top_rated_data_source.dart'
     as _i359;
+import '../data/data_source/home/order_data_source/order_data_source.dart'
+    as _i130;
 import '../data/data_source/home/payment_data_source/payment_data_source.dart'
     as _i232;
 import '../data/data_source/home/product_details_data_source/add_item_view_data_source.dart'
@@ -119,6 +121,8 @@ import '../data/data_source_impl/home/home_tap_data_source_impl/subcategories_fr
     as _i879;
 import '../data/data_source_impl/home/home_tap_data_source_impl/top_rated_data_source_impl.dart'
     as _i22;
+import '../data/data_source_impl/home/order_data_source_impl/order_data_source_impl.dart'
+    as _i400;
 import '../data/data_source_impl/home/payment_data_source_impl/payment_data_source_impl.dart'
     as _i976;
 import '../data/data_source_impl/home/product_details_data_source_impl/add_item_view_data_source_impl.dart'
@@ -164,6 +168,8 @@ import '../layouts/home/tabs/account_tab/widgets/address_book/view_model/get_add
     as _i900;
 import '../layouts/home/tabs/account_tab/widgets/my_details/view_model/profile_view_model.dart'
     as _i278;
+import '../layouts/home/tabs/account_tab/widgets/my_orders/view_model/orders_view_model.dart'
+    as _i309;
 import '../layouts/home/tabs/cart_tab/layouts/checkout/view_model/payment_view_model.dart'
     as _i433;
 import '../layouts/home/tabs/cart_tab/view_model/del_item_from_cart_view_model/del_item_from_cart_view_model.dart'
@@ -274,6 +280,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i359.TopRatedDataSource>(
       () => _i22.TopRatedDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i130.OrderDataSource>(
+      () => _i400.OrderDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i309.OrdersViewModel>(
+      () => _i309.OrdersViewModel(gh<_i130.OrderDataSource>()),
     );
     gh.factory<_i233.UpdateCartDataSource>(
       () => _i140.UpdateCartDataSourceImpl(gh<_i108.ApiManger>()),

@@ -31,7 +31,7 @@ class SignUpForm extends StatelessWidget {
           Text(
             "Let’s create your account.",
             style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.hintColor.withOpacity(0.8),
+              color: theme.hintColor.withAlpha((0.8 * 255).toInt()),
               fontWeight: FontWeight.w400,
             ),
           ),

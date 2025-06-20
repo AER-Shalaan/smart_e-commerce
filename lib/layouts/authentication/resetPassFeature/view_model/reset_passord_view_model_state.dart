@@ -1,16 +1,10 @@
 import 'package:smart_ecommerce/core/api/failure.dart';
-import 'package:smart_ecommerce/data/models/auth_model/reset_password_model/ResetPasswordModel.dart';
+import 'package:smart_ecommerce/data/models/auth_model/reset_password_model/reset_password_model.dart';
 
-/// الحالة الأساسية
+
 abstract class ResetPassordViewModelState {}
 
-/// الحالة الابتدائية
 class ResetPassordViewModelInitial extends ResetPassordViewModelState {}
-
-
-// ----------------------------
-// ✅ حالات إرسال الكود (OTP)
-// ----------------------------
 
 class ResetPassordSendOtpLoading extends ResetPassordViewModelState {}
 
@@ -25,11 +19,6 @@ class ResetPassordSendOtpError extends ResetPassordViewModelState {
 
   ResetPassordSendOtpError(this.error);
 }
-
-
-// ----------------------------
-// ✅ حالات التحقق من الكود وتغيير الباسورد
-// ----------------------------
 
 class ResetPassordVerifyLoading extends ResetPassordViewModelState {}
 

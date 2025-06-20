@@ -47,7 +47,7 @@ class CategoryScreenTablet extends StatelessWidget {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 2,
-                  mainAxisExtent: MediaQuery.sizeOf(context).height * 0.30,
+                  mainAxisExtent: MediaQuery.sizeOf(context).height * 0.21,
                   mainAxisSpacing: 20,
                   crossAxisSpacing: 25,
                 ),

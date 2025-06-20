@@ -4,7 +4,7 @@ import 'package:smart_ecommerce/data/models/product_details_model/products_model
 
 abstract class RecommendedListDataSource {
   Future<Either<Failure, ProductsModel>> getRecommendedList({
-    required int userId,
+    required String userId,
   });
 
 }

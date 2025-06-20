@@ -13,7 +13,6 @@ import 'package:smart_ecommerce/layouts/home/tabs/cart_tab/cart_tab.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/comparison_tab/comparison_tab.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/comparison_tab/view_model/comparison_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/home_tab.dart';
-import 'package:smart_ecommerce/layouts/home/tabs/home_tab/search_feature/widgets/custom_search_icon_button.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/categorys/category_screen_tablet.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/provider/wishlist_provider.dart';
 import 'package:smart_ecommerce/layouts/home/tabs/saved_tab/saved_tab.dart';
@@ -46,7 +45,9 @@ class HomeViewMobileLayout extends StatelessWidget {
             Positioned.fill(
               child: GestureDetector(
                 onTap: () => entry.remove(),
-                child: Container(color: Colors.black.withOpacity(0.25)),
+                child: Container(
+                  color: Colors.black.withAlpha((0.25 * 255).toInt()),
+                ),
               ),
             ),
             Center(
@@ -152,7 +153,7 @@ class HomeViewMobileLayout extends StatelessWidget {
         title: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            "Inspire",
+            "SDFA",
             style: theme.textTheme.headlineSmall?.copyWith(
               color: theme.colorScheme.primary,
               fontWeight: FontWeight.bold,

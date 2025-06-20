@@ -12,7 +12,7 @@ AppBar productDetailsViewAppBar(
   final colorScheme = theme.colorScheme;
 
   return AppBar(
-    title: Text("Product Details"),
+    title: Text("Product Details", style: theme.textTheme.titleMedium),
     backgroundColor: theme.scaffoldBackgroundColor,
     surfaceTintColor: Colors.transparent,
     centerTitle: true,
@@ -34,7 +34,7 @@ AppBar productDetailsViewAppBar(
           style: ElevatedButton.styleFrom(
             shape: const CircleBorder(),
             padding: const EdgeInsets.all(8),
-            backgroundColor: colorScheme.primary.withOpacity(0.1),
+            backgroundColor: colorScheme.primary.withAlpha((0.1 * 255).toInt()),
             elevation: 0,
           ),
           child: Icon(Icons.favorite_border, color: colorScheme.primary),

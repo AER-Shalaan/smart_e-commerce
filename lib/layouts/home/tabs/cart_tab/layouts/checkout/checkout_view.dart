@@ -18,13 +18,15 @@ class CheckoutView extends StatelessWidget {
     final String userId = arguments['userId'] as String;
     final List<CartModel> cartItems = arguments['cartItems'] as List<CartModel>;
     final double total = arguments['total'] as double;
+    var theme = Theme.of(context);
     return BlocProvider(
       create: (context) => getIt<PaymentViewModel>(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: Text("Checkout"),
+          iconTheme: IconThemeData(size: 33),
+          title: Text("Checkout", style: theme.textTheme.titleMedium),
         ),
         body: Column(
           children: [

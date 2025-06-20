@@ -12,7 +12,7 @@ class RecommendedListDataSourceImpl extends RecommendedListDataSource {
   RecommendedListDataSourceImpl(this.apiManger);
   @override
   Future<Either<Failure, ProductsModel>> getRecommendedList({
-    required int userId,
+    required String userId,
   }) async {
     final result = await apiManger.getRecommendedListRequest(
       queryParameters: {"user_id": userId},

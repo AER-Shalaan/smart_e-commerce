@@ -64,7 +64,7 @@ class _ComparisonFullScreenGalleryState extends State<ComparisonFullScreenGaller
                 errorBuilder: (_, __, ___) => Icon(
                   Icons.broken_image,
                   size: 100,
-                  color: theme.disabledColor.withOpacity(0.17),
+                  color: theme.disabledColor.withAlpha((0.17 * 255).toInt()),
                 ),
               ),
             ),

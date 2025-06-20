@@ -21,7 +21,6 @@ import 'package:smart_ecommerce/layouts/home/tabs/home_tab/widgets/filter/model_
 
 import 'config/app_theme.dart';
 import 'core/utils/routes.dart';
-import 'layouts/home/tabs/account_tab/cubits/my_orders_cubit/orders_cubit.dart';
 import 'layouts/home/tabs/account_tab/cubits/notification_settings_cubit/notification_settings_cubit.dart';
 import 'layouts/home/tabs/home_tab/widgets/filter/filter_cubit/filter_cubit.dart';
 
@@ -42,10 +41,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        BlocProvider(create: (context) => OrdersCubit()),
         BlocProvider(create: (context) => NotificationSettingsCubit()),
         BlocProvider(create: (context) => FilterCubit()),
         ChangeNotifierProvider(create: (_) => ComparisonCategoryProvider()),
+        
         BlocProvider(
           create:
               (_) =>
