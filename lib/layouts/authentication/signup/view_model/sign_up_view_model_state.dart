@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../../data/models/signup_model/sign_up_model.dart';
+import '../../../../data/models/auth_model/signup_model/sign_up_model.dart';
 
 abstract class SignUpState extends Equatable {
   const SignUpState();

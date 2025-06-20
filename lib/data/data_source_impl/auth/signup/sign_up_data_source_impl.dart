@@ -3,8 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:smart_ecommerce/core/api/api_manager.dart';
 import 'package:smart_ecommerce/core/api/end_points.dart';
 import 'package:smart_ecommerce/core/api/failure.dart';
-import 'package:smart_ecommerce/data/data_source/signup/signup_data_source.dart';
-import 'package:smart_ecommerce/data/models/signup_model/sign_up_model.dart';
+import 'package:smart_ecommerce/data/data_source/auth/signup/signup_data_source.dart';
+import 'package:smart_ecommerce/data/models/auth_model/signup_model/sign_up_model.dart';
 
 @Injectable(as: SignUpDataSource)
 class SignUpDataSourceImpl extends SignUpDataSource {
