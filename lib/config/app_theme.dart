@@ -21,7 +21,7 @@ class AppTheme {
       ),
 
       // Card Theme
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       ),
@@ -42,7 +42,7 @@ class AppTheme {
       ),
 
       // AppBar theme
-      appBarTheme: AppBarTheme(
+      appBarTheme: AppBarThemeData(
         backgroundColor: AppColors.primary,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white, size: 24),
@@ -126,7 +126,7 @@ class AppTheme {
       ),
 
       // Card Theme (dark)
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       ),
@@ -147,7 +147,7 @@ class AppTheme {
       ),
 
       // AppBar theme for dark mode
-      appBarTheme: AppBarTheme(
+      appBarTheme: AppBarThemeData(
         backgroundColor: AppColors.darkPrimary,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white, size: 24),

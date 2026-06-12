@@ -12,7 +12,7 @@ class ApiManger {
   static late Dio dio2;
   static late Dio dio3;
 
-  static init() {
+  static void init() {
     dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
     dio2 = Dio(BaseOptions(baseUrl: Constants.baseUrl2));
     dio3 = Dio(BaseOptions(baseUrl: Constants.baseUrl3));

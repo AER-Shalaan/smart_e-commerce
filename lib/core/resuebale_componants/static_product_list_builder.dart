@@ -78,7 +78,7 @@ class StaticProductListBuilder extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, _) => buildShimmerItem(context),
-                  separatorBuilder: (_, __) => const SizedBox(width: 16),
+                  separatorBuilder: (_, _) => const SizedBox(width: 16),
                   itemCount: 5,
                 )
               : ListView.separated(
@@ -86,7 +86,7 @@ class StaticProductListBuilder extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: products.length,
                   itemBuilder: _buildProductItem,
-                  separatorBuilder: (_, __) => const SizedBox(width: 16),
+                  separatorBuilder: (_, _) => const SizedBox(width: 16),
                 ),
         ),
       ],

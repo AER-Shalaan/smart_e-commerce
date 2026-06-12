@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -205,54 +205,42 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.singleton<_i108.ApiManger>(() => _i108.ApiManger());
-    gh.factory<_i27.FeaturedProductDataSource>(
-      () => _i52.FeaturedProductDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i130.OrderDataSource>(
+      () => _i400.OrderDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i922.AddToComparisonDataSource>(
-      () => _i1022.AddToComparisonDataSourceImpl(gh<_i108.ApiManger>()),
-    );
-    gh.factory<_i585.GetUserWishlistDataSource>(
-      () => _i492.GetUserWishlistDataSourceImpl(gh<_i108.ApiManger>()),
-    );
-    gh.factory<_i628.ResetPasswordDataSource>(
-      () => _i2.ResetPasswordDataSourceImpl(gh<_i108.ApiManger>()),
-    );
-    gh.factory<_i850.AddToComparisonViewModel>(
-      () =>
-          _i850.AddToComparisonViewModel(gh<_i922.AddToComparisonDataSource>()),
-    );
-    gh.factory<_i143.AddReviewDataSource>(
-      () => _i675.AddReviewDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i233.UpdateCartDataSource>(
+      () => _i140.UpdateCartDataSourceImpl(gh<_i108.ApiManger>()),
     );
     gh.factory<_i508.ChatBotDataSource>(
       () => _i706.ChatBotDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i688.ProductDetailsDataSource>(
-      () => _i489.ProductDetailsDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i200.ChatBotViewModel>(
+      () => _i200.ChatBotViewModel(gh<_i508.ChatBotDataSource>()),
     );
-    gh.factory<_i298.DelFromCartDataSource>(
-      () => _i546.DelFromCartDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i343.LoginDataSource>(
+      () => _i754.LoginDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i35.ReviewsDataSource>(
-      () => _i579.ReviewsDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i965.SubcategoriesFromCategoryDataSource>(
+      () =>
+          _i879.SubcategoriesFromCategoryDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i941.ComparisonDataSource>(
-      () => _i996.ComparisonDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i262.GetCartDataSource>(
+      () => _i114.GetCartDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i659.AddItmeToWishlistDataSource>(
-      () => _i474.AddProductToWishlistDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i928.AddToCartDataSource>(
+      () => _i530.AddTapDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i141.BestSellerDataSource>(
-      () => _i543.MostSellingDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i1065.DelItmeFromWishlsitDataSource>(
+      () => _i752.DelProductFromWishlistDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i417.GetAddressDataSource>(
-      () => _i479.GetAddressDataSourceImpl(gh<_i108.ApiManger>()),
-    );
-    gh.factory<_i973.FilterDataSource>(
-      () => _i640.FilterDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i439.ProfileDataSource>(
+      () => _i731.ProfileDataSourceImpl(gh<_i108.ApiManger>()),
     );
     gh.factory<_i1050.CategoriesDataSource>(
       () => _i323.CategoriesDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i278.ProfileViewModel>(
+      () => _i278.ProfileViewModel(gh<_i439.ProfileDataSource>()),
     );
     gh.factory<_i1015.SearchDataSource>(
       () => _i347.SearchDataSourceImpl(gh<_i108.ApiManger>()),
@@ -275,45 +263,117 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i608.AICheckDataSource>(
       () => _i481.AiCheckDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i571.DelItemFromCartViewModel>(
-      () => _i571.DelItemFromCartViewModel(gh<_i298.DelFromCartDataSource>()),
-    );
     gh.factory<_i359.TopRatedDataSource>(
       () => _i22.TopRatedDataSourceImpl(gh<_i108.ApiManger>()),
     );
-    gh.factory<_i130.OrderDataSource>(
-      () => _i400.OrderDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i35.ReviewsDataSource>(
+      () => _i579.ReviewsDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i1024.AddItemViewViewModel>(
+      () => _i1024.AddItemViewViewModel(gh<_i999.AddItemViewDataSource>()),
+    );
+    gh.factory<_i816.SubcategoriesFromCategoryViewModel>(
+      () => _i816.SubcategoriesFromCategoryViewModel(
+        gh<_i965.SubcategoriesFromCategoryDataSource>(),
+      ),
+    );
+    gh.factory<_i941.ComparisonDataSource>(
+      () => _i996.ComparisonDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i659.AddItmeToWishlistDataSource>(
+      () => _i474.AddProductToWishlistDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i141.BestSellerDataSource>(
+      () => _i543.MostSellingDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i417.GetAddressDataSource>(
+      () => _i479.GetAddressDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i973.FilterDataSource>(
+      () => _i640.FilterDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i27.FeaturedProductDataSource>(
+      () => _i52.FeaturedProductDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i242.AddToCartViewModel>(
+      () => _i242.AddToCartViewModel(gh<_i928.AddToCartDataSource>()),
+    );
+    gh.factory<_i922.AddToComparisonDataSource>(
+      () => _i1022.AddToComparisonDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i585.GetUserWishlistDataSource>(
+      () => _i492.GetUserWishlistDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i628.ResetPasswordDataSource>(
+      () => _i2.ResetPasswordDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i124.RecommendedProductsCubit>(
+      () =>
+          _i124.RecommendedProductsCubit(gh<_i220.RecommendedListDataSource>()),
+    );
+    gh.factory<_i228.CheckReviewViewModel>(
+      () => _i228.CheckReviewViewModel(gh<_i608.AICheckDataSource>()),
+    );
+    gh.factory<_i143.AddReviewDataSource>(
+      () => _i675.AddReviewDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i688.ProductDetailsDataSource>(
+      () => _i489.ProductDetailsDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i298.DelFromCartDataSource>(
+      () => _i546.DelFromCartDataSourceImpl(gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i232.PaymentDataSource>(
+      () => _i976.PaymentDataSourceImpl(apiManger: gh<_i108.ApiManger>()),
+    );
+    gh.factory<_i55.SignUpViewModel>(
+      () => _i55.SignUpViewModel(gh<_i427.SignUpDataSource>()),
+    );
+    gh.factory<_i335.AddAddressCubit>(
+      () => _i335.AddAddressCubit(gh<_i511.AddAddressDataSource>()),
     );
     gh.factory<_i309.OrdersViewModel>(
       () => _i309.OrdersViewModel(gh<_i130.OrderDataSource>()),
     );
-    gh.factory<_i233.UpdateCartDataSource>(
-      () => _i140.UpdateCartDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i605.UpdateCartViewModel>(
+      () => _i605.UpdateCartViewModel(gh<_i233.UpdateCartDataSource>()),
+    );
+    gh.factory<_i669.DelItemFormWishlistViewModel>(
+      () => _i669.DelItemFormWishlistViewModel(
+        gh<_i1065.DelItmeFromWishlsitDataSource>(),
+      ),
     );
     gh.factory<_i126.ResetPassordViewModel>(
       () => _i126.ResetPassordViewModel(gh<_i628.ResetPasswordDataSource>()),
     );
-    gh.factory<_i343.LoginDataSource>(
-      () => _i754.LoginDataSourceImpl(gh<_i108.ApiManger>()),
-    );
-    gh.factory<_i965.SubcategoriesFromCategoryDataSource>(
+    gh.factory<_i850.AddToComparisonViewModel>(
       () =>
-          _i879.SubcategoriesFromCategoryDataSourceImpl(gh<_i108.ApiManger>()),
+          _i850.AddToComparisonViewModel(gh<_i922.AddToComparisonDataSource>()),
     );
-    gh.factory<_i262.GetCartDataSource>(
-      () => _i114.GetCartDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i980.SearchTabViewModel>(
+      () => _i980.SearchTabViewModel(gh<_i1015.SearchDataSource>()),
     );
-    gh.factory<_i928.AddToCartDataSource>(
-      () => _i530.AddTapDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i900.AddressViewModel>(
+      () => _i900.AddressViewModel(gh<_i417.GetAddressDataSource>()),
     );
-    gh.factory<_i1065.DelItmeFromWishlsitDataSource>(
-      () => _i752.DelProductFromWishlistDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i571.DelItemFromCartViewModel>(
+      () => _i571.DelItemFromCartViewModel(gh<_i298.DelFromCartDataSource>()),
     );
-    gh.factory<_i439.ProfileDataSource>(
-      () => _i731.ProfileDataSourceImpl(gh<_i108.ApiManger>()),
+    gh.factory<_i713.ComparisonViewModel>(
+      () => _i713.ComparisonViewModel(gh<_i941.ComparisonDataSource>()),
     );
-    gh.factory<_i200.ChatBotViewModel>(
-      () => _i200.ChatBotViewModel(gh<_i508.ChatBotDataSource>()),
+    gh.factory<_i774.GetUserWishlistViewModel>(
+      () =>
+          _i774.GetUserWishlistViewModel(gh<_i585.GetUserWishlistDataSource>()),
+    );
+    gh.factory<_i579.GetCartViewModel>(
+      () => _i579.GetCartViewModel(gh<_i262.GetCartDataSource>()),
+    );
+    gh.factory<_i857.LoginViewModel>(
+      () => _i857.LoginViewModel(gh<_i343.LoginDataSource>()),
+    );
+    gh.factory<_i869.ProductDetailsViewModel>(
+      () => _i869.ProductDetailsViewModel(gh<_i688.ProductDetailsDataSource>()),
     );
     gh.factory<_i573.HomeCategoriesViewModel>(
       () => _i573.HomeCategoriesViewModel(gh<_i1050.CategoriesDataSource>()),
@@ -321,83 +381,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i172.CategoriesViewModel>(
       () => _i172.CategoriesViewModel(gh<_i1050.CategoriesDataSource>()),
     );
-    gh.factory<_i55.SignUpViewModel>(
-      () => _i55.SignUpViewModel(gh<_i427.SignUpDataSource>()),
-    );
-    gh.factory<_i1035.GetReviewsViewModel>(
-      () => _i1035.GetReviewsViewModel(gh<_i35.ReviewsDataSource>()),
-    );
-    gh.factory<_i669.DelItemFormWishlistViewModel>(
-      () => _i669.DelItemFormWishlistViewModel(
-        gh<_i1065.DelItmeFromWishlsitDataSource>(),
-      ),
-    );
-    gh.factory<_i242.AddToCartViewModel>(
-      () => _i242.AddToCartViewModel(gh<_i928.AddToCartDataSource>()),
-    );
-    gh.factory<_i509.AddReviewViewModel>(
-      () => _i509.AddReviewViewModel(gh<_i143.AddReviewDataSource>()),
-    );
-    gh.factory<_i124.RecommendedProductsCubit>(
-      () =>
-          _i124.RecommendedProductsCubit(gh<_i220.RecommendedListDataSource>()),
-    );
-    gh.factory<_i980.SearchTabViewModel>(
-      () => _i980.SearchTabViewModel(gh<_i1015.SearchDataSource>()),
-    );
-    gh.factory<_i232.PaymentDataSource>(
-      () => _i976.PaymentDataSourceImpl(apiManger: gh<_i108.ApiManger>()),
-    );
-    gh.factory<_i426.FilterViewModel>(
-      () => _i426.FilterViewModel(gh<_i973.FilterDataSource>()),
-    );
-    gh.factory<_i228.CheckReviewViewModel>(
-      () => _i228.CheckReviewViewModel(gh<_i608.AICheckDataSource>()),
-    );
-    gh.factory<_i713.ComparisonViewModel>(
-      () => _i713.ComparisonViewModel(gh<_i941.ComparisonDataSource>()),
-    );
-    gh.factory<_i278.ProfileViewModel>(
-      () => _i278.ProfileViewModel(gh<_i439.ProfileDataSource>()),
-    );
-    gh.factory<_i774.GetUserWishlistViewModel>(
-      () =>
-          _i774.GetUserWishlistViewModel(gh<_i585.GetUserWishlistDataSource>()),
-    );
-    gh.factory<_i605.UpdateCartViewModel>(
-      () => _i605.UpdateCartViewModel(gh<_i233.UpdateCartDataSource>()),
-    );
-    gh.factory<_i869.ProductDetailsViewModel>(
-      () => _i869.ProductDetailsViewModel(gh<_i688.ProductDetailsDataSource>()),
-    );
-    gh.factory<_i900.AddressViewModel>(
-      () => _i900.AddressViewModel(gh<_i417.GetAddressDataSource>()),
-    );
     gh.factory<_i676.AddToWishlistViewModel>(
       () =>
           _i676.AddToWishlistViewModel(gh<_i659.AddItmeToWishlistDataSource>()),
-    );
-    gh.factory<_i816.SubcategoriesFromCategoryViewModel>(
-      () => _i816.SubcategoriesFromCategoryViewModel(
-        gh<_i965.SubcategoriesFromCategoryDataSource>(),
-      ),
-    );
-    gh.factory<_i579.GetCartViewModel>(
-      () => _i579.GetCartViewModel(gh<_i262.GetCartDataSource>()),
-    );
-    gh.factory<_i1024.AddItemViewViewModel>(
-      () => _i1024.AddItemViewViewModel(gh<_i999.AddItemViewDataSource>()),
     );
     gh.factory<_i433.PaymentViewModel>(
       () => _i433.PaymentViewModel(
         paymentDataSource: gh<_i232.PaymentDataSource>(),
       ),
     );
-    gh.factory<_i335.AddAddressCubit>(
-      () => _i335.AddAddressCubit(gh<_i511.AddAddressDataSource>()),
+    gh.factory<_i1035.GetReviewsViewModel>(
+      () => _i1035.GetReviewsViewModel(gh<_i35.ReviewsDataSource>()),
     );
-    gh.factory<_i857.LoginViewModel>(
-      () => _i857.LoginViewModel(gh<_i343.LoginDataSource>()),
+    gh.factory<_i426.FilterViewModel>(
+      () => _i426.FilterViewModel(gh<_i973.FilterDataSource>()),
+    );
+    gh.factory<_i509.AddReviewViewModel>(
+      () => _i509.AddReviewViewModel(gh<_i143.AddReviewDataSource>()),
     );
     return this;
   }

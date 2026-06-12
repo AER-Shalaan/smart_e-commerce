@@ -189,8 +189,8 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
                   ? ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (_, __) => buildShimmerItem(context),
-                      separatorBuilder: (_, __) => const SizedBox(width: 16),
+                      itemBuilder: (_, _) => buildShimmerItem(context),
+                      separatorBuilder: (_, _) => const SizedBox(width: 16),
                       itemCount: 5,
                     )
                   : ListView.separated(
@@ -211,7 +211,7 @@ class _ProductListBuilderState extends State<ProductListBuilder> {
                           );
                         }
                       },
-                      separatorBuilder: (_, __) => const SizedBox(width: 16),
+                      separatorBuilder: (_, _) => const SizedBox(width: 16),
                     ),
         ),
       ],
