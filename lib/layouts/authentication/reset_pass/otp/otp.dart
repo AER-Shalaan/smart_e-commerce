@@ -6,10 +6,11 @@ import 'package:smart_ecommerce/core/resuebale_componants/custom_main_button.dar
 import 'package:smart_ecommerce/core/resuebale_componants/dialogs.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/routes.dart';
-import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/otp/pin_input_form.dart';
-import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/otp/resend_code_text.dart';
-import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/view_model/reset_passord_view_model.dart';
-import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/view_model/reset_passord_view_model_state.dart';
+import 'package:smart_ecommerce/layouts/authentication/reset_pass/otp/pin_input_form.dart';
+import 'package:smart_ecommerce/layouts/authentication/reset_pass/otp/resend_code_text.dart';
+import 'package:smart_ecommerce/layouts/authentication/reset_pass/view_model/reset_passord_view_model.dart';
+import 'package:smart_ecommerce/layouts/authentication/reset_pass/view_model/reset_passord_view_model_state.dart';
+
 
 class Otp extends StatefulWidget {
   final String email;

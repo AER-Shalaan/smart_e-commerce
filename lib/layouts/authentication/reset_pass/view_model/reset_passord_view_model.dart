@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:smart_ecommerce/data/data_source/auth/reset_password/reset_password_data_source.dart';
-import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/view_model/reset_passord_view_model_state.dart';
+import 'package:smart_ecommerce/layouts/authentication/reset_pass/view_model/reset_passord_view_model_state.dart';
 
 @injectable
 class ResetPassordViewModel extends Cubit<ResetPassordViewModelState> {

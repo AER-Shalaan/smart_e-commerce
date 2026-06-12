@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/OTP/otp.dart';
 import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/Provider/forgot_password_provider.dart';
-import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/forgot_password/forgot_password.dart';
+import 'package:smart_ecommerce/layouts/authentication/reset_pass/forgot_password/forgot_password.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/chat_bot_view.dart';
 import 'package:smart_ecommerce/layouts/chat_bot/view_model/chat_bot_view_model.dart';
 import 'package:smart_ecommerce/layouts/home/layouts/product_details/provider/add_cart_provider.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/view_model/reset_passord_view_model.dart';
+import 'package:smart_ecommerce/layouts/authentication/reset_pass/view_model/reset_passord_view_model.dart';
 
 import '../../../../../core/resuebale_componants/custom_main_button.dart';
 import '../../../../../core/utils/app_colors.dart';
-import '../Provider/forgot_password_provider.dart';
+import '../../resetPassFeature/Provider/forgot_password_provider.dart';
 
 class SendCodeButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;

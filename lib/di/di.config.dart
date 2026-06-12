@@ -143,8 +143,8 @@ import '../data/data_source_impl/home/save_tab_data_source_impl/get_user_wishlis
     as _i492;
 import '../layouts/authentication/login/view_model/login_view_model.dart'
     as _i857;
-import '../layouts/authentication/resetPassFeature/view_model/reset_passord_view_model.dart'
-    as _i126;
+import '../layouts/authentication/reset_pass/view_model/reset_passord_view_model.dart'
+    as _i372;
 import '../layouts/authentication/signup/view_model/sign_up_view_model.dart'
     as _i55;
 import '../layouts/chat_bot/view_model/chat_bot_view_model.dart' as _i200;
@@ -343,8 +343,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1065.DelItmeFromWishlsitDataSource>(),
       ),
     );
-    gh.factory<_i126.ResetPassordViewModel>(
-      () => _i126.ResetPassordViewModel(gh<_i628.ResetPasswordDataSource>()),
+    gh.factory<_i372.ResetPassordViewModel>(
+      () => _i372.ResetPassordViewModel(gh<_i628.ResetPasswordDataSource>()),
     );
     gh.factory<_i850.AddToComparisonViewModel>(
       () =>

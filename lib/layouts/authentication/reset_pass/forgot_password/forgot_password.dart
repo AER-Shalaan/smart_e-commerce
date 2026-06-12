@@ -6,8 +6,8 @@ import 'package:smart_ecommerce/core/resuebale_componants/custom_auth_textfield.
 import 'package:smart_ecommerce/core/resuebale_componants/dialogs.dart';
 import 'package:smart_ecommerce/core/utils/app_colors.dart';
 import 'package:smart_ecommerce/core/utils/assets.dart';
-import 'package:smart_ecommerce/layouts/authentication/resetPassFeature/otp/otp.dart';
-import '../Provider/forgot_password_provider.dart';
+import 'package:smart_ecommerce/layouts/authentication/reset_pass/otp/otp.dart';
+import '../../resetPassFeature/Provider/forgot_password_provider.dart';
 import '../view_model/reset_passord_view_model.dart';
 import '../view_model/reset_passord_view_model_state.dart';
 import 'send_code_button.dart';
