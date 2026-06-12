@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/widgets/forget_password_text.dart';
-import 'package:smart_ecommerce/layouts/authentication/login/widgets/logIn_button.dart';
+import 'package:smart_ecommerce/layouts/authentication/login/widgets/log_in_button.dart';
 import 'package:smart_ecommerce/layouts/authentication/login/widgets/social_login_buttons.dart';
 import 'login_text_fields.dart';
 
