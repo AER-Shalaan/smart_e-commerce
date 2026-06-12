@@ -1,5 +1,5 @@
 import 'package:smart_ecommerce/core/api/failure.dart';
-import 'package:smart_ecommerce/data/models/profile_model/ProfileModel.dart';
+import 'package:smart_ecommerce/data/models/profile_model/profile_model.dart';
 
 abstract class ProfileViewModelState {
   

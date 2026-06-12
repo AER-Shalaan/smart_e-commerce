@@ -4,7 +4,7 @@ import 'package:smart_ecommerce/core/api/api_manager.dart';
 import 'package:smart_ecommerce/core/api/end_points.dart';
 import 'package:smart_ecommerce/core/api/failure.dart';
 import 'package:smart_ecommerce/data/data_source/home/account_tab_data_source/profile_data_source/profile_data_source.dart';
-import 'package:smart_ecommerce/data/models/profile_model/ProfileModel.dart';
+import 'package:smart_ecommerce/data/models/profile_model/profile_model.dart';
 @Injectable(as: ProfileDataSource)
 class ProfileDataSourceImpl extends ProfileDataSource {
   ApiManger apiManger;

@@ -1,6 +1,6 @@
-import 'UserProfile.dart';
+import 'user_profile.dart';
 import 'Adresses.dart';
-import 'AdvNumbers.dart';
+import 'adv_numbers.dart';
 
 class ProfileModel {
   ProfileModel({
