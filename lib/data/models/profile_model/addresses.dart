@@ -1,5 +1,5 @@
-class Adresses {
-  Adresses({
+class Addresses {
+  Addresses({
       this.id, 
       this.firstName, 
       this.lastName, 
@@ -16,7 +16,7 @@ class Adresses {
       this.shippingMethod, 
       this.userId,});
 
-  Adresses.fromJson(dynamic json) {
+  Addresses.fromJson(dynamic json) {
     id = json['Id'];
     firstName = json['FirstName'];
     lastName = json['LastName'];

@@ -1,20 +1,24 @@
+import 'package:smart_ecommerce/data/models/profile_model/addresses.dart';
+
 import 'user_profile.dart';
-import 'Adresses.dart';
 import 'adv_numbers.dart';
 
 class ProfileModel {
-  ProfileModel({
-      this.userProfile, 
-      this.adresses, 
-      this.advNumbers,});
+  ProfileModel({this.userProfile, this.adresses, this.advNumbers});
 
   ProfileModel.fromJson(dynamic json) {
-    userProfile = json['UserProfile'] != null ? UserProfile.fromJson(json['UserProfile']) : null;
-    adresses = json['Adresses'] != null ? Adresses.fromJson(json['Adresses']) : null;
-    advNumbers = json['advNumbers'] != null ? AdvNumbers.fromJson(json['advNumbers']) : null;
+    userProfile = json['UserProfile'] != null
+        ? UserProfile.fromJson(json['UserProfile'])
+        : null;
+    adresses = json['Adresses'] != null
+        ? Addresses.fromJson(json['Adresses'])
+        : null;
+    advNumbers = json['advNumbers'] != null
+        ? AdvNumbers.fromJson(json['advNumbers'])
+        : null;
   }
   UserProfile? userProfile;
-  Adresses? adresses;
+  Addresses? adresses;
   AdvNumbers? advNumbers;
 
   Map<String, dynamic> toJson() {
@@ -30,5 +34,4 @@ class ProfileModel {
     }
     return map;
   }
-
 }
