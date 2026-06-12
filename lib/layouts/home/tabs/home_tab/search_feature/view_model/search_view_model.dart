@@ -11,12 +11,22 @@ class SearchTabViewModel extends Cubit<SearchTabStates> {
   SearchDataSource searchDataSource;
   static SearchTabViewModel getObject(BuildContext context) =>
       BlocProvider.of(context);
-  search({required String query, required int page,required String token,required String userId}) async {
+  Future<void> search({
+    required String query,
+    required int page,
+    required String token,
+    required String userId,
+  }) async {
     emit(SearchTabLoadingState());
     // if (query == "") {
     //   emit(SearchTabErrorState(Failure.));
     // }
-    var result = await searchDataSource.search(page: page,query: query,token: token,userId: userId);
+    var result = await searchDataSource.search(
+      page: page,
+      query: query,
+      token: token,
+      userId: userId,
+    );
     result.fold(
       (response) {
         emit(SearchTabErrorState(response));
@@ -27,5 +37,3 @@ class SearchTabViewModel extends Cubit<SearchTabStates> {
     );
   }
 }
-
-

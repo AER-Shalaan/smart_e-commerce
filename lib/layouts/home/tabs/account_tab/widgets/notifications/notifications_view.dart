@@ -41,7 +41,7 @@ class NotificationsView extends StatelessWidget {
                           ),
                         ),
                         value: entry.value,
-                        activeColor: theme.colorScheme.primary,
+                        activeThumbColor: theme.colorScheme.primary,
                         thumbColor: WidgetStatePropertyAll(
                           theme.colorScheme.onPrimary,
                         ),

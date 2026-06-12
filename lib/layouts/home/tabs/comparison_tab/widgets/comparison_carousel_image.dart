@@ -74,7 +74,7 @@ class _ComparisonCarouselImageState extends State<ComparisonCarouselImage> {
                 height: 68,
                 fit: BoxFit.cover,
                 errorBuilder:
-                    (_, __, ___) =>
+                    (_, _, _) =>
                         Icon(Icons.broken_image, color: Colors.grey, size: 38),
               ),
             ),

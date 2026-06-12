@@ -128,7 +128,7 @@ class TabletDrawer extends StatelessWidget {
                             scrollDirection: Axis.vertical,
                             itemCount: categories.length,
                             separatorBuilder:
-                                (_, __) => const SizedBox(height: 16),
+                                (_, _) => const SizedBox(height: 16),
                             itemBuilder: (context, i) {
                               return selectedOption(
                                 imagePath: Assets.assetsIconsAllCategory,

@@ -47,7 +47,7 @@ class _ProductPhotosTabletState extends State<ProductPhotosTablet> {
           child: ListView.separated(
             shrinkWrap: true,
             itemCount: widget.productImages.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            separatorBuilder: (_, _) => const SizedBox(height: 10),
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {

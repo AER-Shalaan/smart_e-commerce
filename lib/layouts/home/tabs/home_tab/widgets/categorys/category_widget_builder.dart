@@ -48,7 +48,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
                               mainAxisSpacing: 12,
                               crossAxisSpacing: 12,
                             ),
-                        itemBuilder: (_, __) => shimmerCategoryItem(isTablet),
+                        itemBuilder: (_, _) => shimmerCategoryItem(isTablet),
                       )
                       : SizedBox(
                         height: 120,
@@ -56,8 +56,8 @@ class CategoryWidgetBuilder extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: 6,
                           separatorBuilder:
-                              (_, __) => const SizedBox(width: 16),
-                          itemBuilder: (_, __) => shimmerCategoryItem(isTablet),
+                              (_, _) => const SizedBox(width: 16),
+                          itemBuilder: (_, _) => shimmerCategoryItem(isTablet),
                         ),
                       ),
             );
@@ -90,7 +90,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           itemCount: (categories.length / 2).ceil(),
                           separatorBuilder:
-                              (_, __) => const SizedBox(width: 16),
+                              (_, _) => const SizedBox(width: 16),
                           itemBuilder: (context, i) {
                             final int topIndex = i * 2;
                             final int bottomIndex = topIndex + 1;
@@ -132,7 +132,7 @@ class CategoryWidgetBuilder extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: categories.length,
                           separatorBuilder:
-                              (_, __) => const SizedBox(width: 16),
+                              (_, _) => const SizedBox(width: 16),
                           itemBuilder:
                               (context, index) => AnimatedCategoryItem(
                                 index: index,

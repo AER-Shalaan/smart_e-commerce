@@ -19,7 +19,7 @@ class ResetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final resetPasswordProvider = Provider.of<ResetPasswordProvider>(context);
-    final TextStyles = Theme.of(context).textTheme;
+    final TextTheme textStyles = Theme.of(context).textTheme;
     passwordFocusNode.addListener(() {
       if (!passwordFocusNode.hasFocus) {
         resetPasswordProvider.validatePassword(passwordController.text);
@@ -50,10 +50,10 @@ class ResetPassword extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Text("Reset Password",style: TextStyles.headlineSmall?.copyWith(fontWeight: FontWeight.bold),),
+                   Text("Reset Password",style: textStyles.headlineSmall?.copyWith(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 8),
                    Text("Set the new password for your account so you can login and access all the features.",
-                      style: TextStyles.titleMedium),
+                      style: textStyles.titleMedium),
                   const SizedBox(height: 24),
                   Text("New Password",),
                   const SizedBox(height: 4),
@@ -102,7 +102,7 @@ class ResetPassword extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     "Confirm New Password",
-                    style: TextStyles.bodySmall,
+                    style: textStyles.bodySmall,
                   ),
                   const SizedBox(height: 4),
                   CustomAuthTextField(

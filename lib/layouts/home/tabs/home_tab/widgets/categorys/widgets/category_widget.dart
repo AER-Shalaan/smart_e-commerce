@@ -61,7 +61,7 @@ class CategoryWidget extends StatelessWidget {
                           Constants.baseUrl + category.categoryImage!,
                           fit: BoxFit.cover,
                           errorBuilder:
-                              (_, __, ___) => Icon(
+                              (_, _, _) => Icon(
                                 Icons.broken_image,
                                 color: theme.disabledColor,
                               ),

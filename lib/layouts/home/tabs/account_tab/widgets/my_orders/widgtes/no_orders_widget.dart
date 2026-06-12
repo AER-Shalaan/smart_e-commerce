@@ -27,7 +27,7 @@ class NoOrdersWidget extends StatelessWidget {
           Text(
             "You haven't placed any orders yet.",
             style: Styles.body2Regular.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.5),
+              color: theme.colorScheme.onSurface.withAlpha(128),
             ),
           ),
         ],

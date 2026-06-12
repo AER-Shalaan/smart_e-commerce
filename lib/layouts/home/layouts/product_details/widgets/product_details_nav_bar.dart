@@ -159,7 +159,7 @@ class ConfirmAddToCart extends StatelessWidget {
         ),
         Selector<AddCartProvider, int>(
           selector: (_, provider) => provider.quantity,
-          builder: (_, quantity, __) {
+          builder: (_, quantity, _) {
             return AnimatedSwitcher(
               duration: const Duration(milliseconds: 240),
               child: Text(

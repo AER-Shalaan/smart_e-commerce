@@ -59,7 +59,7 @@ class _TypingIndicatorState extends State<TypingIndicator>
       children: List.generate(3, (i) {
         return AnimatedBuilder(
           animation: _animations[i],
-          builder: (_, __) {
+          builder: (_, _) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 3),
               child: Opacity(

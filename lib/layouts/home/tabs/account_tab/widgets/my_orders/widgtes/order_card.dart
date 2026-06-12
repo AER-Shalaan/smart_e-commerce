@@ -80,9 +80,7 @@ class OrderCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 18,
-                  backgroundColor: theme.colorScheme.secondary.withOpacity(
-                    0.12,
-                  ),
+                  backgroundColor: theme.colorScheme.secondary.withAlpha(30),
                   child: Icon(Icons.person, color: theme.colorScheme.secondary),
                 ),
                 const SizedBox(width: 10),
@@ -118,7 +116,7 @@ class OrderCard extends StatelessWidget {
                   child: Text(
                     "${order.building} ${order.street}, ${order.city}",
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.75),
+                      color: theme.colorScheme.onSurface.withAlpha(192),
                     ),
                   ),
                 ),

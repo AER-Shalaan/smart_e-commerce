@@ -1,8 +1,8 @@
+import 'package:smart_ecommerce/data/models/product_details_model/Images.dart';
+import 'package:smart_ecommerce/data/models/product_details_model/brand.dart';
 import 'package:smart_ecommerce/data/models/product_details_model/products_data.dart';
 import 'package:smart_ecommerce/data/models/product_details_model/rating.dart';
 
-import 'brand.dart';
-import 'images.dart';
 
 class ProductDetailsModel {
   final ProductsData? data;

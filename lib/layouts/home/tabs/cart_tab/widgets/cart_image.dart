@@ -25,7 +25,7 @@ class CartImage extends StatelessWidget {
           child: Image.network(
             Constants.baseUrl + item.imageCover,
             fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => Icon(
+            errorBuilder: (_, _, _) => Icon(
               Icons.broken_image,
               color: Theme.of(context).hintColor,
               size: imgWidth * 0.5,

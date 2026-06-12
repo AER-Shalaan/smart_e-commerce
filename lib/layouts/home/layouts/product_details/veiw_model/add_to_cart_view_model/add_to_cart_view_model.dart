@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:smart_ecommerce/data/data_source/home/cart_tap_data_source/add_to_cart_data_source.dart';
@@ -8,7 +9,8 @@ class AddToCartViewModel extends Cubit<AddToCartViewModelStates> {
   AddToCartDataSource addToCartDataSource;
   @factoryMethod
   AddToCartViewModel(this.addToCartDataSource) : super(AddToCartInitial());
-  static AddToCartViewModel get(context) => BlocProvider.of(context);
+  static AddToCartViewModel get(BuildContext context) =>
+      BlocProvider.of(context);
   Future<void> addToCart({
     required String productId,
     required String token,

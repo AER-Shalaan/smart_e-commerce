@@ -61,7 +61,7 @@ class _ComparisonFullScreenGalleryState extends State<ComparisonFullScreenGaller
               child: Image.network(
                 widget.imageUrls[i],
                 fit: BoxFit.contain,
-                errorBuilder: (_, __, ___) => Icon(
+                errorBuilder: (_, _, _) => Icon(
                   Icons.broken_image,
                   size: 100,
                   color: theme.disabledColor.withAlpha((0.17 * 255).toInt()),
